@@ -1,0 +1,219 @@
+{
+  "toggleLang": "Eng",
+  "buttons": {
+    "connectWallet": "Connect"
+  },
+  "menu-page": {
+    "menu": {
+      "cat1": "Create a task",
+      "cat2": "Find a task",
+      "cat3": "My tasks"
+    },
+    "menu-footer": {
+      "support": "Write to support"
+    }
+  },
+  "congratulations-page": {
+    "designated-performer": {
+      "title": "The executor has been appointed!",
+      "subtitle": "The task is already in progress",
+      "content": "Track the progress of the task in the section"
+    }
+  },
+  "is-edited-page": {
+    "title": "Profile editing screen"
+  },
+  "response-sent-page": {
+    "title": "Task created ⚡️",
+    "subtitle1": "Your response is already",
+    "subtitle2": "online"
+  },
+  "submited-arbitration-page": {
+    "title": "Submitted for arbitration ⚡️",
+    "subtitle": "Arbitration initiated",
+    "content1": "Expect results in the section",
+    "content2": "during"
+  },
+  "task-completed-page": {
+    "title": "Task completed!",
+    "subtitle": "You did it"
+  },
+  "task-created-page": {
+    "title": "Task created ⚡️",
+    "content1": "NFT tasks are already",
+    "content2": "online"
+  },
+  "connect-page": {
+    "title": "Connect wallet",
+    "content": "A wallet is a simple and anonymous way to log in. To create a task or to respond to it, you must connect a wallet or create a new one.",
+    "link": "Create a new wallet"
+  },
+  "create-task-page": {
+    "header-title": "Create",
+    "first-step": "First step",
+    "step": "step",
+    "of": "of",
+    "first-step-page": {
+      "title": "Select a category"
+    },
+    "second-step-page": {
+      "title": "What should be done?",
+      "label": "Task title",
+      "info": "For example, create a bot for blockchain voting"
+    },
+    "third-step-page": {
+      "title": "When should the task be completed?",
+      "label": "Specify the exact start and end dates of work",
+      "startDate": "Start date and time",
+      "endDate": "Completion date and time"
+    },
+    "fourth-step-page": {
+      "title": "Specify the budget for the task",
+      "content": "The amount will be frozen on the smart contract ordered and transferred to the executor after it is transferred in case of hitting the left side. The customer can cancel the order and return the amount at any time on behalf of the contractor."
+    },
+    "fifth-step-page": {
+      "title": "Task description",
+      "content": "Add a detailed description of the task to get more responses"
+    },
+    "sixth-step-page": {
+      "title": "Attach technical specifications",
+      "content": "Last push",
+      "create-task": "Create task"
+    }
+  },
+  "home": {
+    "not-found": "Nothing was found in the search for your request.",
+    "filter-btn": "Filter",
+    "filters": "Filters",
+    "filter-amount": "Cost of tasks from",
+    "filter-category": "Categories",
+    "filter-lang-label": "Show tasks created on",
+    "filter-lang-lang": "Russian",
+    "task-label1": "Tasks only",
+    "task-text1": "From verified customers",
+    "task-label2": "No responses",
+    "task-text2": "Be the first to respond",
+    "filter-title": "Sort",
+    "filter-sort1": "By publication date",
+    "filter-sort2": "By urgency"
+  },
+  "my-tasks-page": {
+    "header-title": "My tasks",
+    "list-clear": "You have not yet created or accepted any quests.",
+    "awaiting-payment": "Awaiting payment",
+    "in_arbitration": "At arbitration",
+    "active_tasks": "Active",
+    "in_moderation": "Moderation",
+    "completed": "Completed",
+    "you-created": "You created",
+    "you-made": "You made",
+    "at-work": "At work"
+  },
+  "profile": {
+    "title": "Profile",
+    "status": "FREE",
+    "about-me": "About me",
+    "summary": "Summary",
+    "last-activity": "Last activity",
+    "specialization": "Specialization",
+    "edit-profile": "Editing your profile"
+  },
+  "task-detail": {
+    "description": "Description",
+    "awaiting-payment": "Awaiting payment",
+    "technical-task": "Technical task",
+    "begin": "Begin",
+    "finish": "Finish",
+    "customer": "Customer",
+    "buttons": {
+      "pay-and-complete": "Pay and complete",
+      "submit-for-arbitration": "Submit for arbitration",
+      "assign-an-executor": "Assign an executor",
+      "respond": "Respond",
+      "login-and-respond": "Login and respond",
+      "appoint": "Appoint"
+    },
+    "sign-contract": {
+      "header-title": "Sign a smart contract",
+      "content-title": "Decisive moment",
+      "content-description1": "A small step for a man...",
+      "content-description2": "and great for decentralization",
+      "freeze": "To freeze",
+      "appoint-an-executor": "and appoint an executor",
+      "description": "The amount will be frozen on the smart contract of the order and transferred to the contractor after its completion in case of consensus of both parties. If there is no consensus between the parties, the case is sent for arbitration"
+    },
+    "response": {
+      "title": "Accompanying text",
+      "description": "Add accompanying text to increase the chance of a positive response"
+    }
+  },
+  "common": {
+    "profile": "Profile",
+    "my-tasks": "My tasks",
+    "contact-link": "Contact the task executor",
+    "my-tasks-link": "Go to my tasks",
+    "back": "Back",
+    "my-tasks-content": "Track the progress of the task in the section",
+    "thanks": "Thank you",
+    "hours": "hours",
+    "next": "Next",
+    "task1": "Exercise",
+    "task2": "Assignments",
+    "task2-s": "assignments",
+    "task3": "Tasks",
+    "create-task": "Create a task",
+    "feedback": "feedback",
+    "feedback-l": "Responses",
+    "hide": "Hide",
+    "show": "Show",
+    "active": "Actively",
+    "category": "Category",
+    "created": "Created",
+    "offer": "Offer",
+    "add-response": "Add a response",
+    "send-response": "Send a response",
+    "last-step": "Last step",
+    "in-russian": "in russian language",
+    "all-lang": "All languages",
+    "optional": "optional",
+    "create-profile": "Create a profile",
+    "add-photo": "Add photo",
+    "upload-resume": "Upload your resume",
+    "register": "Register",
+    "profile-create-title": "Freelancer profile",
+    "profile-create-description": "Fill in if you plan to respond",
+    "task-completed": "I completed the task",
+    "site": "Site",
+    "portfolio": "Portfolio",
+    "open-in-blockchain": "Open on blockchain",
+    "check-sum-blockchain": "Check the amount in the blockchain",
+    "history-customer": "Customer history in the blockchain",
+    "change-avatar": "Change avatar"
+  },
+  "statuses": {
+    "on-moderation": "MODERATION",
+    "in-work": "IN WORK",
+    "on-arbitration": "ARBITRATION",
+    "completed": "COMPLETED"
+  },
+  "edit-profile": {
+    "nickname": "Nickname",
+    "about": "About me",
+    "site": "Website (optional)",
+    "portfolio": "Portfolio (optional)",
+    "resume": "Summary",
+    "specialization": "Specialization"
+  },
+  "categories": {
+      "cat0": "All orders",
+      "cat1": "Turnkey project",
+      "cat2": "Development of smart contracts",
+      "cat3": "Development of bots and web apps",
+      "cat4": "Creation of websites and decentralized frontend",
+      "cat5": "Backend and interaction with blockchain",
+      "cat6": "UX/UI design, graphic design, 3D",
+      "cat7": "Frontend development",
+      "cat8": "Development and minting of NFT",
+      "cat9": "Writing texts, documentation, copywriting"
+  }
+}

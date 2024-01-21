@@ -1,0 +1,22 @@
+
+.input {
+  height: 30px;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color:var(--black_color);
+  &::placeholder {
+    color:var(--black_color);
+  }
+  padding: 0 10px;
+}
+
+.primary {
+  border-bottom: var(--border-bottom-classic)
+}
+
+.search-tasks {
+  border-radius: var(--input_br);
+  border: 1px solid var(--full-black_color);
+  background: var(--bg-action);
+}

@@ -14,18 +14,33 @@
   },
   "dependencies": {
     "@effector/reflect": "9.0.0",
+    "@tonconnect/sdk": "3.0.0",
+    "@tonconnect/ui": "2.0.0",
+    "@tonconnect/ui-react": "2.0.0",
+    "atomic-router": "0.8.0",
+    "atomic-router-react": "0.8.5",
     "classnames": "^2.5.1",
+    "clsx": "2.1.0",
+    "compose-function": "3.0.3",
     "effector": "22.8.6",
     "effector-react": "22.5.3",
+    "history": "5.3.0",
+    "i18next": "23.7.18",
+    "i18next-browser-languagedetector": "7.2.0",
+    "i18next-http-backend": "2.4.2",
     "modern-normalize": "^2.0.0",
     "patronum": "2.1.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-i18next": "14.0.1",
+    "ton": "13.9.0"
   },
   "devDependencies": {
+    "@types/compose-function": "0.0.33",
     "@types/node": "^20.10.8",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^4.2.1",
@@ -40,11 +55,13 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "postcss": "^8.4.33",
+    "sass": "1.70.0",
     "stylelint": "^16.1.0",
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard": "^36.0.0",
     "typescript": "^5.2.2",
+    "typescript-plugin-css-modules": "5.0.2",
     "vite": "^5.0.8"
   }
 }

@@ -1,0 +1,34 @@
+:root {
+  --wrapper-skeleton: #d9d9d9;
+  --skeleton: #a5a5a5;
+}
+
+.skeleton_wrapper {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  border-radius: inherit;
+  box-sizing:border-box;
+  width: 100%;
+  height: 100%;
+  background: var(--wrapper-skeleton);
+}
+
+@keyframes animationLoading {
+  0% {
+    left: -150%;
+  }
+
+  100% {
+    left: 150%;
+  }
+}
+
+.skeleton_loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--skeleton);
+  filter: blur(33px);
+  animation: 1.3s animationLoading infinite ease-out;
+}

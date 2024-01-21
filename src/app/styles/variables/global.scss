@@ -1,0 +1,47 @@
+@font-face {
+  src: url("./fonts/EBGaramond.ttf");
+  font-family: "EBGaramond";
+}
+
+@font-face {
+  src: url("./fonts/Inter.ttf");
+  font-family: "Inter";
+}
+
+:root {
+  // colors
+  --black_color: #000015;
+  --full-black_color: #000;
+  --text_color: #FFFFFF;
+  --hint_color: #00FF47;
+  --blue_color: #45AEF5;
+  --secondary_bg: #2B2B3C;
+  --bg-action: #3A4362;
+
+  --font-family-main: "Inter";
+  --font-family-additional: "EBGaramond", sans-serif;
+
+  --font-weight-bold: 700;
+  --font-weight-regular: 400;
+  --font-line-main: 155%;
+
+  // --font-size-main-xxl: 32px;
+  // --font-size-main-xl: 24px;
+  --font-size-main-l: 16px;
+  --font-size-main-m: 14px;
+  --font-size-main-s: 12px;
+  --font-size-main-xs: 10px;
+
+  // border-radiuses:
+  --button_br: 25px;
+  --input_br: 5px;
+
+  // animations:
+
+  // padding
+  --p-button:5px 13px;
+
+  // border
+  --border-bottom-classic:1px solid linear-gradient(90deg, rgba(255, 255, 255, 0.00) 0%, #FFF 48.96%, rgba(255, 255, 255, 0.00) 100%);
+
+}

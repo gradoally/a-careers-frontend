@@ -1,83 +1,50 @@
-name: Checking types
+
+
+name: linting, testing, building
 on:
+  push:
+    branches: [ main, develop ]
   pull_request:
-
+    branches: [ main,develop ]
 jobs:
-  code:
-    name: ‍💻 Checking code
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
     steps:
-      - name: ⏬ Checkout
-        uses: actions/checkout@v3
-
-      - name: 📦 Use nodejs 18
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: npm ci
+      - name: build production project
+        run: npm run build:prod
+        if: always()
+      - name: build storybook
+        run: npm run storybook:build
+        if: always()
 
-      - name: ⚙️ Enable corepack
-        run: corepack enable
-
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-
-      - name: 💾 Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: 📦 Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: 🔍 Install dependencies
-        run: pnpm install
-
-      - name: ✅ Check code
-        run: pnpm lint:js
-  styles:
-    name: ‍💻 Checking styles
+  checks:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
     steps:
-      - name: ⏬ Checkout
-        uses: actions/checkout@v3
-
-      - name: 📦 Use nodejs 18
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - name: Staring Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: 18
-
-      - name: ⚙️ Enable corepack
-        run: corepack enable
-
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          run_install: false
-
-      - name: 💾 Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: 📦 Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: 🔍 Install dependencies
-        run: pnpm install
-
-      - name: ✅ Check code
-        run: pnpm lint:css
+          node-version: ${{ matrix.node-version }}
+      - name: install modules
+        run: npm ci
+      - name: linting typescript
+        run: npm run lint:ts
+        if: always()
+      - name: linting scss
+        run: npm run lint:scss
+      - name: unit testing
+        if: always()
+        run: npm run unit

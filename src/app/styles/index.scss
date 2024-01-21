@@ -1,0 +1,37 @@
+@import url("modern-normalize/modern-normalize.css");
+@import "reset";
+@import "variables/global";
+
+html, body {
+  height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.app {
+  min-height: 100vh;
+  line-height: var(--font-line-main);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-main-s);
+  color: var(--text_color);
+  background: var(--black_color);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 1 auto;
+}
+
+.page__loader {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  // min-height: calc(100vh - var(--navbar-height));
+}

@@ -1,10 +1,9 @@
+import "./styles/index.scss";
 
-import "./styles/index.css";
+import { Routing } from "@/pages";
 
-export function App() {
-  return (
-    <>
-      <h1>Brello</h1>
-    </>
-  );
-}
+import { withProviders } from "./providers";
+
+const App = () => <Routing />;
+
+export default withProviders(App);
