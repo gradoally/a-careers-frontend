@@ -11,16 +11,19 @@ import { appStarted } from "../init";
 
 export enum AppRoutes {
   MAIN = "main",
+  FILTERS_ORDERS = "filters-orders",
   TASK = "task",
 }
 
 export const routes = {
   main: createRoute(),
+  filters_orders: createRoute(),
   task: createRoute(),
 };
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MAIN]: "/",
+  [AppRoutes.FILTERS_ORDERS]: "/filters-orders",
   [AppRoutes.TASK]: "/task",
 };
 
@@ -31,6 +34,10 @@ export const router = createHistoryRouter({
     {
       path: RoutePath.main,
       route: routes.main,
+    },
+    {
+      path: RoutePath["filters-orders"],
+      route: routes.filters_orders,
     },
     {
       path: RoutePath.task,

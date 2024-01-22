@@ -3,10 +3,11 @@ import { RouterProvider, createRoutesView } from "atomic-router-react";
 import { BaseLayout } from "@/layouts/base-layout";
 import { router } from "@/shared/config/router";
 import { namedLazy } from "@/shared/lib/lazy-load";
+import { Page } from "@/shared/config/types";
 
 import { MainRoute } from "./main";
 import { TaskRoute } from "./task";
-import { Page } from "@/shared/config/types";
+import { FiltersOrdersRoute } from "./filters-orders";
 
 const NotFoundPage = namedLazy(
   async () => await import("./not-found"),
@@ -14,7 +15,7 @@ const NotFoundPage = namedLazy(
 );
 
 export const Pages = createRoutesView({
-  routes: [MainRoute, TaskRoute],
+  routes: [MainRoute, FiltersOrdersRoute, TaskRoute],
   otherwise: NotFoundPage,
 });
 
