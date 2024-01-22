@@ -3,6 +3,7 @@ export const OpenMenu = () => {
     <svg
       style={{
         minWidth: "30px",
+        cursor: "pointer",
       }}
       xmlns="http://www.w3.org/2000/svg"
       width="30"
