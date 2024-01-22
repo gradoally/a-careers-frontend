@@ -11,7 +11,6 @@ export const Input = ({
   type = "text",
   ...otherProps
 }: InputProps) => {
-  console.log(s["primary"]);
   return (
     <input
       className={clsx(s.input, { [s.disabled]: isDisabled }, [

@@ -4,7 +4,7 @@
   width: 100%;
   background-color: transparent;
   border: none;
-  color:var(--black_color);
+  color:var(--text_color);
   &::placeholder {
     color:var(--black_color);
   }
@@ -19,4 +19,7 @@
   border-radius: var(--input_br);
   border: 1px solid var(--full-black_color);
   background: var(--bg-action);
+  &:focus {
+    border: 1px solid var(--text_color);
+  }
 }

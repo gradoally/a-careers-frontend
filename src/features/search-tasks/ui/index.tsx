@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import "./style.module.scss";
 
 import { Input } from "@/shared/ui/input";
 
