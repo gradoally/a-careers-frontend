@@ -1,0 +1,21 @@
+.toggle {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border:0.5px solid var(--text-hidden_color);
+  background: transparent;
+
+  & > input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.toggle_active {
+  background: var(--blue_color);
+  border: none;
+}

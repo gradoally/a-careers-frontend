@@ -1,0 +1,20 @@
+
+.title {
+  margin-top: 20px;
+  color: var(--text_color);
+  font-size: var(--font-size-main-m);
+}
+
+.container_toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+.label_toggle {
+  font-size: var(--font-size-main-s);
+  color:var(--text-hidden_color);
+}
+

@@ -1,15 +1,9 @@
 import clsx from "clsx";
 import s from "./style.module.scss";
-import { OpenMenu } from "./components";
-import { SearchTasks } from "@/features/search-tasks";
-import { ConnectWallet } from "@/features/connect-wallet";
+import { ComponentProps } from "@/shared/config/types";
 
-export const Header = () => {
-  return (
-    <header className={clsx(s.header)}>
-      <OpenMenu />
-      <SearchTasks />
-      <ConnectWallet />
-    </header>
-  );
+export const Header = ({ children, className }: ComponentProps) => {
+  return <header className={clsx(s.header, className)}>{children}</header>;
 };
+
+export { OpenMenu, HeaderBack } from "./components";

@@ -1,1 +1,1 @@
-export { PreviewOrders } from "./ui";
+export { PreviewOrders, FiltersOrders } from "./ui";

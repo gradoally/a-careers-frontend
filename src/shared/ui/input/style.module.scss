@@ -16,9 +16,9 @@
 }
 
 .search-tasks {
-  border-radius: var(--input_br);
+  border-radius: var(--mini_br);
   border: 1px solid var(--full-black_color);
-  background: var(--bg-action);
+  background: var(--action_color);
   &:focus {
     border: 1px solid var(--text_color);
   }

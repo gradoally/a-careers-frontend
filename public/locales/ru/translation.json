@@ -95,7 +95,8 @@
     "task-text2": "Откликнитесь первым",
     "filter-title": "Сортировать",
     "filter-sort1": "По дате публикации",
-    "filter-sort2": "По срочности"
+    "filter-sort2": "По срочности",
+    "submit-filter": "Показать {{count}} заданий"
   },
   "my-tasks-page": {
     "header-title": "Мои задания",

@@ -35,3 +35,13 @@ html, body {
   justify-content: center;
   // min-height: calc(100vh - var(--navbar-height));
 }
+
+a {
+  color: var(--action_color);
+  font-size: var(--font-size-main-m);
+  text-decoration: none;
+  * {
+    color: inherit;
+    font-size: inherit;
+  }
+}

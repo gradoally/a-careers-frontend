@@ -95,7 +95,8 @@
     "task-text2": "Be the first to respond",
     "filter-title": "Sort",
     "filter-sort1": "By publication date",
-    "filter-sort2": "By urgency"
+    "filter-sort2": "By urgency",
+    "submit-filter": "Show {{count}} tasks"
   },
   "my-tasks-page": {
     "header-title": "My tasks",

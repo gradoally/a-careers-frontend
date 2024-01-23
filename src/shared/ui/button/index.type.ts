@@ -1,7 +1,7 @@
 import { ComponentProps, ElementType } from "react";
 import { SharedSkeleton } from "@/shared/ui/skeleton";
 
-export type ThemeButton = "primary";
+export type ThemeButton = "primary" | "large";
 
 export interface ButtonOwnProps<AS extends ElementType = ElementType>
   extends SharedSkeleton {
