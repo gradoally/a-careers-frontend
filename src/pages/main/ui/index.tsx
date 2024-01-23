@@ -10,6 +10,8 @@ import { ConnectWallet } from "@/features/connect-wallet";
 
 import s from "./style.module.scss";
 import filter_icon from "./image/filter.svg";
+import { Link } from "atomic-router-react";
+import { routes } from "@/shared/config/router";
 
 export const MainPage = (): Page => {
   const { t } = useTranslation();
@@ -22,10 +24,12 @@ export const MainPage = (): Page => {
       </Header>
 
       <PreviewOrders />
-      <Button className={s.filter_link}>
-        {t("home.filter-btn")}
-        <img src={filter_icon} alt="" />
-      </Button>
+      <Link to={routes.filters_orders}>
+        <Button className={s.filter_link}>
+          {t("home.filter-btn")}
+          <img src={filter_icon} alt="" />
+        </Button>
+      </Link>
     </>
   );
 };

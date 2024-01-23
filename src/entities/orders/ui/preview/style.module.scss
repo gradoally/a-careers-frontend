@@ -1,4 +1,4 @@
-.containers {
+.container {
   width: 100%;
   height: 100%;
   padding: var(--p-wrapper-classic);
@@ -10,11 +10,6 @@
   width:100%;
   cursor: pointer;
 
-  border: 1px solid transparent;
-  border-image-slice: var(--border-classic-slice);
-  border-width: var(--border-top-classic-width);
-  border-image-source:var(--border-classic-source);
-  
   padding-top: 16px;
   &:not(:last-child) {
     margin-bottom: 20px;
@@ -23,6 +18,10 @@
   &:first-child {
     border: 0;
   }
+}
+
+.hr{
+  margin-top: 15px;
 }
 
 .order_title {

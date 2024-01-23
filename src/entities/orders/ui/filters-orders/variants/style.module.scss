@@ -1,16 +1,17 @@
 
 .container {
-  width: 100%;
-  padding-bottom: 1.25rem;
   margin-top: 20px;
+  display: block;
+}
+
+.content{
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
 
-  border: 1px solid transparent;
-  border-image-slice: var(--border-classic-slice);
-  border-width: var(--border-bottom-classic-width);
-  border-image-source:var(--border-classic-source);
+.hr {
+  margin-top: 20px;
 }
 
 .left_content {
