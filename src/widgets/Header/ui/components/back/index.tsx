@@ -1,16 +1,13 @@
-import { RouteInstance, RouteParams } from "atomic-router";
-import { Link } from "atomic-router-react";
-
+import { onBack } from "../../../lib";
 import s from "./style.module.scss";
 
 interface HeaderBackProps {
-  to: string | RouteInstance<RouteParams>;
   title: string;
 }
 
-export const HeaderBack = ({ title, to }: HeaderBackProps) => {
+export const HeaderBack = ({ title }: HeaderBackProps) => {
   return (
-    <Link to={to} className={s.back}>
+    <button onClick={onBack} className={s.back}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"
@@ -31,6 +28,6 @@ export const HeaderBack = ({ title, to }: HeaderBackProps) => {
       </svg>
 
       <p>{title}</p>
-    </Link>
+    </button>
   );
 };

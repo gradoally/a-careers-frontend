@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+import s from "./style.module.scss";
+
 export const ToggleLanguage = (): JSX.Element => {
   const { t, i18n } = useTranslation();
 
@@ -8,10 +10,8 @@ export const ToggleLanguage = (): JSX.Element => {
   };
 
   return (
-    <div data-testid="toggle-language">
-      <button type="button" onClick={toggle}>
-        {t("toggleLang")}
-      </button>
-    </div>
+    <button className={s.toggle_lang} onClick={toggle}>
+      {t("toggleLang")}
+    </button>
   );
 };

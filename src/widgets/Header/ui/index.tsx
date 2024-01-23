@@ -6,4 +6,10 @@ export const Header = ({ children, className }: ComponentProps) => {
   return <header className={clsx(s.header, className)}>{children}</header>;
 };
 
-export { OpenMenu, HeaderBack } from "./components";
+export {
+  RowWrapper,
+  OpenMenu,
+  HeaderBack,
+  IconTitle,
+  Close,
+} from "./components";

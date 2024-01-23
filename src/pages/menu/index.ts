@@ -2,9 +2,9 @@ import { namedLazy } from "@/shared/lib/lazy-load";
 
 import { currentRoute } from "./model";
 
-const TaskPage = namedLazy(async () => await import("./ui"), "TaskPage");
+const MenuPage = namedLazy(async () => await import("./ui"), "MenuPage");
 
-export const TaskRoute = {
-  view: TaskPage,
+export const MenuRoute = {
+  view: MenuPage,
   route: currentRoute,
 };

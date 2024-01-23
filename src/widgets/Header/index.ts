@@ -1,1 +1,1 @@
-export { Header, OpenMenu, HeaderBack } from "./ui";
+export { Header, RowWrapper, OpenMenu, HeaderBack, IconTitle } from "./ui";

@@ -1,0 +1,33 @@
+
+.container_links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // gap:50px;
+}
+
+.links {
+  font-size: var(--font-size-main-l);
+  line-height: 50px;
+  font-weight: var(--font-weight-bold);
+  color:var(--blue_color);
+}
+
+.active_link {
+  color:var(--text_color);
+}
+
+.footer {
+  width: 100%;
+  padding: var(--p-wrapper-classic);
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link_to_support {
+  color: var(--blue_color);
+  font-size: var(--font-size-main-s);
+}

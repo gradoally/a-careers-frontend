@@ -12,19 +12,29 @@ import { appStarted } from "../init";
 export enum AppRoutes {
   MAIN = "main",
   FILTERS_ORDERS = "filters-orders",
-  TASK = "task",
+  MENU = "menu",
+  CREATE_ORDER = "create_order",
+  MY_ORDERS = "my_orders",
+  ORDER = "order",
 }
 
 export const routes = {
   main: createRoute(),
   filters_orders: createRoute(),
-  task: createRoute(),
+  menu: createRoute(),
+  create_order: createRoute(),
+  search_order: createRoute(),
+  my_orders: createRoute(),
+  order: createRoute(),
 };
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MAIN]: "/",
   [AppRoutes.FILTERS_ORDERS]: "/filters-orders",
-  [AppRoutes.TASK]: "/task",
+  [AppRoutes.MENU]: "/menu",
+  [AppRoutes.CREATE_ORDER]: "/create_order",
+  [AppRoutes.MY_ORDERS]: "/my_orders",
+  [AppRoutes.ORDER]: "/order",
 };
 
 export const controls = createRouterControls();
@@ -40,8 +50,20 @@ export const router = createHistoryRouter({
       route: routes.filters_orders,
     },
     {
-      path: RoutePath.task,
-      route: routes.task,
+      path: RoutePath.menu,
+      route: routes.menu,
+    },
+    {
+      path: RoutePath.create_order,
+      route: routes.create_order,
+    },
+    {
+      path: RoutePath.my_orders,
+      route: routes.my_orders,
+    },
+    {
+      path: RoutePath.order,
+      route: routes.order,
     },
   ],
   controls,
@@ -52,3 +74,5 @@ sample({
   fn: () => createBrowserHistory(),
   target: router.setHistory,
 });
+
+export { LINK_TELEGRAM_SUPPORT } from "./external-link";

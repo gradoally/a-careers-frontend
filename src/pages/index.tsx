@@ -6,8 +6,11 @@ import { namedLazy } from "@/shared/lib/lazy-load";
 import { Page } from "@/shared/config/types";
 
 import { MainRoute } from "./main";
-import { TaskRoute } from "./task";
+import { MenuRoute } from "./menu";
 import { FiltersOrdersRoute } from "./filters-orders";
+import { OrderRoute } from "./order";
+import { CreateOrderRoute } from "./create-order";
+import { MyOrdersRoute } from "./my-orders";
 
 const NotFoundPage = namedLazy(
   async () => await import("./not-found"),
@@ -15,7 +18,14 @@ const NotFoundPage = namedLazy(
 );
 
 export const Pages = createRoutesView({
-  routes: [MainRoute, FiltersOrdersRoute, TaskRoute],
+  routes: [
+    MainRoute,
+    MenuRoute,
+    FiltersOrdersRoute,
+    CreateOrderRoute,
+    OrderRoute,
+    MyOrdersRoute,
+  ],
   otherwise: NotFoundPage,
 });
 
