@@ -10,7 +10,7 @@ export const Sort = () => {
   const { t } = useTranslation();
   return (
     <div>
-      <h3 className={s.title}>{t("home.filter-title")}</h3>
+      <h3 className={s.title}>{t("home.filter-title")}:</h3>
       <ToggleFilter {...filtersToggles[0]} />
       <Hr theme="linear-gradient" />
       <ToggleFilter {...filtersToggles[1]} />
@@ -24,12 +24,13 @@ const ToggleFilter = ({
   toggleFilter,
 }: filterTogglesI) => {
   const stateFilter = useStore($stateFilter);
+  const { t } = useTranslation();
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div className={s.container_toggle} onClick={() => toggleFilter()}>
       <label htmlFor={title} className={s.label_toggle}>
-        {title}
+        {t(title)}:
       </label>
 
       <Checkbox id={title} checked={stateFilter} />

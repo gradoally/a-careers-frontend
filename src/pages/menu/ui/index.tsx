@@ -8,12 +8,17 @@ import { MenuLinks } from "../config";
 import { Link } from "atomic-router-react";
 import { useTranslation } from "react-i18next";
 import { ToggleLanguage } from "@/features/toggle-language";
-import { LINK_TELEGRAM_SUPPORT } from "@/shared/config/router";
+import { LINK_TELEGRAM_SUPPORT, router } from "@/shared/config/router";
+import { useStore } from "effector-react";
+import { isActiveLink } from "../lib";
 
 const keyTranslation = "menu-page.menu.cat";
 
 export const MenuPage = () => {
   const { t } = useTranslation();
+  const query = useStore(router.$query);
+
+  console.log(query);
   return (
     <>
       <Header>
@@ -28,7 +33,9 @@ export const MenuPage = () => {
         {MenuLinks.map((to, index) => (
           <Link
             to={to}
-            className={clsx(s.links)}
+            className={clsx(s.links, {
+              [s.active_link]: isActiveLink(index) === query.from,
+            })}
             key={`${keyTranslation}${index}`}
           >
             {t(`${keyTranslation}${index + 1}`)}

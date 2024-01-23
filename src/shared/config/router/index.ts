@@ -25,7 +25,7 @@ export const routes = {
   create_order: createRoute(),
   search_order: createRoute(),
   my_orders: createRoute(),
-  order: createRoute(),
+  order: createRoute<{ orderId: string }>(),
 };
 
 export const RoutePath: Record<AppRoutes, string> = {
@@ -34,7 +34,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MENU]: "/menu",
   [AppRoutes.CREATE_ORDER]: "/create_order",
   [AppRoutes.MY_ORDERS]: "/my_orders",
-  [AppRoutes.ORDER]: "/order",
+  [AppRoutes.ORDER]: "/order/:orderId",
 };
 
 export const controls = createRouterControls();

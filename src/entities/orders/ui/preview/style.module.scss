@@ -9,8 +9,9 @@
 .wrapper_order {
   width:100%;
   cursor: pointer;
+  display: block;
+  margin-top: 15px;
 
-  padding-top: 16px;
   &:not(:last-child) {
     margin-bottom: 20px;
   }
@@ -25,6 +26,7 @@
 }
 
 .order_title {
+  color:var(--text_color);
   font-size: var(--font-size-main-s);
 }
 

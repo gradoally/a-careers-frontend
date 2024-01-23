@@ -3,13 +3,20 @@ import s from "./style.module.scss";
 import { useTranslation } from "react-i18next";
 import { countResponsesStyle } from "../../lib";
 import { Hr } from "@/shared/ui/hr";
+import { Link } from "atomic-router-react";
+import { routes } from "@/shared/config/router";
 
 export const PreviewOrders = () => {
   const { t } = useTranslation();
   return (
     <div className={clsx("main", s.container)}>
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((key) => (
-        <div key={key} className={s.wrapper_order}>
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((key: number) => (
+        <Link
+          to={routes.order}
+          params={{ orderId: key.toString() }}
+          key={key}
+          className={s.wrapper_order}
+        >
           <h3 className={s.order_title}>
             Доработать мета-данные и память смарт-контракта для крутого заказа
           </h3>
@@ -21,11 +28,13 @@ export const PreviewOrders = () => {
               s[countResponsesStyle(key)],
             )}
           >
+            {/*  */}
+            {/* {key } */}
             {t("home.task-label2")}
             {/* 10 {t('common.feedback')} */}
           </div>
           <Hr className={s.hr} theme="linear-gradient" />
-        </div>
+        </Link>
       ))}
     </div>
   );
