@@ -121,6 +121,7 @@
   },
   "task-detail": {
     "description": "Описание",
+    "address": "Адрес смарт-контракта",
     "awaiting-payment": "Ожидает оплаты",
     "technical-task": "Техническое задание",
     "begin": "Начать",

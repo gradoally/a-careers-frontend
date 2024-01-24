@@ -1,0 +1,16 @@
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap:3px;
+  font-size: var(--fz-main-s);
+  & * {
+    color:var(--text_color);
+  }
+}
+
+.title {
+  color:var(--text-hidden_color);
+}
+

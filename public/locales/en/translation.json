@@ -121,6 +121,7 @@
   },
   "task-detail": {
     "description": "Description",
+    "address": "Address smart contract",
     "awaiting-payment": "Awaiting payment",
     "technical-task": "Technical task",
     "begin": "Begin",
