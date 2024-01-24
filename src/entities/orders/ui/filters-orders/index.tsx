@@ -5,8 +5,8 @@ import s from "./style.module.scss";
 import { FromPrice } from "./from-price";
 import { Hr } from "@/shared/ui/hr";
 import { Sort } from "./sort";
-import { Button } from "@/shared/ui/button";
 import { useTranslation } from "react-i18next";
+import { Submit } from "@/shared/ui/submit";
 
 export const FiltersOrders = () => {
   const { t } = useTranslation();
@@ -30,12 +30,7 @@ export const FiltersOrders = () => {
         <Hr className={s.hr_filter_bottom} />
       </main>
 
-      <Hr className={s.hr_bottom} />
-      <div className={s.content}>
-        <Button theme="large" className={s.submit}>
-          {t("home.submit-filter", { count: 77 })}
-        </Button>
-      </div>
+      <Submit submit_text={t("home.submit-filter", { count: 77 })} />
     </>
   );
 };

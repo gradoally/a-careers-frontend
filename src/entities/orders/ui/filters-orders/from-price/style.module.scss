@@ -9,12 +9,12 @@
 }
 
 .text_ton {
-  font-size: var(--font-size-main-xl);
+  font-size: var(--fz-main-xl);
 }
 
 .input {
   border: 0;
-  font-size: var(--font-size-main-l);
+  font-size: var(--fz-main-l);
   color: var(--text-hidden_color);
   &::placeholder {
     color: var(--text-hidden_color);

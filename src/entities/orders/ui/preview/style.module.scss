@@ -27,41 +27,19 @@
 
 .order_title {
   color:var(--text_color);
-  font-size: var(--font-size-main-s);
+  font-size: var(--fz-main-s);
 }
 
 
 .order_deadline {
-  font-size: var(--font-size-main-xs);
+  font-size: var(--fz-main-xs);
   color:var(--text-hidden_color);
   margin-top: 5px;
 }
 
 .order_price {
-  font-size: var(--font-size-main-s);
+  font-size: var(--fz-main-s);
   margin-top: 5px;
 }
 
-.order_count_responses {
-  display:inline-block;
-  margin-top: 5px;
-  padding: 3px 4px;
-  font-size: 7px;
-  line-height: normal;
-}
 
-.without_responses {
-  color:var(--hint_color);
-  border: 0.5px solid var(--hint_color);
-}
-
-.average_responses {
-  color:var(--warning_color);
-  border: 0.5px solid var(--warning_color);
-
-}
-
-.large_responses {
-  color:var(--dangerous_color);
-  border: 0.5px solid var(--dangerous_color);
-}

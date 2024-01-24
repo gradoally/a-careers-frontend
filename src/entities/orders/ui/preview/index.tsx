@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import s from "./style.module.scss";
 import { useTranslation } from "react-i18next";
-import { countResponsesStyle } from "../../lib";
 import { Hr } from "@/shared/ui/hr";
 import { Link } from "atomic-router-react";
 import { routes } from "@/shared/config/router";
+import { Status } from "@/shared/ui/status";
+import { getClassStatus } from "@/shared/lib/get-class-status";
 
 export const PreviewOrders = () => {
   const { t } = useTranslation();
@@ -22,17 +23,12 @@ export const PreviewOrders = () => {
           </h3>
           <p className={s.order_deadline}>Сегодня, 21:00 – 20 июня, 15:00</p>
           <p className={s.order_price}>💎 1225</p>
-          <div
-            className={clsx(
-              s.order_count_responses,
-              s[countResponsesStyle(key)],
-            )}
-          >
-            {/*  */}
-            {/* {key } */}
+
+          <Status theme={getClassStatus(key)}>
             {t("home.task-label2")}
             {/* 10 {t('common.feedback')} */}
-          </div>
+          </Status>
+
           <Hr className={s.hr} theme="linear-gradient" />
         </Link>
       ))}
