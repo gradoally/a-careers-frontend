@@ -1,2 +1,1 @@
-export { PreviewOrders } from "./preview";
-export { FiltersOrders } from "./filters-orders";
+export { Feed } from "./feed";

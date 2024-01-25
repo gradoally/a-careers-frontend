@@ -83,6 +83,7 @@
   },
   "home": {
     "not-found": "Nothing was found in the search for your request.",
+    "orders-are-out": "Orders are out.",
     "filter-btn": "Filter",
     "filters": "Filters",
     "filter-amount": "Cost of tasks from",
@@ -95,7 +96,7 @@
     "task-text2": "Be the first to respond",
     "filter-title": "Sort",
     "filter-sort1": "By publication date",
-    "filter-sort2": "By urgency",
+    "filter-sort2": "By deadline",
     "submit-filter": "Show {{count}} tasks"
   },
   "my-tasks-page": {
@@ -207,15 +208,20 @@
     "specialization": "Specialization"
   },
   "categories": {
-      "cat0": "All orders",
-      "cat1": "Turnkey project",
-      "cat2": "Development of smart contracts",
-      "cat3": "Development of bots and web apps",
-      "cat4": "Creation of websites and decentralized frontend",
-      "cat5": "Backend and interaction with blockchain",
-      "cat6": "UX/UI design, graphic design, 3D",
-      "cat7": "Frontend development",
-      "cat8": "Development and minting of NFT",
-      "cat9": "Writing texts, documentation, copywriting"
+      "allOrders": "All orders",
+      "turnkeyProject": "Turnkey project",
+      "smartContracts": "Development of smart contracts",
+      "telegramBotsTwa": "Development of bots and web apps",
+      "websites": "Creation of websites and decentralized frontend",
+      "backend": "Backend and interaction with blockchain",
+      "design": "UX/UI design, graphic design, 3D",
+      "frontend": "Frontend development",
+      "NFTCollections": "Development and minting of NFT",
+      "writingTexts": "Writing texts, documentation, copywriting"
+  },
+  "languages": {
+    "allLang":"All languages",
+    "inRussian":"in Russian",
+    "inEnglish":"in English"
   }
 }

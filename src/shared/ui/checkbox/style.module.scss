@@ -3,7 +3,7 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  border:0.5px solid var(--text-hidden_color);
+  border:0.5px solid var(--text-hidden-color);
   background: transparent;
 
   & > input {
@@ -16,6 +16,6 @@
 }
 
 .toggle_active {
-  background: var(--blue_color);
+  background: var(--blue-color);
   border: none;
 }

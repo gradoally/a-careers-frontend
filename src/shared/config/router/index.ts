@@ -11,7 +11,9 @@ import { appStarted } from "../init";
 
 export enum AppRoutes {
   MAIN = "main",
-  FILTERS_ORDERS = "filters-orders",
+  FILTERS_FEED = "filters-feed",
+  FILTERS_FEED_CATEGORY = "filters-feed/category",
+  FILTERS_FEED_LANGUAGE = "filters-feed/language",
   MENU = "menu",
   CREATE_ORDER = "create_order",
   MY_ORDERS = "my_orders",
@@ -20,7 +22,9 @@ export enum AppRoutes {
 
 export const routes = {
   main: createRoute(),
-  filters_orders: createRoute(),
+  filters_feed: createRoute(),
+  filters_feed_category: createRoute(),
+  filters_feed_language: createRoute(),
   menu: createRoute(),
   create_order: createRoute(),
   search_order: createRoute(),
@@ -30,7 +34,9 @@ export const routes = {
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MAIN]: "/",
-  [AppRoutes.FILTERS_ORDERS]: "/filters-orders",
+  [AppRoutes.FILTERS_FEED]: "/filters-feed",
+  [AppRoutes.FILTERS_FEED_CATEGORY]: "/filters-feed/category",
+  [AppRoutes.FILTERS_FEED_LANGUAGE]: "/filters-feed/language",
   [AppRoutes.MENU]: "/menu",
   [AppRoutes.CREATE_ORDER]: "/create_order",
   [AppRoutes.MY_ORDERS]: "/my_orders",
@@ -46,8 +52,16 @@ export const router = createHistoryRouter({
       route: routes.main,
     },
     {
-      path: RoutePath["filters-orders"],
-      route: routes.filters_orders,
+      path: RoutePath["filters-feed"],
+      route: routes.filters_feed,
+    },
+    {
+      path: RoutePath["filters-feed/category"],
+      route: routes.filters_feed_category,
+    },
+    {
+      path: RoutePath["filters-feed/language"],
+      route: routes.filters_feed_language,
     },
     {
       path: RoutePath.menu,

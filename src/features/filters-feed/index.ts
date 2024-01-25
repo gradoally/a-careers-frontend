@@ -1,0 +1,1 @@
+export { FiltersFeed } from "./ui";

@@ -11,6 +11,8 @@ export const Button = <AS extends ElementType = typeof defaultElement>({
   className = "",
   children,
   theme = "primary",
+  isActive = false,
+  isDisabled = false,
   as,
   isLoading,
   skeletonClass,
@@ -28,7 +30,12 @@ export const Button = <AS extends ElementType = typeof defaultElement>({
   }
 
   return (
-    <TagName className={clsx(button, [className, cls[theme]])} {...otherProps}>
+    <TagName
+      className={clsx(button, [className, cls[theme]])}
+      {...otherProps}
+      aria-checked={isActive}
+      disabled={isDisabled}
+    >
       {children}
     </TagName>
   );

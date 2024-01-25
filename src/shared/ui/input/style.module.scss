@@ -4,9 +4,9 @@
   width: 100%;
   background-color: transparent;
   border: none;
-  color:var(--text_color);
+  color:var(--text-color);
   &::placeholder {
-    color:var(--black_color);
+    color:var(--black-color);
   }
   padding: 0 10px;
 }
@@ -15,11 +15,11 @@
   border-bottom: var(--border-bottom-classic)
 }
 
-.search-tasks {
+.search-orders {
   border-radius: var(--mini_br);
-  border: 1px solid var(--full-black_color);
-  background: var(--action_color);
+  border: 1px solid var(--full-black-color);
+  background: var(--action-color);
   &:focus {
-    border: 1px solid var(--text_color);
+    border: 1px solid var(--text-color);
   }
 }

@@ -17,3 +17,5 @@ export const ColumnContent = ({
     {children}
   </div>
 );
+
+export { Address, DownloadTechTask } from "./components";

@@ -1,17 +1,23 @@
 import { createEvent, createStore } from "effector";
+import {
+  type categoriesVarinats,
+  type languagesVarinats,
+  filterToggleValue,
+} from "../../config";
 
-export const clickedToggleDate = createEvent();
+export const selectedValueCategory = createEvent<categoriesVarinats>();
+export const selectedValueLanguage = createEvent<languagesVarinats>();
+
+export const $category = createStore<categoriesVarinats>("allOrders");
+export const $language = createStore<languagesVarinats>("allLang");
+
+$category.on(selectedValueCategory, (_, category) => category);
+
+$language.on(selectedValueLanguage, (_, language) => language);
+
+export const switchedOrderBy = createEvent<filterToggleValue>();
 export const clickedToggleUrgency = createEvent();
 
-export const $categories = createStore("");
-export const $language = createStore("");
+export const $orderBy = createStore<filterToggleValue>("createdAt");
 
-export const $dateOfPublication = createStore(false).on(
-  clickedToggleDate,
-  (state) => !state,
-);
-
-export const $urgencyOfPublication = createStore(false).on(
-  clickedToggleUrgency,
-  (state) => !state,
-);
+$orderBy.on(switchedOrderBy, (_, paylod) => paylod);

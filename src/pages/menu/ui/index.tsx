@@ -18,7 +18,6 @@ export const MenuPage = () => {
   const { t } = useTranslation();
   const query = useStore(router.$query);
 
-  console.log(query);
   return (
     <>
       <Header>

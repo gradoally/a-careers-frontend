@@ -8,12 +8,11 @@ import s from "./style.module.scss";
 import { Hr } from "@/shared/ui/hr";
 import { Status } from "@/shared/ui/status";
 import { getClassStatus } from "@/shared/lib/get-class-status";
-import { Address } from "@/shared/ui/address";
-import { ColumnContent } from "@/shared/ui/column-content";
+import { Address } from "@/shared/ui/column-content";
+import { ColumnContent, DownloadTechTask } from "@/shared/ui/column-content";
 import { MiniProfile } from "@/entities/user";
 import clsx from "clsx";
 import { Submit } from "@/shared/ui/submit";
-import { DownloadTechTask } from "@/shared/ui/download-tech-task";
 
 const mockData = {
   status: {

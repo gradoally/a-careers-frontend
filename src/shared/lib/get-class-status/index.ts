@@ -1,5 +1,5 @@
 import { CLASSES_NAMES_STATUS } from "@/shared/config/status-order";
-import { themeStatus } from "@/shared/config/types";
+import { themeStatus } from "@/shared/config/status-order";
 
 export const getClassStatus = (count: number): themeStatus => {
   if (count === 0) {

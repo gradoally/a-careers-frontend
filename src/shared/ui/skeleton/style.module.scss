@@ -1,8 +1,3 @@
-:root {
-  --wrapper-skeleton: #d9d9d9;
-  --skeleton: #a5a5a5;
-}
-
 .skeleton_wrapper {
   position: relative;
   overflow: hidden;
@@ -31,4 +26,29 @@
   background: var(--skeleton);
   filter: blur(33px);
   animation: 1.3s animationLoading infinite ease-out;
+}
+
+.xl {
+  height: var(--height-text-main-xl);
+}
+
+.l{
+  height: var(--height-text-main-l);
+}
+
+.m {
+  height: var(--height-text-main-m);
+}
+
+.s {
+  height: var(--height-text-main-s);
+}
+
+.xs {
+  height: var(--height-text-main-xs);
+}
+
+.status {
+  width: 70px;
+  height: 17px;
 }

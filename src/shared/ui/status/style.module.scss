@@ -7,17 +7,17 @@
 }
 
 .without_responses {
-  color:var(--hint_color);
-  border: 0.5px solid var(--hint_color);
+  color:var(--hint-color);
+  border: 0.5px solid var(--hint-color);
 }
 
 .average_responses {
-  color:var(--warning_color);
-  border: 0.5px solid var(--warning_color);
+  color:var(--warning-color);
+  border: 0.5px solid var(--warning-color);
 
 }
 
 .large_responses {
-  color:var(--dangerous_color);
-  border: 0.5px solid var(--dangerous_color);
+  color:var(--dangerous-color);
+  border: 0.5px solid var(--dangerous-color);
 }

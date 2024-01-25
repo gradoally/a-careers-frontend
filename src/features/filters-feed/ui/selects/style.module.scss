@@ -1,0 +1,40 @@
+
+.container {
+  width: 100%;
+  margin-top: 20px;
+  padding: 0;
+  display: block;
+}
+
+.content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hr {
+  margin-top: 20px;
+}
+
+.left_content {
+  display: flex;
+  align-items: center;
+  gap:15px;
+  padding-right: 10px;
+}
+
+.title_icon_filters {
+  font-size: var(--fz-main-xl);
+}
+
+.title_filters {
+  font-size: var(--fz-main-s);
+  color:var(--text-hidden-color);
+}
+
+.value_filters {
+  font-size: var(--fz-main-l);
+  color:var(--text-color);
+  margin-top: 3px;
+  text-align: left;
+}

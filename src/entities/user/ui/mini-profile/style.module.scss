@@ -5,7 +5,7 @@
 
 .conatiner_title, .name_customer {
   font-size: var(--fz-main-s);
-  color:var(--text_color);
+  color:var(--text-color);
 }
 
 .profile_body {
@@ -39,10 +39,10 @@
 }
 
 .content_text, .hidden_text {
-  color:var(--text_color);
+  color:var(--text-color);
   font-size: var(--fz-main-xs);
 }
 
 .hidden_text {
-  color:var(--text-hidden_color);
+  color:var(--text-hidden-color);
 }
