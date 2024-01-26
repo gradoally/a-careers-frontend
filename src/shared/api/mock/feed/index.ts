@@ -1,4 +1,4 @@
-import { FeedOrder } from "../../feed";
+import { FeedOrder } from "../../";
 
 export const FEED_ORDERS_MOCK: FeedOrder[] = [
   {

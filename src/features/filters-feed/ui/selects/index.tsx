@@ -19,7 +19,8 @@ const SelectFilter = ({
   translation,
   link,
   $chooseFilter,
-}: filterFeedSelectsI) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: filterFeedSelectsI<any>) => {
   const { t } = useTranslation();
   const value = useStore($chooseFilter);
 

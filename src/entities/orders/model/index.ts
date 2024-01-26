@@ -16,6 +16,5 @@ export {
   $feedPage,
   $isRanOrders,
   reachedEndOfPage,
-  getOrdersFx,
   ordersLoadedRoute,
 } from "./feed";

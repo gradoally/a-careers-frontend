@@ -13,15 +13,7 @@ import { ColumnContent, DownloadTechTask } from "@/shared/ui/column-content";
 import { MiniProfile } from "@/entities/user";
 import clsx from "clsx";
 import { Submit } from "@/shared/ui/submit";
-
-const mockData = {
-  status: {
-    count_responses: 0,
-    type: "status",
-  },
-  price: 1225,
-  address_contract: "0QD1KiJ1lzU4R-0H8zzttc19ma_6djhGNkdd3eawxylyqn0L",
-};
+import { ORDER_MOCK } from "@/shared/api";
 
 export const OrderPage = (): Page => {
   const { t } = useTranslation();
@@ -38,7 +30,7 @@ export const OrderPage = (): Page => {
 
       <div className={clsx("main", s.container)}>
         <Status
-          theme={getClassStatus(mockData.status.count_responses)}
+          theme={getClassStatus(ORDER_MOCK.status.count_responses)}
           className={s.status}
         >
           {t("home.task-label2")}
@@ -48,9 +40,9 @@ export const OrderPage = (): Page => {
           Доработать мета-данные и память смарт-контракта
         </h1>
 
-        <p className={s.price}>💎 {mockData.price}</p>
+        <p className={s.price}>💎 {ORDER_MOCK.price}</p>
 
-        <Address address={mockData.address_contract} />
+        <Address address={ORDER_MOCK.address_contract} />
 
         <ColumnContent title={t("task-detail.description")}>
           Необходимо доработать смарт-контракт таким образом, что бы при деплое

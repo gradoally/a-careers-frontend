@@ -8,5 +8,3 @@ export {
   categoriesValuesFeed,
   languagesValuesFeed,
 } from "./filters-feed";
-export { FEED_ORDERS_MOCK } from "./mock";
-export type { FeedOrder } from "./feed";

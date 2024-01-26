@@ -4,14 +4,41 @@ import { routes } from "@/shared/router";
 import { Status } from "@/shared/ui/status";
 import { getClassStatus } from "@/shared/lib/get-class-status";
 
-import s from "./style.module.scss";
-import { useTranslation } from "react-i18next";
-import { FeedOrder } from "../../../config";
-import { Skeleton } from "@/shared/ui/skeleton";
+import s from "../preview.module.scss";
 import clsx from "clsx";
 import { getTextCountResponses } from "../../../lib";
+import { $feedOrders, $isRanOrders, reachedEndOfPage } from "../../../model";
+import { InView } from "react-intersection-observer";
+import { LoadingSpinner } from "@/shared/ui/loading-spinner";
+import { useTranslation } from "react-i18next";
+import { useStore } from "effector-react";
+import { FeedOrder } from "@/shared/api";
 
-export const PreviewOrder = ({
+export const PreviewOrders = () => {
+  const { t } = useTranslation();
+  const feedOrders = useStore($feedOrders);
+  const isRanOrders = useStore($isRanOrders);
+
+  return (
+    <>
+      {feedOrders.map((order) => (
+        <PreviewOrder {...order} />
+      ))}
+
+      <InView as="div" onChange={(inView) => inView && reachedEndOfPage()} />
+
+      <div className={s.body_spinner_loading}>
+        {!isRanOrders ? (
+          <LoadingSpinner />
+        ) : (
+          <h1>{t("home.orders-are-out")}</h1>
+        )}
+      </div>
+    </>
+  );
+};
+
+const PreviewOrder = ({
   id,
   title,
   price,
@@ -39,23 +66,3 @@ export const PreviewOrder = ({
     </Link>
   );
 };
-
-export const LoadingPreviewOrder = () =>
-  [].map
-    .call("_".repeat(10), (_, key) => key)
-    .map((key) => (
-      <div key={key as number} className={s.wrapper_order}>
-        <Skeleton heightText="s" isLoading />
-
-        <Skeleton heightText="xs" skeletonClass={s.padding_text} isLoading />
-        <Skeleton heightText="xs" skeletonClass={s.padding_text} isLoading />
-
-        <Skeleton
-          heightText="status"
-          skeletonClass={s.padding_text}
-          isLoading
-        />
-
-        <Hr className={s.hr} theme="linear-gradient" />
-      </div>
-    ));

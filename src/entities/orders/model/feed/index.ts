@@ -1,5 +1,4 @@
 import { attach, createEvent, createStore, sample } from "effector";
-import { FeedOrder } from "../../config";
 import { chainRoute } from "atomic-router";
 import { routes } from "@/shared/router";
 import {
@@ -9,31 +8,11 @@ import {
   $orderBy,
   submitedFilterFeed,
 } from "..";
-import { api } from "@/shared/api";
+import { FeedOrder, api } from "@/shared/api";
+
+export const $feedPage = createStore(1);
 
 export const reachedEndOfPage = createEvent();
-
-export const $feedOrders = createStore<FeedOrder[]>([]);
-export const $feedPage = createStore(1);
-export const $isRanOrders = createStore(false);
-
-export const getOrdersFx = attach({
-  effect: api.orders.getFeedOrders,
-  source: $feedPage,
-});
-
-$feedOrders.on(api.orders.getFeedOrders.doneData, (feed_orders, payload) => [
-  ...feed_orders,
-  ...payload,
-]);
-
-$isRanOrders.on(api.orders.getFeedOrders.failData, () => true);
-
-sample({
-  clock: $feedPage,
-  target: getOrdersFx,
-});
-
 sample({
   clock: reachedEndOfPage,
   source: $feedPage,
@@ -41,25 +20,44 @@ sample({
   target: $feedPage,
 });
 
+export const $isRanOrders = createStore(false);
+$isRanOrders.on(api.orders.getFeedOrders.failData, () => true);
+
+const getFeedArgs = {
+  page: $feedPage,
+  category: $categoryFeed,
+  language: $languageFeed,
+  fromPrice: $filterFeedfromPrice,
+  orderBy: $orderBy,
+};
+
+export const $feedOrders = createStore<FeedOrder[]>([]);
+$feedOrders.on(api.orders.getFeedOrders.doneData, (feed_orders, payload) => [
+  ...feed_orders,
+  ...payload,
+]);
+
+export const getFeedOrdersFx = attach({
+  effect: api.orders.getFeedOrders,
+  source: getFeedArgs,
+});
+sample({
+  clock: $feedPage,
+  target: getFeedOrdersFx,
+});
+
 sample({
   clock: submitedFilterFeed,
-  source: {
-    feedPage: $feedPage,
-    categoryFeed: $categoryFeed,
-    languageFeed: $languageFeed,
-    filterFeedfromPrice: $filterFeedfromPrice,
-    orderBy: $orderBy,
-  },
-  fn: (params) => {
-    console.log(params);
-  },
+  source: getFeedArgs,
+  target: routes.main.open,
 });
 
 export const ordersLoadedRoute = chainRoute({
   route: routes.main,
   beforeOpen: {
-    effect: getOrdersFx,
+    effect: getFeedOrdersFx,
     mapParams: () => {},
   },
 });
-// routes.main.open(); // DANGEOUR PLACE
+
+routes.main.open(); // DANGEOUR PLACE
