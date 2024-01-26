@@ -5,13 +5,13 @@ import { Page } from "@/shared/config/types";
 import { Button } from "@/shared/ui/button";
 import { Header, OpenMenu } from "@/widgets/Header";
 
-import { SearchOrders } from "@/features/search-orders";
+import { SearchOrders } from "@/features/filters-feed";
 import { ConnectWallet } from "@/features/connect-wallet";
 
 import s from "./style.module.scss";
 import filter_icon from "./image/filter.svg";
 import { Link } from "atomic-router-react";
-import { routes } from "@/shared/config/router";
+import { routes } from "@/shared/router";
 
 export const MainPage = (): Page => {
   const { t } = useTranslation();

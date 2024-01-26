@@ -53,9 +53,6 @@
     "first-step": "First step",
     "step": "step",
     "of": "of",
-    "first-step-page": {
-      "title": "Select a category"
-    },
     "second-step-page": {
       "title": "What should be done?",
       "label": "Task title",
@@ -95,8 +92,8 @@
     "task-label2": "No responses",
     "task-text2": "Be the first to respond",
     "filter-title": "Sort",
-    "filter-sort1": "By publication date",
-    "filter-sort2": "By deadline",
+    "createdAt": "By publication date",
+    "deadline": "By deadline",
     "submit-filter": "Show {{count}} tasks"
   },
   "my-tasks-page": {
@@ -208,18 +205,20 @@
     "specialization": "Specialization"
   },
   "categories": {
-      "allOrders": "All orders",
-      "turnkeyProject": "Turnkey project",
-      "smartContracts": "Development of smart contracts",
-      "telegramBotsTwa": "Development of bots and web apps",
-      "websites": "Creation of websites and decentralized frontend",
-      "backend": "Backend and interaction with blockchain",
-      "design": "UX/UI design, graphic design, 3D",
-      "frontend": "Frontend development",
-      "NFTCollections": "Development and minting of NFT",
-      "writingTexts": "Writing texts, documentation, copywriting"
+    "title":"Select a category",
+    "allOrders": "All orders",
+    "turnkeyProject": "Turnkey project",
+    "smartContracts": "Development of smart contracts",
+    "telegramBotsTwa": "Development of bots and web apps",
+    "websites": "Creation of websites and decentralized frontend",
+    "backend": "Backend and interaction with blockchain",
+    "design": "UX/UI design, graphic design, 3D",
+    "frontend": "Frontend development",
+    "NFTCollections": "Development and minting of NFT",
+    "writingTexts": "Writing texts, documentation, copywriting"
   },
   "languages": {
+    "title":"Select the language in which to display tasks:",
     "allLang":"All languages",
     "inRussian":"in Russian",
     "inEnglish":"in English"

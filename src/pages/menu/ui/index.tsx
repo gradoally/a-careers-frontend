@@ -8,7 +8,7 @@ import { MenuLinks } from "../config";
 import { Link } from "atomic-router-react";
 import { useTranslation } from "react-i18next";
 import { ToggleLanguage } from "@/features/toggle-language";
-import { LINK_TELEGRAM_SUPPORT, router } from "@/shared/config/router";
+import { LINK_TELEGRAM_SUPPORT, router } from "@/shared/router";
 import { useStore } from "effector-react";
 import { isActiveLink } from "../lib";
 

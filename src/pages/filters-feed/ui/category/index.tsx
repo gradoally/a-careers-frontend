@@ -3,12 +3,13 @@ import { useTranslation } from "react-i18next";
 import { Header, HeaderBack } from "@/widgets/Header";
 import { SelectionValue } from "@/widgets/selection-value";
 import {
-  $category,
+  $categoryFeed,
   selectedValueCategory,
-  categoriesFilters,
+  categoriesValuesFeed,
+  categoriesVariantFeed,
 } from "@/entities/orders";
 
-export const FiltresFeedCategoryPage = () => {
+export const FiltersFeedCategoryPage = () => {
   const { t } = useTranslation();
 
   return (
@@ -17,11 +18,11 @@ export const FiltresFeedCategoryPage = () => {
         <HeaderBack title={t("home.filter-category")} />
       </Header>
 
-      <SelectionValue
-        title_page="create-task-page.first-step-page.title"
-        $selection={$category}
+      <SelectionValue<categoriesVariantFeed>
+        $selection={$categoryFeed}
         onSelected={selectedValueCategory}
-        varinats={categoriesFilters}
+        varinats={categoriesValuesFeed}
+        translation="categories"
       />
     </>
   );

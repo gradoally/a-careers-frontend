@@ -1,4 +1,15 @@
-export type categoriesVarinats =
+import { RouteInstance } from "atomic-router";
+import { Store } from "effector";
+
+export interface filterFeedSelectsI<variantsT> {
+  icon: "🧩" | "🌎";
+  title: string;
+  translation: string;
+  link: RouteInstance<object>;
+  $chooseFilter: Store<variantsT>;
+}
+
+export type categoriesVariantFeed =
   | "allOrders"
   | "turnkeyProject"
   | "smartContracts"
@@ -10,4 +21,4 @@ export type categoriesVarinats =
   | "NFTCollections"
   | "writingTexts";
 
-export type languagesVarinats = "allLang" | "inRussian" | "inEnglish";
+export type languagesVarinatstFeed = "allLang" | "inRussian" | "inEnglish";

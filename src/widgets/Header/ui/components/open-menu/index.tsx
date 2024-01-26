@@ -1,12 +1,12 @@
-import { router, routes } from "@/shared/config/router";
-import { getPath } from "@/shared/lib/get-path";
+import { router, routes } from "@/shared/router";
 import { Link } from "atomic-router-react";
 import { useStore } from "effector-react";
 
 export const OpenMenu = () => {
   const path = useStore(router.$path);
+  const from = path.split("/")[1];
   return (
-    <Link to={routes.menu} query={{ from: getPath(path) }}>
+    <Link to={routes.menu} query={{ from }}>
       <svg
         style={{
           minWidth: "30px",

@@ -6,6 +6,7 @@ import { Hr } from "@/shared/ui/hr";
 import { Toggles } from "./toggle";
 import { useTranslation } from "react-i18next";
 import { Submit } from "@/shared/ui/submit";
+import { onClickedFilterFeed } from "@/entities/orders";
 
 export const FiltersFeed = () => {
   const { t } = useTranslation();
@@ -28,7 +29,12 @@ export const FiltersFeed = () => {
         <Hr className={s.hr_filter_bottom} />
       </main>
 
-      <Submit submit_text={t("home.submit-filter", { count: 77 })} />
+      <Submit
+        onClick={onClickedFilterFeed}
+        submit_text={t("home.submit-filter", { count: 77 })}
+      />
     </>
   );
 };
+
+export { SearchOrders } from "./search-orders";

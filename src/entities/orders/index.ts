@@ -1,22 +1,24 @@
 export { Feed as FeedOrders } from "./ui";
 export {
-  type categoriesVarinats,
-  type languagesVarinats,
-  type filterSelectsI,
-  type filterTogglesI,
-  filtersSelects,
+  type categoriesVariantFeed,
+  type languagesVarinatstFeed,
+  type filterFeedSelectsI,
+  type filterToggleValue,
+  filterFeedSelects,
   filtersToggles,
-  categoriesFilters,
-  languagesFilters,
+  categoriesValuesFeed,
+  languagesValuesFeed,
 } from "./config";
 
 export {
-  $category,
+  $categoryFeed,
   $feedOrders,
   $feedPage,
-  $language,
+  $languageFeed,
   $orderBy,
-  clickedToggleUrgency,
   selectedValueCategory,
   selectedValueLanguage,
+  $filterFeedfromPrice,
+  enteredFromPrice,
+  onClickedFilterFeed,
 } from "./model";

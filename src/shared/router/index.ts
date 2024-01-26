@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {
   createHistoryRouter,
   createRoute,
@@ -7,7 +6,7 @@ import {
 import { sample } from "effector";
 import { createBrowserHistory } from "history";
 
-import { appStarted } from "../init";
+import { appStarted } from "@/shared/init";
 
 export enum AppRoutes {
   MAIN = "main",

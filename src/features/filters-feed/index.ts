@@ -1,1 +1,1 @@
-export { FiltersFeed } from "./ui";
+export { FiltersFeed, SearchOrders } from "./ui";

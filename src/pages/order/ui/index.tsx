@@ -1,4 +1,4 @@
-import { router } from "@/shared/config/router";
+import { router } from "@/shared/router";
 import { Page } from "@/shared/config/types";
 import { Header, HeaderBack, OpenMenu } from "@/widgets/Header";
 import { useStore } from "effector-react";

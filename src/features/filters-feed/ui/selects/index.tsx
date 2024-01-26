@@ -1,7 +1,7 @@
 import { useStore } from "effector-react";
 import { useTranslation } from "react-i18next";
 
-import { filterSelectsI, filtersSelects } from "@/entities/orders";
+import { filterFeedSelectsI, filterFeedSelects } from "@/entities/orders";
 import s from "./style.module.scss";
 
 import next_icon from "@/shared/assets/next.svg";
@@ -9,7 +9,9 @@ import { Hr } from "@/shared/ui/hr";
 import { Link } from "atomic-router-react";
 
 export const Selects = () =>
-  filtersSelects.map((filterArgument) => <SelectFilter {...filterArgument} />);
+  filterFeedSelects.map((filterArgument) => (
+    <SelectFilter {...filterArgument} />
+  ));
 
 const SelectFilter = ({
   icon,
@@ -17,7 +19,7 @@ const SelectFilter = ({
   translation,
   link,
   $chooseFilter,
-}: filterSelectsI) => {
+}: filterFeedSelectsI) => {
   const { t } = useTranslation();
   const value = useStore($chooseFilter);
 

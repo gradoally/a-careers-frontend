@@ -1,6 +1,6 @@
 import { Hr } from "@/shared/ui/hr";
 import { Link } from "atomic-router-react";
-import { routes } from "@/shared/config/router";
+import { routes } from "@/shared/router";
 import { Status } from "@/shared/ui/status";
 import { getClassStatus } from "@/shared/lib/get-class-status";
 

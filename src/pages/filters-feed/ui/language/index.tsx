@@ -4,12 +4,13 @@ import { Header, HeaderBack } from "@/widgets/Header";
 import { SelectionValue } from "@/widgets/selection-value";
 
 import {
-  $language,
+  $languageFeed,
   selectedValueLanguage,
-  languagesFilters,
+  languagesValuesFeed,
+  languagesVarinatstFeed,
 } from "@/entities/orders";
 
-export const FiltresFeedLanguagePage = () => {
+export const FiltersFeedLanguagePage = () => {
   const { t } = useTranslation();
 
   return (
@@ -18,11 +19,11 @@ export const FiltresFeedLanguagePage = () => {
         <HeaderBack title={t("home.filter-lang-label")} />
       </Header>
 
-      <SelectionValue
-        title_page="create-task-page.first-step-page.title"
-        $selection={$language}
+      <SelectionValue<languagesVarinatstFeed>
+        $selection={$languageFeed}
         onSelected={selectedValueLanguage}
-        varinats={languagesFilters}
+        varinats={languagesValuesFeed}
+        translation="languages"
       />
     </>
   );

@@ -1,6 +1,6 @@
-import { categoriesVarinats, languagesVarinats } from "./index.type";
+import { categoriesVariantFeed, languagesVarinatstFeed } from "./index.type";
 
-export const categoriesFilters: categoriesVarinats[] = [
+export const categoriesValuesFeed: categoriesVariantFeed[] = [
   "allOrders",
   "turnkeyProject",
   "smartContracts",
@@ -13,7 +13,7 @@ export const categoriesFilters: categoriesVarinats[] = [
   "writingTexts",
 ];
 
-export const languagesFilters: languagesVarinats[] = [
+export const languagesValuesFeed: languagesVarinatstFeed[] = [
   "allLang",
   "inRussian",
   "inEnglish",

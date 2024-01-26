@@ -12,22 +12,22 @@ export const FiltersFeedRoute = {
   route: mainRoute,
 };
 
-const FiltresFeedCategoryPage = namedLazy(
+const FiltersFeedCategoryPage = namedLazy(
   async () => await import("./ui"),
-  "FiltresFeedCategoryPage",
+  "FiltersFeedCategoryPage",
 );
 
-export const FiltresFeedCategoryRoute = {
-  view: FiltresFeedCategoryPage,
+export const FiltersFeedCategoryRoute = {
+  view: FiltersFeedCategoryPage,
   route: categoryRoute,
 };
 
-const FiltresFeedLanguagePage = namedLazy(
+const FiltersFeedLanguagePage = namedLazy(
   async () => await import("./ui"),
-  "FiltresFeedLanguagePage",
+  "FiltersFeedLanguagePage",
 );
 
-export const FiltresFeedLanguageRoute = {
-  view: FiltresFeedLanguagePage,
+export const FiltersFeedLanguageRoute = {
+  view: FiltersFeedLanguagePage,
   route: languageRoute,
 };

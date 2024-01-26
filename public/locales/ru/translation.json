@@ -53,9 +53,6 @@
     "first-step": "Первый шаг",
     "step": "Шаг",
     "of": "из",
-    "first-step-page": {
-      "title": "Выберите категорию"
-    },
     "second-step-page": {
       "title": "Что нужно сделать?",
       "label": "Название задания",
@@ -95,8 +92,8 @@
     "task-label2": "Без откликов",
     "task-text2": "Откликнитесь первым",
     "filter-title": "Сортировать",
-    "filter-sort1": "По дате публикации",
-    "filter-sort2": "По дедлайну",
+    "createdAt": "По дате публикации",
+    "deadline": "По дедлайну",
     "submit-filter": "Показать {{count}} заданий"
   },
   "my-tasks-page": {
@@ -208,6 +205,7 @@
     "specialization": "Специализация"
   },
   "categories": {
+    "title":"Выберите категорию",
     "allOrders": "Все заказы",
     "turnkeyProject": "Проект под ключ",
     "smartContracts": "Разработка смарт-контрактов",
@@ -220,6 +218,7 @@
     "writingTexts": "Написание текстов, документации, копирайтинг"
   },
   "languages": {
+    "title":"Выберите язык на котором показывать задачи",
     "allLang":"Всех языках",
     "inRussian":"Русском языке",
     "inEnglish":"Английском языке"

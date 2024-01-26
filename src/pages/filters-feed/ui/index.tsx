@@ -15,5 +15,5 @@ export const FiltersFeedPage = () => {
   );
 };
 
-export { FiltresFeedCategoryPage } from "./category";
-export { FiltresFeedLanguagePage } from "./language";
+export { FiltersFeedCategoryPage } from "./category";
+export { FiltersFeedLanguagePage } from "./language";

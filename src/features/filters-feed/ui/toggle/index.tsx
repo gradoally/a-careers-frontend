@@ -3,7 +3,7 @@ import { useStore } from "effector-react";
 
 import s from "./style.module.scss";
 import { Hr } from "@/shared/ui/hr";
-import { $orderBy, filterTogglesI, filtersToggles } from "@/entities/orders";
+import { $orderBy, filtersToggles, filterToggleValue } from "@/entities/orders";
 import { Checkbox } from "@/shared/ui/checkbox";
 import { switchedOrderBy } from "@/entities/orders/model";
 
@@ -12,16 +12,21 @@ export const Toggles = () => {
   return (
     <div>
       <h3 className={s.title}>{t("home.filter-title")}:</h3>
-      <ToggleFilter {...filtersToggles[0]} />
+      <ToggleFilter value={filtersToggles[0]} />
       <Hr theme="linear-gradient" />
-      <ToggleFilter {...filtersToggles[1]} />
+      <ToggleFilter value={filtersToggles[1]} />
     </div>
   );
 };
 
-const ToggleFilter = ({ title, value }: filterTogglesI) => {
+interface ToggleFilterProps {
+  value: filterToggleValue;
+}
+
+const ToggleFilter = ({ value }: ToggleFilterProps) => {
   const stateFilter = useStore($orderBy);
   const { t } = useTranslation();
+  const title = `home.${value}`;
 
   return (
     <button

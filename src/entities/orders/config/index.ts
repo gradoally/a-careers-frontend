@@ -1,13 +1,12 @@
 export {
   type filterToggleValue,
-  type filterSelectsI,
-  type filterTogglesI,
-  type categoriesVarinats,
-  type languagesVarinats,
-  filtersSelects,
+  type filterFeedSelectsI,
+  type categoriesVariantFeed,
+  type languagesVarinatstFeed,
+  filterFeedSelects,
   filtersToggles,
-  categoriesFilters,
-  languagesFilters,
+  categoriesValuesFeed,
+  languagesValuesFeed,
 } from "./filters-feed";
 export { FEED_ORDERS_MOCK } from "./mock";
 export type { FeedOrder } from "./feed";

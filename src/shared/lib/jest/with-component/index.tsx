@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { I18nextProvider } from "react-i18next";
 
 import i18nForTests from "@/shared/config/i18n/i18n-tests";
-import { router } from "@/shared/config/router";
+import { router } from "@/shared/router";
 
 export function componentRender(component: ReactNode) {
   return render(

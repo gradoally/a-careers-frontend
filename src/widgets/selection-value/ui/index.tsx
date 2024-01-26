@@ -1,31 +1,22 @@
-import { Event, Store } from "effector";
 import { useStore } from "effector-react";
 import { useTranslation } from "react-i18next";
 
 import s from "./style.module.scss";
 import { Button } from "@/shared/ui/button";
-import { categoriesVarinats, languagesVarinats } from "@/entities/orders";
+import { SelectionValueProps } from "../config";
 
-type varinats = categoriesVarinats | languagesVarinats;
-interface SelectionValueProps {
-  title_page: string;
-  $selection: Store<varinats>;
-  onSelected: Event<varinats>;
-  varinats: varinats[];
-}
-
-export const SelectionValue = ({
-  title_page,
+export function SelectionValue<variantsT>({
+  translation,
   $selection,
   onSelected,
   varinats,
-}: SelectionValueProps) => {
+}: SelectionValueProps<variantsT>) {
   const { t } = useTranslation();
   const selection = useStore($selection);
 
   return (
     <div className={s.container}>
-      <h1 className={s.page_title}>{t(title_page)}</h1>
+      <h1 className={s.page_title}>{t(`${translation}.title`)}</h1>
 
       <div>
         {varinats.map((select) => (
@@ -34,13 +25,13 @@ export const SelectionValue = ({
             theme="large"
             className={s.variants}
             isActive={selection === select}
-            key={select}
+            key={select as string}
           >
             {/* replace */}
-            {t(`categories.${select}`)}
+            {t(`${translation}.${select}`)}
           </Button>
         ))}
       </div>
     </div>
   );
-};
+}

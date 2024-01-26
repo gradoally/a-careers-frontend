@@ -1,12 +1,16 @@
 export {
-  $category,
-  $language,
-  $orderBy,
-  switchedOrderBy,
-  clickedToggleUrgency,
+  $categoryFeed,
+  $languageFeed,
   selectedValueCategory,
   selectedValueLanguage,
-} from "./filters-orders";
+  $orderBy,
+  switchedOrderBy,
+  $filterFeedfromPrice,
+  enteredFromPrice,
+  submitedFilterFeed,
+  onClickedFilterFeed,
+} from "./filters-feed";
+
 export {
   $feedOrders,
   $feedPage,
@@ -14,4 +18,4 @@ export {
   reachedEndOfPage,
   getOrdersFx,
   ordersLoadedRoute,
-} from "./feed-orders";
+} from "./feed";
