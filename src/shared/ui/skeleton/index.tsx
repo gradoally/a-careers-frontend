@@ -8,10 +8,13 @@ const SkeletonWrapper = ({
   children,
   isLoading,
   skeletonClass,
+  heightText = "s",
 }: SkeletonProps) => {
   if (isLoading) {
     return (
-      <div className={clsx(cls.skeleton_wrapper, skeletonClass)}>
+      <div
+        className={clsx(cls.skeleton_wrapper, skeletonClass, cls[heightText])}
+      >
         <div className={cls.skeleton_loading} />
       </div>
     );

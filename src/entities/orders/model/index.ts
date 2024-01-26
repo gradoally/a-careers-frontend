@@ -1,8 +1,20 @@
 export {
-  $categories,
-  $language,
-  $dateOfPublication,
-  $urgencyOfPublication,
-  clickedToggleDate,
-  clickedToggleUrgency,
-} from "./filters-orders";
+  $categoryFeed,
+  $languageFeed,
+  selectedValueCategory,
+  selectedValueLanguage,
+  $orderBy,
+  switchedOrderBy,
+  $filterFeedfromPrice,
+  enteredFromPrice,
+  submitedFilterFeed,
+  onClickedFilterFeed,
+} from "./filters-feed";
+
+export {
+  $feedOrders,
+  $feedPage,
+  $isRanOrders,
+  reachedEndOfPage,
+  ordersLoadedRoute,
+} from "./feed";

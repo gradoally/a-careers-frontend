@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 import mock_avatar from "../image/mock_avatar.png";
 import { Link } from "atomic-router-react";
-import { routes } from "@/shared/config/router";
+import { routes } from "@/shared/router";
 
 interface MiniProfileProps {
   className?: string;

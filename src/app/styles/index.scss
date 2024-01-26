@@ -17,8 +17,8 @@ html, body {
   line-height: var(--font-line-main);
   font-family: var(--font-family-main);
   font-size: var(--fz-main-s);
-  color: var(--text_color);
-  background: var(--black_color);
+  color: var(--text-color);
+  background: var(--black-color);
 
   display: flex;
   flex-direction: column;
@@ -26,6 +26,8 @@ html, body {
 
 .main {
   flex: 1 1 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .page__loader {
@@ -37,7 +39,7 @@ html, body {
 }
 
 a {
-  color: var(--action_color);
+  color: var(--action-color);
   font-size: var(--fz-main-m);
   text-decoration: none;
   * {

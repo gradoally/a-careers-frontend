@@ -1,7 +1,8 @@
 import clsx from "clsx";
 
 import s from "./style.module.scss";
-import { ComponentProps, themeStatus } from "@/shared/config/types";
+import { ComponentProps } from "@/shared/config/types";
+import { themeStatus } from "@/shared/config/status-order";
 
 interface StatusProps extends ComponentProps {
   theme: themeStatus;

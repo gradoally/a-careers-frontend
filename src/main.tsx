@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { appStarted } from "@/shared/config/init";
+import { appStarted } from "@/shared/init";
 import "@/shared/config/i18n";
 import App from "@/app";
 

@@ -1,0 +1,1 @@
+export { setTimeoutForMock } from "./setTimeout";

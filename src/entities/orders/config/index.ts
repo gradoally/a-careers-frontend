@@ -1,6 +1,10 @@
 export {
-  type filterVariantsI,
-  type filterTogglesI,
-  filtersVariants,
+  type filterToggleValue,
+  type filterFeedSelectsI,
+  type categoriesVariantFeed,
+  type languagesVarinatstFeed,
+  filterFeedSelects,
   filtersToggles,
-} from "./filters-orders";
+  categoriesValuesFeed,
+  languagesValuesFeed,
+} from "./filters-feed";

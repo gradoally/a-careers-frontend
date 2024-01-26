@@ -10,17 +10,19 @@
 
 :root {
   // colors
-  --black_color: #000015;
-  --full-black_color: #000;
-  --text_color: #FFFFFF;
-  --text-hidden_color: hsla(0, 0%, 100%, 0.4);
-  --hr_color:rgba(217, 217, 217, 0.2);
-  --hint_color: #00FF47;
-  --dangerous_color: #E01E1E;
-  --warning_color: #FFA800;
-  --blue_color: #45AEF5;
-  --secondary_bg: #2B2B3C;
-  --action_color: #3A4362;
+  --black-color: #000015;
+  --full-black-color: #000;
+  --text-color: #FFFFFF;
+  --text-hidden-color: hsla(0, 0%, 100%, 0.4);
+  --hr-color:rgba(217, 217, 217, 0.2);
+  --hint-color: #00FF47;
+  --dangerous-color: #E01E1E;
+  --warning-color: #FFA800;
+  --blue-color: #45AEF5;
+  --secondary-bg: #2B2B3C;
+  --action-color: #3A4362;
+  --wrapper-skeleton: #d9d9d9;
+  --skeleton: #7d7d7d;
 
   --font-family-main: "Inter";
   --font-family-additional: "EBGaramond", sans-serif;
@@ -36,6 +38,12 @@
   --fz-main-s: 12px;
   --fz-main-xs: 10px;
 
+  --height-text-main-xl: 0px;
+  --height-text-main-l: 19px;
+  --height-text-main-m: 0px;
+  --height-text-main-s: 20px;
+  --height-text-main-xs: 15px;
+
   // border-radiuses:
   --button_br: 25px;
   --mini_br: 5px;
@@ -43,9 +51,9 @@
   // animations:
 
   // padding
+  --p-wrapper-classic: 0 20px;
   --p-button:5px 13px;
   --p-large-button:10px 13px;
-  --p-wrapper-classic: 0 20px;
 
   // border
   --border-classic-source:linear-gradient(90deg, rgba(255, 255, 255, 0.00) 0%, #FFF 48.96%, rgba(255, 255, 255, 0.00) 100%);

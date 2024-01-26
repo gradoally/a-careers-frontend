@@ -1,13 +1,16 @@
 import { RouterProvider, createRoutesView } from "atomic-router-react";
 
-import { BaseLayout } from "@/layouts/base-layout";
-import { router } from "@/shared/config/router";
+import { router } from "@/shared/router";
 import { namedLazy } from "@/shared/lib/lazy-load";
 import { Page } from "@/shared/config/types";
 
 import { MainRoute } from "./main";
 import { MenuRoute } from "./menu";
-import { FiltersOrdersRoute } from "./filters-orders";
+import {
+  FiltersFeedRoute,
+  FiltersFeedCategoryRoute,
+  FiltersFeedLanguageRoute,
+} from "./filters-feed";
 import { OrderRoute } from "./order";
 import { CreateOrderRoute } from "./create-order";
 import { MyOrdersRoute } from "./my-orders";
@@ -21,7 +24,9 @@ export const Pages = createRoutesView({
   routes: [
     MainRoute,
     MenuRoute,
-    FiltersOrdersRoute,
+    FiltersFeedRoute,
+    FiltersFeedCategoryRoute,
+    FiltersFeedLanguageRoute,
     CreateOrderRoute,
     OrderRoute,
     MyOrdersRoute,
@@ -31,8 +36,6 @@ export const Pages = createRoutesView({
 
 export const Routing = (): Page => (
   <RouterProvider router={router}>
-    <BaseLayout>
-      <Pages />
-    </BaseLayout>
+    <Pages />
   </RouterProvider>
 );

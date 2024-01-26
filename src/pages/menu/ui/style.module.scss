@@ -11,11 +11,11 @@
   font-size: var(--fz-main-l);
   line-height: 50px;
   font-weight: var(--font-weight-bold);
-  color:var(--blue_color);
+  color:var(--blue-color);
 }
 
 .active_link {
-  color:var(--text_color);
+  color:var(--text-color);
 }
 
 .footer {
@@ -28,6 +28,6 @@
 }
 
 .link_to_support {
-  color: var(--blue_color);
+  color: var(--blue-color);
   font-size: var(--fz-main-s);
 }

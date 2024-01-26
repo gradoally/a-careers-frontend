@@ -1,3 +1,3 @@
-import { routes } from "@/shared/config/router";
+import { routes } from "@/shared/router";
 
 export const currentRoute = routes.order;

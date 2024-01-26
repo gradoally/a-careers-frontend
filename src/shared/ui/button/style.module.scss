@@ -1,10 +1,9 @@
 .button {
   border-radius: var(--button_br);
-  background-color: var(--blue_color);
   padding: var(--p-button);
   font-size: var(--fz-main-l);
   font-weight: var(--font-weight-bold);
-  color: var(--black_color);
+  color: var(--black-color);
 }
 
 .base_size {
@@ -12,11 +11,27 @@
   border-radius: var(--button_br);
 }
 
-.connect-wallet {
-
+.primary, .primary_large {
+  background-color: var(--blue-color);
 }
 
-.large {
+.primary_large {
   border-radius: var(--mini_br);
   padding: var(--p-large-button);
+}
+
+.large{
+  width: 100%;
+  padding: 14px 12px;
+  border-radius: var(--mini_br);
+  border: 1px solid var(--action-color);
+  color:var(--blue-color);
+  font-size: var(--fz-main-s);
+  font-weight: 500;
+  text-align: left;
+
+  &[aria-checked='true'] {
+    color:var(--text-color);
+    border: 1px solid var(--text-color);
+  }
 }
