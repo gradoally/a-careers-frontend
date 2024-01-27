@@ -40,3 +40,5 @@ export const Button = <AS extends ElementType = typeof defaultElement>({
     </TagName>
   );
 };
+
+export { Submit } from "./submit";

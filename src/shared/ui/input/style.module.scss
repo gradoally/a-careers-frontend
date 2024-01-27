@@ -20,6 +20,8 @@
   border: 1px solid var(--full-black-color);
   background: var(--action-color);
   &:focus {
-    border: 1px solid var(--text-color);
+    &::placeholder {
+      opacity: 0;
+    }
   }
 }

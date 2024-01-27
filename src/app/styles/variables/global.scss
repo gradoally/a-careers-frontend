@@ -21,8 +21,8 @@
   --blue-color: #45AEF5;
   --secondary-bg: #2B2B3C;
   --action-color: #3A4362;
-  --wrapper-skeleton: #d9d9d9;
-  --skeleton: #7d7d7d;
+  --wrapper-skeleton: var(--action-color);
+  --skeleton: linear-gradient(90deg, rgba(57, 64, 88, 0) 0%, #5B6789 33.33%, #5B6789 66.67%, rgba(57, 65, 88, 0) 100%);
 
   --font-family-main: "Inter";
   --font-family-additional: "EBGaramond", sans-serif;

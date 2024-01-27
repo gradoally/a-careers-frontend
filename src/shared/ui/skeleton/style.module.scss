@@ -9,13 +9,13 @@
   background: var(--wrapper-skeleton);
 }
 
-@keyframes animationLoading {
-  0% {
-    left: -150%;
+@keyframes animationSkeleton{
+  0%{
+    left: -100%;
   }
 
-  100% {
-    left: 150%;
+  100%{
+    left: 200%;
   }
 }
 
@@ -24,8 +24,7 @@
   width: 100%;
   height: 100%;
   background: var(--skeleton);
-  filter: blur(33px);
-  animation: 1.3s animationLoading infinite ease-out;
+  animation: 2s animationSkeleton infinite ease-out;
 }
 
 .xl {

@@ -12,7 +12,7 @@ import { Address } from "@/shared/ui/column-content";
 import { ColumnContent, DownloadTechTask } from "@/shared/ui/column-content";
 import { MiniProfile } from "@/entities/user";
 import clsx from "clsx";
-import { Submit } from "@/shared/ui/submit";
+import { Submit } from "@/shared/ui/button";
 import { ORDER_MOCK } from "@/shared/api";
 
 export const OrderPage = (): Page => {

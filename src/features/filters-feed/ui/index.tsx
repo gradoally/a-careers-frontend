@@ -5,7 +5,7 @@ import { FromPrice } from "./from-price";
 import { Hr } from "@/shared/ui/hr";
 import { Toggles } from "./toggle";
 import { useTranslation } from "react-i18next";
-import { Submit } from "@/shared/ui/submit";
+import { Submit } from "@/shared/ui/button";
 import { onClickedFilterFeed } from "@/entities/orders";
 
 export const FiltersFeed = () => {
