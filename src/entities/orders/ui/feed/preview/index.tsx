@@ -4,7 +4,6 @@ import { routes } from "@/shared/router";
 import { Status } from "@/shared/ui/status";
 import { getClassStatus } from "@/shared/lib/get-class-status";
 
-import s from "../preview.module.scss";
 import clsx from "clsx";
 import { getTextCountResponses } from "../../../lib";
 import { $feedOrders, $isRanOrders, reachedEndOfPage } from "../../../model";
@@ -13,6 +12,8 @@ import { LoadingSpinner } from "@/shared/ui/loading-spinner";
 import { useTranslation } from "react-i18next";
 import { useStore } from "effector-react";
 import { FeedOrder } from "@/shared/api";
+
+import s from "../preview.module.scss";
 
 export const PreviewOrders = () => {
   const { t } = useTranslation();
@@ -62,7 +63,7 @@ const PreviewOrder = ({
         {getTextCountResponses(count_response, t)}
       </Status>
 
-      <Hr className={s.hr} theme="linear-gradient" />
+      <Hr className={s.border_bottom} theme="linear-gradient" />
     </Link>
   );
 };

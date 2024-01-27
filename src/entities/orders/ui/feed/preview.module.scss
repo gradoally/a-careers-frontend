@@ -1,21 +1,12 @@
-
 .wrapper_order {
   width:100%;
   display: block;
-  margin-top: 15px;
 
+  margin-top: 15px;
   &:not(:last-child) {
     margin-bottom: 20px;
   }
-
-  &:first-child {
-    border: 0;
-  }
 }
-.hr{
-  margin-top: 15px;
-}
-
 .title {
   color:var(--text-color);
   font-size: var(--fz-main-s);
@@ -28,10 +19,16 @@
 .deadline {
   font-size: var(--fz-main-xs);
   color:var(--text-hidden-color);
+  font-weight: 400;
 }
 
 .price {
   font-size: var(--fz-main-s);
+  color:var(--text-color);
+}
+
+.border_bottom {
+  margin-top: 15px;
 }
 
 .body_spinner_loading {

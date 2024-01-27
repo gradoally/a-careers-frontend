@@ -16,10 +16,16 @@
 }
 
 .search-orders {
+  width: min(400px, 100%);
+
   border-radius: var(--mini_br);
   border: 1px solid var(--full-black-color);
   background: var(--action-color);
   &:focus {
     border: 1px solid var(--text-color);
   }
+}
+
+.disabled {
+
 }

@@ -19,6 +19,7 @@ export const MainPage = (): Page => {
     <>
       <Header>
         <OpenMenu />
+
         <SearchOrders />
 
         <ConnectWallet />

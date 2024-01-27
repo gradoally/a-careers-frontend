@@ -26,7 +26,7 @@ export const FiltersFeed = () => {
           <Toggles />
         </div>
 
-        <Hr className={s.hr_filter_bottom} />
+        <Hr className={s.border_bottom_filter} />
       </main>
 
       <Submit

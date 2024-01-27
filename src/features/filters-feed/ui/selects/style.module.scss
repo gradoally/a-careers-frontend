@@ -12,7 +12,7 @@
   justify-content: space-between;
 }
 
-.hr {
+.border_bottom {
   margin-top: 20px;
 }
 
@@ -30,11 +30,13 @@
 .title_filters {
   font-size: var(--fz-main-s);
   color:var(--text-hidden-color);
+  font-weight: 400;
 }
 
 .value_filters {
   font-size: var(--fz-main-l);
   color:var(--text-color);
+  font-weight: 400;
   margin-top: 3px;
   text-align: left;
 }
