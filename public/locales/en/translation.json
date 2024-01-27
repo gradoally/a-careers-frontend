@@ -222,5 +222,7 @@
     "allLang":"All languages",
     "inRussian":"in Russian",
     "inEnglish":"in English"
-  }
+  },
+  "not-found": "Page not found, I'm sorry",
+  "page-error": "Something's broken, I'm sorry"
 }

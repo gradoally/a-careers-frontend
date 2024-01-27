@@ -2,11 +2,13 @@ import "./styles/index.scss";
 
 import { Routing } from "@/pages";
 
-import { withProviders } from "./providers";
+import { WithErrorBoundary, withProviders } from "./providers";
 
 const App = () => (
   <div className="app">
-    <Routing />
+    <WithErrorBoundary>
+      <Routing />
+    </WithErrorBoundary>
   </div>
 );
 

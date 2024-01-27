@@ -1,15 +1,15 @@
-import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 
-import cls from "./style.module.scss";
 import { Page } from "@/shared/config/types";
+import { ErrorSection } from "@/widgets/error-section";
+import { router } from "@/shared/router";
 
 export const NotFoundPage = (): Page => {
   const { t } = useTranslation();
 
   return (
-    <div data-testid="NotFoundPage" className={clsx(cls.NotFoundPage, {}, [])}>
-      {t("Страница не найдена")}
-    </div>
+    <ErrorSection onNavigate={() => router.back()}>
+      {t("not-found")}
+    </ErrorSection>
   );
 };

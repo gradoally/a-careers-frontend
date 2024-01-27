@@ -15,6 +15,7 @@ import { routes } from "@/shared/router";
 
 export const MainPage = (): Page => {
   const { t } = useTranslation();
+
   return (
     <>
       <Header>

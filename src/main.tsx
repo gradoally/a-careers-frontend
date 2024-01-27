@@ -8,6 +8,7 @@ import App from "@/app";
 const root = document.getElementById("root")!;
 
 appStarted();
+
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <App />
