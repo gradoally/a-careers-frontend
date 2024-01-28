@@ -7,21 +7,12 @@ import {
   $languageFeed,
   $orderBy,
   submitedFilterFeed,
+  $search,
 } from "..";
 import { FeedOrder, api } from "@/shared/api";
+import { debouncedSearch } from "../filters-feed";
 
-export const $feedPage = createStore(1);
-
-export const reachedEndOfPage = createEvent();
-sample({
-  clock: reachedEndOfPage,
-  source: $feedPage,
-  fn: (count_page) => ++count_page,
-  target: $feedPage,
-});
-
-export const $isRanOrders = createStore(false);
-$isRanOrders.on(api.orders.getFeedOrders.failData, () => true);
+export const $feedPage = createStore(0);
 
 const getFeedArgs = {
   page: $feedPage,
@@ -29,27 +20,45 @@ const getFeedArgs = {
   language: $languageFeed,
   fromPrice: $filterFeedfromPrice,
   orderBy: $orderBy,
+  query: $search,
 };
 
+const rannedOrders = sample({
+  clock: api.orders.getFeedOrders.doneData,
+  filter: (feed) => feed.length === 0,
+});
+export const $isRanOrders = createStore(false).on(rannedOrders, () => true);
+
+export const reachedEndOfPage = createEvent();
+sample({
+  clock: reachedEndOfPage,
+  source: { page: $feedPage, isRanOrders: $isRanOrders },
+  filter: ({ isRanOrders }) => !isRanOrders,
+  fn: ({ page }) => ++page,
+  target: $feedPage,
+});
+
 export const $feedOrders = createStore<FeedOrder[]>([]);
-$feedOrders.on(api.orders.getFeedOrders.doneData, (feed_orders, payload) => [
-  ...feed_orders,
-  ...payload,
-]);
+
+sample({
+  clock: api.orders.getFeedOrders.doneData,
+  filter: (feed) => feed.length > 0,
+  target: $feedOrders,
+});
+
+sample({
+  clock: submitedFilterFeed,
+  target: routes.main.open,
+});
 
 export const getFeedOrdersFx = attach({
   effect: api.orders.getFeedOrders,
   source: getFeedArgs,
 });
-sample({
-  clock: $feedPage,
-  target: getFeedOrdersFx,
-});
 
 sample({
-  clock: submitedFilterFeed,
-  source: getFeedArgs,
-  target: routes.main.open,
+  clock: [$feedPage, debouncedSearch],
+  target: getFeedOrdersFx,
 });
 
 export const ordersLoadedRoute = chainRoute({
@@ -60,4 +69,4 @@ export const ordersLoadedRoute = chainRoute({
   },
 });
 
-routes.main.open(); // DANGEOUR PLACE
+routes.main.open();

@@ -1,10 +1,7 @@
-@font-face {
-  src: url("./fonts/EBGaramond.ttf");
-  font-family: "EBGaramond";
-}
+
 
 @font-face {
-  src: url("./fonts/Inter.ttf");
+  src: url("./fonts/Inter.woff2");
   font-family: "Inter";
 }
 
@@ -25,18 +22,17 @@
   --skeleton: linear-gradient(90deg, rgba(57, 64, 88, 0) 0%, #5B6789 33.33%, #5B6789 66.67%, rgba(57, 65, 88, 0) 100%);
 
   --font-family-main: "Inter";
-  --font-family-additional: "EBGaramond", sans-serif;
 
   --font-weight-bold: 600;
   --font-weight-regular: 400;
   --font-line-main: 155%;
 
   // --fz-main-xxl: 32px;
-  --fz-main-xl: 24px;
-  --fz-main-l: 16px;
-  --fz-main-m: 14px;
-  --fz-main-s: 12px;
-  --fz-main-xs: 10px;
+  --fz-xl: 24px;
+  --fz-l: 16px;
+  --fz-m: 14px;
+  --fz-s: 12px;
+  --fz-xs: 10px;
 
   --height-text-main-xl: 0px;
   --height-text-main-l: 19px;

@@ -1,0 +1,30 @@
+
+.container {
+  padding: var(--p-wrapper-classic);
+  margin: 20px auto;
+}
+
+.status{
+  font-size: var(--fz-xs);
+}
+
+.title {
+  font-size: var(--fz-l);
+  margin-top: 7px;
+}
+
+.price {
+  margin-top: 10px;
+  font-size: var(--fz-s);
+}
+
+.hr {
+  margin-top: 30px;
+}
+
+.details_order {
+  margin-top: 10px;
+  color:var(--text-hidden-color);
+  font-size: var(--fz-xs);
+  line-height: 20px;
+}

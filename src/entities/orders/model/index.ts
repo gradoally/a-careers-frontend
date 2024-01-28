@@ -9,6 +9,8 @@ export {
   enteredFromPrice,
   submitedFilterFeed,
   onClickedFilterFeed,
+  $search,
+  changedSearch,
 } from "./filters-feed";
 
 export {
@@ -18,3 +20,5 @@ export {
   reachedEndOfPage,
   ordersLoadedRoute,
 } from "./feed";
+
+export { orderLoadedRoute, $order } from "./order";

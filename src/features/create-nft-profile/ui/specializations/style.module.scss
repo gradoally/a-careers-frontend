@@ -1,0 +1,43 @@
+
+.specs_container {
+  margin-top: 7px;
+  margin-bottom: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap:10px;
+  flex-wrap: wrap;
+}
+
+.add_spec {
+  width: 25px;
+  height: 25px;
+  background-color: var(--blue-color);
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.spec_block {
+  cursor: pointer;
+  height: 25px;
+  border-radius: 15px;
+  background: var(--action-color);
+  padding: 0 10px;
+
+  font-size: var(--fz-s);
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap:7px;
+}
+
+.spec_input {
+  min-width: 40px;
+  width: 0;
+  color:var(--text-color);
+}

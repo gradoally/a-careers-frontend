@@ -14,6 +14,8 @@ import {
 import { OrderRoute } from "./order";
 import { CreateOrderRoute } from "./create-order";
 import { MyOrdersRoute } from "./my-orders";
+import { ProfileRoute } from "./profile";
+import { CreateNftRoute } from "./create-nft-profile";
 
 const NotFoundPage = namedLazy(
   async () => await import("./not-found"),
@@ -27,6 +29,8 @@ export const Pages = createRoutesView({
     FiltersFeedRoute,
     FiltersFeedCategoryRoute,
     FiltersFeedLanguageRoute,
+    ProfileRoute,
+    CreateNftRoute,
     CreateOrderRoute,
     OrderRoute,
     MyOrdersRoute,

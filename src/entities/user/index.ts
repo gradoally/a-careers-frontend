@@ -1,1 +1,1 @@
-export { MiniProfile } from "./ui";
+export { ProfileForOrder, AvatarUser } from "./ui";

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import s from "./style.module.scss";
+import s from "./container.module.scss";
 import { PreviewOrders } from "./preview";
 import { useStore } from "effector-react";
 

@@ -1,5 +1,6 @@
-export { OpenMenu } from "./open-menu";
+export { HeaderOpenMenu } from "./open-menu";
 export { HeaderBack } from "./back";
-export { IconTitle } from "./icon-title";
-export { RowWrapper } from "./row-wrapper";
+export { HeaderIconTitle } from "./icon-title";
+export { HeaderRowWrapper } from "./row-wrapper";
 export { Close } from "./close";
+export { HeaderTitles } from "./title";

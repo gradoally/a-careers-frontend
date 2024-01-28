@@ -4,8 +4,8 @@ import {
   type languagesVarinatstFeed,
 } from "../../../config";
 
-export const $categoryFeed = createStore<categoriesVariantFeed>("allOrders");
-export const $languageFeed = createStore<languagesVarinatstFeed>("allLang");
+export const $categoryFeed = createStore<categoriesVariantFeed>("");
+export const $languageFeed = createStore<languagesVarinatstFeed>("");
 
 export const selectedValueCategory = createEvent<categoriesVariantFeed>();
 export const selectedValueLanguage = createEvent<languagesVarinatstFeed>();

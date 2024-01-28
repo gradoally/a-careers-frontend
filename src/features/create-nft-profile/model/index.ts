@@ -1,0 +1,18 @@
+export {
+  $telegram_id,
+  $telegram_nickname,
+  $about_yorself,
+  $link_site,
+  $link_portfolio,
+  $resume,
+  $specializations,
+  changedTelegram_id,
+  changedTelegram_nickname,
+  changedAbout_yorself,
+  changedLink_site,
+  changedLink_portfolio,
+  changedResume,
+  modifedSpecialization,
+  addedSpecialization,
+  deleteSpecialization,
+} from "./form";

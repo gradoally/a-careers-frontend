@@ -188,7 +188,8 @@
     "open-in-blockchain": "Open on blockchain",
     "check-sum-blockchain": "Check the amount in the blockchain",
     "history-customer": "Customer history in the blockchain",
-    "change-avatar": "Change avatar"
+    "change-avatar": "Change avatar",
+    "network-commission":"Network commission ≈ {{ton}} TON"
   },
   "statuses": {
     "on-moderation": "MODERATION",
@@ -199,10 +200,10 @@
   "edit-profile": {
     "nickname": "Nickname",
     "about": "About me",
-    "site": "Website (optional)",
-    "portfolio": "Portfolio (optional)",
-    "resume": "Summary",
-    "specialization": "Specialization"
+    "site": "Link to Website (optional)",
+    "portfolio": "Link to portfolio (optional)",
+    "resume": "Summary (optional)",
+    "specialization": "Specialization (optional)"
   },
   "categories": {
     "title":"Select a category",
@@ -222,5 +223,7 @@
     "allLang":"All languages",
     "inRussian":"in Russian",
     "inEnglish":"in English"
-  }
+  },
+  "not-found": "Page not found, I'm sorry",
+  "page-error": "Something's broken, I'm sorry"
 }

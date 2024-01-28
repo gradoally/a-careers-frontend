@@ -2,12 +2,16 @@ import "./styles/index.scss";
 
 import { Routing } from "@/pages";
 
-import { withProviders } from "./providers";
+import { IsCreateProfile, WithErrorBoundary, withProviders } from "./providers";
 
 const App = () => (
-  <div className="app">
-    <Routing />
-  </div>
+  <IsCreateProfile>
+    <div className="app">
+      <WithErrorBoundary>
+        <Routing />
+      </WithErrorBoundary>
+    </div>
+  </IsCreateProfile>
 );
 
 export default withProviders(App);

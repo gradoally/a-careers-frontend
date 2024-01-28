@@ -38,7 +38,7 @@ const SelectFilter = ({
         <img src={next_icon} alt="Next" />
       </div>
 
-      <Hr theme="linear-gradient" className={s.hr} />
+      <Hr theme="linear-gradient" className={s.border_bottom} />
     </Link>
   );
 };

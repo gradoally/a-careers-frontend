@@ -1,16 +1,19 @@
 
 .container {
   margin-top: 20px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap:3px;
-  font-size: var(--fz-main-s);
+
   & * {
-    color:var(--text-color);
+    font-size: var(--fz-s);
   }
 }
 
 .title {
   color:var(--text-hidden-color);
+  font-weight: 400;
+  font-size: 12px;
 }
 

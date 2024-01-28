@@ -8,9 +8,6 @@ dependencies:
   '@effector/reflect':
     specifier: 9.0.0
     version: 9.0.0(effector-react@22.5.3)(effector@22.8.6)(react@18.2.0)
-  '@farfetched/core':
-    specifier: 0.11.2
-    version: 0.11.2(effector@22.8.6)
   '@tonconnect/sdk':
     specifier: 3.0.0
     version: 3.0.0
@@ -20,6 +17,9 @@ dependencies:
   '@tonconnect/ui-react':
     specifier: 2.0.0
     version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
+  '@twa-dev/sdk':
+    specifier: 7.0.0
+    version: 7.0.0(react@18.2.0)
   atomic-router:
     specifier: 0.8.0
     version: 0.8.0(effector@22.8.6)(history@5.3.0)
@@ -74,6 +74,9 @@ dependencies:
   ton:
     specifier: 13.9.0
     version: 13.9.0(ton-core@0.53.0)(ton-crypto@3.2.0)
+  uniqid:
+    specifier: 5.4.0
+    version: 5.4.0
 
 devDependencies:
   '@types/compose-function':
@@ -91,6 +94,9 @@ devDependencies:
   '@types/react-router-dom':
     specifier: 5.3.3
     version: 5.3.3
+  '@types/uniqid':
+    specifier: 5.3.4
+    version: 5.3.4
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.14.0
     version: 6.14.0(@typescript-eslint/parser@6.14.0)(eslint@8.55.0)(typescript@5.2.2)
@@ -689,14 +695,6 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@farfetched/core@0.11.2(effector@22.8.6):
-    resolution: {integrity: sha512-pvdWjEzZwbtGPD+FDap9a+P1wlBZ9ZHnYlvIrVhJer0G8GXJlGDtUHIm519bELV6iMFYRFidC8RBFWWgcnwCWw==}
-    peerDependencies:
-      effector: ^23.0.0
-    dependencies:
-      effector: 22.8.6
-    dev: false
-
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -951,6 +949,19 @@ packages:
       - encoding
     dev: false
 
+  /@twa-dev/sdk@7.0.0(react@18.2.0):
+    resolution: {integrity: sha512-OZvqGGrdrgE0xU/IGjvsGKKouia5bTu6rA/BOOU6pJYLu776nQJs/HNFl7lwW16RONf1vvPqeV8XximsuzZ9Iw==}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      '@twa-dev/types': 7.0.0
+      react: 18.2.0
+    dev: false
+
+  /@twa-dev/types@7.0.0:
+    resolution: {integrity: sha512-LBnMklxORuXd/ypv9gFKcQVNJkCktkeuU+2V6B5Ww7dcxDCoYBAKkNnIwEQ3cShq+cxTi96jC/CqWhgDMQ7AXQ==}
+    dev: false
+
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
     dependencies:
@@ -1053,6 +1064,10 @@ packages:
 
   /@types/semver@7.5.6:
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
+    dev: true
+
+  /@types/uniqid@5.3.4:
+    resolution: {integrity: sha512-AgC+o3/8/QEHuU3w5w2jZ8auQtjSJ/s8G8RfEk9CYLogK1RGXqxhHH0wOEAu8uHXjvj8oh/dRtfgok4IHKxh/Q==}
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.14.0(@typescript-eslint/parser@6.14.0)(eslint@8.55.0)(typescript@5.2.2):
@@ -4314,6 +4329,10 @@ packages:
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
+
+  /uniqid@5.4.0:
+    resolution: {integrity: sha512-38JRbJ4Fj94VmnC7G/J/5n5SC7Ab46OM5iNtSstB/ko3l1b5g7ALt4qzHFgGciFkyiRNtDXtLNb+VsxtMSE77A==}
+    dev: false
 
   /update-browserslist-db@1.0.13(browserslist@4.22.2):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}

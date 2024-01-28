@@ -15,7 +15,7 @@ export const Address = ({ className, address }: AddressProps) => {
   return (
     <ColumnContent title={t("task-detail.address")} className={className}>
       <button onClick={onCopyText(address)} className={s.address_container}>
-        <span className={s.content}>{shortenedAddress(address)}</span>
+        <span className={s.address}>{shortenedAddress(address)}</span>
         <img src={icon_copy} alt="copy" />
       </button>
     </ColumnContent>

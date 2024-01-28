@@ -3,10 +3,10 @@ import { ComponentProps } from "@/shared/config/types";
 
 import s from "./style.module.scss";
 
-interface RowWrapperProps extends ComponentProps {
+interface HeaderRowWrapperProps extends ComponentProps {
   gap: string;
 }
 
-export const RowWrapper = ({ children, gap }: RowWrapperProps) => (
-  <div className={clsx(s.rowWrapper, s[`gap_${gap}`])}>{children}</div>
+export const HeaderRowWrapper = ({ children, gap }: HeaderRowWrapperProps) => (
+  <div className={clsx(s.HeaderRowWrapper, s[`gap_${gap}`])}>{children}</div>
 );

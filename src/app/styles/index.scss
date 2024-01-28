@@ -16,7 +16,7 @@ html, body {
   min-height: 100vh;
   line-height: var(--font-line-main);
   font-family: var(--font-family-main);
-  font-size: var(--fz-main-s);
+  font-size: var(--fz-s);
   color: var(--text-color);
   background: var(--black-color);
 
@@ -40,10 +40,18 @@ html, body {
 
 a {
   color: var(--action-color);
-  font-size: var(--fz-main-m);
+  font-size: var(--fz-m);
   text-decoration: none;
   * {
     color: inherit;
     font-size: inherit;
   }
+}
+
+input[type="file"], input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }

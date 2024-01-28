@@ -18,4 +18,4 @@ export const ColumnContent = ({
   </div>
 );
 
-export { Address, DownloadTechTask } from "./components";
+export { Address, DownloadTechTask, Field } from "./components";

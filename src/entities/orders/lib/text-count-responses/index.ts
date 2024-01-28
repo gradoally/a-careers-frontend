@@ -4,8 +4,12 @@ export const getTextCountResponses = (
   count_responses: number,
   t: TFunction<"translation", undefined>,
 ) => {
+  let text: string;
+
+  text = t("home.task-label2") as string;
   if (count_responses > 0) {
-    return `${count_responses} ${t("common.feedback")}`;
+    text = `${count_responses} ${t("common.feedback")}`;
   }
-  return t("home.task-label2");
+
+  return text.toLocaleUpperCase();
 };

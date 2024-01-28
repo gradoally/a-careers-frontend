@@ -11,14 +11,19 @@ export {
 } from "./config";
 
 export {
+  $search,
   $categoryFeed,
   $feedOrders,
   $feedPage,
   $languageFeed,
   $orderBy,
+  $order,
   selectedValueCategory,
   selectedValueLanguage,
   $filterFeedfromPrice,
   enteredFromPrice,
   onClickedFilterFeed,
+  orderLoadedRoute,
+  ordersLoadedRoute,
+  changedSearch,
 } from "./model";
