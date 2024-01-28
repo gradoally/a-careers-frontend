@@ -25,10 +25,10 @@
 
 .description {
   color:var(--text-color);
-  font-size: var(--fz-main-l);
+  font-size: var(--fz-l);
   font-weight: 400;
 
   @media (max-width: 350px) {
-    font-size: var(--fz-main-s);
+    font-size: var(--fz-s);
   }
 }

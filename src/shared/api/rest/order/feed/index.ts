@@ -1,40 +1,20 @@
-import {
-  categoriesVariantFeed,
-  filterToggleValue,
-  languagesVarinatstFeed,
-} from "@/entities/orders/config";
-import { FEED_ORDERS_MOCK } from "@/shared/api";
-import { setTimeoutForMock } from "@/shared/lib/developing";
 import { createEffect } from "effector";
+import { transformOrderData } from "./lib";
+import { queryGetFx } from "../../../wrapper";
+import { getFeedOrdersArgs } from "./type";
 
-interface getFeedOrdersArgs {
-  page: number;
-  category: categoriesVariantFeed;
-  language: languagesVarinatstFeed;
-  fromPrice: string;
-  orderBy: filterToggleValue;
-}
-
+const PATH_FEED = "/search";
 export const getFeedOrders = createEffect(async (args: getFeedOrdersArgs) => {
-  const {
-    page,
-    // category,
-    // language,
-    // fromPrice,
-    // orderBy
-  } = args;
+  const page = `${args.query === "" ? args.page : 0}`;
+  const queryParams = new URLSearchParams({ ...args, page });
+  const request = await queryGetFx({
+    path: PATH_FEED,
+    queryData: queryParams,
+  });
 
-  await setTimeoutForMock();
+  if (!Array.isArray(request)) return [];
 
-  const count_orders = 10;
-  const feed = FEED_ORDERS_MOCK.slice(
-    page * count_orders - count_orders,
-    page * count_orders,
-  );
-
-  if (feed.length === 0) {
-    throw new Error("orders are out");
-  }
+  const feed = request.map((order) => transformOrderData(order));
 
   return feed;
 });

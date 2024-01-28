@@ -1,7 +1,3 @@
-import { getFeedOrders } from "./feed";
+export { getFeedOrders, type FeedOrder } from "./feed";
 
-export const orders = {
-  getFeedOrders,
-};
-
-export type { FeedOrder } from "./feed";
+export { getOrderFx, type Order } from "./full";

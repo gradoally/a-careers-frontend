@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@effector/reflect": "9.0.0",
-    "@farfetched/core": "0.11.2",
     "@tonconnect/sdk": "3.0.0",
     "@tonconnect/ui": "2.0.0",
     "@tonconnect/ui-react": "2.0.0",

@@ -14,6 +14,7 @@ import { useStore } from "effector-react";
 import { FeedOrder } from "@/shared/api";
 
 import s from "../preview.module.scss";
+import { transformDate } from "@/shared/lib/formatted-date";
 
 export const PreviewOrders = () => {
   const { t } = useTranslation();
@@ -43,7 +44,7 @@ const PreviewOrder = ({
   id,
   title,
   price,
-  data,
+  date,
   count_response,
 }: FeedOrder) => {
   const { t } = useTranslation();
@@ -56,7 +57,12 @@ const PreviewOrder = ({
       className={s.wrapper_order}
     >
       <h3 className={s.title}>{title}</h3>
-      <p className={clsx(s.deadline, s.padding_text)}>{data}</p>
+      <p className={clsx(s.date, s.padding_text)}>
+        {transformDate(date.createdAt)}
+      </p>
+      <p className={clsx(s.date, s.padding_text)}>
+        {transformDate(date.deadline)}
+      </p>
       <p className={clsx(s.price, s.padding_text)}>💎 {price}</p>
 
       <Status theme={getClassStatus(count_response)}>

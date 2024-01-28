@@ -1,1 +1,0 @@
-export { getQueryWrapper } from "./get";

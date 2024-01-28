@@ -5,17 +5,17 @@
 }
 
 .status{
-  font-size: var(--fz-main-xs);
+  font-size: var(--fz-xs);
 }
 
 .title {
-  font-size: var(--fz-main-l);
+  font-size: var(--fz-l);
   margin-top: 7px;
 }
 
 .price {
   margin-top: 10px;
-  font-size: var(--fz-main-s);
+  font-size: var(--fz-s);
 }
 
 .hr {
@@ -25,6 +25,6 @@
 .details_order {
   margin-top: 10px;
   color:var(--text-hidden-color);
-  font-size: var(--fz-main-xs);
+  font-size: var(--fz-xs);
   line-height: 20px;
 }

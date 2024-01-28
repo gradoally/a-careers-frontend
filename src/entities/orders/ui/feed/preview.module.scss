@@ -9,21 +9,21 @@
 }
 .title {
   color:var(--text-color);
-  font-size: var(--fz-main-s);
+  font-size: var(--fz-s);
 }
 
 .padding_text {
   margin-top: 5px;
 }
 
-.deadline {
-  font-size: var(--fz-main-xs);
+.date {
+  font-size: var(--fz-xs);
   color:var(--text-hidden-color);
   font-weight: 400;
 }
 
 .price {
-  font-size: var(--fz-main-s);
+  font-size: var(--fz-s);
   color:var(--text-color);
 }
 
@@ -35,5 +35,5 @@
   display: flex;
   justify-content: center;
   margin-bottom: 60px;
+  margin-top: 30px;
 }
-
