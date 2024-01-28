@@ -1,0 +1,34 @@
+
+.main_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color:var(--text-color);
+  font-size: 128px;
+  font-style: normal;
+  font-weight: 100;
+  line-height: normal;
+
+  @media (max-width: 350px) {
+    font-size: 100px;
+  }
+}
+
+.description {
+  color:var(--text-color);
+  font-size: var(--fz-main-l);
+  font-weight: 400;
+
+  @media (max-width: 350px) {
+    font-size: var(--fz-main-s);
+  }
+}

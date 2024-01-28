@@ -1,0 +1,26 @@
+
+.container_title_center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap:5px;
+}
+
+.large_title {
+  color: var(--text-color);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fz-main-m);
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.mini_title {
+  color: var(--text-hidden-color);
+
+  text-align: center;
+  font-weight: 400;
+  font-size: var(--fz-main-xs);
+  line-height: 15px;
+}

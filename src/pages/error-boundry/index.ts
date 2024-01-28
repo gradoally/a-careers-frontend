@@ -1,0 +1,1 @@
+export { ErrorBoundryPage } from "./ui";
