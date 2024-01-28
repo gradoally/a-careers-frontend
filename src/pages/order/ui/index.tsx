@@ -1,6 +1,6 @@
 import { router } from "@/shared/router";
 import { Page } from "@/shared/config/types";
-import { Header, HeaderBack, OpenMenu } from "@/widgets/Header";
+import { Header, HeaderBack, HeaderOpenMenu } from "@/widgets/Header";
 import { useStore } from "effector-react";
 import { useTranslation } from "react-i18next";
 
@@ -10,7 +10,7 @@ import { Status } from "@/shared/ui/status";
 import { getClassStatus } from "@/shared/lib/get-class-status";
 import { Address } from "@/shared/ui/column-content";
 import { ColumnContent, DownloadTechTask } from "@/shared/ui/column-content";
-import { MiniProfile } from "@/entities/user";
+import { ProfileForOrder } from "@/entities/user";
 import clsx from "clsx";
 import { Submit } from "@/shared/ui/submit";
 import { ORDER_MOCK } from "@/shared/api";
@@ -25,7 +25,7 @@ export const OrderPage = (): Page => {
       <Header>
         <HeaderBack title={`${t(`common.task1`)} #${orderId}`} />
 
-        <OpenMenu />
+        <HeaderOpenMenu />
       </Header>
 
       <div className={clsx("main", s.container)}>
@@ -72,7 +72,7 @@ export const OrderPage = (): Page => {
           <p>Категория «Разработка на блокчейне TON»</p>
         </div>
 
-        <MiniProfile />
+        <ProfileForOrder />
       </div>
 
       <Submit submit_text={`${t("task-detail.buttons.login-and-respond")}⚡`} />

@@ -4,19 +4,31 @@
   width: 100%;
   background-color: transparent;
   border: none;
+
   color:var(--text-color);
   &::placeholder {
     color:var(--black-color);
   }
-  padding: 0 10px;
+
+  &, &::placeholder {
+    font-size: var(--fz-main-s);
+    font-weight: 500;
+  }
 }
 
 .primary {
-  border-bottom: var(--border-bottom-classic)
+  border: 1px solid;
+  border-width:0 0 1px 1px;
+  border-image: var(--border-classic-source);
+  border-image-slice: 1;
+
+  padding-bottom: 10px;
+  margin-top: 7px;
 }
 
 .search-orders {
   width: min(400px, 100%);
+  padding: 0 10px;
 
   border-radius: var(--mini_br);
   border: 1px solid var(--full-black-color);
@@ -27,5 +39,5 @@
 }
 
 .disabled {
-
+  cursor: not-allowed;
 }

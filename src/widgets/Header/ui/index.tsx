@@ -7,9 +7,10 @@ export const Header = ({ children, className }: ComponentProps) => {
 };
 
 export {
-  RowWrapper,
-  OpenMenu,
+  HeaderRowWrapper,
+  HeaderOpenMenu,
   HeaderBack,
-  IconTitle,
+  HeaderIconTitle,
   Close,
+  HeaderTitles,
 } from "./components";

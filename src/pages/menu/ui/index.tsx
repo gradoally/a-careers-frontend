@@ -1,4 +1,4 @@
-import { Header, IconTitle, RowWrapper } from "@/widgets/Header";
+import { Header, HeaderIconTitle, HeaderRowWrapper } from "@/widgets/Header";
 import { ConnectWallet } from "@/features/connect-wallet";
 import { Close } from "@/widgets/Header/ui";
 import clsx from "clsx";
@@ -21,11 +21,11 @@ export const MenuPage = () => {
   return (
     <>
       <Header>
-        <IconTitle />
-        <RowWrapper gap="10">
+        <HeaderIconTitle />
+        <HeaderRowWrapper gap="10">
           <ConnectWallet />
           <Close />
-        </RowWrapper>
+        </HeaderRowWrapper>
       </Header>
 
       <div className={clsx("main", s.container_links)}>

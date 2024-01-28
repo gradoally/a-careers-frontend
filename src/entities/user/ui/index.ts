@@ -1,1 +1,2 @@
-export { MiniProfile } from "./mini-profile";
+export { ProfileForOrder } from "./for-order";
+export { AvatarUser } from "./avatars";

@@ -114,7 +114,7 @@
     "about-me": "О себе",
     "summary": "Резюме",
     "last-activity": "Последняя активность",
-    "specialization": "Специализация",
+    "specialization": "Специализация (необязательно)",
     "edit-profile": "Редактирование профиля"
   },
   "task-detail": {
@@ -188,7 +188,8 @@
     "open-in-blockchain": "Открыть в блокчейне",
     "check-sum-blockchain": "Проверить сумму в блокчейне",
     "history-customer": "История заказчика в блокчейне",
-    "change-avatar": "Сменить аватар"
+    "change-avatar": "Сменить аватар",
+    "network-commission":"Комиссия сети ≈ {{ton}} TON"
   },
   "statuses": {
     "on-moderation": "НА МОДЕРАЦИИ",
@@ -199,9 +200,9 @@
   "edit-profile": {
     "nickname": "Никнейм",
     "about": "О себе",
-    "site": "Сайт (необязательно)",
-    "portfolio": "Портфолио (необязательно)",
-    "resume": "Резюме",
+    "site": "Ссылка на сайт (необязательно)",
+    "portfolio": "Ссылка на портфолио (необязательно)",
+    "resume": "Резюме (необязательно)",
     "specialization": "Специализация"
   },
   "categories": {

@@ -17,6 +17,7 @@
 */
 * {
   margin: 0;
+  padding: 0;
 }
 
 /*
@@ -58,6 +59,8 @@ textarea,
 select {
   font: inherit;
   outline: none;
+  background:transparent;
+  border: 0;
 }
 
 /*

@@ -2,7 +2,7 @@ import { router, routes } from "@/shared/router";
 import { Link } from "atomic-router-react";
 import { useStore } from "effector-react";
 
-export const OpenMenu = () => {
+export const HeaderOpenMenu = () => {
   const path = useStore(router.$path);
   const from = path.split("/")[1];
   return (

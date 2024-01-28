@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { FeedOrders } from "@/entities/orders";
 import { Page } from "@/shared/config/types";
 import { Button } from "@/shared/ui/button";
-import { Header, OpenMenu } from "@/widgets/Header";
+import { Header, HeaderOpenMenu } from "@/widgets/Header";
 
 import { SearchOrders } from "@/features/filters-feed";
 import { ConnectWallet } from "@/features/connect-wallet";
@@ -19,7 +19,7 @@ export const MainPage = (): Page => {
   return (
     <>
       <Header>
-        <OpenMenu />
+        <HeaderOpenMenu />
 
         <SearchOrders />
 

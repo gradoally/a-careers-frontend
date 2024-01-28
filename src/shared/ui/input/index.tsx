@@ -6,17 +6,21 @@ import s from "./style.module.scss";
 
 export const Input = ({
   theme = "primary",
-  isDisabled,
+  disabled,
   className = "",
   type = "text",
   ...otherProps
 }: InputProps) => {
   return (
     <input
-      className={clsx(s.input, { [s.disabled]: isDisabled }, [
-        s[theme],
-        className,
-      ])}
+      className={clsx(
+        s.input,
+        {
+          [s.disabled]: disabled,
+        },
+        [s[theme], className],
+      )}
+      disabled={disabled}
       type={type}
       {...otherProps}
     />
