@@ -7,7 +7,7 @@ import {useTranslations} from "next-intl";
 import Avatar from '@mui/material/Avatar';
 import Footer from "@/components/layout/Footer";
 import Shell from "@/components/layout/Shell";
-import {MiniAppbar} from "@/components/layout/app-bar";
+import AppBar from "@/components/layout/app-bar";
 import {Stack} from "@mui/material";
 import BackButton from "@/components/ui/buttons/BackButton";
 import {locales} from "@/config";
@@ -65,7 +65,7 @@ const Page = ({params: {locale, id}}: Props) => {
         }
     }
     const footer = (
-        <Footer grow={true}>
+        <Footer>
             <FooterButton
                 color={"secondary"} sx={{color: "common.black", width: "100%"}}
                 variant="contained">
@@ -74,7 +74,7 @@ const Page = ({params: {locale, id}}: Props) => {
         </Footer>
     )
     const header = (
-        <MiniAppbar>
+        <AppBar>
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <BackButton/>
                 <Typography variant="h5" sx={{color: "info.main"}}>{t("detail", {value: "#234567"})}</Typography>
@@ -89,7 +89,7 @@ const Page = ({params: {locale, id}}: Props) => {
                 />
                 <MenuButton/>
             </Stack>
-        </MiniAppbar>
+        </AppBar>
     )
     return (
         <Shell miniAppbar={true} header={header} footer={footer} drawer={<Drawer/>}>

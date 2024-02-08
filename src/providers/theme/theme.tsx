@@ -31,7 +31,7 @@ export const getTheme = (mode: "light" | "dark") => {
                 primary: "#fff",
                 secondary: "#45AEF5",
             },
-            divider: "rgba(217, 217, 217, 0.2)"
+            divider: "rgba(217, 217, 217, 0.2)",
         },
 
         typography: {
@@ -43,7 +43,7 @@ export const getTheme = (mode: "light" | "dark") => {
             },
             h5: {
                 fontSize: "14px",
-                fontWeight: "600",
+                fontWeight: "500",
                 lineHeight: "30px",
             },
             h6:{

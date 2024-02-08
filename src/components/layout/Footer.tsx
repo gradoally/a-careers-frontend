@@ -2,12 +2,11 @@ import Box from '@mui/material/Box';
 import {ReactNode} from "react";
 
 interface Props {
-    children: ReactNode,
-    transparent?: boolean
-    grow?: boolean
+    children: ReactNode;
+    transparent?: boolean;
 }
 
-const Footer = ({grow=true,...props}: Props) => {
+const Footer = (props: Props) => {
     const styled = {
         borderTop: "1px solid rgba(217, 217, 217, 0.2)",
         background: "linear-gradient(180deg, rgba(0, 0, 21, 0.77) 0%, #000015 100%)",

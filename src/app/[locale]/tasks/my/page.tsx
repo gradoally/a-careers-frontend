@@ -3,7 +3,7 @@ import {locales} from "@/config";
 import {useTranslations} from "next-intl";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
-import {MiniAppbar} from "@/components/layout/app-bar";
+import AppBar from "@/components/layout/app-bar";
 import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -26,19 +26,12 @@ export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
 }
 
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
 const Page = ({params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
     const t = useTranslations("tasks");
     const data = "on moderation"
     const footer = (
-        <Footer grow={true}>
+        <Footer  >
             <FooterButton
                 color={"secondary"} sx={{color: "common.black", width: "100%"}}
                 variant="contained">
@@ -47,19 +40,15 @@ const Page = ({params: {locale}}: Props) => {
         </Footer>
     )
     const header = (
-        <MiniAppbar>
+        <AppBar padding="15px 20px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
-
                 <MenuButton/>
                 <Typography variant="h5" sx={{color: "info.main"}}>{t("my",)}</Typography>
             </Stack>
-
-        </MiniAppbar>
+        </AppBar>
     )
 
-
     return (
-
         <Shell miniAppbar={true} header={header} footer={footer} drawer={<Drawer/>}>
             <Suspense fallback={"Loading..."}>
                 {data ? (

@@ -16,7 +16,7 @@ export const StyledPaper = styled(Paper)`
 `
 
 export const StyledToolbar = styled(Toolbar)`
-    height: 70px;
+    height: 60px;
     border: none;
-    padding: 20px;
+    padding: 15px;
 `

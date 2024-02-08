@@ -33,7 +33,9 @@
     "customer": "Заказчик",
     "profile": "Профиль",
     "back": "Назад",
-    "smart_contract_address": "Адрес смарт-контракта"
+    "smart_contract_address": "Адрес смарт-контракта",
+    "created": "Созданные",
+    "responses": "Отклики"
   },
 
   "tasks": {
@@ -43,7 +45,24 @@
     "show": "Показать {count} заданий",
     "detail": "Задача {value}",
     "language": "Язык заказа",
+    "you_have_created": "Вы создали {value} задач",
+    "you_have_not_created_tasks": "Вы еще не создали и не взяли ни одной задачи.",
 
-    "you_have_not_created_tasks": "Вы еще не создали и не взяли ни одной задачи."
+    "on_moderation": "На модерации · {value}",
+    "no_responses": "Нет откликов · {value}",
+    "have_responses": "Есть отклики · {value}",
+    "offer_made": "Предложение сделано · {value}",
+    "in_the_work": "В работе · {value}",
+    "pending_payment": "Ожидает оплаты · {value}",
+    "arbitration": "Арбитраж · {value}",
+    "completed": "Завершена · {value}",
+
+
+    "you_have_responded": "Вы откликнулись на {value} задач",
+    "response_sent": "Отклик отправлен · {value}",
+    "response_denied": "Отклик отклонен · {value}",
+    "an_offer_came_in": "Пришло предложение · {value}",
+    "on_inspection": "На проверке · {value}",
+    "task_accomplished": "Task accomplished · {value}"
   }
 }

@@ -30,7 +30,9 @@
     "customer": "Customer",
     "profile": "Profile",
     "back": "Back",
-    "smart_contract_address": "Smart contract address"
+    "smart_contract_address": "Smart contract address",
+    "created": "Created",
+    "responses": "Responses"
   },
   "tasks": {
     "create": "Create task",
@@ -39,6 +41,23 @@
     "show": "Show {count} assignments",
     "detail": "Task {value}",
     "language": "Task language",
-    "you_have_not_created_tasks": "You haven't created or taken any tasks yet."
+
+    "you_have_created": "You've created {value} tasks",
+    "you_have_not_created_tasks": "You haven't created or taken any tasks yet.",
+    "on_moderation": "On moderation · {value}",
+    "no_responses": "No responses · {value}",
+    "have_responses": "Have responses · {value}",
+    "offer_made": "Offer made · {value}",
+    "in_the_work": "In the work · {value}",
+    "pending_payment": "Pending payment · {value}",
+    "arbitration": "Arbitration · {value}",
+    "completed": "Completed · {value}",
+
+    "you_have_responded": "You've responded to {value} tasks",
+    "response_sent": "Response sent · {value}",
+    "response_denied": "Response denied · {value}",
+    "an_offer_came_in": "An offer came in · {value}",
+    "on_inspection": "On inspection · {value}",
+    "task_accomplished": "Task accomplished · {value}"
   }
 }

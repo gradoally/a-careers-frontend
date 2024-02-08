@@ -1,18 +1,22 @@
-import {IconButton} from "@mui/material";
+import IconButton, {IconButtonProps} from "@mui/material/IconButton";
 import ReplyIcon from '@mui/icons-material/Reply';
 
-import Avatar from '@mui/material/Avatar';
+interface Props extends IconButtonProps {
+    to?: string
+}
 
-const BackButton = ({onClick}: { onClick?: () => void }) => {
+const BackButton = ({children,...props}: Props) => {
     return (
-            <IconButton onClick={onClick} aria-label="back"
+            <IconButton aria-label="back"
                     sx={{
                         width: "30px",
                         height: "30px",
                         bgcolor: "info.main",
                         color: "primary.main"
-                    }}>
-                <ReplyIcon/>
+                    }}
+                        {...props}
+            >
+                <ReplyIcon/> {children}
             </IconButton>
     )
 }

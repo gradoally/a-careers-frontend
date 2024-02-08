@@ -7,7 +7,7 @@ import AppBar from "./app-bar";
 
 const Header = ({messages}: {messages: {connect: string, find: string}}) => {
     return (
-        <AppBar>
+        <AppBar padding={"20px"}>
             <Stack direction="row" alignItems="center" spacing={"15px"} >
                 <MenuButton/>
                 <SearchForm text={messages.find}/>
