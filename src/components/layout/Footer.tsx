@@ -4,9 +4,10 @@ import {ReactNode} from "react";
 interface Props {
     children: ReactNode,
     transparent?: boolean
+    grow?: boolean
 }
 
-const Footer = (props: Props) => {
+const Footer = ({grow=true,...props}: Props) => {
     const styled = {
         borderTop: "1px solid rgba(217, 217, 217, 0.2)",
         background: "linear-gradient(180deg, rgba(0, 0, 21, 0.77) 0%, #000015 100%)",
@@ -19,7 +20,7 @@ const Footer = (props: Props) => {
         justifyContent: "center"
     }
     return (
-        <>
+        <div>
             <Box component="div" sx={styled}/>
             <Box
                 component="footer" sx={{
@@ -30,9 +31,9 @@ const Footer = (props: Props) => {
                 borderTop: props.transparent ? "none" : "1px solid rgba(217, 217, 217, 0.2)",
                 background: props.transparent ? "transparent" : "linear-gradient(180deg, rgba(0, 0, 21, 0.77) 0%, #000015 100%)",
             }}>
-                {props.children}
+                    {props.children}
             </Box>
-        </>
+        </div>
     )
 }
 

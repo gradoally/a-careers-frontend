@@ -7,8 +7,6 @@ import AppBar from "./app-bar";
 
 const Header = ({messages}: {messages: {connect: string, find: string}}) => {
     return (
-
-        
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={"15px"} >
                 <MenuButton/>

@@ -38,6 +38,7 @@
     "my": "My tasks",
     "show": "Show {count} assignments",
     "detail": "Task {value}",
-    "language": "Task language"
+    "language": "Task language",
+    "you_have_not_created_tasks": "You haven't created or taken any tasks yet."
   }
 }

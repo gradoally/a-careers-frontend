@@ -26,17 +26,17 @@ export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
 }
 
-const StackContainer = ({primary, secondary}: {primary: string, secondary: string})=>{
+const StackContainer = ({primary, secondary, primaryHeight="15px"}: {primary: string, secondary: string, primaryHeight?: string})=>{
     return (
 
         <Stack component="div" spacing={"3px"} direction="column">
             <Typography  sx={{
-                lineHeight: "17px",
+                lineHeight: "19px",
             }} variant={"caption"}>
                 {secondary}
             </Typography>
             <Typography sx={{
-                lineHeight: "17px",
+                lineHeight: primaryHeight,
             }} variant="body2">
                 {primary}
             </Typography>
@@ -65,9 +65,9 @@ const Page = ({params: {locale, id}}: Props) => {
         }
     }
     const footer = (
-        <Footer>
+        <Footer grow={true}>
             <FooterButton
-                color={"secondary"} sx={{color: "common.black"}}
+                color={"secondary"} sx={{color: "common.black", width: "100%"}}
                 variant="contained">
                 {tc("log_in_and_respond")}
             </FooterButton>
@@ -91,9 +91,8 @@ const Page = ({params: {locale, id}}: Props) => {
             </Stack>
         </MiniAppbar>
     )
-    const drawer = <Drawer/>
     return (
-        <Shell miniAppbar={true} header={header} footer={footer} drawer={drawer}>
+        <Shell miniAppbar={true} header={header} footer={footer} drawer={<Drawer/>}>
             <Box component="div" sx={{"padding": "20px 0", }}>
             <Stack
                 component="div"
@@ -115,7 +114,8 @@ const Page = ({params: {locale, id}}: Props) => {
                         fontWeight: "400",
                         lineHeight: "11px",
                         letterSpacing: "0.06em",
-                        marginBottom: '7px'
+                        marginBottom: '7px',
+
                     }}>
                         {tc("no_responses")}
                         {/*<Chip*/}
@@ -133,32 +133,37 @@ const Page = ({params: {locale, id}}: Props) => {
                 </div>
                 <StackContainer primary={"EQCISAJu…W_JqYM3t"} secondary={tc("smart_contract_address")}/>
                 <StackContainer primary={data.language.label} secondary={t("language")}/>
-                <StackContainer primary={data.description} secondary={tc("description")}/>
-                <StackContainer primary={data.technical_task} secondary={tc("technical_task")}/>
+
+                <StackContainer primaryHeight={"20px"} primary={data.description} secondary={tc("description")}/>
+                <StackContainer primaryHeight={"20px"} primary={data.technical_task} secondary={tc("technical_task")}/>
                 <StackContainer primary={data.deadline} secondary={tc("deadline")}/>
                 <Divider/>
 
-                <Stack spacing={1} direction="column">
-                    <Typography variant={"caption"}>
+                <Stack spacing={"0"}  direction="column">
+                    <Typography sx={{'fontSize': "10px", "lineHeight": "20px"}} variant={"caption"}>
                         {data.created_at}
                     </Typography>
-                    <Typography variant={"caption"}>
+                    <Typography sx={{'fontSize': "10px", "lineHeight": "20px"}} variant={"caption"}>
                         {data.category}
                     </Typography>
                 </Stack>
-                <Stack spacing={1} direction={"column"}>
+                <Stack spacing={"20px"} direction={"column"}>
                     <Typography variant="body2">{tc("customer")}</Typography>
                     <Box component="div">
                         <Stack component="div" direction="row" spacing={3}>
-                            <Avatar alt="Avatar" src={data.customer.image}/>
-                            <Stack direction={"column"} spacing={1} component={"div"}>
+                            <Avatar sx={{"height": "80px", width: "80px"}} alt="Avatar" src={data.customer.image}/>
+                            <Stack direction={"column"} spacing={"7px"} component={"div"}>
                                 <Typography variant="body2">{data.customer.username}</Typography>
-                                <Stack component="div" direction="row" spacing="1">
-
+                                <Stack component="div" sx={{fontSize: "10px"}} direction="row" spacing="5px">
+                                    <div>✅ 2</div>
+                                    <div>❎ 1</div>
                                 </Stack>
-                                <Stack component="div" direction="row" spacing="1">
-                                    <Link variant="caption" href={`/profile/${data.customer.id}`}>
-                                        {tc("profile")}
+                                <Stack component="div" sx={{fontSize: "10px"}} direction="row" spacing="5px">
+                                    <Link  href={`/profile/${data.customer.id}`}>
+                                        <Typography sx={{color: "info.main"}} variant={"caption"}>{tc("profile")} 📖</Typography>
+                                    </Link>
+                                    <Link href={data.customer.telegram}>
+                                        <Typography sx={{color: "info.main"}} variant={"caption"}>Telegram</Typography>
                                     </Link>
                                 </Stack>
                             </Stack>
