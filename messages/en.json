@@ -1,0 +1,43 @@
+{ 
+  "locale_switcher": {
+    "ru": "Русский",
+    "en": "English"
+  },
+  "form": {
+    "required": {
+      "default":"This field required",
+      "email": "Please fill your email"
+    },
+    "validation": {
+      "default": "Please fill valid data",
+      "email": "Please fill valid email"
+    }
+  },
+  "errors": {
+    "something_went_wrong_sorry": "Something went wrong. Sorry!",
+    "please_provide_valid_data": "Please provide valid data"
+  }, 
+
+  "common": {
+    "connect": "Connect",
+    "text_support": "Write to support",
+    "no_responses": "No Responses",
+    "filter": "Filter",
+    "log_in_and_respond": "Log in and respond",
+    "description": "Description",
+    "technical_task": "Technical task",
+    "deadline": "Deadline",
+    "customer": "Customer",
+    "profile": "Profile",
+    "back": "Back",
+    "smart_contract_address": "Smart contract address"
+  },
+  "tasks": {
+    "create": "Create task",
+    "find": "Find task",
+    "my": "My tasks",
+    "show": "Show {count} assignments",
+    "detail": "Task {value}",
+    "language": "Task language"
+  }
+}

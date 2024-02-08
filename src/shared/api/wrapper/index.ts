@@ -1,1 +1,0 @@
-export { queryGetFx } from "./get";

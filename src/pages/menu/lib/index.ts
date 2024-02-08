@@ -1,1 +1,0 @@
-export { isActiveLink } from "./isActiveLink";

@@ -1,1 +1,0 @@
-export { CreateNftProfile } from "./ui";

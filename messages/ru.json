@@ -1,0 +1,47 @@
+{
+  "auth": {
+    "sign_in": "Войти"
+  },
+  "locale_switcher": {
+    "ru": "Русский",
+    "en": "English"
+  },
+  "form": {
+    "required": {
+      "default": "This field required",
+      "email": "Please fill your email"
+    },
+    "validation": {
+      "default": "Please fill valid data",
+      "email": "Please fill valid email"
+    }
+  },
+  "errors": {
+    "something_went_wrong_sorry": "Что то пошло не так. Простите!",
+    "please_provide_valid_data": "Please provide valid data"
+  },
+  
+  "common": {
+    "connect": "Подключиться",
+    "text_support": "Написать в поддержку",
+    "no_responses": "Без откликов",
+    "filter": "Фильтр",
+    "log_in_and_respond": "Войти и откликнуться",
+    "description": "Описание",
+    "technical_task": "Техническое задание",
+    "deadline": "Дедлайн",
+    "customer": "Заказчик",
+    "profile": "Профиль",
+    "back": "Назад",
+    "smart_contract_address": "Адрес смарт-контракта"
+  },
+
+  "tasks": {
+    "create": "Создать задачу",
+    "find": "Найти задачу",
+    "my": "Мои задачи",
+    "show": "Показать {count} заданий",
+    "detail": "Задача {value}",
+    "language": "Язык заказа"
+  }
+}
