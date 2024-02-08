@@ -9,7 +9,7 @@ const Header = ({messages}: {messages: {connect: string, find: string}}) => {
     return (
 
         
-        <AppBar withAppbar={true}>
+        <AppBar>
             <Stack direction="row" alignItems="center" spacing={"15px"} >
                 <MenuButton/>
                 <SearchForm text={messages.find}/>

@@ -37,7 +37,7 @@ const Page = ({ params: { locale } }: Props)=>{
         </Footer>
     )
     const header = (
-        <AppBar withAppbar={true}>
+        <AppBar>
             <Stack direction="row" alignItems="center" spacing={1} >
                 <BackButton/>
                 <Typography variant="h5" sx={{color: "info.main"}}>{tc("filter")}</Typography>
