@@ -13,7 +13,7 @@ const MenuButton = () => {
                 height: "30px",
                 // bgcolor: "info.main",
                 // color: "primary.main",
-                // borderRadius: "8px",
+                borderRadius: "2px",
                 padding: 0,
             }}>
             <SvgIcon sx={{fontSize: "30px"}}>

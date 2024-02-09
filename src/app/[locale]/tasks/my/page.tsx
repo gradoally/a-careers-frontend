@@ -6,17 +6,12 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import AppBar from "@/components/layout/app-bar";
 import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import MenuButton from "@/components/ui/buttons/MenuButton";
 import Shell from "@/components/layout/Shell";
-import Drawer from "@/components/layout/drawer";
-import Divider from "@/components/ui/Divider";
-import Link from "@/components/Link";
 import React, {Suspense} from "react";
 
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Content from "@/app/[locale]/tasks/my/content";
+import CenteredContainer from "@/components/ui/CenteredContainer";
 
 type Props = {
     params: { locale: string };
@@ -29,7 +24,7 @@ export function generateStaticParams() {
 const Page = ({params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
     const t = useTranslations("tasks");
-    const data = "on moderation"
+    const data = "on moderation";
     const footer = (
         <Footer  >
             <FooterButton
@@ -49,16 +44,12 @@ const Page = ({params: {locale}}: Props) => {
     )
 
     return (
-        <Shell miniAppbar={true} header={header} footer={footer} drawer={<Drawer/>}>
+        <Shell miniAppbar={true} withDrawer header={header} footer={footer}>
             <Suspense fallback={"Loading..."}>
                 {data ? (
-                    <Content>
-                        <div/>
-                    </Content>
+                    <Content data={data}/>
                 ) : (
-                    <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "100%"}}>
-                        <Typography variant="caption">{t("you_have_not_created_tasks")}</Typography>
-                    </div>
+                    <CenteredContainer >{t("you_have_not_created_tasks")}</CenteredContainer>
                 )}
             </Suspense>
         </Shell>

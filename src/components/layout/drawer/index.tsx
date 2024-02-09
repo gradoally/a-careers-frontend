@@ -5,9 +5,9 @@ import DrawerContent from "@/components/layout/drawer/DrawerContent";
 const Drawer = ()=>{
     const t = useTranslations();
     const routes = [
-        {"label": t("tasks.create"), "to": "/"},
+        {"label": t("tasks.create"), "to": "/tasks/create"},
         {"label": t("tasks.find"), "to": "/"},
-        {"label": t("tasks.my"), "to": "/"},
+        {"label": t("tasks.my"), "to": "/tasks/my"},
     ]
     return (
         <DrawerContent

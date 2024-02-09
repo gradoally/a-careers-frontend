@@ -1,6 +1,7 @@
 import React, {ReactNode} from "react";
 import clsx from "clsx";
-import {Inter} from 'next/font/google';
+
+import localFont from 'next/font/local'
 import type {Metadata} from 'next'
 import pick from 'lodash/pick';
 import {NextIntlClientProvider, useMessages} from 'next-intl';
@@ -12,18 +13,17 @@ import {
 } from 'next-intl/server';
 import {locales} from '@/config';
 import AppProviders from "@/lib/app-providers";
-import Shell from "@/components/layout/Shell";
 
 import 'react-toastify/dist/ReactToastify.css';
 
 import "../globals.css";
 
 
-// const inter = Inter({
-//     weight: ["100", "200", "300", '400', "500", "600", '700', "800", "900"],
-//     subsets: ['latin'],
-//     variable: '--font-inter',
-// })
+const inter = localFont({
+    src: '../fonts/Inter.ttf',
+    display: 'swap',
+    variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
     title: 'Alfamater',
@@ -45,22 +45,17 @@ const RootLayout = ({children, params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
     const messages = useMessages();
     return (
-        <html lang={locale}>
-        <head>
-
-                <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={"anonymous"}/>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-                    rel="stylesheet"/>
-
-        </head>
+        <html lang={locale} className={`${inter.variable}`}>
         <body className={clsx(
             'dark',
         )}>
 
+        <style>{`
+            html {
+                font-family: ${inter.variable};
+            }
+        `}</style>
         <AppProviders options={{key: 'mui'}}>
-
             <NextIntlClientProvider
                 locale={locale}
                 messages={pick(messages, 'errors', 'common', 'tasks')}

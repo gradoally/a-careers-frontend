@@ -1,19 +1,21 @@
 "use client"
 
-import React, {PropsWithChildren, ReactNode} from 'react';
+import React, { ReactNode} from 'react';
 import {useTranslations} from "next-intl";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ListSubheader from '@mui/material/ListSubheader';
-import Divider from "@/components/ui/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import SecondaryActionButton from "@/components/ui/buttons/SecondaryActionButton";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+
+import Divider from "@/components/ui/Divider";
+import SecondaryActionButton from "@/components/ui/buttons/SecondaryActionButton";
+import {NextLinkComposed} from "@/components/Link";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -54,7 +56,6 @@ function a11yProps(index: number) {
             letterSpacing: "0.0666em",
             textAlign: "center",
             textTransform: "uppercase",
-
             '&:hover': {
                 color: 'info.main',
                 opacity: 1,
@@ -72,11 +73,17 @@ function a11yProps(index: number) {
 }
 
 
-const CustomListItem = ({icon, title}: {icon: ReactNode, title: string})=>{
+const CustomListItem = ({icon, title, category}: {icon: ReactNode, title: string, category?: string})=>{
     return (
         <>
-            <ListItem sx={{"height": "82px"}} disablePadding secondaryAction={<SecondaryActionButton to={"/"}/>}>
-                <ListItemButton sx={{padding: 0}}>
+            <ListItem
+                disablePadding
+                secondaryAction={<SecondaryActionButton to={"/"}/>}>
+                <ListItemButton
+                    component={NextLinkComposed}
+                    to={'/tasks/my/category'}
+                    sx={{"height": "80px"}}
+                    alignItems={"center"}>
                     <ListItemIcon sx={{fontSize: "24px"}}>
                         {icon}
                     </ListItemIcon>
@@ -90,13 +97,13 @@ const CustomListItem = ({icon, title}: {icon: ReactNode, title: string})=>{
                     } />
                 </ListItemButton>
             </ListItem>
-            <Divider/>
+            <Divider component="li"/>
         </>
     )
 }
 
 
-export default function Content(props: PropsWithChildren) {
+export default function Content({data}: {data: string}) {
     const [value, setValue] = React.useState(0);
     const tc = useTranslations('common')
     const t = useTranslations('tasks')
@@ -116,8 +123,9 @@ export default function Content(props: PropsWithChildren) {
             <CustomTabPanel value={value} index={0}>
                     <nav>
                         <List
+                            disablePadding
                             subheader={
-                                <ListSubheader sx={{padding: 0, "color": "common.white"}} component="div" id="nested-list-subheader">
+                                <ListSubheader sx={{"color": "common.white"}} component="div" id="nested-list-subheader">
                                     <Typography >
                                         {t("you_have_created", {value: "77"})}
                                     </Typography>
@@ -132,8 +140,6 @@ export default function Content(props: PropsWithChildren) {
                             <CustomListItem icon={"💸️"}  title={t("pending_payment", {value: 2})}/>
                             <CustomListItem icon={"🤵"}  title={t("arbitration", {value: 2})}/>
                             <CustomListItem icon={"🚀"}  title={t("completed", {value: 6})}/>
-
-                            <Divider/>
                         </List>
                     </nav>
             </CustomTabPanel>
@@ -157,8 +163,6 @@ export default function Content(props: PropsWithChildren) {
                         <CustomListItem icon={"💸️"}  title={t("in_the_work", {value: 2})}/>
                         <CustomListItem icon={"🤵"}  title={t("arbitration", {value: 2})}/>
                         <CustomListItem icon={"🤴"}  title={t("task_accomplished", {value: 2})}/>
-
-                        <Divider/>
                     </List>
                 </nav>
             </CustomTabPanel>

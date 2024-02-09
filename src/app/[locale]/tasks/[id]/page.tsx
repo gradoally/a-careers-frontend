@@ -17,6 +17,7 @@ import MenuButton from "@/components/ui/buttons/MenuButton";
 import Drawer from "@/components/layout/drawer";
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
+import NoResponsesChip from "@/components/NoResponsesChip";
 
 type Props = {
     params: { locale: string, id: number };
@@ -51,6 +52,7 @@ const Page = ({params: {locale, id}}: Props) => {
     const data = {
         "title": "Доработать мета-данные и память смарт-контракта",
         "diamonds": 1225,
+        "proposals": 0,
         "language": {"label": "Русский"},
         "description": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
         "technical_task": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
@@ -92,37 +94,16 @@ const Page = ({params: {locale, id}}: Props) => {
         </AppBar>
     )
     return (
-        <Shell miniAppbar={true} header={header} footer={footer} drawer={<Drawer/>}>
-            <Box component="div" sx={{"padding": "20px 0", }}>
-            <Stack
-                component="div"
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                spacing={"20px"}>
-                <div>
-                    <Box sx={{
-                        padding: "3px 0 0 4px",
-                        color: "warning.main",
-                        width: "86px",
-                        height: "17px",
-                        top: "81px",
-                        left: "20px",
-                        borderRadius: "2px",
-                        border: "1px solid #00FF47",
-                        fontSize: "9px",
-                        fontWeight: "400",
-                        lineHeight: "11px",
-                        letterSpacing: "0.06em",
-                        marginBottom: '7px',
+        <Shell miniAppbar={true} header={header} footer={footer} withDrawer>
 
-                    }}>
-                        {tc("no_responses")}
-                        {/*<Chip*/}
-                        {/*    label={tc("no_responses")}*/}
-                        {/*    sx={{borderRadius: "2px"}}*/}
-                        {/*    size="small" variant="outlined" color="warning"/>*/}
-                    </Box>
+                <Stack
+                    component="div"
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    spacing={"20px"}>
+                <div>
+                    {data.proposals ===0 && <NoResponsesChip/>}
                     <Typography variant="h4">{data.title}</Typography>
                     <Typography  sx={{
                         marginTop: "10px",
@@ -171,7 +152,6 @@ const Page = ({params: {locale, id}}: Props) => {
                     </Box>
                 </Stack>
             </Stack>
-            </Box>
         </Shell>
     )
 }

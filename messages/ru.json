@@ -64,5 +64,9 @@
     "an_offer_came_in": "Пришло предложение · {value}",
     "on_inspection": "На проверке · {value}",
     "task_accomplished": "Task accomplished · {value}"
+  },
+  "profile": {
+    "create": "Создать профиль",
+    "send_to_blockchain": "Отправить в блокчейн"
   }
 }

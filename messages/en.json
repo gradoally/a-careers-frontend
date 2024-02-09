@@ -59,5 +59,10 @@
     "an_offer_came_in": "An offer came in · {value}",
     "on_inspection": "On inspection · {value}",
     "task_accomplished": "Task accomplished · {value}"
+  },
+
+  "profile": {
+    "create": "Create profile",
+    "send_to_blockchain": "Send to blockchain"
   }
 }

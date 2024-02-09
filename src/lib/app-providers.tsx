@@ -4,7 +4,6 @@ import React from "react";
 import type {ReactNode} from "react";
 
 import {useServerInsertedHTML} from "next/navigation";
-
 import {CacheProvider} from "@emotion/react";
 import createCache from "@emotion/cache";
 
@@ -60,7 +59,8 @@ const AppProviders = (props: Props) => {
     });
     return ( 
             <CacheProvider value={cache}>
-                <ThemeProvider> 
+                <ThemeProvider>
+
                     {props.children}
                 </ThemeProvider>
             </CacheProvider> 

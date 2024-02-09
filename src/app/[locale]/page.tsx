@@ -6,12 +6,11 @@ import {
 import {useTranslations} from "next-intl";
 import { locales } from '@/config';
 // import Await from "@/lib/await";
-import Items from "./items";
 import Footer from "@/components/layout/Footer";
 import FilterButton from "@/components/ui/buttons/FilterButton";
 import Shell from "@/components/layout/Shell";
 import Header from "@/components/layout/Header";
-import Drawer from "@/components/layout/drawer";
+import TaskList from "@/components/TaskList";
 
 type Props = {
     params: { locale: string };
@@ -27,15 +26,68 @@ export default function Home({ params: { locale } }: Props) {
     unstable_setRequestLocale(locale);
     const t = useTranslations();
     const header = <Header messages={{"connect": t("common.connect"), "find": t("tasks.find")}}/>
-    const drawer =  <Drawer/>
+
+    const data = [
+        {
+            "title": "Доработать мета-данные и память смарт-контракта для крутого заказа",
+            "date": "Сегодня, 21:00 – 20 июня, 15:00",
+            "proposals": 1,
+            "diamonds": 1225,
+        },
+
+        {
+            "title": "Заминтить коллекцию тамагочи NFT",
+            "date": "10 июня, 21:00 – 20 июня, 15:00",
+            "proposals": 0,
+            "diamonds": 100500,
+        },
+        {
+            "title": "Расширение редактируемого стандарта NFT",
+            "date": "12 июня, 9:00 – 3 августа, 21:00",
+            "proposals": 1,
+            "diamonds": 567,
+        },
+        {
+            "title": "Разработка TDA фриланс-биржи (часть II)",
+            "date": "10 июня, 21:00 – 20 июня, 15:00",
+            "proposals": 1,
+            "diamonds": 777,
+        },
+        {
+            "title": "Заминтить коллекцию тамагочи NFT",
+            "date": "10 июня, 21:00 – 20 июня, 15:00",
+            "proposals": 0,
+            "diamonds": 100500,
+        },
+        {
+            "title": "Extend Editable NFT Standard (add features)",
+            "date": "12 июня, 9:00 – 3 августа, 21:00",
+            "proposals": 1,
+            "diamonds": 567,
+        },
+        {
+            "title": "Доработать мета-данные и память смарт-контракта для крутого заказа",
+            "date": "12 июня, 9:00 – 3 августа, 21:00",
+            "proposals": 1,
+            "diamonds": 1225,
+        },
+        {
+            "title": "Доработать мета-данные и память смарт-контракта для крутого заказа",
+            "date": "12 июня, 9:00 – 3 августа, 21:00",
+            "proposals": 1,
+            "diamonds": 1225,
+        },
+    ]
     return (
-        <Shell miniAppbar={false} header={header} drawer={drawer} footer={
+        <Shell miniAppbar={false} header={header} withDrawer footer={
             <Footer transparent={true}>
                 <FilterButton>{t("common.filter")}</FilterButton>
             </Footer>}>
+
             <Suspense fallback={<div>Loading...</div>}>
                 {/*<Await  promise={promise}>*/}
-                <Items messages={{no_responses: t("common.no_responses")}}/>
+                <TaskList data={data}/>
+
                 {/*</Await>*/}
             </Suspense>
         </Shell>

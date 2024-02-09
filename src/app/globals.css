@@ -1,11 +1,22 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');*/
-
+/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root{
+/*@font-face {*/
+/*    font-family: 'Inter';*/
+/*    src: local('Inter'), url('./fonts/Inter.ttf') format('truetype');*/
+
+/*    !* You can include additional font formats like woff, ttf, etc. as needed *!*/
+/*}*/
+
+:root {
     --divider-gradient: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 48.96%, rgba(255, 255, 255, 0) 100%);
+    --primary-color: "#000015";
+    --secondary-color: "#45AEF5";
+    --info-color: "#3A4362";
+
 }
 * {
     box-sizing: border-box;
@@ -18,10 +29,7 @@ body {
     height: 100%;
     max-width: 100vw;
     overflow-x: hidden;
-}
-
-html, body {
-    font-family: "Inter", sans-serif;
+    background-color: var(--primary-color);
 }
 
 a {

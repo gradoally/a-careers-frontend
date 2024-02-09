@@ -67,6 +67,7 @@ const DrawerContent = ({messages, routes}: Props) => {
                                             color: "text.primary"
                                         }
                                     }}
+                                    onClick={()=>toggleDrawer(false)}
                                     component={NextLinkComposed}
                                     to={e.to}
                                     selected={isSelectedRoute}>

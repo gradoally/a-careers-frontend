@@ -30,11 +30,11 @@ export default function NotFound() {
             </FooterButton>
         </Footer>}>
                 <Stack direction={"column"} justifyContent="center" alignItems={"center"} sx={{height: "100%"}}>
-                    <p style={{
-                        fontSize: "128px", lineHeight: "155px", letterSpacing: "0em", fontWeight: 100
-                    }}>
+                    <div style={{
+                        fontSize: "128px", lineHeight: "155px",
+                    }} className="font-thin">
                         404
-                    </p>
+                    </div>
                     <Typography variant="body1">
                         {t("errors.something_went_wrong_sorry")}
                     </Typography>

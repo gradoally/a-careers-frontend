@@ -1,13 +1,17 @@
-import MuiDivider from '@mui/material/Divider';
+import MuiDivider, {DividerProps} from '@mui/material/Divider';
 
-const Divider = ()=>{
+const Divider = (props: DividerProps) => {
     return (
         <MuiDivider sx={{
             background: "var(--divider-gradient)",
             height: "1px",
             opacity: "30%",
             border: 'none',
-        }} orientation="horizontal" flexItem/>
+        }}
+                    orientation="horizontal"
+                    flexItem
+                    {...props}
+        />
     )
 }
 
