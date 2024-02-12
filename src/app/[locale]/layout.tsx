@@ -58,7 +58,7 @@ const RootLayout = ({children, params: {locale}}: Props) => {
         <AppProviders options={{key: 'mui'}}>
             <NextIntlClientProvider
                 locale={locale}
-                messages={pick(messages, 'errors', 'common', 'tasks')}
+                messages={pick(messages, 'errors', 'common', 'tasks', "copy")}
             >
                 {children}
             </NextIntlClientProvider>

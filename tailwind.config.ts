@@ -27,6 +27,15 @@ const config: Config = {
                 sans: ['var(--font-inter)'],
             },
         },
+
+        colors: {
+            primary: '#000015',
+            secondary: '#45AEF5',
+            info: "#3A4362",
+            warning: "#00FF47",
+            orange: "#45F58B",
+            "light-gray": "#CCCCCC"
+        }
     },
     plugins: [],
 };

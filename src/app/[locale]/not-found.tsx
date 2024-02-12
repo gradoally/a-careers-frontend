@@ -29,7 +29,8 @@ export default function NotFound() {
                 {t("common.back")}
             </FooterButton>
         </Footer>}>
-                <Stack direction={"column"} justifyContent="center" alignItems={"center"} sx={{height: "100%"}}>
+                <Stack className="p-[20px]" component="div"
+                       direction={"column"} justifyContent="center" alignItems={"center"} sx={{height: "100%"}}>
                     <div style={{
                         fontSize: "128px", lineHeight: "155px",
                     }} className="font-thin">

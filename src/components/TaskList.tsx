@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
-import NoResponsesChip from "@/components/NoResponsesChip";
+import StatusChip from "@/components/StatusChip";
 
 interface DataType {
     title: string;
@@ -15,7 +15,7 @@ interface DataType {
     proposals: number;
 }
 
-const TaskList = ({data}: {data: DataType[]})=>{
+const TaskList = ({data, link}: {data: DataType[], link: string})=>{
     return (
         <Stack spacing={"15px"}
                divider={<Divider/>}>
@@ -23,7 +23,7 @@ const TaskList = ({data}: {data: DataType[]})=>{
                 return (
                     <div
                         key={i}>
-                        <Link href={"/tasks/1"} noLinkStyle>
+                        <Link href={link} noLinkStyle>
                             <Typography variant="h6" >
                                 {e.title}
                             </Typography>
@@ -34,7 +34,7 @@ const TaskList = ({data}: {data: DataType[]})=>{
                         <Typography variant="body2" sx={{ lineHeight: "none", fontSize: "12px"}}>
                             💎 {e.diamonds}
                         </Typography>
-                        {e.proposals === 0 && <NoResponsesChip/>}
+                        {e.proposals === 0 && <StatusChip status={"no_responses"}/>}
                     </div>
                 )
             })}

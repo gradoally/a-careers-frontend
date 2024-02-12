@@ -14,10 +14,10 @@ import {locales} from "@/config";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 
 import MenuButton from "@/components/ui/buttons/MenuButton";
-import Drawer from "@/components/layout/drawer";
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
-import NoResponsesChip from "@/components/NoResponsesChip";
+import StatusChip from "@/components/StatusChip";
+import CopyContainer from "@/components/features/copy";
 
 type Props = {
     params: { locale: string, id: number };
@@ -27,18 +27,16 @@ export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
 }
 
-const StackContainer = ({primary, secondary, primaryHeight="15px"}: {primary: string, secondary: string, primaryHeight?: string})=>{
+const StackContainer = ({primary, secondary}: {
+    primary: string;
+    secondary: string;
+}) => {
     return (
-
         <Stack component="div" spacing={"3px"} direction="column">
-            <Typography  sx={{
-                lineHeight: "19px",
-            }} variant={"caption"}>
+            <Typography component="div" variant={"caption"}>
                 {secondary}
             </Typography>
-            <Typography sx={{
-                lineHeight: primaryHeight,
-            }} variant="body2">
+            <Typography variant="body2">
                 {primary}
             </Typography>
         </Stack>
@@ -82,12 +80,11 @@ const Page = ({params: {locale, id}}: Props) => {
                 <Typography variant="h5" sx={{color: "info.main"}}>{t("detail", {value: "#234567"})}</Typography>
             </Stack>
 
-            <Box component="div" sx={{flexGrow: 1}}/>
-
+            <div className="flex-grow"/>
             <Stack direction="row" alignItems="center" spacing={"15px"}>
                 <Avatar alt="Diamond"
                         src="/diamond.png"
-                        sx={{width: 30, height: 30, bgcolor: "common.white"}}
+                        sx={{height: '30px', width: "30px"}}
                 />
                 <MenuButton/>
             </Stack>
@@ -95,62 +92,13 @@ const Page = ({params: {locale, id}}: Props) => {
     )
     return (
         <Shell miniAppbar={true} header={header} footer={footer} withDrawer>
-
-                <Stack
-                    component="div"
-                    direction="column"
-                    justifyContent="flex-start"
-                    alignItems="flex-start"
-                    spacing={"20px"}>
-                <div>
-                    {data.proposals ===0 && <NoResponsesChip/>}
-                    <Typography variant="h4">{data.title}</Typography>
-                    <Typography  sx={{
-                        marginTop: "10px",
-                        lineHeight: "15px",
-                    }} variant="body2">
-                        💎 {data.diamonds}
-                    </Typography>
-                </div>
-                <StackContainer primary={"EQCISAJu…W_JqYM3t"} secondary={tc("smart_contract_address")}/>
-                <StackContainer primary={data.language.label} secondary={t("language")}/>
-
-                <StackContainer primaryHeight={"20px"} primary={data.description} secondary={tc("description")}/>
-                <StackContainer primaryHeight={"20px"} primary={data.technical_task} secondary={tc("technical_task")}/>
-                <StackContainer primary={data.deadline} secondary={tc("deadline")}/>
-                <Divider/>
-
-                <Stack spacing={"0"}  direction="column">
-                    <Typography sx={{'fontSize': "10px", "lineHeight": "20px"}} variant={"caption"}>
-                        {data.created_at}
-                    </Typography>
-                    <Typography sx={{'fontSize': "10px", "lineHeight": "20px"}} variant={"caption"}>
-                        {data.category}
-                    </Typography>
-                </Stack>
-                <Stack spacing={"20px"} direction={"column"}>
-                    <Typography variant="body2">{tc("customer")}</Typography>
-                    <Box component="div">
-                        <Stack component="div" direction="row" spacing={3}>
-                            <Avatar sx={{"height": "80px", width: "80px"}} alt="Avatar" src={data.customer.image}/>
-                            <Stack direction={"column"} spacing={"7px"} component={"div"}>
-                                <Typography variant="body2">{data.customer.username}</Typography>
-                                <Stack component="div" sx={{fontSize: "10px"}} direction="row" spacing="5px">
-                                    <div>✅ 2</div>
-                                    <div>❎ 1</div>
-                                </Stack>
-                                <Stack component="div" sx={{fontSize: "10px"}} direction="row" spacing="5px">
-                                    <Link  href={`/profile/${data.customer.id}`}>
-                                        <Typography sx={{color: "info.main"}} variant={"caption"}>{tc("profile")} 📖</Typography>
-                                    </Link>
-                                    <Link href={data.customer.telegram}>
-                                        <Typography sx={{color: "info.main"}} variant={"caption"}>Telegram</Typography>
-                                    </Link>
-                                </Stack>
-                            </Stack>
-                        </Stack>
-                    </Box>
-                </Stack>
+            <Stack
+                className="p-[20px]"
+                component="div"
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+                spacing={"20px"}>
             </Stack>
         </Shell>
     )

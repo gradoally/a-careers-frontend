@@ -22,6 +22,9 @@
     "connect": "Connect",
     "text_support": "Write to support",
     "no_responses": "No Responses",
+    "on_moderation": "On moderation",
+    "response_sent": "Response sent",
+    "declined": "Declined",
     "filter": "Filter",
     "log_in_and_respond": "Log in and respond",
     "description": "Description",
@@ -32,7 +35,11 @@
     "back": "Back",
     "smart_contract_address": "Smart contract address",
     "created": "Created",
-    "responses": "Responses"
+    "responses": "Responses",
+    "next": "Next",
+    "edit_profile": "Edit profile",
+    "optional": "optional",
+    "network_commission": "Network commission"
   },
   "tasks": {
     "create": "Create task",
@@ -58,11 +65,29 @@
     "response_denied": "Response denied · {value}",
     "an_offer_came_in": "An offer came in · {value}",
     "on_inspection": "On inspection · {value}",
-    "task_accomplished": "Task accomplished · {value}"
+
+    "select_language": "Select task language",
+    "task_accomplished": "Task accomplished · {value}",
+
+    "select_category": "Select category"
   },
 
   "profile": {
     "create": "Create profile",
-    "send_to_blockchain": "Send to blockchain"
+    "send_to_blockchain": "Send to blockchain",
+
+    "update_on_blockchain": "Update on blockchain",
+    "about": "About",
+    "site": "Site",
+
+    "task_result": "{payed} tasks payed, {completed} completed",
+    "task_history": "Task history",
+    "specialization": "Specialization",
+    "resume": "Resume",
+    "portfolio": "Portfolio"
+  },
+  "copy": {
+    "copied": "Copied",
+    "error_copying_text_to_clipboard": "Error copying text to clipboard"
   }
 }

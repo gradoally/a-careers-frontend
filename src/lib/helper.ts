@@ -33,7 +33,7 @@ export const toastUpdate = (
 
 export const toast = (
     message: string,
-    toastType: any = "success",
+    toastType: 'info' | 'success' | 'warning' | 'error' | 'default' = "success",
     options?: ToastOptions
 ) => {
     baseToast(message, {

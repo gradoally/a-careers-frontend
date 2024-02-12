@@ -12,19 +12,23 @@ import {
     Box, Typography
 } from '@mui/material';
 
-import {useThemeContext} from "@/providers/theme/provider";
 import Logo from "@/app/logo";
 import CloseButton from "@/components/ui/buttons/CloseButton";
 import ConnectButton from "@/components/ui/buttons/ConnectButton";
 import AppBar from "@/components/layout/app-bar";
 import {NextLinkComposed} from "@/components/Link";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@/components/ui/Divider";
+import Link from "@/components/Link";
+import {useAppContext} from "@/lib/app-providers";
 
 interface Props {
     messages: { connect: string, text_support: string }
-    routes: {label: string, to: string}[]
+    routes: {label: string, to: string}[];
+    withAuth?: boolean;
 }
-const DrawerContent = ({messages, routes}: Props) => {
-    const {isDrawerOpen, toggleDrawer} = useThemeContext()
+const DrawerContent = ({messages, routes, withAuth}: Props) => {
+    const {isDrawerOpen, toggleDrawer} = useAppContext()
     const pathname = usePathname();
     const locale = useLocale();
     return (
@@ -33,14 +37,12 @@ const DrawerContent = ({messages, routes}: Props) => {
             onClose={() => toggleDrawer(false)}
             open={isDrawerOpen}
             sx={{
-                width: "100vw",
                 zIndex: theme => theme.zIndex.drawer + 2,
                 '& .MuiPaper-root': {
                     width: "100vw",
                     backgroundColor: theme => theme.palette.background.paper,
                     backgroundImage: 'none'
                 },
-                display: "flex"
             }}
         >
             <AppBar>
@@ -53,47 +55,70 @@ const DrawerContent = ({messages, routes}: Props) => {
                     <CloseButton onClick={() => toggleDrawer(false)}/>
                 </Stack>
             </AppBar>
-            <nav style={{flexGrow: 1,}}>
-                <List sx={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
-                    {routes.map((e, index) => {
-                        const [, , ...segments] = pathname.split('/');
-                        const pathnameWithoutLocale = segments.join("/");
-                        const isSelectedRoute = `/${pathnameWithoutLocale}` === e.to
-                        return (
-                            <ListItem key={index} disablePadding>
-                                <ListItemButton
-                                    sx={{
-                                        "&.Mui-selected": {
-                                            color: "text.primary"
-                                        }
-                                    }}
-                                    onClick={()=>toggleDrawer(false)}
-                                    component={NextLinkComposed}
-                                    to={e.to}
-                                    selected={isSelectedRoute}>
-                                    <ListItemText
-                                        sx={{textAlign: "center"}}
-                                        primaryTypographyProps={{"color": isSelectedRoute?"text.primary":"text.secondary"}}
-                                        primary={e.label}/>
-                                </ListItemButton>
-                            </ListItem>
-                        )
-                    })}
-                </List>
-            </nav>
-            <Box component="div" sx={{padding: "16px"}}>
-                <Stack direction="row" spacing={2}
-                       justifyContent="space-between">
-                    <Typography sx={{color: "text.secondary"}} variant="body2">
-                        {messages.text_support}
-                    </Typography>
-                    <div>
+            <Stack spacing={0} className="pt-[20px] h-full">
+                {withAuth && (
+                    <>
+                        <Stack spacing="20px" className="py-[30px]" direction="column" justifyContent="center" alignItems="center">
+                            <Avatar sx={{height: "70px", width: "70px"}} alt="Avatar" src={"/avatar.png"}/>
+                            <div className="text-center">
+                                <Typography variant="h4">
+                                    @new_user
+                                </Typography>
+                                <Typography variant="caption">
+                                    <Link className="underline" noLinkStyle href={"/profile"}>
+                                        Профиль 📖
+                                    </Link>
+                                </Typography>
+                            </div>
+                        </Stack>
+                        <Divider/>
+                    </>
+                )}
+
+                <nav style={{flexGrow: 1,}}>
+                    <List sx={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                        {routes.map((e, index) => {
+                            const [, , ...segments] = pathname.split('/');
+                            const pathnameWithoutLocale = segments.join("/");
+
+                            const isSelectedRoute = `/${pathnameWithoutLocale}` === e.to
+                            console.log(pathnameWithoutLocale, isSelectedRoute)
+                            return (
+                                <ListItem key={index} disablePadding>
+                                    <ListItemButton
+                                        sx={{
+                                            "&.Mui-selected": {
+                                                color: "text.primary"
+                                            }
+                                        }}
+                                        onClick={()=>toggleDrawer(false)}
+                                        component={NextLinkComposed}
+                                        to={e.to}
+                                        selected={isSelectedRoute}>
+                                        <ListItemText
+                                            sx={{textAlign: "center"}}
+                                            primaryTypographyProps={{"color": isSelectedRoute?"text.primary":"text.secondary"}}
+                                            primary={e.label}/>
+                                    </ListItemButton>
+                                </ListItem>
+                            )
+                        })}
+                    </List>
+                </nav>
+                <Box component="div" sx={{padding: "16px"}}>
+                    <Stack direction="row" spacing={2}
+                           justifyContent="space-between">
                         <Typography sx={{color: "text.secondary"}} variant="body2">
-                            🌎 {locale}
+                            {messages.text_support}
                         </Typography>
-                    </div>
-                </Stack>
-            </Box>
+                        <div>
+                            <Typography sx={{color: "text.secondary"}} variant="body2">
+                                🌎 {locale}
+                            </Typography>
+                        </div>
+                    </Stack>
+                </Box>
+            </Stack>
         </MuiDrawer>
     )
 }

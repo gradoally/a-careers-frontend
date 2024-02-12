@@ -2,7 +2,7 @@ import {useTranslations} from "next-intl";
 
 import DrawerContent from "@/components/layout/drawer/DrawerContent";
 
-const Drawer = ()=>{
+const Drawer = ({withAuth}: {withAuth?: boolean})=>{
     const t = useTranslations();
     const routes = [
         {"label": t("tasks.create"), "to": "/tasks/create"},
@@ -11,6 +11,7 @@ const Drawer = ()=>{
     ]
     return (
         <DrawerContent
+            withAuth
             messages={{"connect": t("common.connect"), "text_support": t("common.text_support")}}
             routes={routes}/>
     )

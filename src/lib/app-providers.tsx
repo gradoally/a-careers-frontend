@@ -7,16 +7,32 @@ import {useServerInsertedHTML} from "next/navigation";
 import {CacheProvider} from "@emotion/react";
 import createCache from "@emotion/cache";
 
-import ThemeProvider from "@/providers/theme/provider";
+import ThemeProvider from "@/lib/theme-provider";
 
+
+export type AppContextType = {
+    toggleDrawer: (value: boolean) => void
+    toggleFilter: (value: boolean) => void
+    isDrawerOpen: boolean
+    isFilterOpen: boolean
+}
 
 type Props = {
     children: ReactNode;
     options: { key: string }
 };
 
+const AppContext = React.createContext<AppContextType>({
+    isFilterOpen: false,
+    toggleDrawer: (value: boolean) => undefined,
+    toggleFilter: (value: boolean) => undefined,
+    isDrawerOpen: false,
+})
+
 
 const AppProviders = (props: Props) => {
+    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
+    const [isFilterOpen, setIsFilterOpen] = React.useState(false)
 
     const [{cache, flush}] = React.useState(() => {
         const cache = createCache(props.options);
@@ -57,14 +73,44 @@ const AppProviders = (props: Props) => {
             />
         );
     });
-    return ( 
-            <CacheProvider value={cache}>
-                <ThemeProvider>
 
+    const toggleDrawer = (value: boolean) => {
+        setIsDrawerOpen(value)
+    }
+    const toggleFilter = (value: boolean) => {
+        setIsFilterOpen(value)
+    }
+
+    const memoValue = React.useMemo(
+        () => ({
+            isFilterOpen,
+            isDrawerOpen,
+            toggleDrawer,
+            toggleFilter,
+        }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [isDrawerOpen, isFilterOpen]
+    )
+
+    return (
+        <CacheProvider value={cache}>
+            <AppContext.Provider value={memoValue}>
+                <ThemeProvider>
                     {props.children}
                 </ThemeProvider>
-            </CacheProvider> 
+            </AppContext.Provider>
+        </CacheProvider>
     );
 };
+
+
+export const useAppContext = (): AppContextType => {
+    const context = React.useContext(AppContext)
+    if (context === undefined) {
+        throw new Error('useAppContext must be used within a AppProviders')
+    }
+    return context
+}
+
 
 export default AppProviders;

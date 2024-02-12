@@ -25,6 +25,11 @@
     "connect": "Подключиться",
     "text_support": "Написать в поддержку",
     "no_responses": "Без откликов",
+
+    "on_moderation": "В модерации",
+    "response_sent": "Отправлен отклик",
+    "declined": "Отказано",
+
     "filter": "Фильтр",
     "log_in_and_respond": "Войти и откликнуться",
     "description": "Описание",
@@ -35,7 +40,10 @@
     "back": "Назад",
     "smart_contract_address": "Адрес смарт-контракта",
     "created": "Созданные",
-    "responses": "Отклики"
+    "responses": "Отклики",
+    "next": "Далее",
+    "edit_profile": "Редактирование профиля",
+    "network_commission": "Комиссия сети ≈ {value}"
   },
 
   "tasks": {
@@ -63,10 +71,29 @@
     "response_denied": "Отклик отклонен · {value}",
     "an_offer_came_in": "Пришло предложение · {value}",
     "on_inspection": "На проверке · {value}",
-    "task_accomplished": "Task accomplished · {value}"
+    "task_accomplished": "Task accomplished · {value}",
+    "select_language": "Выберите язык объявления",
+    "select_category": "Выберите категорию"
   },
   "profile": {
     "create": "Создать профиль",
-    "send_to_blockchain": "Отправить в блокчейн"
+    "send_to_blockchain": "Отправить в блокчейн",
+    "update_on_blockchain": "Обновить в блокчейне",
+    "about": "О себе",
+    "site": "Сайт",
+    "task_result": "{payed} задач оплачено, {completed} выполнено",
+    "task_history": "История задач",
+    "specialization": "Специализация",
+    "resume": "Резюме",
+    "portfolio": "Портфолио",
+    "freelancer_profile": "Профиль фрилансера",
+    "fill_if_you_want_make_response": "Заполните, если планируете делать отклики",
+    "link_to_website": "Ссылка на сайт",
+    "link_to_portfolio": "Ссылка на портфолио"
+  },
+
+  "copy": {
+    "copied": "Скопировано",
+    "error_copying_text_to_clipboard": "Ошибка при копировании текста в буфер обмена"
   }
 }

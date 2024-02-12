@@ -1,8 +1,17 @@
-import React from "react";
+import {ReactNode} from "react";
+import clsx from "clsx";
 
-const CenteredContainer = ({children}: React.PropsWithChildren)=>{
+interface Props {
+    className?: string
+    children: ReactNode
+}
+
+
+const CenteredContainer = ({children, className=""}: Props)=>{
     return (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className={
+            clsx("w-full h-full flex justify-center items-center", className)
+        }>
             {children}
         </div>
     )

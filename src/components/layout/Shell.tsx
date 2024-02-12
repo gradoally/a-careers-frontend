@@ -10,11 +10,13 @@ interface Props {
     children: ReactNode;
     header?: ReactNode;
     withDrawer?: boolean;
+    withAuth?: boolean;
     extra?: ReactNode;
     footer?: ReactNode;
     miniAppbar?: boolean;
 }
 const Shell = (props: Props) => {
+    const paddingTop = props.miniAppbar?"60px":"70px";
     return (
             <Paper elevation={0} sx={{
                 display: "flex",
@@ -26,11 +28,17 @@ const Shell = (props: Props) => {
                 "& > #styled-content": { flexGrow: "1"},
             }}>
                 {props.header && props.header}
-                {props.withDrawer &&  <Drawer/>}
-                <StyledBox id="styled-content" sx={{paddingTop: props.miniAppbar?"80px":"90px"}}>
+                {props.withDrawer &&  <Drawer withAuth/>}
+                <div
+                    id="styled-content"
+                    // style={{
+                        // paddingTop,
+                        // minHeight: `calc(100vh - ${paddingTop} - 40px)`,
+                // }}
+                    className="w-full overflow-y-scroll "
+                >
                     {props.children}
-                </StyledBox>
-
+                </div>
                 {props.extra && props.extra}
                 {props.footer && props.footer}
             </Paper>
