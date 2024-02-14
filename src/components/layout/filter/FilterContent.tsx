@@ -19,8 +19,9 @@ import AppBar from "@/components/layout/app-bar";
 import Divider from "@/components/ui/Divider";
 
 import BackButton from "@/components/ui/buttons/BackButton";
-import SecondaryActionButton from "@/components/ui/buttons/SecondaryActionButton";
+
 import {useAppContext} from "@/lib/app-providers";
+import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 
 const FilterContent = () => {
     const {isFilterOpen, toggleFilter} = useAppContext()
@@ -51,7 +52,7 @@ const FilterContent = () => {
             <div>
                 <nav aria-label="main mailbox folders">
                     <List>
-                        <ListItem disablePadding secondaryAction={<SecondaryActionButton to={"/"}/>}>
+                        <ListItem disablePadding secondaryAction={<ArrowRightIcon/>}>
                             <ListItemButton>
                                 <ListItemIcon sx={{fontSize: "24px"}}>
                                     🧩
@@ -64,7 +65,7 @@ const FilterContent = () => {
                             </ListItemButton>
                         </ListItem>
                         <Divider/>
-                        <ListItem disablePadding secondaryAction={<SecondaryActionButton to={"/"}/>}>
+                        <ListItem disablePadding secondaryAction={<ArrowRightIcon  />}>
                             <ListItemButton>
                                 <ListItemIcon sx={{fontSize: "24px"}}>
                                     🌎

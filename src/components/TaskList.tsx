@@ -2,7 +2,6 @@ import React from "react";
 
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
@@ -17,8 +16,7 @@ interface DataType {
 
 const TaskList = ({data, link}: {data: DataType[], link: string})=>{
     return (
-        <Stack spacing={"15px"}
-               divider={<Divider/>}>
+        <Stack spacing={"15px"} divider={<Divider/>}>
             {data.map((e, i) => {
                 return (
                     <div

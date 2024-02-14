@@ -21,7 +21,6 @@ const config: Config = {
             "laptop": {"max": "1024px"},
             "desktop": {"max": "1280px"},
         },
-
         extend: {
             fontFamily: {
                 sans: ['var(--font-inter)'],

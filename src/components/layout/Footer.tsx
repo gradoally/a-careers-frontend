@@ -11,30 +11,27 @@ interface Props {
 const Footer = (props: Props) => {
     const [h, setH] = useState<string>("100px")
     const styled = {
-        // height: "110px",
+        // borderTop: props.transparent ? "none" : "1px solid rgba(217, 217, 217, 0.2)",
         borderTop: props.transparent ? "none" : "1px solid rgba(217, 217, 217, 0.2)",
         background: props.transparent ? "transparent" : "linear-gradient(180deg, rgba(0, 0, 21, 0.77) 0%, #000015 100%)",
     }
-    useEffect(()=>{
+    useEffect(() => {
         const footer = document.getElementById("footer");
         if (!footer) return
         const height = footer.clientHeight;
-        if (height>100) setH(`${height}px`);
+        if (height > 100) setH(`${height}px`);
         console.log(height)
     }, [props.children])
     return (
         <>
-            <div style={{
-                "borderTop": "1px solid rgba(217, 217, 217, 0.2)",
-                "minHeight": h
-            }}/>
-            {/*<Box component="div" sx={styled}/>*/}
-            <footer id="footer" className={clsx(
-                "flex flex-col items-center justify-center w-full p-[20px]",
-                "min-h-[100px]",
-                "fixed bottom-0 left-0",
-                "space-y-[15px]"
-            )}
+            <div style={{"minHeight": h}}/>
+            <footer id="footer"
+                    className={clsx(
+                        "flex flex-col items-center justify-center w-full p-[20px]",
+                        "min-h-[100px]",
+                        "fixed bottom-0 left-0",
+                        "space-y-[15px]"
+                    )}
                     style={styled}
             >
                 {props.children}

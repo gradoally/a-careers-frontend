@@ -28,7 +28,7 @@ const Shell = (props: Props) => {
                 "& > #styled-content": { flexGrow: "1"},
             }}>
                 {props.header && props.header}
-                {props.withDrawer &&  <Drawer withAuth/>}
+                {props.withDrawer &&  <Drawer withAuth={props.withAuth}/>}
                 <div
                     id="styled-content"
                     // style={{

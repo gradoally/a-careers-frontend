@@ -40,7 +40,7 @@ export const getTheme = () => {
             divider: "rgba(217, 217, 217, 0.2)",
         },
         typography: {
-            fontFamily: '"Inter", serif',
+            fontFamily: '"Inter", sans',
             h4: {
                 fontSize: "16px",
                 fontWeight: "700",

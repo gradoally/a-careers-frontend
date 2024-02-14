@@ -91,9 +91,7 @@ const History = ({data}: {data: HistoryType[]}) => {
                                     {e.smartContract}
                                 </Link>
                             </Typography>
-
                         </div>
-
                         {e.price && (
                             <Typography component="div" variant="h6">{e.price}</Typography>
                         )}
@@ -137,7 +135,6 @@ const userTemp = {
 }
 
 const ProfileView = ({data}: {data: ProfileData})=>{
-
     const t = useTranslations("profile");
     const tc = useTranslations("common");
     return (

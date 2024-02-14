@@ -1,50 +1,32 @@
 import React from "react";
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import {unstable_setRequestLocale} from "next-intl/server";
 import {useTranslations} from "next-intl";
+import {unstable_setRequestLocale} from "next-intl/server";
 
-import Avatar from '@mui/material/Avatar';
-import Footer from "@/components/layout/Footer";
-import Shell from "@/components/layout/Shell";
-import AppBar from "@/components/layout/app-bar";
 import {Stack} from "@mui/material";
-import BackButton from "@/components/ui/buttons/BackButton";
-import {locales} from "@/config";
-import FooterButton from "@/components/ui/buttons/FooterButton";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 
+import TaskView from "@/components/TaskView";
+import Shell from "@/components/layout/Shell";
+import Footer from "@/components/layout/Footer";
+import FooterButton from "@/components/ui/buttons/FooterButton";
+import AppBar from "@/components/layout/app-bar";
+import BackButton from "@/components/ui/buttons/BackButton";
 import MenuButton from "@/components/ui/buttons/MenuButton";
-import Divider from "@/components/ui/Divider";
-import Link from "@/components/Link";
-import StatusChip from "@/components/StatusChip";
-import CopyContainer from "@/components/features/copy";
+import {locales} from "@/config";
+import {NextLinkComposed} from "@/components/Link";
 
 type Props = {
-    params: { locale: string, id: number };
+    params: { locale: string };
 };
 
 export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
 }
 
-const StackContainer = ({primary, secondary}: {
-    primary: string;
-    secondary: string;
-}) => {
-    return (
-        <Stack component="div" spacing={"3px"} direction="column">
-            <Typography component="div" variant={"caption"}>
-                {secondary}
-            </Typography>
-            <Typography variant="body2">
-                {primary}
-            </Typography>
-        </Stack>
-    )
-}
-
-const Page = ({params: {locale, id}}: Props) => {
+const Page = ({params: {locale}}: Props)=>{
     unstable_setRequestLocale(locale);
+
     const tc = useTranslations("common");
     const t = useTranslations("tasks");
     const data = {
@@ -53,17 +35,19 @@ const Page = ({params: {locale, id}}: Props) => {
         "proposals": 0,
         "language": {"label": "Русский"},
         "description": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
-        "technical_task": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
+        "technicalTask": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
         "deadline": "21 июня, 21:00",
-        "created_at": "Создано 7 июня в 16:53 на русском языке",
+        "createdAt": "Создано 7 июня в 16:53 на русском языке",
         "category": "Категория «Разработка на блокчейне TON»",
         "customer": {
             "id": 1,
             "image": "/avatar.png",
             "username": "@another_kote",
             "telegram": "@another_kote"
-        }
+        },
+        status: "no_responses" as "no_responses"
     }
+
     const footer = (
         <Footer>
             <FooterButton
@@ -76,7 +60,7 @@ const Page = ({params: {locale, id}}: Props) => {
     const header = (
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={"10px"}>
-                <BackButton/>
+                <BackButton component={NextLinkComposed} to={"/core"}/>
                 <Typography variant="h5" sx={{color: "info.main"}}>{t("detail", {value: "#234567"})}</Typography>
             </Stack>
 
@@ -90,8 +74,11 @@ const Page = ({params: {locale, id}}: Props) => {
             </Stack>
         </AppBar>
     )
+
     return (
+
         <Shell miniAppbar={true} header={header} footer={footer} withDrawer>
+
             <Stack
                 className="p-[20px]"
                 component="div"
@@ -99,6 +86,7 @@ const Page = ({params: {locale, id}}: Props) => {
                 justifyContent="flex-start"
                 alignItems="flex-start"
                 spacing={"20px"}>
+                <TaskView data={data}/>
             </Stack>
         </Shell>
     )

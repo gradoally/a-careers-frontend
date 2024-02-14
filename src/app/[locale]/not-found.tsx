@@ -24,7 +24,7 @@ export default function NotFound() {
         </AppBar>
     )
     return (
-        <Shell header={header} footer={<Footer>
+        <Shell miniAppbar header={header} footer={<Footer>
             <FooterButton component={NextLinkComposed} to="/">
                 {t("common.back")}
             </FooterButton>

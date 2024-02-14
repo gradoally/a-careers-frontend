@@ -11,7 +11,7 @@ const Drawer = ({withAuth}: {withAuth?: boolean})=>{
     ]
     return (
         <DrawerContent
-            withAuth
+            withAuth={withAuth}
             messages={{"connect": t("common.connect"), "text_support": t("common.text_support")}}
             routes={routes}/>
     )

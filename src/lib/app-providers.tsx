@@ -6,6 +6,7 @@ import type {ReactNode} from "react";
 import {useServerInsertedHTML} from "next/navigation";
 import {CacheProvider} from "@emotion/react";
 import createCache from "@emotion/cache";
+import {TonConnectUIProvider} from "@tonconnect/ui-react";
 
 import ThemeProvider from "@/lib/theme-provider";
 
@@ -29,6 +30,10 @@ const AppContext = React.createContext<AppContextType>({
     isDrawerOpen: false,
 })
 
+
+// this manifest is used temporarily for development purposes
+const manifestUrl =
+    "https://raw.githubusercontent.com/ton-community/tutorials/main/03-client/test/public/tonconnect-manifest.json";
 
 const AppProviders = (props: Props) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
@@ -93,6 +98,8 @@ const AppProviders = (props: Props) => {
     )
 
     return (
+
+        <TonConnectUIProvider manifestUrl={manifestUrl}>
         <CacheProvider value={cache}>
             <AppContext.Provider value={memoValue}>
                 <ThemeProvider>
@@ -100,6 +107,8 @@ const AppProviders = (props: Props) => {
                 </ThemeProvider>
             </AppContext.Provider>
         </CacheProvider>
+
+        </TonConnectUIProvider>
     );
 };
 

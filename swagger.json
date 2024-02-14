@@ -1,0 +1,853 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Backend API",
+    "description": "Backend API for SomeDAO frontend.",
+    "version": "backend"
+  },
+  "paths": {
+    "/api/config": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Returns general configuration data.",
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BackendConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Returns list of ACTIVE (available to work at) Orders that meet filter.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Free query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Show only specified category.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Show only specified language.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minPrice",
+            "in": "query",
+            "description": "Minimum price to include",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Sort field: 'createdAt' or 'deadline'.",
+            "schema": {
+              "type": "string",
+              "default": "createdAt"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort order: 'asc' or 'desc'.",
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to return (default 0).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size (default 10, max 100).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request."
+          }
+        }
+      }
+    },
+    "/api/searchcount": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Returns number of ACTIVE (available to work at) Orders that meet filter.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Free query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Show only specified category.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Show only specified language.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minPrice",
+            "in": "query",
+            "description": "Minimum price to include",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/finduser": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Find user by wallet address.",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "Address of user's main wallet (in user-friendly form).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserFindResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Address is empty or invalid."
+          }
+        }
+      }
+    },
+    "/api/getuser": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get user by index.",
+        "parameters": [
+          {
+            "name": "index",
+            "in": "query",
+            "description": "ID of user ('index' field from user contract).",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Index is invalid (or user does not exist)."
+          }
+        }
+      }
+    },
+    "/api/getorder": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get order by index.",
+        "parameters": [
+          {
+            "name": "index",
+            "in": "query",
+            "description": "ID of order ('index' field from order contract).",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Index is invalid (or order does not exist)."
+          }
+        }
+      }
+    },
+    "/api/findorder": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Find order by contract address.",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "Address of order contract (in user-friendly form).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFindResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Address is empty or invalid."
+          }
+        }
+      }
+    },
+    "/api/getuserstats": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get user statistics - number of orders, detailed by role (customer / freelancer) and by status.",
+        "description": "Only statuses with non-zero number of orders are returned.",
+        "parameters": [
+          {
+            "name": "index",
+            "in": "query",
+            "description": "ID of user ('index' field from user contract).",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserStat"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Index is invalid (or user does not exist)."
+          }
+        }
+      }
+    },
+    "/api/getuserorders": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get list of user orders by role and status.",
+        "description": "Only statuses with non-zero number of orders are returned.",
+        "parameters": [
+          {
+            "name": "index",
+            "in": "query",
+            "description": "ID of user ('index' field from user contract).",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "description": "Role of user: 'customer' or 'freelancer'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of orders to return.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid (nonexisting) 'index' or 'role' value."
+          }
+        }
+      }
+    },
+    "/api/getuseractivity": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get list of user activity in different orders.",
+        "parameters": [
+          {
+            "name": "index",
+            "in": "query",
+            "description": "ID of user ('index' field from user contract).",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to return (default 0).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size (default 10, max 100).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderActivity"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid (nonexisting) 'index' value."
+          }
+        }
+      }
+    },
+    "/api/getorderactivity": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get list of order activity.",
+        "parameters": [
+          {
+            "name": "index",
+            "in": "query",
+            "description": "ID of order ('index' field from user contract).",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to return (default 0).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size (default 10, max 100).",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request is accepted, processed and response contains requested data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderActivity"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid (nonexisting) 'index' value."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BackendConfig": {
+        "type": "object",
+        "properties": {
+          "masterContractAddress": {
+            "type": "string"
+          },
+          "mainnet": {
+            "type": "boolean"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Language"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Language": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpCode": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          15,
+          17,
+          20,
+          21,
+          30,
+          31,
+          32,
+          44,
+          45,
+          239
+        ],
+        "type": "integer",
+        "description": "Opcodes for Order.",
+        "format": "int32"
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "address": {
+            "type": "string",
+            "description": "Smartcontract address - in bounceable form."
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "customerAddress": {
+            "type": "string",
+            "description": "User wallet address - in non-bounceable form."
+          },
+          "customer": {
+            "$ref": "#/components/schemas/User"
+          },
+          "freelancerAddress": {
+            "type": "string",
+            "description": "User wallet address - in non-bounceable form.",
+            "nullable": true
+          },
+          "freelancer": {
+            "$ref": "#/components/schemas/User"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "responsesCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "technicalTask": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderActivity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "txLt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "txHash": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "opCode": {
+            "$ref": "#/components/schemas/OpCode"
+          },
+          "senderRole": {
+            "$ref": "#/components/schemas/OrderActivitySenderRole"
+          },
+          "senderAddress": {
+            "type": "string",
+            "description": "Message sender address: for customer or freelancer - in non-bounceable form, for others - in bounceable form."
+          },
+          "sender": {
+            "$ref": "#/components/schemas/User"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderActivitySenderRole": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "OrderFindResult": {
+        "type": "object",
+        "properties": {
+          "found": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Order"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "type": "integer",
+        "description": "Order statuses.",
+        "format": "int32"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "address": {
+            "type": "string",
+            "description": "Smartcontract address - in bounceable form."
+          },
+          "userAddress": {
+            "type": "string",
+            "description": "User wallet address - in non-bounceable form."
+          },
+          "revokedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isUser": {
+            "type": "boolean"
+          },
+          "isFreelancer": {
+            "type": "boolean"
+          },
+          "nickname": {
+            "type": "string",
+            "nullable": true
+          },
+          "telegram": {
+            "type": "string",
+            "nullable": true
+          },
+          "about": {
+            "type": "string",
+            "nullable": true
+          },
+          "website": {
+            "type": "string",
+            "nullable": true
+          },
+          "portfolio": {
+            "type": "string",
+            "nullable": true
+          },
+          "resume": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialization": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserFindResult": {
+        "type": "object",
+        "properties": {
+          "found": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserStat": {
+        "type": "object",
+        "properties": {
+          "asCustomerTotal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "asCustomerByStatus": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "asFreelancerTotal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "asFreelancerByStatus": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -19,6 +19,10 @@
   }, 
 
   "common": {
+
+
+    "deadline_datetime": "Deadline datetime",
+    "select_deadline": "Select deadline",
     "connect": "Connect",
     "text_support": "Write to support",
     "no_responses": "No Responses",

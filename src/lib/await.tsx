@@ -5,7 +5,12 @@ export default async function Await<T>({
   promise: Promise<T>
   children: (value: T) => JSX.Element
 }) {
-  let data = await promise
+  try {
+    let data = await promise
+    return children(data)
 
-  return children(data)
+  }catch (e) {
+    return <div>Error handler - Await component</div>
+  }
+
 }

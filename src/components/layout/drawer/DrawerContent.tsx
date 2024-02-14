@@ -56,27 +56,28 @@ const DrawerContent = ({messages, routes, withAuth}: Props) => {
                 </Stack>
             </AppBar>
             <Stack spacing={0} className="pt-[20px] h-full">
-                {withAuth && (
-                    <>
-                        <Stack spacing="20px" className="py-[30px]" direction="column" justifyContent="center" alignItems="center">
-                            <Avatar sx={{height: "70px", width: "70px"}} alt="Avatar" src={"/avatar.png"}/>
-                            <div className="text-center">
-                                <Typography variant="h4">
-                                    @new_user
-                                </Typography>
-                                <Typography variant="caption">
-                                    <Link className="underline" noLinkStyle href={"/profile"}>
-                                        Профиль 📖
-                                    </Link>
-                                </Typography>
-                            </div>
-                        </Stack>
-                        <Divider/>
-                    </>
-                )}
-
-                <nav style={{flexGrow: 1,}}>
-                    <List sx={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                <div className="h-[270px]">
+                    {withAuth && (
+                        <>
+                            <Stack spacing="20px" className="py-[30px]" direction="column" justifyContent="center" alignItems="center">
+                                <Avatar sx={{height: "70px", width: "70px"}} alt="Avatar" src={"/avatar.png"}/>
+                                <div className="text-center">
+                                    <Typography variant="h4">
+                                        @new_user
+                                    </Typography>
+                                    <Typography variant="caption">
+                                        <Link className="underline" noLinkStyle href={"/profile"}>
+                                            Профиль 📖
+                                        </Link>
+                                    </Typography>
+                                </div>
+                            </Stack>
+                            <Divider/>
+                        </>
+                        )}
+                </div>
+                <nav className="grow">
+                    <List>
                         {routes.map((e, index) => {
                             const [, , ...segments] = pathname.split('/');
                             const pathnameWithoutLocale = segments.join("/");

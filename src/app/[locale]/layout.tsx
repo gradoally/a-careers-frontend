@@ -20,7 +20,7 @@ import "../globals.css";
 
 
 const inter = localFont({
-    src: '../fonts/Inter.ttf',
+    src: '../fonts/Inter.woff2',
     display: 'swap',
     variable: '--font-inter',
 })
