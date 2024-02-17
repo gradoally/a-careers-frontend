@@ -140,7 +140,10 @@ const ProfileView = ({data}: {data: ProfileData})=>{
     return (
         <>
             <div className="p-[20px] rounded">
-                <Image alt="Profile image" width="335" height={335} src={data.image}/>
+                {/*<Image alt="Profile image" width="335" height={335} src={data.image}/>*/}
+                <div className="bg-[#000] text-center align-middle h-[335px] w-[334] text-[196px]">
+                    🦄
+                </div>
                 <Stack spacing={"20px"} className="pt-[35px]">
 
                     <Typography variant="h4">{data.username}</Typography>

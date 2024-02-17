@@ -14,7 +14,6 @@ import BackButton from "@/components/ui/buttons/BackButton";
 
 export default function NotFound() {
     const t = useTranslations();
-
     const header = (
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={1} >

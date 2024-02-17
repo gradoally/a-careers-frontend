@@ -51,7 +51,7 @@ const Page = ({params: {locale}}: Props)=>{
     const footer = (
         <Footer>
             <FooterButton
-                color={"secondary"} sx={{color: "common.black", width: "100%"}}
+                color={"secondary"} sx={{color: "common.black"}}
                 variant="contained">
                 {tc("log_in_and_respond")}
             </FooterButton>
@@ -60,8 +60,10 @@ const Page = ({params: {locale}}: Props)=>{
     const header = (
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={"10px"}>
-                <BackButton component={NextLinkComposed} to={"/core"}/>
-                <Typography variant="h5" sx={{color: "info.main"}}>{t("detail", {value: "#234567"})}</Typography>
+                <BackButton component={NextLinkComposed} to={"/"}/>
+                <Typography variant="h5" sx={{color: "info.main"}}>
+                    {t("detail", {value: "#234567"})}
+                </Typography>
             </Stack>
 
             <div className="flex-grow"/>
@@ -76,9 +78,7 @@ const Page = ({params: {locale}}: Props)=>{
     )
 
     return (
-
         <Shell miniAppbar={true} header={header} footer={footer} withDrawer>
-
             <Stack
                 className="p-[20px]"
                 component="div"

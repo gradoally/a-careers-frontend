@@ -10,6 +10,8 @@ import enLocale from "date-fns/locale/en-US";
 
 import {MobileDateTimePicker} from '@mui/x-date-pickers/MobileDateTimePicker';
 import ClearIcon from '@mui/icons-material/Clear';
+import InputAdornment from "@mui/material/InputAdornment";
+import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 
 const localeMap = {
     en: enLocale,
@@ -22,12 +24,12 @@ interface Props {
     fullWidth: boolean;
     name: string;
     id: string;
-    variant: "standard" | "filled"
+    onChange: (e: any) => void
 }
 
 const DateTimePicker = (
     {
-        label, value, variant
+        label, value, onChange,
     }:
         Props) => {
     const locale = useLocale();
@@ -42,14 +44,26 @@ const DateTimePicker = (
                 onClose={() => setOpen(false)}
                 label={label}
                 value={value}
-
+                onChange={onChange}
                 slotProps={{
                     layout: {
                         sx: {
                             backgroundColor: "info.main"
                         },
                     },
+
+                    textField: {
+                        InputProps: {
+                            startAdornment: (
+                                <InputAdornment position="start">🗓</InputAdornment>
+                            ),
+                            endAdornment: (
+                                <InputAdornment position="start"><ArrowRightIcon/></InputAdornment>
+                            ),
+                        },
+                    }
                 }}
+
                 // minDate={minDate}
                 // maxDate={maxDate}
                 // onChange={() => (newValue) => {

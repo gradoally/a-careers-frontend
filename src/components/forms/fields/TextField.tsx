@@ -10,16 +10,18 @@ interface Props {
     name: string
     id: string
     label?: string
-    value?: string;
+    value?: string | number;
     defaultValue?: string;
     helperText?: string;
     multiline?: boolean;
     fullWidth?: boolean;
+    type: "text" | "number"
     /**
      * The variant to use.
      * @default 'outlined'
      */
     variant?: 'standard' | 'outlined' | 'filled';
+    onChange: (e: any) => void;
 }
 
 
@@ -31,10 +33,15 @@ const TextField = (props: Props) => {
                     <Typography variant="caption">{props.label}</Typography>
                 </InputLabel>
             )}
-            <Input sx={{
+            <Input type={props.type} sx={{
                 fontSize: "12px",
                 fontWeight: "400",
-            }} multiline={props.multiline} value={props.value} defaultValue={props.defaultValue} id={props.id}
+            }}
+                   onChange={props.onChange}
+                   multiline={props.multiline}
+                   value={props.value}
+                   defaultValue={props.defaultValue}
+                   id={props.id}
                    name={props.name}/>
             {props.withDivider && <Divider/>}
             {props.helperText && <FormHelperText id="component-text">{props.helperText}</FormHelperText>}

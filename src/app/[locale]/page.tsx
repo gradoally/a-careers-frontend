@@ -79,7 +79,7 @@ export default function Home({params: {locale}}: Props) {
         <Shell miniAppbar={false} header={header}  withDrawer withAuth={false}
                extra={<Filter/>}>
 
-            <div className="h-full p-[20px]">
+            <div className=" p-[20px] border-b border-divider">
                 <Suspense fallback={<div>Loading...</div>}>
                     <TaskList link="/tasks/1" data={data}/>
                 </Suspense>

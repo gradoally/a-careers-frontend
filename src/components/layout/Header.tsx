@@ -4,6 +4,7 @@ import ConnectButton from "@/components/ui/buttons/ConnectButton";
 import MenuButton from "@/components/ui/buttons/MenuButton";
 import SearchForm from "@/components/forms/search-form";
 import AppBar from "./app-bar";
+import React from "react";
 
 const Header = ({messages}: {messages: {connect: string, find: string}}) => {
     return (
@@ -11,8 +12,10 @@ const Header = ({messages}: {messages: {connect: string, find: string}}) => {
             <Stack direction="row" alignItems="center" spacing={"15px"} >
                 <MenuButton/>
                 <SearchForm text={messages.find}/>
-                <ConnectButton text={messages.connect}/>
             </Stack>
+            <Box component="div" sx={{flexGrow: 1}}/>
+            <Stack><ConnectButton text={messages.connect}/></Stack>
+
         </AppBar>
     )
 }

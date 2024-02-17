@@ -9,14 +9,16 @@ export const StyledAppBar = styled(AppBar)`
 `
 
 export const StyledPaper = styled(Paper)`
-  border-bottom: ${({ theme }) => '1px solid ' + theme.palette.divider};
-  box-shadow: none;
-  border-radius: 0;
-  background-image: none;
+    border-bottom: ${({theme}) => '1px solid ' + theme.palette.divider};
+    box-shadow: none;
+    border-radius: 0;
+    background-image: none;
+    width: 375px;
+    margin: 0 auto;
 `
 
 export const StyledToolbar = styled(Toolbar)`
-    height: 60px;
+    height: 70px;
     border: none;
     padding: 15px; 
 `

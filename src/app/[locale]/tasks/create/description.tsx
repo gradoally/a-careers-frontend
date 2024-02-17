@@ -3,28 +3,27 @@ import {TaskCreateType} from "./stepper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import {StyledInput} from "./styled";
+import {FormikProps} from "formik";
 
 
-const Description = ({data}: { data: TaskCreateType }) => {
+const Description = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
     const t = useTranslations('tasks')
-    const handleChange = (event: any) => {
-
-    };
     return (
-        <div className="h-full flex flex-col">
+        <div className="min-h-screen h-full flex flex-col">
             <Stack className="p-[20px] mb-4" component="div" spacing="20px" direction="column">
                 <Typography variant="h4">Описание задания</Typography>
                 <Typography variant="caption">
-                    Добавьте подробное описание задания, чтобы получить больше откликов
+                    {t("add_detailed_description_to_get_more_responses")}
                 </Typography>
             </Stack>
-            <div className="flex-grow">
+            <div className="grow">
                     <StyledInput
                         fullWidth
                         multiline
+                        onChange={formik.handleChange}
                         inputProps={{style: {height: "100%"}}}
                         id="description"
-                        value="Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться"
+                        value={formik.values.description}
                         name="description"/>
             </div>
         </div>

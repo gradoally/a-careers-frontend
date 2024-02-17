@@ -9,6 +9,7 @@ import createCache from "@emotion/cache";
 import {TonConnectUIProvider} from "@tonconnect/ui-react";
 
 import ThemeProvider from "@/lib/theme-provider";
+import {TelegramProvider} from "@/lib/telegram-provider";
 
 
 export type AppContextType = {
@@ -103,7 +104,10 @@ const AppProviders = (props: Props) => {
         <CacheProvider value={cache}>
             <AppContext.Provider value={memoValue}>
                 <ThemeProvider>
-                    {props.children}
+
+                    <TelegramProvider>
+                        {props.children}
+                    </TelegramProvider>
                 </ThemeProvider>
             </AppContext.Provider>
         </CacheProvider>

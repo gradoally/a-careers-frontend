@@ -17,8 +17,8 @@ const ConnectButton = ({text}: {text: string})=>{
     const [tonConnectUI] = useTonConnectUI();
     const { connected, network, wallet, sender } = useTonConnect();
 		const client = useTonClient();
-		// const { userNextIndex } = useMasterContract();
-		const { value, address } = useCounterContract();
+		const { userNextIndex } = useMasterContract();
+		// const { value, address } = useCounterContract();
 
 		useEffect(() => {
 			if (network === CHAIN.TESTNET) {
@@ -39,8 +39,6 @@ const ConnectButton = ({text}: {text: string})=>{
     };
 
     const onCreateUser = async () => {
-			// console.log("counter", value, address);
-
         try {
 					if (!client) return;
 					// console.log("userNextIndex", userNextIndex);
@@ -79,8 +77,9 @@ const ConnectButton = ({text}: {text: string})=>{
 					// 	{ value }
 					// </Button>
 					// <div>{value ?? "Loading..."}</div>
+					<Button color="secondary" variant="contained" onClick={onCreateUser}> {userNextIndex ?? "Loading..."} </Button>
 					// <Button color="secondary" variant="contained" onClick={onCreateUser}> {value ?? "Loading..."} </Button>
-					wallet
+					// wallet
         : <Button
             onClick={onConnectWallet}
 						sx={{

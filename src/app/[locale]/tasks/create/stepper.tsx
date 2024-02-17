@@ -1,5 +1,5 @@
 "use client"
-import {useTranslations} from "next-intl";
+import {useTranslations, useLocale} from "next-intl";
 
 import React, {useState} from "react";
 import Typography from "@mui/material/Typography";
@@ -15,26 +15,47 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 
 import SelectLanguage from "./select-language";
 import SelectCategory from "./select-category";
-import Task from "./task";
+import Title from "./title";
 import Deadline from "./deadline";
 import Price from "./price";
 import Description from "./description";
 import TechnicalTask from "./technical_task";
+import {useFormik} from "formik";
 
 export interface TaskCreateType {
-    language?: string;
-    category?: string;
+    language: string;
+    category: string;
+    price: number;
+    deadline: string;
+    title: string;
+    description: string;
+    technicalTask: string;
 }
 
 const Stepper = () => {
+    const locale = useLocale();
     const t = useTranslations("tasks");
     const tc = useTranslations("common");
 
-    const [data, setData] = useState<TaskCreateType>({});
-    const [step, setStep] = useState<number>(4);
+    const [step, setStep] = useState<number>(1);
     const [title, setTitle] = useState(t("create"))
     const [disabled, setDisabled] = useState(false)
 
+    const formik = useFormik<TaskCreateType>(
+        {
+            initialValues: {
+                language: locale,
+                category: "",
+                price: 0,
+                deadline: "",
+                description: "",
+                title: "",
+                technicalTask: "",
+            },
+            onSubmit: (values: TaskCreateType)=>{}
+        },
+
+    )
 
     const handleBack = () => {
         const newStep = step == 1 ? 1 : step - 1
@@ -64,22 +85,22 @@ const Stepper = () => {
 
     const renderStep =  ()=>{
         switch (step){
-            case 7: return (<TechnicalTask data={data}/>)
-            case 6: return (<Description data={data}/>)
-            case 5: return (<Price data={data}/>)
+            case 7: return (<TechnicalTask formik={formik}/>)
+            case 6: return (<Description formik={formik}/>)
+            case 5: return (<Price formik={formik}/>)
             case 4:
-                return (<Deadline data={data}/>)
+                return (<Deadline formik={formik}/>)
             case 3:
                 return (
-                    <Task data={data}/>
+                    <Title formik={formik}/>
                 )
             case 2:
                 return (
-                    <SelectCategory data={data}/>
+                    <SelectCategory formik={formik}/>
                 )
             case 1:
             default:
-                return (<SelectLanguage data={data}/>)
+                return (<SelectLanguage formik={formik}/>)
         }
     }
 

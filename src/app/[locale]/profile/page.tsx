@@ -116,7 +116,7 @@ const Page = ({params: {locale, category}}: Props) => {
     )
     return (
         <Shell miniAppbar={true} header={header}>
-            <Suspense fallback={"Loading..."}>
+            <Suspense fallback={<div>Loading...</div>}>
                 <ProfileView data={data}/>
             </Suspense>
         </Shell>

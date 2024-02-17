@@ -19,11 +19,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../globals.css";
 
 
-const inter = localFont({
-    src: '../fonts/Inter.woff2',
-    display: 'swap',
-    variable: '--font-inter',
-})
+// const inter = localFont({
+//     src: '../fonts/Inter.woff2',
+//     display: 'swap',
+//     variable: '--font-inter',
+// })
 
 export const metadata: Metadata = {
     title: 'Alfamater',
@@ -45,16 +45,18 @@ const RootLayout = ({children, params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
     const messages = useMessages();
     return (
-        <html lang={locale} className={`${inter.variable}`}>
+        <html lang={locale}
+              // className={`${inter.variable}`}
+        >
         <body className={clsx(
             'dark',
         )}>
 
-        <style>{`
-            html {
-                font-family: ${inter.variable};
-            }
-        `}</style>
+        {/*<style>{`*/}
+        {/*    html {*/}
+        {/*        font-family: ${inter.variable};*/}
+        {/*    }*/}
+        {/*`}</style>*/}
         <AppProviders options={{key: 'mui'}}>
             <NextIntlClientProvider
                 locale={locale}

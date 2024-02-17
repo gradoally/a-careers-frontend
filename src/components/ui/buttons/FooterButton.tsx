@@ -18,6 +18,7 @@ const FooterButton = ({children,...props}: Props) => {
                     fontSize: "16px",
                     textAlign: "center",
                     fontWeight: "800",
+                    maxWidth: "200px"
                 }}
             {...props}
         >

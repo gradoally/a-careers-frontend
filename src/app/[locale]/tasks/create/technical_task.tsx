@@ -4,9 +4,10 @@ import Typography from "@mui/material/Typography";
 
 import {StyledInput} from "./styled";
 import {TaskCreateType} from "./stepper";
+import {FormikProps} from "formik";
 
 
-const TechnicalTask = ({data}: { data: TaskCreateType }) => {
+const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
     const t = useTranslations('tasks')
     const handleChange = (event: any) => {
 
@@ -14,9 +15,9 @@ const TechnicalTask = ({data}: { data: TaskCreateType }) => {
     return (
         <div className="h-full flex flex-col">
             <Stack className="p-[20px] mb-4" component="div" spacing="20px" direction="column">
-                <Typography variant="h4">Техническое задание</Typography>
-                <Typography variant="caption">
-                    Добавьте техническое задание. Для хранения файлов используйте TON Byte.
+                <Typography variant="h4">{t("technical_task")}</Typography>
+                <Typography component="div" variant="caption">
+                    {t("technical_task_description")}
                 </Typography>
             </Stack>
 
@@ -24,8 +25,10 @@ const TechnicalTask = ({data}: { data: TaskCreateType }) => {
                 <StyledInput
                     fullWidth
                     inputProps={{style: {height: "100%"}}}
-                    multiline id="technical_task"
-                    value="Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться"
+                    multiline
+
+                    value={formik.values.technicalTask}
+                    id="technical_task"
                     name="technical_task"/>
             </div>
         </div>

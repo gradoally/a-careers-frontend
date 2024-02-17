@@ -20,16 +20,13 @@
     "something_went_wrong_sorry": "Что то пошло не так. Простите!",
     "please_provide_valid_data": "Please provide valid data"
   },
-  
   "common": {
     "connect": "Подключиться",
     "text_support": "Написать в поддержку",
     "no_responses": "Без откликов",
-
     "on_moderation": "В модерации",
     "response_sent": "Отправлен отклик",
     "declined": "Отказано",
-
     "filter": "Фильтр",
     "log_in_and_respond": "Войти и откликнуться",
     "description": "Описание",
@@ -45,7 +42,6 @@
     "edit_profile": "Редактирование профиля",
     "network_commission": "Комиссия сети ≈ {value}"
   },
-
   "tasks": {
     "deadline_datetime": "Дата и время дедлайна",
     "select_deadline": "Укажите точный дедлайн",
@@ -57,7 +53,6 @@
     "language": "Язык заказа",
     "you_have_created": "Вы создали {value} задач",
     "you_have_not_created_tasks": "Вы еще не создали и не взяли ни одной задачи.",
-
     "on_moderation": "На модерации · {value}",
     "no_responses": "Нет откликов · {value}",
     "have_responses": "Есть отклики · {value}",
@@ -66,8 +61,6 @@
     "pending_payment": "Ожидает оплаты · {value}",
     "arbitration": "Арбитраж · {value}",
     "completed": "Завершена · {value}",
-
-
     "you_have_responded": "Вы откликнулись на {value} задач",
     "response_sent": "Отклик отправлен · {value}",
     "response_denied": "Отклик отклонен · {value}",
@@ -75,7 +68,13 @@
     "on_inspection": "На проверке · {value}",
     "task_accomplished": "Task accomplished · {value}",
     "select_language": "Выберите язык объявления",
-    "select_category": "Выберите категорию"
+    "select_category": "Выберите категорию",
+    "add_detailed_description_to_get_more_responses": "Добавьте подробное описание задания, чтобы получить больше откликов",
+    "set_task_price": "Укажите бюджет задачи",
+    "set_task_price_explained": "Укажите сумму вознаграждения исполнителю после выполнения задачи в TON",
+    "technical_task": "Техническое задание",
+    "technical_task_description": "Добавьте техническое задание. Для хранения файлов используйте TON Byte.",
+    "task_deadline": "Когда нужно выполнять задачу?"
   },
   "profile": {
     "create": "Создать профиль",
@@ -93,7 +92,6 @@
     "link_to_website": "Ссылка на сайт",
     "link_to_portfolio": "Ссылка на портфолио"
   },
-
   "copy": {
     "copied": "Скопировано",
     "error_copying_text_to_clipboard": "Ошибка при копировании текста в буфер обмена"

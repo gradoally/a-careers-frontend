@@ -6,18 +6,18 @@ import Stack from '@mui/material/Stack';
 import TextField from "@/components/forms/fields/TextField";
 
 import {TaskCreateType} from "./stepper";
+import {FormikProps} from "formik";
 
 
-const Price = ({data}: {data: TaskCreateType})=>{
+const Price = ({formik}: { formik: FormikProps<TaskCreateType>})=>{
     const t = useTranslations('tasks')
-    const handleChange = (event: any) => {
 
-    };
     return (
         <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">Укажите бюджет задачи</Typography>
-            <Typography variant="caption">Укажите сумму вознаграждения исполнителю после выполнения задачи в TON</Typography>
-            <TextField variant="standard" withDivider fullWidth id="price" name="price" />
+            <Typography variant="h4">{t("set_task_price")}</Typography>
+            <Typography variant="caption">{t("set_task_price_explained")}</Typography>
+            <TextField type="text"  value={formik.values.price} onChange={formik.handleChange}
+                       variant="standard" withDivider fullWidth id="price" name="price" />
         </Stack>
     )
 }

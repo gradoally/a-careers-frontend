@@ -10,28 +10,25 @@ import Divider from "@/components/ui/Divider";
 
 import {TaskCreateType} from "./stepper";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
+import {FormikProps} from "formik";
 
 
-const SelectLanguage = ({data}: {data: TaskCreateType})=>{
+const SelectLanguage = ({formik}: {formik: FormikProps<TaskCreateType>})=>{
     const t = useTranslations('tasks')
-    const handleChange = (event: SelectChangeEvent) => {
 
-    };
     return (
         <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
             <Typography variant="h4">{t("select_language")}</Typography>
             <Typography variant="caption">{t("language")}</Typography>
-
             <FormControl component="div" fullWidth>
-
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={"ru"}
+                    labelId="language-label"
+                    id="language" name="language"
+                    value={formik.values.language}
                     className="py-2 ps-0"
                     startAdornment={<InputAdornment position="start">🌎</InputAdornment>}
                     IconComponent={ArrowRightIcon}
-                    onChange={handleChange}
+                    onChange={formik.handleChange}
                 >
                     <MenuItem value={"ru"}>Русский</MenuItem>
                     <MenuItem value={"en"}>English</MenuItem>

@@ -4,15 +4,12 @@ import clsx from "clsx";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 
 import {TaskCreateType} from "./stepper";
+import {FormikProps} from "formik";
 
 
-const SelectCategory = ({data}: { data: TaskCreateType }) => {
+const SelectCategory = ({formik}: {  formik: FormikProps<TaskCreateType>}) => {
     const t = useTranslations("tasks")
 
     const category: string[] = [
@@ -25,20 +22,25 @@ const SelectCategory = ({data}: { data: TaskCreateType }) => {
         "Frontend-разработка",
         "Разработка и минт NFT-коллекций",
     ]
+
+    const handleClick = async (value: string) =>{
+        await formik.setFieldValue("category", value)
+    }
+
     return (
         <div className={"p-[20px]"}>
             <Typography variant="h4">{t("select_category")}</Typography>
             <Stack component="div" className="mt-4" spacing="20px">
                 {category.map((e, i) => {
-                    const isSelected = i == 3
+                    const isSelected = formik.values.category === e
                     return (
                         <Button variant="outlined" component="div" color="secondary" key={i}
                                 className={"py-[15px] ps-1"}
                                 sx={{
-                                    // textAlign: 'left',
                                     borderColor: isSelected ? "common.white" : "secondary.main",
                                     color: isSelected ? "common.white" : "secondary.main"
                                 }}
+                                onClick={()=>handleClick(e)}
                             >
                             <Typography variant="body2" className="w-full leading-[20px]" component="div">
                                 {e}

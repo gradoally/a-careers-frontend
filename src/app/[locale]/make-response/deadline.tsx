@@ -18,7 +18,7 @@ const Deadline = ({data}: {data: TaskCreateType})=>{
             <Typography variant="caption">
                 Укажите точный дедлайн
             </Typography>
-            <TextField name="deadline" withDivider fullWidth id="about" variant="standard"/>
+            <TextField onChange={()=>{}} type="text" value="" name="deadline" withDivider fullWidth id="about" variant="standard"/>
         </Stack>
     )
 }

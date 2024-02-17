@@ -14,7 +14,7 @@ export function useMasterContract() {
   
   const masterContract = useAsyncInitialize(async () => {
     if (!client) return;
-    const contract = new Master(Address.parse(process.env.MASTER_CONTRACT_ADDRESS || ""));
+    const contract = Master.createFromAddress(Address.parse("EQCmgRIfj3trNv5aR9fvDYaVkQ5yskhq6RJ4ygQ4BdiUQBtx"));
     return client.open(contract) as OpenedContract<Master>;
   }, [client]);
 
@@ -26,9 +26,10 @@ export function useMasterContract() {
       const indexes = await masterContract.getIndexes();
       setUserNextIndex(indexes.userNextIndex);
       
-      await sleep(5000);
-      await getIndexes(); 
+      await sleep(500000);
+      getIndexes(); 
     }
+    getIndexes();
   }, [masterContract]);
 
   return {
