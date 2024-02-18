@@ -6,7 +6,6 @@ import {unstable_setRequestLocale} from "next-intl/server";
 
 
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 
 import {locales} from "@/config";
 
@@ -17,6 +16,7 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 import ProfileForm from "@/components/forms/ProfileForm";
 import {NextLinkComposed} from "@/components/Link";
+import UserAvatar from "@/components/UserAvatar";
 
 type Props = {
     params: {
@@ -35,7 +35,7 @@ const Page = ({params: {locale}}: Props) => {
     const messages = useMessages();
 
     const t = useTranslations("profile");
-    const tc = useTranslations("common");
+    const tn = useTranslations("network");
     const header = (
         <AppBar>
             <CenteredContainer>
@@ -53,15 +53,16 @@ const Page = ({params: {locale}}: Props) => {
                 variant="contained">
                 {t("send_to_blockchain")}
             </FooterButton>
-            <Typography variant="body2">{tc("network_commission", {value: "0.011 TON"})}</Typography>
+            <Typography variant="body2">{tn("commission", {value: "0.011 TON"})}</Typography>
         </Footer>
     )
 
     return (
-        <Shell miniAppbar={true} withDrawer header={header} footer={footer}>
-            <div className="p-[20px]">
+        <Shell withDrawer header={header} footer={footer}>
+            <div className="p-5">
                 <div className="flex justify-center mb-[30px]">
-                    <Avatar sx={{"height": "90px", width: "90px"}} alt="Avatar" src={"/avatar.png"}/>
+
+                    <UserAvatar height={"90px"} width={"90px"}/>
                 </div>
 
                 <NextIntlClientProvider

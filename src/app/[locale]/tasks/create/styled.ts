@@ -5,14 +5,14 @@ import InputBase from '@mui/material/InputBase';
 
 export const StyledInput = styled(InputBase)(({theme}) => ({
     height: "100%",
+    padding: 0,
     '& .MuiInputBase-input': {
-        backgroundColor: "rgba(43, 43, 60, 0.2)",
 
+        backgroundColor: "rgba(43, 43, 60, 0.2)",
+        caretColor: "#fff",
         border: 'none',
-        // "color": theme.palette.common.black,
         fontWeight: "400",
         fontSize: "12px",
-        // width: 'auto',
         padding: '20px',
         lineHeight: "25px",
         transition: theme.transitions.create([

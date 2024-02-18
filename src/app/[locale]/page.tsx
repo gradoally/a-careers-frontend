@@ -76,16 +76,16 @@ export default function Home({params: {locale}}: Props) {
         },
     ]
     return (
-        <Shell miniAppbar={false} header={header}  withDrawer withAuth={false}
+        <Shell header={header}  withDrawer withAuth={false}
                extra={<Filter/>}>
 
-            <div className=" p-[20px] border-b border-divider">
+            <div className="p-5 border-b border-divider">
                 <Suspense fallback={<div>Loading...</div>}>
                     <TaskList link="/tasks/1" data={data}/>
                 </Suspense>
             </div>
             <Footer transparent={true}>
-                <FilterButton>{t("common.filter")}</FilterButton>
+                <FilterButton>{t("buttons.filter")}</FilterButton>
             </Footer>
         </Shell>
     );

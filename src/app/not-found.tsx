@@ -57,7 +57,7 @@ export default function NotFound() {
             }
         `}</style>
         <AppProviders options={{key: 'mui'}}>
-            <Shell miniAppbar header={header} footer={<Footer>
+            <Shell  header={header} footer={<Footer>
                 <FooterButton component={NextLinkComposed} to="/">
                     {message[locale].back}
                 </FooterButton>

@@ -1,6 +1,16 @@
 {
-  "auth": {
-    "sign_in": "Войти"
+  "filter": {
+    "sort": "Сортировать",
+    "by_deadline": "По дедлайну",
+    "by_publication_date": "По дате публикации"
+  },
+  "buttons": {
+    "next": "Далее",
+    "filter": "Фильтр",
+    "back": "Назад"
+  },
+  "network": {
+    "commission": "Комиссия сети ≈ {value}"
   },
   "locale_switcher": {
     "ru": "Русский",
@@ -27,23 +37,18 @@
     "on_moderation": "В модерации",
     "response_sent": "Отправлен отклик",
     "declined": "Отказано",
-    "filter": "Фильтр",
     "log_in_and_respond": "Войти и откликнуться",
     "description": "Описание",
     "technical_task": "Техническое задание",
     "deadline": "Дедлайн",
     "customer": "Заказчик",
     "profile": "Профиль",
-    "back": "Назад",
     "smart_contract_address": "Адрес смарт-контракта",
     "created": "Созданные",
-    "responses": "Отклики",
-    "next": "Далее",
-    "edit_profile": "Редактирование профиля",
-    "network_commission": "Комиссия сети ≈ {value}"
+    "responses": "Отклики"
+
   },
   "tasks": {
-    "deadline_datetime": "Дата и время дедлайна",
     "select_deadline": "Укажите точный дедлайн",
     "create": "Создать задачу",
     "find": "Найти задачу",
@@ -69,12 +74,22 @@
     "task_accomplished": "Task accomplished · {value}",
     "select_language": "Выберите язык объявления",
     "select_category": "Выберите категорию",
-    "add_detailed_description_to_get_more_responses": "Добавьте подробное описание задания, чтобы получить больше откликов",
-    "set_task_price": "Укажите бюджет задачи",
+    "send_task_to_blockchain": "Отправить задачу в блокчейн",
+
+    "what_needs_to_be_done": "Что нужно сделать?",
+    "job_title": "Название задания",
+    "task_title_example": "Например, создать бот для блокчейн-голосования",
+
+    "when_should_a_task_be_accomplished": "Когда нужно выполнять задачу?",
+    "deadline_datetime": "Дата и время дедлайна",
+    "specify_the_exact_deadline": "Specify the exact deadline",
+    "price": "Цена",
+    "specify_the_budget_for_the_task": "Укажите бюджет задачи",
     "set_task_price_explained": "Укажите сумму вознаграждения исполнителю после выполнения задачи в TON",
+    "job_description": "Job Description",
+    "add_detailed_description_to_get_more_responses": "Добавьте подробное описание задания, чтобы получить больше откликов",
     "technical_task": "Техническое задание",
-    "technical_task_description": "Добавьте техническое задание. Для хранения файлов используйте TON Byte.",
-    "task_deadline": "Когда нужно выполнять задачу?"
+    "technical_task_description": "Добавьте техническое задание. Для хранения файлов используйте TON Byte."
   },
   "profile": {
     "create": "Создать профиль",
@@ -90,7 +105,9 @@
     "freelancer_profile": "Профиль фрилансера",
     "fill_if_you_want_make_response": "Заполните, если планируете делать отклики",
     "link_to_website": "Ссылка на сайт",
-    "link_to_portfolio": "Ссылка на портфолио"
+    "link_to_portfolio": "Ссылка на портфолио",
+    "edit": "Редактирование профиля",
+    "profile": "Профиль"
   },
   "copy": {
     "copied": "Скопировано",

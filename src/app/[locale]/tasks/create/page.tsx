@@ -1,8 +1,12 @@
 import React from "react";
 
+import pick from 'lodash/pick';
+import {NextIntlClientProvider, useMessages} from 'next-intl';
 import {unstable_setRequestLocale} from "next-intl/server";
+
 import {locales} from "@/config";
 import Stepper from "./stepper";
+
 type Props = {
     params: {
         category: string;
@@ -19,7 +23,15 @@ const Page = ({params: {locale}}: Props)=>{
     // Enable static rendering
     unstable_setRequestLocale(locale);
 
-    return (<Stepper/>)
+    const messages = useMessages();
+    return (
+        <NextIntlClientProvider
+            locale={locale}
+            messages={pick(messages, "tasks", "buttons", "network")}
+        >
+        <Stepper/>
+        </NextIntlClientProvider>
+    )
 }
 
 export default Page;

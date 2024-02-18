@@ -43,7 +43,7 @@ const Page = ({params: {locale}}: Props) => {
     )
 
     return (
-        <Shell miniAppbar={true} withDrawer header={header} footer={footer}>
+        <Shell withDrawer header={header} footer={footer}>
             <div className="ps-[20px] pb-[20px]">
                 <Content/>
             </div>

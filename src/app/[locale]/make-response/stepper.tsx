@@ -98,7 +98,7 @@ const Stepper = () => {
         </Footer>
     )
     return (
-        <Shell withDrawer header={header} footer={footer}>
+        <Shell padding="70px 0 100px 0" header={header} footer={footer}>
             {renderStep()}
         </Shell>
     )

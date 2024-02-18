@@ -1,4 +1,3 @@
-import {ReactNode} from "react";
 
 import Button, {ButtonProps} from '@mui/material/Button';
 
@@ -12,13 +11,14 @@ const FooterButton = ({children,...props}: Props) => {
                 variant="contained"
                 sx={{
                     color: "common.black",
-                    width: "100%",
+                    // width: "100%",
                     height: "40px",
                     borderRadius: "5px",
                     fontSize: "16px",
                     textAlign: "center",
                     fontWeight: "800",
-                    maxWidth: "200px"
+                    maxWidth: "200px",
+                    lineHeight: "24px"
                 }}
             {...props}
         >

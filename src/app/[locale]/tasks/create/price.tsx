@@ -14,9 +14,9 @@ const Price = ({formik}: { formik: FormikProps<TaskCreateType>})=>{
 
     return (
         <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">{t("set_task_price")}</Typography>
+            <Typography variant="h4">{t("specify_the_budget_for_the_task")}</Typography>
             <Typography variant="caption">{t("set_task_price_explained")}</Typography>
-            <TextField type="text"  value={formik.values.price} onChange={formik.handleChange}
+            <TextField type="text" label={t("price")}  value={formik.values.price} onChange={formik.handleChange}
                        variant="standard" withDivider fullWidth id="price" name="price" />
         </Stack>
     )

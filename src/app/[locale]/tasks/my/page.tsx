@@ -12,7 +12,6 @@ import React, {Suspense} from "react";
 
 import Content from "./content";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-import Link from "@/components/Link";
 
 type Props = {
     params: { locale: string };
@@ -29,7 +28,7 @@ const Page = ({params: {locale}}: Props) => {
     const footer = (
         <Footer  >
             <FooterButton
-                color={"secondary"} sx={{color: "common.black", width: "100%"}}
+                color={"secondary"} sx={{color: "common.black"}}
                 variant="contained">
                 {t("create")}
             </FooterButton>
@@ -45,8 +44,8 @@ const Page = ({params: {locale}}: Props) => {
     )
 
     return (
-        <Shell withAuth miniAppbar={true} withDrawer header={header} footer={footer}>
-            <div className="ps-[20px] pb-[20px]">
+        <Shell withAuth  withDrawer header={header} footer={footer}>
+            <div className="px-[20px] pb-[20px]">
                 <Suspense fallback={"Loading..."}>
                     {data ? (
                         <Content data={data}/>

@@ -3,10 +3,10 @@ import StatusChip from "@/components/StatusChip";
 import Typography from "@mui/material/Typography";
 import CopyContainer from "@/components/features/copy";
 import Divider from "@/components/ui/Divider";
-import Avatar from "@mui/material/Avatar";
 import Link from "@/components/Link";
 import React from "react";
 import {useTranslations} from "next-intl";
+import UserAvatar from "@/components/UserAvatar";
 
 const StackContainer = ({primary, secondary}: {
     primary: string;
@@ -76,7 +76,8 @@ const TaskView = ({data}: Props) => {
                     <Typography variant="body2">{tc("customer")}</Typography>
                     <div>
                         <Stack component="div" direction="row" spacing={3}>
-                            <Avatar sx={{"height": "80px", width: "80px"}} alt="Avatar" src={data.customer.image}/>
+                            <UserAvatar height={"80px"} width="80px"/>
+                            {/*<Avatar sx={{"height": "80px", width: "80px"}} alt="Avatar" src={data.customer.image}/>*/}
                             <Stack direction={"column"} spacing={"7px"} component={"div"}>
                                 <Typography variant="body2">{data.customer.username}</Typography>
                                 <Stack component="div" sx={{fontSize: "10px"}} direction="row" spacing="5px">

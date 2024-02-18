@@ -1,5 +1,5 @@
 "use client"
-import {useLocale} from "next-intl";
+import {useTranslations} from "next-intl";
 import {usePathname} from "next/navigation";
 import React from "react";
 import {
@@ -21,17 +21,18 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
 import {useAppContext} from "@/lib/app-providers";
+import LanguageToggler from "@/components/layout/drawer/LanguageToggler";
+import UserAvatar from "@/components/UserAvatar";
 
 interface Props {
-    messages: { connect: string, text_support: string }
     routes: { label: string, to: string }[];
     withAuth?: boolean;
 }
 
-const DrawerContent = ({messages, routes, withAuth}: Props) => {
+const DrawerContent = ({routes, withAuth}: Props) => {
     const {isDrawerOpen, toggleDrawer} = useAppContext()
     const pathname = usePathname();
-    const locale = useLocale();
+    const t = useTranslations("common");
     return (
         <MuiDrawer
             variant="temporary"
@@ -51,13 +52,12 @@ const DrawerContent = ({messages, routes, withAuth}: Props) => {
             }}
         >
             <div className="w-[375px] h-full mx-auto">
-
                 <AppBar>
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <Logo/>
                     </Stack>
                     <Box component="div" sx={{flexGrow: 1}}/>
-                    <Stack><ConnectButton text={messages.connect}/></Stack>
+                    <Stack><ConnectButton text={t('connect')}/></Stack>
                     <Stack direction="row" alignItems="center" style={{marginLeft: 10}}>
                         <CloseButton onClick={() => toggleDrawer(false)}/>
                     </Stack>
@@ -68,14 +68,14 @@ const DrawerContent = ({messages, routes, withAuth}: Props) => {
                             <>
                                 <Stack spacing="20px" className="py-[30px]" direction="column" justifyContent="center"
                                        alignItems="center">
-                                    <Avatar sx={{height: "70px", width: "70px"}} alt="Avatar" src={"/avatar.png"}/>
+                                    <UserAvatar/>
                                     <div className="text-center">
                                         <Typography variant="h4">
                                             @new_user
                                         </Typography>
                                         <Typography variant="caption">
                                             <Link className="underline" noLinkStyle href={"/profile"}>
-                                                Профиль 📖
+                                                {t("profile")} 📖
                                             </Link>
                                         </Typography>
                                     </div>
@@ -117,14 +117,10 @@ const DrawerContent = ({messages, routes, withAuth}: Props) => {
                     <Box component="div" sx={{padding: "16px"}}>
                         <Stack direction="row" spacing={2}
                                justifyContent="space-between">
-                            <Typography sx={{color: "text.secondary"}} variant="body2">
-                                {messages.text_support}
+                            <Typography component="div" sx={{color: "text.secondary"}} variant="body2">
+                                {t("text_support")}
                             </Typography>
-                            <div>
-                                <Typography sx={{color: "text.secondary"}} variant="body2">
-                                    🌎 {locale}
-                                </Typography>
-                            </div>
+                            <LanguageToggler/>
                         </Stack>
                     </Box>
                 </Stack>

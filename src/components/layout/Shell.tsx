@@ -13,24 +13,25 @@ interface Props {
     withAuth?: boolean;
     extra?: ReactNode;
     footer?: ReactNode;
-    miniAppbar?: boolean;
+    padding?: string;
 }
 
-const Shell = (props: Props) => {
-    const paddingTop = props.miniAppbar ? "60px" : "70px";
+const Shell = ({padding = "60px 0 100px 0", ...props}: Props) => {
     return (
-        <Paper elevation={0} className="max-w-screen h-full min-h-screen" sx={{width: "375px", margin: "0 auto"}}>
+        <Paper elevation={0} className="max-w-screen h-full w-full min-h-screen border border-divider"
+               sx={{maxWidth: "375px", margin: "0 auto"}}
+        >
             {props.header && props.header}
             {props.withDrawer && <Drawer withAuth={props.withAuth}/>}
+            {props.extra && props.extra}
             <div
                 id="styled-content"
                 className="min-h-screen h-full overflow-y-scroll"
-                style={{paddingTop: paddingTop, paddingBottom: "100px", }}
+                style={{padding: padding}}
             >
                 {props.children}
+                {props.footer && props.footer}
             </div>
-            {props.extra && props.extra}
-            {props.footer && props.footer}
         </Paper>
     )
 }

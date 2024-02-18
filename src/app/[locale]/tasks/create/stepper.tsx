@@ -26,7 +26,7 @@ export interface TaskCreateType {
     language: string;
     category: string;
     price: number;
-    deadline: string;
+    deadline: string | null;
     title: string;
     description: string;
     technicalTask: string;
@@ -34,12 +34,13 @@ export interface TaskCreateType {
 
 const Stepper = () => {
     const locale = useLocale();
-    const t = useTranslations("tasks");
-    const tc = useTranslations("common");
+    const t = useTranslations();
 
     const [step, setStep] = useState<number>(1);
-    const [title, setTitle] = useState(t("create"))
+    const [title, setTitle] = useState(t("tasks.create"))
     const [disabled, setDisabled] = useState(false)
+
+
 
     const formik = useFormik<TaskCreateType>(
         {
@@ -47,12 +48,14 @@ const Stepper = () => {
                 language: locale,
                 category: "",
                 price: 0,
-                deadline: "",
+                deadline: null,
                 description: "",
                 title: "",
                 technicalTask: "",
             },
-            onSubmit: (values: TaskCreateType)=>{}
+            onSubmit: (values: TaskCreateType)=>{
+
+            }
         },
 
     )
@@ -96,7 +99,7 @@ const Stepper = () => {
                 )
             case 2:
                 return (
-                    <SelectCategory formik={formik}/>
+                    <SelectCategory setTitle={setTitle}  formik={formik}/>
                 )
             case 1:
             default:
@@ -107,32 +110,36 @@ const Stepper = () => {
     const footer = (
         <Footer>
             {step===7?(
-                <>
+                <Stack spacing="10px" className="h-[65px]">
                     <FooterButton
                         component={NextLinkComposed}
                         to={"/create-task/task"}
                         disabled={disabled}
                         className="w-full"
-                        color={"secondary"} sx={{color: "common.black"}}
+                        color={"secondary"}
+                        sx={{color: "common.black"}}
                         variant="contained">
-                        Отправить задачу в блокчейн
+                        {t("tasks.send_task_to_blockchain")}
                     </FooterButton>
-                    <Typography variant="body2">Комиссия сети ≈ 0.011 TON</Typography>
-                </>
+                    <Typography variant="body2">
+                        {t("network.commission", {value: "≈ 0.011 TON"})}
+                    </Typography>
+                </Stack>
             ): (
                 <FooterButton
                     disabled={disabled}
                     onClick={handleClick}
-                    className="w-full"
-                    color={"secondary"} sx={{color: "common.black"}}
+                    color={"secondary"}
+                    sx={{color: "common.black"}}
+                    // className="h-[40px]"
                     variant="contained">
-                    {tc("next")}
+                    {t("buttons.next")}
                 </FooterButton>
             )}
         </Footer>
     )
     return (
-        <Shell withDrawer header={header} footer={footer}>
+        <Shell padding="70px 0 105px 0" withDrawer header={header} footer={footer}>
             {renderStep()}
         </Shell>
     )

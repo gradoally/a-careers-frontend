@@ -5,6 +5,7 @@ import Link from "@/components/Link";
 import Chip from "@mui/material/Chip";
 import React from "react";
 import {useTranslations} from "next-intl";
+import {User} from "@/openapi/client";
 
 interface HistoryType {
     date: string;
@@ -74,16 +75,16 @@ const temp = [
     },
 ]
 
-const History = ({data}: {data: HistoryType[]}) => {
+const History = ({data}: { data: HistoryType[] }) => {
     return (
-        <Stack component="div" spacing="1px" className="w-screen">
+        <Stack component="div" spacing="1px" >
             {data.map((e, i) => (
-                <Stack className="bg-info px-[20px] py-2" direction="column" key={i} >
+                <Stack className="bg-info px-[20px] py-2" direction="column" key={i}>
                     <Typography variant="caption" component="div">{e.date}</Typography>
                     <Stack direction="row" spacing={1} className="h-[30px]">
                         <div>{e.type === 'in' ? "↘" : "↗"}</div>
                         <div className="flex-grow">
-                            <Typography component="div"  variant="body2">
+                            <Typography component="div" variant="body2">
                                 {e.title}
                             </Typography>
                             <Typography component="div" color="secondary" variant="body2">
@@ -103,56 +104,45 @@ const History = ({data}: {data: HistoryType[]}) => {
 }
 
 
+// const userTemp = {
+//     username: "@new_user",
+//     smartContract: "EQCISAJu…W_JqYM3t",
+//     telegram: "@some_wallet",
+//     about: "🎯 dApp любой сложности\n" +
+//         "💎 Премиум дизайн (UI/UX)!\n" +
+//         "⚙️ Адаптивная верстка – на профессиональном уровне!🏆 Золотой партнёр «1С-Битрикс» (нет) !\n" +
+//         "\n" +
+//         "✔️ Blockchain-продвижение сайтов на лидирующие позиции. Взлом рынков, соц. инжинеринг",
+//     site: "my-little-studio.ton",
+//     portfolio: "https://github.com/somewallet",
+//     resume: "https://github.com/somewallet",
+//     specialization: ["FunC", "FIFT", "Toncenter API"],
+//     image: "/profile.png"
+// }
 
-interface ProfileData {
-    username: string
-    smartContract: string;
-    telegram: string;
-    about?: string;
-    site?: string
-    portfolio?: string;
-    resume?: string;
-    specialization?: string[]
-    image: string
-    history?: HistoryType[]
-}
-
-
-const userTemp = {
-    username: "@new_user",
-    smartContract: "EQCISAJu…W_JqYM3t",
-    telegram: "@some_wallet",
-    about: "🎯 dApp любой сложности\n" +
-        "💎 Премиум дизайн (UI/UX)!\n" +
-        "⚙️ Адаптивная верстка – на профессиональном уровне!🏆 Золотой партнёр «1С-Битрикс» (нет) !\n" +
-        "\n" +
-        "✔️ Blockchain-продвижение сайтов на лидирующие позиции. Взлом рынков, соц. инжинеринг",
-    site: "my-little-studio.ton",
-    portfolio: "https://github.com/somewallet",
-    resume: "https://github.com/somewallet",
-    specialization: ["FunC", "FIFT", "Toncenter API"],
-    image: "/profile.png"
-}
-
-const ProfileView = ({data}: {data: ProfileData})=>{
+const ProfileView = ({data, history}: { data: User, history: HistoryType[] }) => {
     const t = useTranslations("profile");
     const tc = useTranslations("common");
+    const renderSpecialization = ()=>{
+        if (!data?.specialization) return <div/>
+        const specialization = data.specialization.split(",")
+        return specialization.map((e: string, i: number)=> <Chip key={i} label={e} color="secondary"/>)
+    }
     return (
         <>
-            <div className="p-[20px] rounded">
-                {/*<Image alt="Profile image" width="335" height={335} src={data.image}/>*/}
-                <div className="bg-[#000] text-center align-middle h-[335px] w-[334] text-[196px]">
+            <div className="p-5">
+                <div className="bg-[#000] rounded text-center align-middle h-[335px] w-[334] text-[196px]">
                     🦄
                 </div>
                 <Stack spacing={"20px"} className="pt-[35px]">
 
-                    <Typography variant="h4">{data.username}</Typography>
+                    <Typography variant="h4">{data?.nickname}</Typography>
                     <div>
                         <Typography component="div" variant="caption">
                             {tc("smart_contract_address")}
                         </Typography>
                         <Typography className="mt-1" variant="body2">
-                            {data.smartContract}
+                            {data?.address}
                         </Typography>
                     </div>
                     <div>
@@ -161,7 +151,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                         </Typography>
                         <Typography className="mt-1" color="secondary" variant="body2">
                             <Link noLinkStyle href={"https://t.me/user.telegram"}>
-                                {data.telegram}
+                                {data?.telegram}
                             </Link>
                         </Typography>
                     </div>
@@ -170,7 +160,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                             {t("about")}
                         </Typography>
                         <Typography variant="body2">
-                            {data.about}
+                            {data?.about}
                         </Typography>
                     </div>
                     <div>
@@ -178,7 +168,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                             {t("site")}
                         </Typography>
                         <Typography className="mt-1" variant="body2">
-                            {data.site}
+                            {data?.website}
                         </Typography>
                     </div>
                     <div>
@@ -186,7 +176,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                             {t("portfolio")}
                         </Typography>
                         <Typography className="mt-1" variant="body2">
-                            {data.portfolio}
+                            {data?.portfolio}
                         </Typography>
                     </div>
                     <div>
@@ -194,7 +184,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                             {t("resume")}
                         </Typography>
                         <Typography variant="body2">
-                            {data.resume}
+                            {data?.resume}
                         </Typography>
                     </div>
                     <div>
@@ -202,9 +192,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                             {t("specialization")}
                         </Typography>
                         <Stack component="div" className="mt-1" direction={"row"} spacing={1}>
-                            {data.specialization && data.specialization.map((e, i) => (
-                                <Chip key={i} label={e} color="secondary"/>
-                            ))}
+                            {renderSpecialization()}
                         </Stack>
                     </div>
 
@@ -216,7 +204,7 @@ const ProfileView = ({data}: {data: ProfileData})=>{
                     </div>
                 </Stack>
             </div>
-            {data.history && <History data={data.history}/>}
+            {history && <History data={history}/>}
         </>
     )
 }

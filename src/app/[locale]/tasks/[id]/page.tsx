@@ -78,9 +78,9 @@ const Page = ({params: {locale}}: Props)=>{
     )
 
     return (
-        <Shell miniAppbar={true} header={header} footer={footer} withDrawer>
+        <Shell header={header} footer={footer} withDrawer>
             <Stack
-                className="p-[20px]"
+                className="p-5"
                 component="div"
                 direction="column"
                 justifyContent="flex-start"

@@ -1,4 +1,19 @@
-{ 
+{
+  "filter": {
+    "sort": "Sort",
+    "by_deadline": "By deadline",
+    "by_publication_date": "By publication date"
+  },
+  "buttons": {
+    "next": "Next",
+
+    "filter": "Filter",
+    "back": "Back"
+  },
+
+  "network": {
+    "commission": "Network commission {value}"
+  },
   "locale_switcher": {
     "ru": "Русский",
     "en": "English"
@@ -29,21 +44,19 @@
     "on_moderation": "On moderation",
     "response_sent": "Response sent",
     "declined": "Declined",
-    "filter": "Filter",
     "log_in_and_respond": "Log in and respond",
     "description": "Description",
     "technical_task": "Technical task",
     "deadline": "Deadline",
     "customer": "Customer",
     "profile": "Profile",
-    "back": "Back",
     "smart_contract_address": "Smart contract address",
     "created": "Created",
     "responses": "Responses",
-    "next": "Next",
     "edit_profile": "Edit profile",
-    "optional": "optional",
-    "network_commission": "Network commission"
+    "optional": "optional"
+
+
   },
   "tasks": {
     "create": "Create task",
@@ -73,7 +86,27 @@
     "select_language": "Select task language",
     "task_accomplished": "Task accomplished · {value}",
 
-    "select_category": "Select category"
+    "select_category": "Select category",
+    "send_task_to_blockchain": "Send a task to the blockchain",
+
+    "what_needs_to_be_done": "What needs to be done?",
+    "job_title": "Job title",
+    "task_title_example": "For example, create a bot for blockchain voting",
+
+    "when_should_a_task_be_accomplished": "When should a task be accomplished?",
+    "specify_the_exact_deadline": "Specify the exact deadline",
+    "deadline_datetime": "Deadline date and time",
+
+    "price": "Price",
+    "specify_the_budget_for_the_task": "Specify the budget for the task",
+    "set_task_price_explained": "Specify the amount of remuneration to the executor after the task is completed in TON",
+
+
+    "job_description": "Job Description",
+    "add_detailed_description_to_get_more_responses": "Add a detailed job description to get more responses",
+
+    "technical_task": "Technical task",
+    "technical_task_description": "Add a statement of work. Use TON Byte to store files."
   },
 
   "profile": {

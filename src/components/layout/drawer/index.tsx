@@ -1,19 +1,29 @@
-import {useTranslations} from "next-intl";
+
+import {NextIntlClientProvider, useMessages, useTranslations, useLocale} from 'next-intl';
+import pick from "lodash/pick";
+
 
 import DrawerContent from "@/components/layout/drawer/DrawerContent";
 
-const Drawer = ({withAuth}: {withAuth?: boolean})=>{
-    const t = useTranslations();
+const Drawer = ({withAuth}: { withAuth?: boolean }) => {
+    const t = useTranslations("tasks");
+    const messages = useMessages();
+    const locale = useLocale();
+
     const routes = [
-        {"label": t("tasks.create"), "to": "/tasks/create"},
-        {"label": t("tasks.find"), "to": "/"},
-        {"label": t("tasks.my"), "to": "/tasks/my"},
+        {"label": t("create"), "to": "/tasks/create"},
+        {"label": t("find"), "to": "/"},
+        {"label": t("my"), "to": "/tasks/my"},
     ]
     return (
-        <DrawerContent
-            withAuth={withAuth}
-            messages={{"connect": t("common.connect"), "text_support": t("common.text_support")}}
-            routes={routes}/>
+        <NextIntlClientProvider
+            locale={locale}
+            messages={pick(messages, "locale_switcher", "common")}
+        >
+            <DrawerContent
+                withAuth={withAuth}
+                routes={routes}/>
+        </NextIntlClientProvider>
     )
 }
 

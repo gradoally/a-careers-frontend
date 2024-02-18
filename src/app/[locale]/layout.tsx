@@ -1,5 +1,4 @@
 import React, {ReactNode} from "react";
-import clsx from "clsx";
 
 import localFont from 'next/font/local'
 import type {Metadata} from 'next'
@@ -19,11 +18,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../globals.css";
 
 
-// const inter = localFont({
-//     src: '../fonts/Inter.woff2',
-//     display: 'swap',
-//     variable: '--font-inter',
-// })
+const inter = localFont({
+    src: '../fonts/Inter.ttf',
+    display: 'swap',
+    variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
     title: 'Alfamater',
@@ -46,21 +45,19 @@ const RootLayout = ({children, params: {locale}}: Props) => {
     const messages = useMessages();
     return (
         <html lang={locale}
-              // className={`${inter.variable}`}
+              className={`${inter.variable}`}
         >
-        <body className={clsx(
-            'dark',
-        )}>
+        <body className="dark">
 
-        {/*<style>{`*/}
-        {/*    html {*/}
-        {/*        font-family: ${inter.variable};*/}
-        {/*    }*/}
-        {/*`}</style>*/}
+        <style>{`
+            html {
+                font-family: ${inter.variable};
+            }
+        `}</style>
         <AppProviders options={{key: 'mui'}}>
             <NextIntlClientProvider
                 locale={locale}
-                messages={pick(messages, 'errors', 'common', 'tasks', "copy")}
+                messages={pick(messages, 'errors', 'buttons')}
             >
                 {children}
             </NextIntlClientProvider>

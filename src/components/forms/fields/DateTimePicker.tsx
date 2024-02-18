@@ -1,15 +1,16 @@
 "use client"
+
 import React from "react";
 import {useLocale} from "next-intl";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
+// import TextField from "@mui/material/TextField";
+// import IconButton from "@mui/material/IconButton";
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import ruLocale from "date-fns/locale/ru";
 import enLocale from "date-fns/locale/en-US";
 
 import {MobileDateTimePicker} from '@mui/x-date-pickers/MobileDateTimePicker';
-import ClearIcon from '@mui/icons-material/Clear';
+// import ClearIcon from '@mui/icons-material/Clear';
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 
@@ -20,7 +21,7 @@ const localeMap = {
 
 interface Props {
     label: string;
-    value?: string;
+    value: string | null;
     fullWidth: boolean;
     name: string;
     id: string;
@@ -33,25 +34,20 @@ const DateTimePicker = (
     }:
         Props) => {
     const locale = useLocale();
-    const [open, setOpen] = React.useState<boolean>(false)
+    // const [open, setOpen] = React.useState<boolean>(false)
     return (
         <LocalizationProvider
             adapterLocale={localeMap[locale as keyof typeof localeMap]}
             dateAdapter={AdapterDateFns}>
             <MobileDateTimePicker
-                open={open}
-                onOpen={() => setOpen(true)}
-                onClose={() => setOpen(false)}
+                // open={open}
+                // onOpen={() => setOpen(true)}
+                // onClose={() => setOpen(false)}
                 label={label}
                 value={value}
                 onChange={onChange}
                 slotProps={{
-                    layout: {
-                        sx: {
-                            backgroundColor: "info.main"
-                        },
-                    },
-
+                    layout: {sx: {backgroundColor: "info.main"}},
                     textField: {
                         InputProps: {
                             startAdornment: (

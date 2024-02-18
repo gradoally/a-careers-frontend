@@ -15,13 +15,15 @@ const Footer = (props: Props) => {
                     "flex flex-col items-center justify-center w-full p-[20px]",
                     "min-h-[100px]",
                     "fixed bottom-0 left-0",
-                    "space-y-[15p] width-[375px] ms-auto",
+                    "space-y-[15px] left-auto text-center",
                 )}
                 style={{
+                    width: "373px",
+
                     borderTop: props.transparent ? "none" : "1px solid rgba(217, 217, 217, 0.2)",
                     background: props.transparent ? "transparent" : "linear-gradient(180deg, rgba(0, 0, 21, 0.77) 0%, #000015 100%)",
-                }}
-        >
+                }}>
+
             {props.children}
         </footer>
     )

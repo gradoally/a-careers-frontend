@@ -69,7 +69,7 @@ const Page = ({params: {locale}}: Props) => {
         </AppBar>
     )
     return (
-        <Shell miniAppbar={true} header={header}>
+        <Shell   header={header}>
             <div className="p-[20px]">
 
                 <Suspense fallback={<div>Loading...</div>}>

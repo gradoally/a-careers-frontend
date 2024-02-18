@@ -9,11 +9,8 @@ import {FormikProps} from "formik";
 
 const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
     const t = useTranslations('tasks')
-    const handleChange = (event: any) => {
-
-    };
     return (
-        <div className="h-full flex flex-col">
+        <Stack direction="column" spacing="10px" className="h-full">
             <Stack className="p-[20px] mb-4" component="div" spacing="20px" direction="column">
                 <Typography variant="h4">{t("technical_task")}</Typography>
                 <Typography component="div" variant="caption">
@@ -21,17 +18,17 @@ const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
                 </Typography>
             </Stack>
 
-            <div className="flex-grow">
+            <div className="grow pb-2.5">
                 <StyledInput
                     fullWidth
-                    inputProps={{style: {height: "100%"}}}
+                    inputProps={{style: {height: "100%", padding: "10px 20px", overflow: "scroll"}}}
                     multiline
-
+                    onChange={formik.handleChange}
                     value={formik.values.technicalTask}
-                    id="technical_task"
-                    name="technical_task"/>
+                    id="technicalTask"
+                    name="technicalTask"/>
             </div>
-        </div>
+        </Stack>
     )
 }
 

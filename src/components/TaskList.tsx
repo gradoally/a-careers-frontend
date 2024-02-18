@@ -20,11 +20,11 @@ const TaskList = ({data, link}: { data: DataType[], link: string }) => {
             {data.map((e, i) => {
                 return (
                     <Stack spacing="3px" key={i}>
-                        <Typography variant="h6">
+                        <div className="">
                             <Link href={link} noLinkStyle>
                                 {e.title}
                             </Link>
-                        </Typography>
+                        </div>
                         <Typography component="div" variant="caption">
                             {e.date}
                         </Typography>

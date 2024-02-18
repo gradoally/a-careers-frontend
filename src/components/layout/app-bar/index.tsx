@@ -10,7 +10,7 @@ interface Props {
 
 const AppBar = ({children, height="60px", padding="15px"}: Props) => {
     return (
-        <StyledAppBar>
+        <StyledAppBar sx={{height: height}}>
             <StyledPaper>
                 <StyledToolbar sx={{height: height, padding: padding}}>
                     {children}

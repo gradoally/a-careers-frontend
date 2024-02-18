@@ -11,7 +11,6 @@ import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
 
 
-
 export default function NotFound() {
     const t = useTranslations();
     const header = (
@@ -23,9 +22,9 @@ export default function NotFound() {
         </AppBar>
     )
     return (
-        <Shell miniAppbar header={header} footer={<Footer>
+        <Shell header={header} footer={<Footer>
             <FooterButton component={NextLinkComposed} to="/">
-                {t("common.back")}
+                {t("buttons.back")}
             </FooterButton>
         </Footer>}>
                 <Stack className="p-[20px]" component="div"

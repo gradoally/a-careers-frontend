@@ -13,8 +13,8 @@ const Title = ({formik}: {formik: FormikProps<TaskCreateType>})=>{
     const t = useTranslations('tasks')
     return (
         <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">{t("what_need_to_do")}</Typography>
-            <Typography variant="caption">{t("task_name")}</Typography>
+            <Typography variant="h4">{t("what_needs_to_be_done")}</Typography>
+            <Typography variant="caption">{t("job_title")}</Typography>
             <TextField type="text" withDivider name="title" onChange={formik.handleChange}
                        value={formik.values.title}
                         multiline fullWidth id="title"  variant="standard"/>

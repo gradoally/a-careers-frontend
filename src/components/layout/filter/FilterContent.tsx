@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MuiDivider from "@mui/material/Divider";
-import Radio from "@mui/material/Radio";
 
 import AppBar from "@/components/layout/app-bar";
 import Divider from "@/components/ui/Divider";
@@ -22,6 +21,7 @@ import BackButton from "@/components/ui/buttons/BackButton";
 
 import {useAppContext} from "@/lib/app-providers";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
+import CustomizedRadios from "@/components/layout/filter/FilterSort";
 
 const FilterContent = () => {
     const {isFilterOpen, toggleFilter} = useAppContext()
@@ -95,27 +95,30 @@ const FilterContent = () => {
                         </List>
                     </nav>
                     <MuiDivider/>
-                    <nav aria-label="secondary mailbox folders">
-                        <List>
-                            <ListItem disablePadding secondaryAction={<Radio/>}>
-                                <ListItemButton>
-                                    <ListItemText
-                                        secondaryTypographyProps={{variant: "caption", sx: {color: "common.white"}}}
-                                        primaryTypographyProps={{sx: {marginBottom: "15px"}, variant: "h5"}}
-                                        primary={"Sort"} secondary="By publication date"/>
-                                </ListItemButton>
-                            </ListItem>
-                            <Divider/>
+                    <div className="mt-5">
+                        <CustomizedRadios/>
+                    </div>
+                    {/*<nav aria-label="secondary mailbox folders">*/}
+                    {/*    <List>*/}
+                    {/*        <ListItem disablePadding secondaryAction={<Radio/>}>*/}
+                    {/*            <ListItemButton>*/}
+                    {/*                <ListItemText*/}
+                    {/*                    secondaryTypographyProps={{variant: "caption", sx: {color: "common.white"}}}*/}
+                    {/*                    primaryTypographyProps={{sx: {marginBottom: "15px"}, variant: "h5"}}*/}
+                    {/*                    primary={"Sort"} secondary="By publication date"/>*/}
+                    {/*            </ListItemButton>*/}
+                    {/*        </ListItem>*/}
+                    {/*        <Divider/>*/}
 
-                            <ListItem disablePadding secondaryAction={<Radio/>}>
-                                <ListItemButton>
-                                    <ListItemText
-                                        secondaryTypographyProps={{variant: "caption", sx: {color: "common.white"}}}
-                                        secondary="By deadline"/>
-                                </ListItemButton>
-                            </ListItem>
-                        </List>
-                    </nav>
+                    {/*        <ListItem disablePadding secondaryAction={<Radio/>}>*/}
+                    {/*            <ListItemButton>*/}
+                    {/*                <ListItemText*/}
+                    {/*                    secondaryTypographyProps={{variant: "caption", sx: {color: "common.white"}}}*/}
+                    {/*                    secondary="By deadline"/>*/}
+                    {/*            </ListItemButton>*/}
+                    {/*        </ListItem>*/}
+                    {/*    </List>*/}
+                    {/*</nav>*/}
                     <MuiDivider/>
                 </div>
             </div>

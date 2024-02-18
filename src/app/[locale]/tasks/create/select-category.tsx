@@ -9,7 +9,7 @@ import {TaskCreateType} from "./stepper";
 import {FormikProps} from "formik";
 
 
-const SelectCategory = ({formik}: {  formik: FormikProps<TaskCreateType>}) => {
+const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateType>, setTitle: (value: string)=>void}) => {
     const t = useTranslations("tasks")
 
     const category: string[] = [
@@ -25,6 +25,7 @@ const SelectCategory = ({formik}: {  formik: FormikProps<TaskCreateType>}) => {
 
     const handleClick = async (value: string) =>{
         await formik.setFieldValue("category", value)
+        setTitle(value)
     }
 
     return (
