@@ -12,6 +12,7 @@ import {
     Slice,
 } from '@ton/core';
 import { OPCODES } from './Config';
+import { sha256Hash } from './Helpers';
 
 export type OrderConfig = {};
 
@@ -42,6 +43,16 @@ export type OrderData = {
     content: Dictionary<bigint, Cell>;
 };
 
+export type OrderContentData = {
+    category: string;
+    language: string;
+    name: string;
+    price: bigint;
+    deadline: number;
+    description: string;
+    technicalTask: string;
+};
+
 export type ArbitrationData = {
     adminVotedCount: number;
     freelancerPart: number;
@@ -54,6 +65,19 @@ export type Responses = {
     responses: Dictionary<Address, Cell> | null;
     responsesCount: number;
 };
+
+export function buildOrderContent(data: OrderContentData): Cell {
+    const content = Dictionary.empty<bigint, Cell>();
+    content.set(sha256Hash('category'), beginCell().storeUint(sha256Hash(data.category), 256).endCell());
+    content.set(sha256Hash('language'), beginCell().storeUint(sha256Hash(data.language), 256).endCell());
+    content.set(sha256Hash('name'), beginCell().storeStringTail(data.name).endCell());
+    content.set(sha256Hash('price'), beginCell().storeCoins(data.price).endCell());
+    content.set(sha256Hash('deadline'), beginCell().storeUint(data.deadline, 32).endCell());
+    content.set(sha256Hash('description'), beginCell().storeStringTail(data.description).endCell());
+    content.set(sha256Hash('technical_task'), beginCell().storeStringTail(data.technicalTask).endCell());
+
+    return beginCell().storeDictDirect(content, Dictionary.Keys.BigUint(256), Dictionary.Values.Cell()).endCell();
+}
 
 export function orderConfigToCell(config: OrderConfig): Cell {
     return beginCell().endCell();

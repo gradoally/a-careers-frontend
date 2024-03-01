@@ -23,10 +23,9 @@ const config: Config = {
         },
         extend: {
             fontFamily: {
-                sans: ['var(--font-inter)'],
+                "san-serif": ['var(--font-sf-pro-display)'],
             },
         },
-
         colors: {
             primary: '#000015',
             secondary: '#45AEF5',
@@ -34,7 +33,8 @@ const config: Config = {
             warning: "#00FF47",
             orange: "#45F58B",
             "light-gray": "#CCCCCC",
-            divider: "rgba(217, 217, 217, 0.2)"
+            divider: "rgba(217, 217, 217, 0.2)",
+            "gray-900": "rgb(17 24 39)"
         }
     },
     plugins: [],

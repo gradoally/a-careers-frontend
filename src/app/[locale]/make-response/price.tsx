@@ -5,18 +5,25 @@ import Stack from '@mui/material/Stack';
 import TextField from "@/components/forms/fields/TextField";
 
 import {TaskCreateType} from "./stepper";
+import NumberFormat from "@/components/forms/fields/NumberFormat";
 
 
 const Price = ({data}: {data: TaskCreateType})=>{
     const t = useTranslations('tasks')
-    const handleChange = (event: any) => {
-
-    };
     return (
-        <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">Укажите бюджет задачи</Typography>
-            <Typography variant="caption">Укажите сумму вознаграждения исполнителю после выполнения задачи в TON</Typography>
-            <TextField  onChange={()=>{}}  type="text" value="" variant="standard" withDivider fullWidth id="price" name="price" />
+        <Stack className="p-5" component="div" spacing="20px" direction="column">
+            <Typography variant="h4">{t("confirm_the_task_budget")}</Typography>
+            <Typography variant="caption">{t("or_suggest_your_own")}</Typography>
+            <TextField  onChange={()=>{}}  type="text"
+                        label={t("price")}
+                        // InputProps={{
+                        //     disableUnderline: true,
+                        //     inputComponent: NumberFormat as any,
+                        //     inputProps: {
+                        //         min: 0,
+                        //     },
+                        // }}
+                        value="" variant="standard" fullWidth id="price" name="price" />
         </Stack>
     )
 }

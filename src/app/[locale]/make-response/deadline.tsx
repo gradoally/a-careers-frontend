@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import TextField from "@/components/forms/fields/TextField";
 
 import {TaskCreateType} from "./stepper";
+import DateTimePicker from "@/components/forms/fields/DateTimePicker";
 
 
 const Deadline = ({data}: {data: TaskCreateType})=>{
@@ -13,12 +14,18 @@ const Deadline = ({data}: {data: TaskCreateType})=>{
 
     };
     return (
-        <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">Когда нужно выполнять задачу?</Typography>
-            <Typography variant="caption">
-                Укажите точный дедлайн
-            </Typography>
-            <TextField onChange={()=>{}} type="text" value="" name="deadline" withDivider fullWidth id="about" variant="standard"/>
+        <Stack className="p-5" component="div" spacing="20px" direction="column">
+            <Typography variant="h4">{t('confirm_the_deadline')}</Typography>
+
+            <Typography variant="caption">{t("or_suggest_your_own")}</Typography>
+
+            <DateTimePicker
+                placeholder={t("deadline_datetime")}
+                onChange={(value) => {}}
+                name="deadline" fullWidth id="deadline"
+                value={null}
+            />
+
         </Stack>
     )
 }

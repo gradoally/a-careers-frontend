@@ -1,6 +1,6 @@
 "use client"
 
-import React, { ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {useTranslations} from "next-intl";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -16,6 +16,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@/components/ui/Divider";
 import {NextLinkComposed} from "@/components/Link";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
+import Image from "@/components/Image";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -35,9 +36,9 @@ function CustomTabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{paddingTop: "20px"}}>
+                <div className="pt-5">
                     {children}
-                </Box>
+                </div>
             )}
         </div>
     );
@@ -73,7 +74,7 @@ function a11yProps(index: number) {
 }
 
 
-const CustomListItem = ({icon, title, category}: {icon: ReactNode, title: string, category?: string})=>{
+const CustomListItem = ({iconSrc, title, category}: { iconSrc: string, title: string, category?: string }) => {
     return (
         <>
             <ListItem
@@ -84,14 +85,14 @@ const CustomListItem = ({icon, title, category}: {icon: ReactNode, title: string
                     to={'/tasks/my/on_moderation'}
                     sx={{"height": "80px", "padding": "0"}}
                     alignItems={"center"}>
-                    <ListItemIcon sx={{fontSize: "24px"}}>
-                        {icon}
+                    <ListItemIcon>
+                        <Image width="24" height="24" alt="" src={iconSrc}/>
                     </ListItemIcon>
                     <ListItemText primary={
                         <Typography variant="h4" color="secondary.main" sx={{
                             fontWeight: 400,
                         }}>{title}</Typography>
-                    } />
+                    }/>
                 </ListItemButton>
             </ListItem>
             <Divider component="li"/>
@@ -99,7 +100,7 @@ const CustomListItem = ({icon, title, category}: {icon: ReactNode, title: string
     )
 }
 
-export default function Content({data}: {data: string}) {
+export default function Content({data}: { data: string }) {
     const [value, setValue] = React.useState(0);
     const tc = useTranslations('common')
     const t = useTranslations('tasks')
@@ -117,28 +118,29 @@ export default function Content({data}: {data: string}) {
             </div>
             <Divider/>
             <CustomTabPanel value={value} index={0}>
-                    <nav>
-                        <List
-                            disablePadding
-                            subheader={
-                                <ListSubheader sx={{padding: "0","color": "common.white"}}
-                                               component="div" id="nested-list-subheader">
-                                    <Typography variant="h4">
-                                        {t("you_have_created", {value: "77"})}
-                                    </Typography>
-                                </ListSubheader>
-                            }
-                        >
-                            <CustomListItem icon={"⏳"} title={t("on_moderation", {value: 2})}/>
-                            <CustomListItem icon={"🧢"}  title={t("no_responses", {value: 0})}/>
-                            <CustomListItem icon={"💎"}  title={t("have_responses", {value: 81})}/>
-                            <CustomListItem icon={"🤌"}  title={t("offer_made", {value: 1})}/>
-                            <CustomListItem icon={"⚒️"}  title={t("in_the_work", {value: 4})}/>
-                            <CustomListItem icon={"💸️"}  title={t("pending_payment", {value: 2})}/>
-                            <CustomListItem icon={"🤵"}  title={t("arbitration", {value: 2})}/>
-                            <CustomListItem icon={"🚀"}  title={t("completed", {value: 6})}/>
-                        </List>
-                    </nav>
+                <nav>
+                    <List
+                        disablePadding
+                        subheader={
+                            <ListSubheader sx={{padding: "0", "color": "common.white"}}
+                                           disableSticky
+                                           component="div" id="nested-list-subheader">
+                                <Typography variant="h4">
+                                    {t("you_have_created", {value: "77"})}
+                                </Typography>
+                            </ListSubheader>
+                        }
+                    >
+                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={t("on_moderation", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={t("no_responses", {value: 0})}/>
+                        <CustomListItem iconSrc={"/images/gem.png"} title={t("have_responses", {value: 81})}/>
+                        <CustomListItem iconSrc={"/images/offer_made.png"} title={t("offer_made", {value: 1})}/>
+                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={t("in_the_work", {value: 4})}/>
+                        <CustomListItem iconSrc={"/images/money_with_wings.png"} title={t("pending_payment", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/eyes.png"} title={t("arbitration", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/rocket.png"} title={t("completed", {value: 6})}/>
+                    </List>
+                </nav>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <nav>
@@ -146,7 +148,7 @@ export default function Content({data}: {data: string}) {
                         disablePadding
 
                         subheader={
-                            <ListSubheader sx={{padding: "0","color": "common.white"}}
+                            <ListSubheader sx={{padding: "0", "color": "common.white"}}
                                            component="div" id="nested-list-subheader-2">
                                 <Typography variant="h4">
                                     {t("you_have_responded", {value: "777"})}
@@ -154,14 +156,13 @@ export default function Content({data}: {data: string}) {
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem icon={"💫️"} title={t("response_sent", {value: 2})}/>
-                        <CustomListItem icon={"🔥️"}  title={t("response_denied", {value: 0})}/>
-                        <CustomListItem icon={"🫳"}  title={t("an_offer_came_in", {value: 81})}/>
-                        <CustomListItem icon={"🪁"}  title={t("in_the_work", {value: 1})}/>
-                        <CustomListItem icon={"⚒️"}  title={t("on_inspection", {value: 4})}/>
-                        <CustomListItem icon={"💸️"}  title={t("in_the_work", {value: 2})}/>
-                        <CustomListItem icon={"🤵"}  title={t("arbitration", {value: 2})}/>
-                        <CustomListItem icon={"🤴"}  title={t("task_accomplished", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/dizzy.png"} title={t("response_sent", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/fire.png"} title={t("response_denied", {value: 0})}/>
+                        <CustomListItem iconSrc={"/images/fish_cake.png"} title={t("an_offer_came_in", {value: 81})}/>
+                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={t("in_the_work", {value: 1})}/> 
+                        <CustomListItem iconSrc={"/images/dancer.png"} title={t("on_inspection", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/eyes.png"} title={t("arbitration", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/star.png"} title={t("task_accomplished", {value: 2})}/>
                     </List>
                 </nav>
             </CustomTabPanel>

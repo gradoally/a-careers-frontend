@@ -14,16 +14,14 @@ import Shell from "@/components/layout/Shell";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-import ProfileForm from "@/components/forms/ProfileForm";
 import {NextLinkComposed} from "@/components/Link";
 import UserAvatar from "@/components/UserAvatar";
-
+import Content from "./content";
 type Props = {
     params: {
         locale: string;
     };
 };
-
 
 export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
@@ -49,7 +47,7 @@ const Page = ({params: {locale}}: Props) => {
                 component={NextLinkComposed}
                 to={'/create-profile/profile'}
                 className="w-full"
-                color={"secondary"} sx={{color: "common.black"}}
+                color={"secondary"}
                 variant="contained">
                 {t("send_to_blockchain")}
             </FooterButton>
@@ -58,18 +56,17 @@ const Page = ({params: {locale}}: Props) => {
     )
 
     return (
-        <Shell withDrawer header={header} footer={footer}>
+        <Shell  withDrawer header={header} >
             <div className="p-5">
                 <div className="flex justify-center mb-[30px]">
-
                     <UserAvatar height={"90px"} width={"90px"}/>
                 </div>
 
                 <NextIntlClientProvider
                     locale={locale}
-                    messages={pick(messages, 'profile', 'common')}
+                    messages={pick(messages, 'profile', 'common', "errors", 'form', 'network')}
                 >
-                    <ProfileForm/>
+                    <Content/>
                 </NextIntlClientProvider>
             </div>
         </Shell>

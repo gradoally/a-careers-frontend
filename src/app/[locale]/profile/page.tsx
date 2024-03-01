@@ -20,30 +20,13 @@ const Page = ({params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
     const messages = useMessages();
 
-
-    const data = {
-        nickname: "@new_user",
-        address: "EQCISAJu…W_JqYM3t",
-        telegram: "@some_wallet",
-        about: "🎯 dApp любой сложности\n" +
-            "💎 Премиум дизайн (UI/UX)!\n" +
-            "⚙️ Адаптивная верстка – на профессиональном уровне!🏆 Золотой партнёр «1С-Битрикс» (нет) !\n" +
-            "\n" +
-            "✔️ Blockchain-продвижение сайтов на лидирующие позиции. Взлом рынков, соц. инжинеринг",
-        websitesite: "my-little-studio.ton",
-        portfolio: "https://github.com/somewallet",
-        resume: "https://github.com/somewallet",
-        specialization: "FunC,FIFT,Toncenter API",
-    }
-
-
     return (
         <NextIntlClientProvider
             locale={locale}
-            messages={pick(messages, 'profile', 'network')}
+            messages={pick(messages, 'profile', 'network', "common", "copy", "errors", 'form', "read_more")}
         >
             <Suspense fallback={<div>Loading...</div>}>
-                <Content user={data}/>
+                <Content />
             </Suspense>
         </NextIntlClientProvider>
     )

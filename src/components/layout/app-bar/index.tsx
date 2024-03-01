@@ -8,15 +8,15 @@ interface Props {
     children: ReactNode
 }
 
-const AppBar = ({children, height="60px", padding="15px"}: Props) => {
+const AppBar = ({children, height="70px", padding="20px"}: Props) => {
     return (
         <StyledAppBar sx={{height: height}}>
             <StyledPaper>
-                <StyledToolbar sx={{height: height, padding: padding}}>
+                <StyledToolbar sx={{height: height, padding: `${padding} !important`}}>
                     {children}
                 </StyledToolbar>
             </StyledPaper>
-        </StyledAppBar>
+         </StyledAppBar>
     )
 }
 

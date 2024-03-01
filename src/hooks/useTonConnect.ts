@@ -2,14 +2,18 @@ import { CHAIN, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import { toUserFriendlyAddress } from '@tonconnect/sdk';
 import { Sender, SenderArguments } from '@ton/core';
 
-export function useTonConnect(): { sender: Sender; connected: boolean; wallet: string | null; network: CHAIN | null; } {
-  const [tonConnectUI] = useTonConnectUI();
+export function useTonConnect(): {
+  sender: Sender;
+  connected: boolean;
+  walletAddress: string | null;
+  network: CHAIN | null;
+} {
+  const [tonConnectUI,] = useTonConnectUI();
   const wallet = useTonWallet();
-
   return {
     sender: {
       send: async (args: SenderArguments) => {
-        tonConnectUI.sendTransaction({
+        await tonConnectUI.sendTransaction({
           messages: [
             {
               address: args.to.toString(),
@@ -21,8 +25,8 @@ export function useTonConnect(): { sender: Sender; connected: boolean; wallet: s
         });
       },
     },
-    connected: tonConnectUI.connected,
-    wallet: wallet? toUserFriendlyAddress(wallet.account.address) : null,
+    connected: !!tonConnectUI?.connected,
+    walletAddress: wallet? toUserFriendlyAddress(wallet.account.address) : null,
     network: wallet?.account.chain ?? null,
   };
 }

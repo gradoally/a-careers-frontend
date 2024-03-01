@@ -1,4 +1,8 @@
 import {unstable_setRequestLocale} from "next-intl/server";
+
+import pick from 'lodash/pick';
+import {NextIntlClientProvider, useMessages} from 'next-intl';
+
 import {locales} from "@/config";
 import {useTranslations} from "next-intl";
 import Footer from "@/components/layout/Footer";
@@ -12,7 +16,7 @@ import React, {Suspense} from "react";
 
 import Content from "./content";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-
+import {NextLinkComposed} from "@/components/Link";
 type Props = {
     params: { locale: string };
 };
@@ -23,28 +27,34 @@ export function generateStaticParams() {
 
 const Page = ({params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
+    const messages = useMessages()
     const t = useTranslations("tasks");
     const data = "on moderation";
     const footer = (
         <Footer  >
             <FooterButton
-                color={"secondary"} sx={{color: "common.black"}}
+                component={NextLinkComposed} to={"/tasks/create"}
+                color={"secondary"}
                 variant="contained">
                 {t("create")}
             </FooterButton>
         </Footer>
     )
     const header = (
-        <AppBar padding="15px 20px">
+        <AppBar height={"60px"} padding="15px 20px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <MenuButton/>
-                <Typography variant="h5" color="info.main">{t("my",)}</Typography>
+                <Typography variant="h5"  fontWeight="500" color="info.main">{t("my",)}</Typography>
             </Stack>
         </AppBar>
     )
 
     return (
-        <Shell withAuth  withDrawer header={header} footer={footer}>
+        <NextIntlClientProvider
+            locale={locale}
+            messages={pick(messages, "tasks", "common")}
+        >
+        <Shell withDrawer header={header} footer={footer}>
             <div className="px-[20px] pb-[20px]">
                 <Suspense fallback={"Loading..."}>
                     {data ? (
@@ -55,6 +65,7 @@ const Page = ({params: {locale}}: Props) => {
                 </Suspense>
             </div>
         </Shell>
+        </NextIntlClientProvider>
     )
 }
 

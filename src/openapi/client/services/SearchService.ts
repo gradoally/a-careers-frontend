@@ -30,6 +30,16 @@ export class SearchService {
 
     /**
      * Returns list of ACTIVE (available to work at) Orders that meet filter.
+     * <br>
+     * With non-empty <b>translateTo</b> param returned top-level objects (Orders) will have fields <b>nameTranslated</b>, <b>descriptionTranslated</b> and <b>technicalTaskTranslated</b> filled with translated values of their corresponding original field values.
+     *
+     * <br>
+     * These fields may be null if corresponding value is not translated yet.
+     * Also, these fields will be null if original order language is equal to the language to translate to.
+     *
+     * <br>
+     * Expected usage: ```… = (item.nameTranslated ?? item.name)```.
+     *
      * @returns Order Request is accepted, processed and response contains requested data.
      * @throws ApiError
      */
@@ -40,6 +50,7 @@ export class SearchService {
         minPrice,
         orderBy = 'createdAt',
         sort = 'asc',
+        translateTo,
         page,
         pageSize = 10,
     }: {
@@ -68,6 +79,10 @@ export class SearchService {
          */
         sort?: string,
         /**
+         * Language (key or code/name) of language to translate to. Must match one of supported languages (from config).
+         */
+        translateTo?: string,
+        /**
          * Page number to return (default 0).
          */
         page?: number,
@@ -86,6 +101,7 @@ export class SearchService {
                 'minPrice': minPrice,
                 'orderBy': orderBy,
                 'sort': sort,
+                'translateTo': translateTo,
                 'page': page,
                 'pageSize': pageSize,
             },
@@ -142,17 +158,23 @@ export class SearchService {
      */
     public getApiFinduser({
         address,
+        translateTo,
     }: {
         /**
          * Address of user's main wallet (in user-friendly form).
          */
         address?: string,
+        /**
+         * Language (key or code/name) of language to translate to. Must match one of supported languages (from config).
+         */
+        translateTo?: string,
     }): CancelablePromise<UserFindResult> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/api/finduser',
             query: {
                 'address': address,
+                'translateTo': translateTo,
             },
             errors: {
                 400: `Address is empty or invalid.`,
@@ -167,17 +189,23 @@ export class SearchService {
      */
     public getApiGetuser({
         index,
+        translateTo,
     }: {
         /**
          * ID of user ('index' field from user contract).
          */
         index?: number,
+        /**
+         * Language (key or code/name) of language to translate to. Must match one of supported languages (from config).
+         */
+        translateTo?: string,
     }): CancelablePromise<User> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/api/getuser',
             query: {
                 'index': index,
+                'translateTo': translateTo,
             },
             errors: {
                 400: `Index is invalid (or user does not exist).`,
@@ -192,17 +220,23 @@ export class SearchService {
      */
     public getApiGetorder({
         index,
+        translateTo,
     }: {
         /**
          * ID of order ('index' field from order contract).
          */
         index?: number,
+        /**
+         * Language (key or code/name) of language to translate to. Must match one of supported languages (from config).
+         */
+        translateTo?: string,
     }): CancelablePromise<Order> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/api/getorder',
             query: {
                 'index': index,
+                'translateTo': translateTo,
             },
             errors: {
                 400: `Index is invalid (or order does not exist).`,
@@ -217,17 +251,23 @@ export class SearchService {
      */
     public getApiFindorder({
         address,
+        translateTo,
     }: {
         /**
          * Address of order contract (in user-friendly form).
          */
         address?: string,
+        /**
+         * Language (key or code/name) of language to translate to. Must match one of supported languages (from config).
+         */
+        translateTo?: string,
     }): CancelablePromise<OrderFindResult> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/api/findorder',
             query: {
                 'address': address,
+                'translateTo': translateTo,
             },
             errors: {
                 400: `Address is empty or invalid.`,
@@ -263,7 +303,6 @@ export class SearchService {
 
     /**
      * Get list of user orders by role and status.
-     * Only statuses with non-zero number of orders are returned.
      * @returns Order Request is accepted, processed and response contains requested data.
      * @throws ApiError
      */
@@ -271,6 +310,7 @@ export class SearchService {
         index,
         role,
         status,
+        translateTo,
     }: {
         /**
          * ID of user ('index' field from user contract).
@@ -284,6 +324,10 @@ export class SearchService {
          * Status of orders to return.
          */
         status?: number,
+        /**
+         * Language (key or code/name) of language to translate to. Must match one of supported languages (from config).
+         */
+        translateTo?: string,
     }): CancelablePromise<Array<Order>> {
         return this.httpRequest.request({
             method: 'GET',
@@ -292,6 +336,7 @@ export class SearchService {
                 'index': index,
                 'role': role,
                 'status': status,
+                'translateTo': translateTo,
             },
             errors: {
                 400: `Invalid (nonexisting) 'index' or 'role' value.`,

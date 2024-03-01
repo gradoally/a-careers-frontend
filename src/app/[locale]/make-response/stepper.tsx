@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslations} from "next-intl";
 
 import Stack from "@mui/material/Stack";
@@ -24,14 +24,21 @@ export interface TaskCreateType {
 }
 
 const Stepper = () => {
-    const t = useTranslations("tasks");
-    const tc = useTranslations("common");
+    const t = useTranslations();
 
     const [data, setData] = useState<TaskCreateType>({});
     const [step, setStep] = useState<number>(1);
-    const [title, setTitle] = useState(t("create"))
+    const [subtitle, setSubtitle] = useState(t("tasks.firs_step"))
+    const [title, setTitle] = useState(t("tasks.make_a_response"));
     const [disabled, setDisabled] = useState(false)
 
+    useEffect(() => {
+        if (step == 1) {
+            setSubtitle(t("tasks.first_step"))
+        } else {
+            setSubtitle(t("tasks.step_x_from_x", {"value": step, "from": 3}))
+        }
+    }, [step])
 
     const handleBack = () => {
         const newStep = step == 1 ? 1 : step - 1
@@ -41,12 +48,12 @@ const Stepper = () => {
     const header = (
         <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
-                <BackButton onClick={handleBack} />
+                {step === 1 ? <div className="h-[30px] w-[30px]"/> : <BackButton onClick={handleBack}/>}
                 <div className="flex-grow text-center">
                     <Typography variant="body1">
                         {title}
                     </Typography>
-                    <Typography className="mt-[5px]"  variant="caption" component="div">{step} / 3</Typography>
+                    <Typography className="mt-[5px]" variant="caption" component="div">{subtitle}</Typography>
                 </div>
                 <CloseButton component={NextLinkComposed} to={"/make-response"}/>
             </Stack>
@@ -54,14 +61,15 @@ const Stepper = () => {
     )
 
     const handleClick = () => {
-        const newStep = step+1;
+        const newStep = step + 1;
 
         setStep(newStep);
     }
 
-    const renderStep =  ()=>{
-        switch (step){
-            case 3: return (<Comment data={data}/>)
+    const renderStep = () => {
+        switch (step) {
+            case 3:
+                return (<Comment data={data}/>)
             case 2:
                 return (<Deadline data={data}/>)
             case 1:
@@ -72,33 +80,33 @@ const Stepper = () => {
 
     const footer = (
         <Footer>
-            {step===3?(
+            {step === 3 ? (
                 <>
                     <FooterButton
                         component={NextLinkComposed}
                         to={"/make-response/task"}
                         disabled={disabled}
                         className="w-full"
-                        color={"secondary"} sx={{color: "common.black"}}
+                        color={"secondary"}
                         variant="contained">
-                        {t("send_response")}
+                        {t("tasks.send_response")}
                     </FooterButton>
                     <Typography variant="body2">Комиссия сети ≈ 0.011 TON</Typography>
                 </>
-            ): (
+            ) : (
                 <FooterButton
                     disabled={disabled}
                     onClick={handleClick}
                     className="w-full"
-                    color={"secondary"} sx={{color: "common.black"}}
+                    color={"secondary"}
                     variant="contained">
-                    {tc("next")}
+                    {t("buttons.next")}
                 </FooterButton>
             )}
         </Footer>
     )
     return (
-        <Shell padding="70px 0 100px 0" header={header} footer={footer}>
+        <Shell header={header} footer={footer}>
             {renderStep()}
         </Shell>
     )

@@ -40,33 +40,41 @@ export const getTheme = () => {
             divider: "rgba(217, 217, 217, 0.2)",
         },
         typography: {
-            fontFamily: '"Inter", sans',
+            fontFamily: '"SF Pro Display", sans',
             h4: {
                 fontSize: "16px",
                 fontWeight: "700",
                 lineHeight: "20px",
+                // letterSpacing: "0",
             },
             h5: {
                 fontSize: "14px",
-                fontWeight: "700",
+                fontWeight: "600",
+                // letterSpacing: "0",
+
             },
             h6: {
                 fontSize: "12px",
-                fontWeight: "700"
+                fontWeight: "700",
+                // letterSpacing: "0",
             },
             body1: {
                 fontWeight: 600,
                 fontSize: "16px",
+                // letterSpacing: "0",
             },
             body2: {
                 fontWeight: 400,
                 fontSize: "12px",
+                // letterSpacing: "0",
             },
             button: {
                 textTransform: "none"
             },
             caption: {
-                opacity: "40%",
+                color: "rgba(255, 255, 255, 0.4)",
+                // opacity: "40%",
+                // letterSpacing: "0",
             }
         },
     })
@@ -97,25 +105,29 @@ const ThemeProvider = ({children}: PropsWithChildren) => {
 
     return (
         <MuiThemeProvider theme={theme}>
-            <CssBaseline/>
-            <ConfirmProvider
-                defaultOptions={{
-                    title: "Are you sure?",
-                    confirmationText: "Yes",
-                    cancellationText: "Cancel",
-                    confirmationButtonProps: {autoFocus: true}
-                }}>
+            <>
+
+                <CssBaseline/>
+                <ConfirmProvider
+                    defaultOptions={{
+                        title: "Are you sure?",
+                        confirmationText: "Yes",
+                        cancellationText: "Cancel",
+                        confirmationButtonProps: {autoFocus: true, sx: {color: "common.white"}},
+                        cancellationButtonProps: {  sx: {color: "common.white"}},
+                    }}>
                 {children}
-            </ConfirmProvider>
-            <ToastContainer
-                position={isMobile ? 'top-center' : 'top-right'}
-                pauseOnHover
-                hideProgressBar={false}
-                theme={"dark"}
-                toastStyle={{
-                    zIndex: 99999
-                }}
-            />
+                </ConfirmProvider>
+                <ToastContainer
+                    position={isMobile ? 'top-center' : 'top-right'}
+                    pauseOnHover
+                    hideProgressBar={false}
+                    theme={"dark"}
+                    toastStyle={{
+                        zIndex: 99999
+                    }}
+                />
+            </>
         </MuiThemeProvider>
     )
 }

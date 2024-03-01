@@ -10,29 +10,37 @@ interface Props {
     children: ReactNode;
     header?: ReactNode;
     withDrawer?: boolean;
-    withAuth?: boolean;
     extra?: ReactNode;
     footer?: ReactNode;
-    padding?: string;
 }
 
-const Shell = ({padding = "60px 0 100px 0", ...props}: Props) => {
+const Shell = (props: Props) => {
     return (
-        <Paper elevation={0} className="max-w-screen h-full w-full min-h-screen border border-divider"
-               sx={{maxWidth: "375px", margin: "0 auto"}}
+        <div
+            className="flex flex-col justify-center items-center min-h-screen h-full w-screen min-w-[300px] overflow-x-scroll"
+            style={{
+                // justifyContent: "center",
+                // alignItems: "center",
+                // overflowX: "scroll",
+                // height: "100%",
+                // minHeight: "100vh",
+                // width: "100vw",
+                // minWidth: "300px",
+                // display: "flex",
+                // flexDirection: "column",
+            }}
         >
             {props.header && props.header}
-            {props.withDrawer && <Drawer withAuth={props.withAuth}/>}
+            {props.withDrawer && <Drawer/>}
             {props.extra && props.extra}
             <div
                 id="styled-content"
-                className="min-h-screen h-full overflow-y-scroll"
-                style={{padding: padding}}
+                className="h-full overflow-y-scroll w-full max-w-[768px]"
             >
                 {props.children}
-                {props.footer && props.footer}
             </div>
-        </Paper>
+            {props.footer && props.footer}
+        </div>
     )
 }
 

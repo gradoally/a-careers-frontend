@@ -7,12 +7,11 @@ const Filter = ()=>{
     const locale = useLocale();
     const messages = useMessages();
     return (
-
         <NextIntlClientProvider
             locale={locale}
             messages={pick(messages, 'filter')}
         >
-        <FilterContent/>
+            <FilterContent/>
         </NextIntlClientProvider>
     )
 }

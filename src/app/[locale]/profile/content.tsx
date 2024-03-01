@@ -1,38 +1,97 @@
 "use client"
 
-import React, {Suspense, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {User} from "@/openapi/client";
 import Shell from "@/components/layout/Shell";
-import {useTranslations} from "next-intl";
+import {useLocale, useTranslations} from "next-intl";
 
-import ProfileForm from "@/components/forms/ProfileForm";
+import ProfileForm, {UserFormValues} from "@/components/forms/ProfileForm";
 import AppBar from "@/components/layout/app-bar";
 import {Stack} from "@mui/material";
 import BackButton from "@/components/ui/buttons/BackButton";
 import Typography from "@mui/material/Typography";
-import Footer from "@/components/layout/Footer";
-import FooterButton from "@/components/ui/buttons/FooterButton";
 import UserAvatar from "@/components/UserAvatar";
 import ProfileView from "@/components/ProfileView";
 import {NextLinkComposed} from "@/components/Link";
 import EditButton from "@/components/ui/buttons/EditButton";
+import {useUserContract} from "@/hooks/useUserContract";
+import {useTonClient} from "@/hooks/useTonClient";
+import {useAuthContext} from "@/lib/auth-provider";
+import {useTonConnect} from "@/hooks/useTonConnect";
+import {buildUserContent} from '@/contracts/User';
+import LazyLoading from "@/components/features/LazyLoading";
 
 
-interface Props {
-    user: User;
+const EditComponent = ({data}: {data: User})=>{
+    const {client} = useTonClient();
+
+    const {
+        sendChangeContent,
+    } = useUserContract(String(data?.address));
+    const t = useTranslations()
+
+    const updateUserProfile = async (values: UserFormValues, callback: (props: {
+        isError: boolean, message?: string | null
+    }) => Promise<void>) => {
+        console.log(client, data, 'updateUserProfile before')
+        if (client == null || data == null)
+            return;
+        console.log("after", 'updateUserProfile')
+
+        try {
+            const userContentData = {
+                isUser: true,
+                isFreelancer: true,
+                nickname: values.nickname,
+                telegram: values.telegram,
+                about: values.about,
+                website: values.website,
+                portfolio: values.portfolio,
+                resume: values.resume,
+                specialization: values.specialization.join("##"),
+            };
+
+            const result = sendChangeContent("0.5", 0, buildUserContent(userContentData));
+            console.log(result)
+            await callback({
+                isError: false,
+                message: t("profile.profile_successfully_updated")
+            })
+        } catch (e) {
+            await callback({isError: true, message: t("errors.something_went_wrong_sorry")})
+            console.log("update_user_profile", e)
+        }
+    };
+
+    return (
+        <ProfileForm onSubmit={updateUserProfile} data={data}/>
+    )
 }
 
-const Content = (props: Props) => {
+const Content = () => {
     const [edit, setEdit] = useState<boolean>(false)
     const t = useTranslations();
+    const {user, isLoading} = useAuthContext()
+    const {connected, walletAddress} = useTonConnect()
+    // const router = useRouter();
+    // const locale = useLocale()
 
-    const handleClick = () => {
-        console.log("Update on blockchain")
-    }
+    console.log("connected", "walletAddress", "user", "isLoading")
+    console.log(connected, walletAddress, user, isLoading)
+
+    // useEffect(() => {
+    //     if (walletAddress && !user){
+    //         router.push(`/${locale}/profile/create`)
+    //     }else if (!connected){
+    //         toast("You do not connect ton wallet yet")
+    //         router.push(`/${locale}`)
+    //     }
+    // }, []);
+
 
     const header = (
-        <AppBar>
+        <AppBar height="60px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <BackButton onClick={() => setEdit(false)}/>
                 <Typography
@@ -43,76 +102,6 @@ const Content = (props: Props) => {
             </Stack>
         </AppBar>
     )
-    const footer = (
-        <Footer>
-            <FooterButton
-                color={"secondary"}
-                sx={{color: "common.black"}}
-                onClick={() => handleClick()}
-                variant="contained">
-                {t("profile.update_on_blockchain")}
-            </FooterButton>
-            <Typography variant="body2">{t("network.commission", {value: "0.011 TON"})}</Typography>
-        </Footer>
-    )
-    const history =[
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            title: "Получил входящий арбитраж",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "− 0.011 TON",
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "in",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "",
-            title: "Создал задачу"
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "",
-            title: "Создал задачу"
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "− 0.011 TON",
-            title: "Создал задачу"
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "− 0.011 TON",
-            title: "Создал задачу"
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "",
-            title: "Создал задачу"
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "",
-            title: "Создал задачу"
-        },
-        {
-            date: "12 янв 2023, 17:00",
-            type: "out",
-            smartContract: "EQCISAJu…W_JqYM3t",
-            price: "− 0.011 TON",
-            title: "Создал задачу"
-        },
-    ]
 
     const profileHeader = (
         <AppBar>
@@ -123,30 +112,37 @@ const Content = (props: Props) => {
                 </Typography>
             </Stack>
             <div className="flex-grow"/>
-            <EditButton onClick={() => setEdit(true)}/>
+            <EditButton disabled={isLoading} onClick={() => setEdit(true)}/>
         </AppBar>
     )
 
-
-    if (edit) {
+    if (user===null) {
         return (
-            <Shell withDrawer header={header} footer={footer}>
-                <div className="p-5">
-                    <div className="flex justify-center mb-[30px]">
-                        <UserAvatar height={"90px"} width={"90px"}/>
-                    </div>
-                    <ProfileForm data={props.user}/>
-                </div>
+            <Shell>
+                <div/>
             </Shell>
         )
     }
 
+    if (!edit) {
+        return (
+            <Shell  header={profileHeader}>
+                {isLoading ?<LazyLoading/>:<ProfileView data={user} />}
+            </Shell>
+        )
+    }
 
     return (
-        <Shell padding="60px 0 0 0" header={profileHeader}>
-            <ProfileView data={props.user} history={history}/>
+        <Shell header={header}>
+            <div className="p-5">
+                <div className="flex justify-center mb-[30px]">
+                    <UserAvatar height={"90px"} width={"90px"}/>
+                </div>
+                <EditComponent data={user}/>
+            </div>
         </Shell>
     )
+
 }
 
 export default Content;

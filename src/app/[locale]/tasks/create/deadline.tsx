@@ -6,24 +6,29 @@ import Stack from '@mui/material/Stack';
 
 import DateTimePicker from "@/components/forms/fields/DateTimePicker";
 import {TaskCreateType} from "./stepper";
+import Divider from "@/components/ui/Divider";
 
 
 const Deadline = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
     const t = useTranslations('tasks')
 
     return (
-        <Stack className="p-[20px]" component="div" spacing="20px" direction="column">
+        <div className="w-full p-5">
             <Typography variant="h4">{t("when_should_a_task_be_accomplished")}</Typography>
-            <Typography variant="caption">
+            <Typography component="div" variant="caption" sx={{marginTop: "10px"}}>
                 {t("specify_the_exact_deadline")}
             </Typography>
             <DateTimePicker
-                label={t("deadline_datetime")}
+                label=""
+                className="py-5"
+                formControlClassName="mt-6"
+                placeholder={t("deadline_datetime")}
                 onChange={(value) => formik.setFieldValue("deadline", value)}
-                name="deadline" fullWidth id="deadline"
+                name="deadline"
+                fullWidth id="deadline"
                 value={formik.values.deadline}
             />
-        </Stack>
+        </div>
     )
 }
 

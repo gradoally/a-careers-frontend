@@ -1,7 +1,7 @@
 "use client"
 import {useTranslations, useLocale} from "next-intl";
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 
@@ -38,9 +38,16 @@ const Stepper = () => {
 
     const [step, setStep] = useState<number>(1);
     const [title, setTitle] = useState(t("tasks.create"))
+    const [subtitle, setSubtitle] = useState(t("tasks.first_step"))
     const [disabled, setDisabled] = useState(false)
 
-
+    useEffect(() => {
+        if (step == 1) {
+            setSubtitle(t("tasks.first_step"))
+        } else {
+            setSubtitle(t("tasks.step_x_from_x", {"value": step, "from": 7}))
+        }
+    }, [step])
 
     const formik = useFormik<TaskCreateType>(
         {
@@ -53,11 +60,10 @@ const Stepper = () => {
                 title: "",
                 technicalTask: "",
             },
-            onSubmit: (values: TaskCreateType)=>{
+            onSubmit: (values: TaskCreateType) => {
 
             }
         },
-
     )
 
     const handleBack = () => {
@@ -68,29 +74,36 @@ const Stepper = () => {
     const header = (
         <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
-                <BackButton onClick={handleBack} />
-                <div className="flex-grow text-center">
-                    <Typography variant="body1">
-                        {title}
-                    </Typography>
-                    <Typography className="mt-[5px]"  variant="caption" component="div">{step} / 7</Typography>
+                {step === 1 ? <div className="h-[30px] w-[30px]"/> : <BackButton onClick={handleBack}/>}
+                <div className="flex-grow text-center ">
+                    <div className="max-w-[200px] mx-auto">
+                        <Typography variant="body1" className="truncate">
+                            {title}
+                        </Typography>
+                        <Typography className="mt-[5px]" variant="caption" component="div">
+                            {subtitle}
+                        </Typography>
+                    </div>
                 </div>
                 <CloseButton component={NextLinkComposed} to={"/tasks/my"}/>
             </Stack>
         </AppBar>
     )
 
-    const handleClick = () => {
-        const newStep = step+1;
 
+    const handleClick = () => {
+        const newStep = step + 1;
         setStep(newStep);
     }
 
-    const renderStep =  ()=>{
-        switch (step){
-            case 7: return (<TechnicalTask formik={formik}/>)
-            case 6: return (<Description formik={formik}/>)
-            case 5: return (<Price formik={formik}/>)
+    const renderStep = () => {
+        switch (step) {
+            case 7:
+                return (<TechnicalTask formik={formik}/>)
+            case 6:
+                return (<Description formik={formik}/>)
+            case 5:
+                return (<Price formik={formik}/>)
             case 4:
                 return (<Deadline formik={formik}/>)
             case 3:
@@ -99,7 +112,7 @@ const Stepper = () => {
                 )
             case 2:
                 return (
-                    <SelectCategory setTitle={setTitle}  formik={formik}/>
+                    <SelectCategory setTitle={setTitle} formik={formik}/>
                 )
             case 1:
             default:
@@ -109,7 +122,7 @@ const Stepper = () => {
 
     const footer = (
         <Footer>
-            {step===7?(
+            {step === 7 ? (
                 <Stack spacing="10px" className="h-[65px]">
                     <FooterButton
                         component={NextLinkComposed}
@@ -117,21 +130,18 @@ const Stepper = () => {
                         disabled={disabled}
                         className="w-full"
                         color={"secondary"}
-                        sx={{color: "common.black"}}
                         variant="contained">
                         {t("tasks.send_task_to_blockchain")}
                     </FooterButton>
                     <Typography variant="body2">
-                        {t("network.commission", {value: "≈ 0.011 TON"})}
+                        {t("network.commission", {value: "0.011 TON"})}
                     </Typography>
                 </Stack>
-            ): (
+            ) : (
                 <FooterButton
                     disabled={disabled}
                     onClick={handleClick}
                     color={"secondary"}
-                    sx={{color: "common.black"}}
-                    // className="h-[40px]"
                     variant="contained">
                     {t("buttons.next")}
                 </FooterButton>
@@ -139,7 +149,7 @@ const Stepper = () => {
         </Footer>
     )
     return (
-        <Shell padding="70px 0 105px 0" withDrawer header={header} footer={footer}>
+        <Shell header={header} footer={footer}>
             {renderStep()}
         </Shell>
     )

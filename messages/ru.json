@@ -2,12 +2,18 @@
   "filter": {
     "sort": "Сортировать",
     "by_deadline": "По дедлайну",
-    "by_publication_date": "По дате публикации"
+    "by_publication_date": "По дате публикации",
+    "filters": "Фильтры",
+    "categories": "Категории",
+    "all": "Все",
+    "show_tasks_on_language": "Показать задачи, созданные на",
+    "all_languages": "Всех языках",
+    "tasks_price_from": "Стоимость заданий от"
   },
   "buttons": {
     "next": "Далее",
-    "filter": "Фильтр",
-    "back": "Назад"
+    "back": "Назад",
+    "filter": "Фильтр"
   },
   "network": {
     "commission": "Комиссия сети ≈ {value}"
@@ -18,25 +24,40 @@
   },
   "form": {
     "required": {
-      "default": "This field required",
-      "email": "Please fill your email"
+      "default": "Это поле обязательно для заполнения",
+      "email": "Пожалуйста, укажите ваш электронный адрес"
     },
     "validation": {
-      "default": "Please fill valid data",
-      "email": "Please fill valid email"
+      "default": "Пожалуйста, введите корректные данные",
+      "email": "Пожалуйста, введите корректный адрес электронной почты",
+      "url": "Пожалуйста, укажите действительный URL"
     }
+
   },
   "errors": {
+    "user_not_found": "Пользователь не найден!",
+    "something_went_wrong_when_try_to_connect_ton_wallet": "Something went wrong when try to connect TON wallet",
+
     "something_went_wrong_sorry": "Что то пошло не так. Простите!",
-    "please_provide_valid_data": "Please provide valid data"
+    "please_provide_valid_data": "Пожалуйста заполните валидные данные"
   },
-  "common": {
-    "connect": "Подключиться",
-    "text_support": "Написать в поддержку",
+  "status_chip": {
     "no_responses": "Без откликов",
     "on_moderation": "В модерации",
     "response_sent": "Отправлен отклик",
-    "declined": "Отказано",
+    "declined": "Отказано"
+  },
+  "read_more": {
+    "read_more": "Подробнее",
+    "hide": "Скрыть"
+  },
+  "common": {
+    "connected_to_ton_wallet":  "Подключено к кошельку TON",
+
+    "no_more_data": "Нету больше данных",
+    "filter": "Фильтр",
+    "connect": "Подключиться",
+    "text_support": "Написать в поддержку",
     "log_in_and_respond": "Войти и откликнуться",
     "description": "Описание",
     "technical_task": "Техническое задание",
@@ -46,9 +67,11 @@
     "smart_contract_address": "Адрес смарт-контракта",
     "created": "Созданные",
     "responses": "Отклики"
-
   },
   "tasks": {
+    "first_step": "Первый шаг",
+    "step_x_from_x": "Шаг {value} из {from}",
+    "make_a_response": "Сделать отклик",
     "select_deadline": "Укажите точный дедлайн",
     "create": "Создать задачу",
     "find": "Найти задачу",
@@ -89,9 +112,25 @@
     "job_description": "Job Description",
     "add_detailed_description_to_get_more_responses": "Добавьте подробное описание задания, чтобы получить больше откликов",
     "technical_task": "Техническое задание",
-    "technical_task_description": "Добавьте техническое задание. Для хранения файлов используйте TON Byte."
+    "technical_task_description": "Добавьте техническое задание. Для хранения файлов используйте TON Byte.",
+
+    "confirm_the_task_budget": "Подтвердите бюджет задачи",
+    "or_suggest_your_own": "или предложите свой",
+
+    "confirm_the_deadline": "Подтвердите дедлайн",
+    "response_comment": "Комментарий к отклику",
+    "make_response_comment_description": "Добавьте подробное описание вашего предложения и потенциальные преимущества для заказчиков"
+
   },
   "profile": {
+    "profile_successfully_connected": "Профиль успешно подключнено",
+    "profile_successfully_updated": "Профиль успешно обновлено",
+    "please_wait": "Подаждите!",
+    "website_link": "Ссылка на сайт",
+    "resume_link":  "Ссылка на резюме",
+    "link_to_portfolio": "Ссылка на портфолио",
+    "nickname": "Никнейм",
+    "profile_language": "Язык профиля",
     "create": "Создать профиль",
     "send_to_blockchain": "Отправить в блокчейн",
     "update_on_blockchain": "Обновить в блокчейне",
@@ -105,7 +144,6 @@
     "freelancer_profile": "Профиль фрилансера",
     "fill_if_you_want_make_response": "Заполните, если планируете делать отклики",
     "link_to_website": "Ссылка на сайт",
-    "link_to_portfolio": "Ссылка на портфолио",
     "edit": "Редактирование профиля",
     "profile": "Профиль"
   },

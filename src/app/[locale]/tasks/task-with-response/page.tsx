@@ -27,7 +27,7 @@ const Page = ({params: {locale}}: Props) => {
     const footer = (
         <Footer  >
             <FooterButton
-                color={"secondary"} sx={{color: "common.black", width: "100%"}}
+                color={"secondary"}
                 variant="contained">
                 Предложить сотрудничество
             </FooterButton>

@@ -4,12 +4,12 @@ import InputBase from '@mui/material/InputBase';
 
 
 export const StyledInput = styled(InputBase)(({theme}) => ({
-    width: "129px",
+    maxWidth: "129px",
     'label + &': {
         marginTop: theme.spacing(3),
     },
     '& .MuiInputBase-input': {
-        height: "15px",
+        height: "14px",
         backgroundColor: theme.palette.info.main,
         borderRadius: "5px",
         border: 'none',
@@ -17,7 +17,7 @@ export const StyledInput = styled(InputBase)(({theme}) => ({
         fontWeight: "400",
         fontSize: "10px",
         width: 'auto',
-        padding: '6px 10px 9px 10px',
+        padding: '8px 10px 8px 10px',
         lineHeight: "15px",
         transition: theme.transitions.create([
             'border-color',

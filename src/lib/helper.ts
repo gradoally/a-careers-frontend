@@ -1,7 +1,16 @@
 import type {ToastOptions} from "react-toastify";
 import {toast as baseToast} from "react-toastify";
-import {format, parseISO} from "date-fns";
+import {format, parseISO} from 'date-fns';
+import type {FormikProps} from "formik";
 
+import ruLocale from "date-fns/locale/ru";
+import enLocale from "date-fns/locale/en-US";
+import {DEFAULT_LOCALE} from "@/lib/constants";
+
+const localeMap: any = {
+    en: enLocale,
+    ru: ruLocale,
+};
 
 const toastOptions: ToastOptions = {
     // autoClose: 5000,
@@ -64,29 +73,23 @@ export const isObjectEmpty = (obj: Record<any, any>) => {
     }
 };
 
-export const formatDate = (
-    {
-        date,
-        formatStr = "PP",
-    }: {
-        date?: string;
-        formatStr?: string;
-    }) => {
-    if (!date) return "";
-    return format(parseISO(date), formatStr);
-};
+export const formatDate = ({
+                               date,
+                               formatStr = 'PP',
+                               locale = DEFAULT_LOCALE,
+                           }: { date?: string, formatStr?: string, locale?: string }) => {
+    if (!date) return ''
+    return format(parseISO(date), formatStr, {locale: localeMap[locale]})
+}
 
-export const formatDatetime = (
-    {
-        date,
-        formatStr = "dd.MM.yyyy HH:mm",
-    }: {
-        date: string;
-        formatStr?: string;
-    }) => {
-    if (!date) return "";
-    return format(parseISO(date), formatStr);
-};
+export const formatDatetime = ({
+                                   date,
+                                   formatStr = 'dd.MM.yyyy HH:mm',
+                                   locale = DEFAULT_LOCALE,
+                               }: { date?: string, formatStr?: string, locale?: string }) => {
+    if (!date) return '';
+    return format(parseISO(date), formatStr, {locale: localeMap[locale]})
+}
 
 export function getItem(object: any, key: string, default_value = "") {
     const result = object[key];
@@ -112,3 +115,32 @@ export function getValueFromEnum<T extends string>(
     const key = keys.find((k) => enumObj[k] === value);
     return key ? enumObj[key] : undefined;
 }
+
+
+export const checkError = (
+    formik: FormikProps<any>,
+    errors: Record<string, string> | null,
+    field: string
+) => {
+    if (formik.touched[field]) return true;
+    else if (errors && errors[field]) return true;
+    return false;
+};
+
+export const getError = (
+    formik: FormikProps<any>,
+    errors:  Record<string, string> | null,
+    field: string
+): string | undefined => {
+    if (formik.errors[field]) {
+        return formik.errors[field]?.toString();
+    } else if (errors && errors[field]) {
+        return errors[field];
+    }
+    return undefined;
+};
+
+export const canSubmit = (formik: FormikProps<any>) => {
+    if (!(formik.isValid && formik.dirty)) return true;
+    return formik.isSubmitting;
+};

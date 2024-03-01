@@ -1,5 +1,3 @@
-"use client"
-
 import Shell from "@/components/layout/Shell";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
@@ -8,46 +6,68 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import {parseCookies} from "nookies";
-import {DEFAULT_LOCALE} from "@/lib/constants";
 import {locales} from "@/config";
-// Render the default Next.js 404 page when a route
-// is requested that doesn't match the middleware and
-// therefore doesn't have a locale associated with it.
+
+import "./globals.css";
+import clsx from "clsx";
+import AppProviders from "@/lib/app-providers";
+import type {Metadata} from "next";
+import AppBar from "@/components/layout/app-bar";
+import BackButton from "@/components/ui/buttons/BackButton";
+
+
+export const metadata: Metadata = {
+    title: 'Alfamater',
+    description: 'Ton wallet, Alfamater',
+}
+
+const message = {
+    "en": {"back": "Back", "message": "Something went wrong. Sorry!"},
+    "ru": {"back": "Назад", "message": "Что то пошло не так. Простите!"},
+}
 
 
 export default function NotFound() {
-    // const cookies = parseCookies();
-    // let locale = cookies["NEXT_LOCALE"]
-    let locale = "ru";
-    // // @ts-ignore
-    // if (!locales.includes(locale)) locale = DEFAULT_LOCALE;
+    const cookies = parseCookies();
+    let locale = cookies["NEXT_LOCALE"]
 
-    const messages = {
-        "ru": {
-            "back": "Назад",
-            "message": "Что то пошло не так. Простите!"
-        },
-        "en": {
-            "back": "Back",
-            "message": "Something went wrong. Sorry!",
-        }
-    }
+    if (!locales.includes(locale as any)) locale = "en";
+
+    const header = (
+        <AppBar>
+            <Stack direction="row" alignItems="center" spacing={1}>
+                <BackButton/>
+                <Typography variant="h5" sx={{color: "info.main"}}>404</Typography>
+            </Stack>
+        </AppBar>
+    )
+
     return (
         <html lang={locale}>
-        <body>
-            <Shell footer={<Footer>
+        <body className={clsx(
+            'dark',
+        )}>
+
+        <AppProviders options={{key: 'mui'}} config={null}>
+            <Shell  header={header} footer={<Footer>
                 <FooterButton component={NextLinkComposed} to="/">
-                    {messages[locale as typeof locales[number]].back}
+                    {message[locale as typeof locales[number]].back}
                 </FooterButton>
             </Footer>}>
-                <Stack direction={"column"} spacing={2}>
-                    <Typography sx={{fontSize: "128px", fontWeight: 100}}>404</Typography>
+                <Stack className="p-5" component="div"
+                       direction={"column"} justifyContent="center" alignItems={"center"} sx={{height: "100%"}}>
+                    <div style={{
+                        fontSize: "128px", lineHeight: "155px",
+                    }} className="font-thin">
+                        404
+                    </div>
                     <Typography variant="body1">
-                        {messages[locale as typeof locales[number]].message}
+                        {message[locale as typeof locales[number]].message}
                     </Typography>
                 </Stack>
             </Shell>
+        </AppProviders>
         </body>
         </html>
-    );
+    )
 }

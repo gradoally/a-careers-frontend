@@ -5,7 +5,7 @@ import pick from "lodash/pick";
 
 import DrawerContent from "@/components/layout/drawer/DrawerContent";
 
-const Drawer = ({withAuth}: { withAuth?: boolean }) => {
+const Drawer = () => {
     const t = useTranslations("tasks");
     const messages = useMessages();
     const locale = useLocale();
@@ -21,7 +21,6 @@ const Drawer = ({withAuth}: { withAuth?: boolean }) => {
             messages={pick(messages, "locale_switcher", "common")}
         >
             <DrawerContent
-                withAuth={withAuth}
                 routes={routes}/>
         </NextIntlClientProvider>
     )

@@ -29,7 +29,7 @@ const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateTyp
     }
 
     return (
-        <div className={"p-[20px]"}>
+        <div className={"p-5"}>
             <Typography variant="h4">{t("select_category")}</Typography>
             <Stack component="div" className="mt-4" spacing="20px">
                 {category.map((e, i) => {

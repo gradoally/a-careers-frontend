@@ -68,7 +68,7 @@ const Page = ({params: {locale, id}}: Props) => {
     const footer = (
         <Footer>
             <FooterButton
-                color={"secondary"} sx={{color: "common.black", width: "100%"}}
+                color={"secondary"}
                 variant="contained">
                 Отправить отклик
             </FooterButton>
@@ -95,7 +95,7 @@ const Page = ({params: {locale, id}}: Props) => {
     return (
         <Shell  header={header} footer={footer} withDrawer>
                 <Stack
-                    className="p-[20px]"
+                    className="p-5"
                     component="div"
                     direction="column"
                     justifyContent="flex-start"

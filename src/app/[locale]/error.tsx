@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 
 import {Boundary} from "@/components/ui/boundary";
 
-
 export default function Error({error, reset}: any) {
     React.useEffect(() => {
         console.log('logging error:', error);

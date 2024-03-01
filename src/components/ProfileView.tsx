@@ -1,11 +1,15 @@
-import Image from "@/components/Image";
-import {Stack} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Link from "@/components/Link";
-import Chip from "@mui/material/Chip";
 import React from "react";
 import {useTranslations} from "next-intl";
+
+import {Stack} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+
+import Link from "@/components/Link";
 import {User} from "@/openapi/client";
+import UserAvatar from "@/components/UserAvatar";
+import CopyContainer from "@/components/features/copy";
+import ReadMoreCollapse from "@/components/features/ReadMoreCollapse";
 
 interface HistoryType {
     date: string;
@@ -15,69 +19,9 @@ interface HistoryType {
     price: string;
 }
 
-
-const temp = [
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        title: "Получил входящий арбитраж",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "− 0.011 TON",
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "in",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "",
-        title: "Создал задачу"
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "",
-        title: "Создал задачу"
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "− 0.011 TON",
-        title: "Создал задачу"
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "− 0.011 TON",
-        title: "Создал задачу"
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "",
-        title: "Создал задачу"
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "",
-        title: "Создал задачу"
-    },
-    {
-        date: "12 янв 2023, 17:00",
-        type: "out",
-        smartContract: "EQCISAJu…W_JqYM3t",
-        price: "− 0.011 TON",
-        title: "Создал задачу"
-    },
-]
-
 const History = ({data}: { data: HistoryType[] }) => {
     return (
-        <Stack component="div" spacing="1px" >
+        <Stack component="div" spacing="1px" className="mt-5">
             {data.map((e, i) => (
                 <Stack className="bg-info px-[20px] py-2" direction="column" key={i}>
                     <Typography variant="caption" component="div">{e.date}</Typography>
@@ -88,7 +32,7 @@ const History = ({data}: { data: HistoryType[] }) => {
                                 {e.title}
                             </Typography>
                             <Typography component="div" color="secondary" variant="body2">
-                                <Link noLinkStyle href={`https://domain.com/${e.smartContract}`}>
+                                <Link target="_blank" noLinkStyle href={`https://tonviewer.com/${e.smartContract}`}>
                                     {e.smartContract}
                                 </Link>
                             </Typography>
@@ -104,107 +48,95 @@ const History = ({data}: { data: HistoryType[] }) => {
 }
 
 
-// const userTemp = {
-//     username: "@new_user",
-//     smartContract: "EQCISAJu…W_JqYM3t",
-//     telegram: "@some_wallet",
-//     about: "🎯 dApp любой сложности\n" +
-//         "💎 Премиум дизайн (UI/UX)!\n" +
-//         "⚙️ Адаптивная верстка – на профессиональном уровне!🏆 Золотой партнёр «1С-Битрикс» (нет) !\n" +
-//         "\n" +
-//         "✔️ Blockchain-продвижение сайтов на лидирующие позиции. Взлом рынков, соц. инжинеринг",
-//     site: "my-little-studio.ton",
-//     portfolio: "https://github.com/somewallet",
-//     resume: "https://github.com/somewallet",
-//     specialization: ["FunC", "FIFT", "Toncenter API"],
-//     image: "/profile.png"
-// }
+const ProfileView = ({data}: { data: User}) => {
+    const t = useTranslations();
 
-const ProfileView = ({data, history}: { data: User, history: HistoryType[] }) => {
-    const t = useTranslations("profile");
-    const tc = useTranslations("common");
-    const renderSpecialization = ()=>{
+    const renderSpecialization = () => {
         if (!data?.specialization) return <div/>
         const specialization = data.specialization.split(",")
-        return specialization.map((e: string, i: number)=> <Chip key={i} label={e} color="secondary"/>)
+        return specialization.map((e: string, i: number) => <Chip key={i} label={e} color="secondary"/>)
     }
     return (
         <>
-            <div className="p-5">
-                <div className="bg-[#000] rounded text-center align-middle h-[335px] w-[334] text-[196px]">
-                    🦄
-                </div>
-                <Stack spacing={"20px"} className="pt-[35px]">
-
-                    <Typography variant="h4">{data?.nickname}</Typography>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            {tc("smart_contract_address")}
-                        </Typography>
-                        <Typography className="mt-1" variant="body2">
-                            {data?.address}
-                        </Typography>
-                    </div>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            Telegram
-                        </Typography>
-                        <Typography className="mt-1" color="secondary" variant="body2">
-                            <Link noLinkStyle href={"https://t.me/user.telegram"}>
-                                {data?.telegram}
+            <div className="bg-info bg-opacity-20 h-[180px] w-full flex flex-col justify-center items-center">
+                <UserAvatar src="/unicorn-hight.gif" height="90px" width="90px"/>
+                <div className="mt-2.5 text-lg font-bold">{data?.nickname}</div>
+            </div>
+            <Stack spacing={"20px"} className="pt-[35px] px-5">
+                <div>
+                    <Typography component="div" variant="caption">
+                        {t("common.smart_contract_address")}
+                    </Typography>
+                    <CopyContainer className="mt-1">
+                        <Typography color="secondary" variant="body2">
+                            <Link target="_blank" noLinkStyle href={`http://tonviewer.com/${data?.address}`}>
+                                {data?.address}
                             </Link>
                         </Typography>
-                    </div>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            {t("about")}
+                    </CopyContainer>
+                </div>
+                <div>
+                    <Typography component="div" variant="caption">
+                        Telegram
+                    </Typography>
+                    {data?.telegram && (
+                        <Typography className="mt-1" color="secondary" variant="body2">
+                            <Link noLinkStyle href={`https://t.me/${data.telegram}`}>
+                                @{data.telegram}
+                            </Link>
                         </Typography>
-                        <Typography variant="body2">
-                            {data?.about}
-                        </Typography>
-                    </div>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            {t("site")}
-                        </Typography>
-                        <Typography className="mt-1" variant="body2">
-                            {data?.website}
-                        </Typography>
-                    </div>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            {t("portfolio")}
-                        </Typography>
-                        <Typography className="mt-1" variant="body2">
-                            {data?.portfolio}
-                        </Typography>
-                    </div>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            {t("resume")}
-                        </Typography>
-                        <Typography variant="body2">
-                            {data?.resume}
-                        </Typography>
-                    </div>
-                    <div>
-                        <Typography component="div" variant="caption">
-                            {t("specialization")}
-                        </Typography>
-                        <Stack component="div" className="mt-1" direction={"row"} spacing={1}>
-                            {renderSpecialization()}
-                        </Stack>
-                    </div>
+                    )}
+                </div>
+                <div>
+                    <Typography component="div" variant="caption">
+                        {t("profile.about")}
+                    </Typography>
+                    {data?.about && (
+                        <ReadMoreCollapse read_more={t("read_more.read_more")} hide={t("read_more.hide")}
+                                          className="mt-1 text-xs" text={data.about}/>
+                    )}
+                </div>
+                <div>
+                    <Typography component="div" variant="caption">
+                        {t("profile.site")}
+                    </Typography>
+                    <Typography className="mt-1" variant="body2">
+                        {data?.website}
+                    </Typography>
+                </div>
+                <div>
+                    <Typography component="div" variant="caption">
+                        {t("profile.portfolio")}
+                    </Typography>
+                    <Typography className="mt-1" variant="body2">
+                        {data?.portfolio}
+                    </Typography>
+                </div>
+                <div>
+                    <Typography component="div" variant="caption">
+                        {t("profile.resume")}
+                    </Typography>
+                    <Typography variant="body2">
+                        {data?.resume}
+                    </Typography>
+                </div>
+                <div>
+                    <Typography component="div" variant="caption">
+                        {t("profile.specialization")}
+                    </Typography>
+                    <Stack component="div" className="mt-1" direction={"row"} spacing={1}>
+                        {renderSpecialization()}
+                    </Stack>
+                </div>
 
-                    <div>
-                        <Typography variant="h4">{t("task_history")}</Typography>
-                        <Typography className="mt-2" variant="body2">
-                            {t("task_result", {"payed": "100%", completed: "99%"})}
-                        </Typography>
-                    </div>
-                </Stack>
-            </div>
-            {history && <History data={history}/>}
+                <div>
+                    <Typography variant="h4">{t("profile.task_history")}</Typography>
+                    <Typography className="mt-2" variant="body2">
+                        {t("profile.task_result", {"payed": "100%", completed: "99%"})}
+                    </Typography>
+                </div>
+            </Stack>
+            {/*{history && <History data={history}/>}*/}
         </>
     )
 }

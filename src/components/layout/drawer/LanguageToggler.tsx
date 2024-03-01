@@ -22,7 +22,9 @@ const LanguageToggler = ()=> {
         <Typography component="div" color="text.secondary" variant="body2">...</Typography>
     )
     return (
-            <Typography component="div" onClick={()=>handleClick()} sx={{color: "text.secondary"}} variant="body2">
+            <Typography component="div"
+                        className="cursor-pointer"
+                        onClick={()=>handleClick()} sx={{color: "text.secondary"}} variant="body2">
                 🌎 {t(locale)}
             </Typography>
     )

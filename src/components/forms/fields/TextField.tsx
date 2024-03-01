@@ -1,52 +1,53 @@
 import Typography from '@mui/material/Typography';
-import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
-import Divider from "@/components/ui/Divider";
-
-interface Props {
-    withDivider?: boolean;
-    name: string
-    id: string
-    label?: string
-    value?: string | number;
-    defaultValue?: string;
-    helperText?: string;
-    multiline?: boolean;
-    fullWidth?: boolean;
-    type: "text" | "number"
-    /**
-     * The variant to use.
-     * @default 'outlined'
-     */
-    variant?: 'standard' | 'outlined' | 'filled';
-    onChange: (e: any) => void;
-}
+import {StandardTextFieldProps} from "@mui/material/TextField/TextField";
+import React from "react";
+import Input from "@/components/forms/fields/Input";
+import FormControl from "@/components/forms/FormControl";
 
 
-const TextField = (props: Props) => {
+const TextField = (
+    {
+        InputProps,
+        InputLabelProps,
+        label,
+        fullWidth = true,
+        className,
+        ...props
+    }: StandardTextFieldProps
+) => {
     return (
-        <FormControl fullWidth variant={props.variant}>
-            {props.label && (
-                <InputLabel sx={{color: "common.white"}} htmlFor={props.id}>
-                    <Typography variant="caption">{props.label}</Typography>
+        <FormControl
+            error={props.error}
+            className={className}
+            fullWidth={fullWidth} variant="standard"
+        >
+            {label && (
+                <InputLabel
+                    shrink={InputLabelProps?.shrink}
+                    htmlFor={props.id}>
+                    <Typography variant="caption">{label}</Typography>
                 </InputLabel>
             )}
-            <Input type={props.type} sx={{
-                fontSize: "12px",
-                fontWeight: "400",
-            }}
+            <Input type={props.type}
+                   sx={{padding: "10px 0"}}
+                   {...InputProps}
                    onChange={props.onChange}
                    multiline={props.multiline}
                    value={props.value}
                    defaultValue={props.defaultValue}
                    id={props.id}
-                   name={props.name}/>
-            {props.withDivider && <Divider/>}
-            {props.helperText && <FormHelperText id="component-text">{props.helperText}</FormHelperText>}
+                   name={props.name}
+            />
+            {props.helperText && (
+                <FormHelperText sx={{marginTop: "10px"}}>
+                    {props.helperText}
+                </FormHelperText>
+            )}
         </FormControl>
     )
 }
+
 
 export default TextField;

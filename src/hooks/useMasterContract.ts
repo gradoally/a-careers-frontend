@@ -1,42 +1,42 @@
-import { useEffect, useState } from 'react';
-import { Master, Indexes } from '../contracts/Master';
-import { useTonClient } from './useTonClient';
-import { useAsyncInitialize } from './useAsyncInitialize';
-import { useTonConnect } from './useTonConnect';
-import { Address, OpenedContract } from '@ton/core';
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { CHAIN } from "@tonconnect/protocol";
+import { Address, Cell, OpenedContract, toNano } from "@ton/core";
+import { useTonClient } from "./useTonClient";
+import { useTonConnect } from "./useTonConnect";
+import { useAsyncInitialize } from "./useAsyncInitialize";
+import { Master } from "../contracts/Master";
 
 export function useMasterContract() {
-  const client = useTonClient();
+  const { client } = useTonClient();
+  const { sender, network } = useTonConnect();
   const [userNextIndex, setUserNextIndex] = useState<null | number>();
-  const { sender } = useTonConnect();
+  const [orderNextIndex, setOrderNextIndex] = useState<null | number>();
 
-  const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
-  
   const masterContract = useAsyncInitialize(async () => {
     if (!client) return;
-    const contract = Master.createFromAddress(Address.parse("EQCmgRIfj3trNv5aR9fvDYaVkQ5yskhq6RJ4ygQ4BdiUQBtx"));
+    const contract = new Master(Address.parse("EQCmgRIfj3trNv5aR9fvDYaVkQ5yskhq6RJ4ygQ4BdiUQBtx"));
     return client.open(contract) as OpenedContract<Master>;
   }, [client]);
 
+  const getIndexes = async () => {
+    if (!masterContract) return;
+    
+    const indexes = await masterContract.getIndexes();
+    setUserNextIndex(indexes.userNextIndex);
+    setOrderNextIndex(indexes.orderNextIndex);
+  }
+  
   useEffect(() => {
-    async function getIndexes() {
-      if (!masterContract) return;
-      setUserNextIndex(null);
-      
-      const indexes = await masterContract.getIndexes();
-      setUserNextIndex(indexes.userNextIndex);
-      
-      await sleep(500000);
-      getIndexes(); 
-    }
     getIndexes();
   }, [masterContract]);
 
   return {
-    userNextIndex: userNextIndex,
     address: masterContract?.address.toString(),
-    // sendIncrement: () => {
-    //   return masterContract?.sendIncrement(sender);
-    // },
+    userNextIndex: userNextIndex,
+    orderNextIndex: orderNextIndex,
+    sendCreateUser: (value: bigint | string, queryId: number, content: Cell) => {
+      return masterContract?.sendCreateUser(sender, toNano(value), queryId, content);
+    },
   };
 }

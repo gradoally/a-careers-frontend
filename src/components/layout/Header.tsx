@@ -8,8 +8,8 @@ import React from "react";
 
 const Header = ({messages}: {messages: {connect: string, find: string}}) => {
     return (
-        <AppBar height="70px" padding={"20px"}>
-            <Stack direction="row" alignItems="center" spacing={"15px"} >
+        <AppBar>
+            <Stack sx={{paddingRight: "5px"}} direction="row" alignItems="center" spacing={"15px"} >
                 <MenuButton/>
                 <SearchForm text={messages.find}/>
             </Stack>

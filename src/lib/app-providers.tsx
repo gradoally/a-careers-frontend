@@ -10,18 +10,22 @@ import {TonConnectUIProvider} from "@tonconnect/ui-react";
 
 import ThemeProvider from "@/lib/theme-provider";
 import {TelegramProvider} from "@/lib/telegram-provider";
-
+import AuthProvider from "@/lib/auth-provider";
+import {BackendConfig} from "@/openapi/client";
 
 export type AppContextType = {
     toggleDrawer: (value: boolean) => void
     toggleFilter: (value: boolean) => void
     isDrawerOpen: boolean
     isFilterOpen: boolean
+    config: BackendConfig | null;
+
 }
 
 type Props = {
     children: ReactNode;
-    options: { key: string }
+    options: { key: string };
+    config: BackendConfig | null;
 };
 
 const AppContext = React.createContext<AppContextType>({
@@ -29,6 +33,7 @@ const AppContext = React.createContext<AppContextType>({
     toggleDrawer: (value: boolean) => undefined,
     toggleFilter: (value: boolean) => undefined,
     isDrawerOpen: false,
+    config: null,
 })
 
 
@@ -93,26 +98,26 @@ const AppProviders = (props: Props) => {
             isDrawerOpen,
             toggleDrawer,
             toggleFilter,
+            config: props.config,
         }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [isDrawerOpen, isFilterOpen]
     )
 
     return (
-
-        <TonConnectUIProvider manifestUrl={manifestUrl}>
-        <CacheProvider value={cache}>
+        <TelegramProvider>
             <AppContext.Provider value={memoValue}>
-                <ThemeProvider>
-
-                    <TelegramProvider>
-                        {props.children}
-                    </TelegramProvider>
-                </ThemeProvider>
+                <TonConnectUIProvider manifestUrl={manifestUrl}>
+                    <AuthProvider>
+                        <CacheProvider value={cache}>
+                            <ThemeProvider>
+                                {props.children}
+                            </ThemeProvider>
+                        </CacheProvider>
+                    </AuthProvider>
+                </TonConnectUIProvider>
             </AppContext.Provider>
-        </CacheProvider>
-
-        </TonConnectUIProvider>
+        </TelegramProvider>
     );
 };
 

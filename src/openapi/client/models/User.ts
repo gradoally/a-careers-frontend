@@ -22,5 +22,7 @@ export type User = {
     portfolio?: string | null;
     resume?: string | null;
     specialization?: string | null;
+    language?: string | null;
+    aboutTranslated?: string | null;
 };
 

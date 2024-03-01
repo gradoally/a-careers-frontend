@@ -1,28 +1,15 @@
 import React, {ReactNode} from "react";
-
-import localFont from 'next/font/local'
 import type {Metadata} from 'next'
 import pick from 'lodash/pick';
-import {NextIntlClientProvider, useMessages} from 'next-intl';
+import {NextIntlClientProvider} from 'next-intl';
 
-
-import {
-    // getTranslations,
-    unstable_setRequestLocale
-} from 'next-intl/server';
+import {unstable_setRequestLocale, getMessages} from 'next-intl/server';
 import {locales} from '@/config';
 import AppProviders from "@/lib/app-providers";
-
+import {fetchClientGetter} from "@/openapi/client-getter";
 import 'react-toastify/dist/ReactToastify.css';
 
 import "../globals.css";
-
-
-const inter = localFont({
-    src: '../fonts/Inter.ttf',
-    display: 'swap',
-    variable: '--font-inter',
-})
 
 export const metadata: Metadata = {
     title: 'Alfamater',
@@ -39,29 +26,28 @@ export function generateStaticParams() {
 }
 
 
-const RootLayout = ({children, params: {locale}}: Props) => {
+const RootLayout = async ({children, params: {locale}}: Props) => {
     // Enable static rendering
     unstable_setRequestLocale(locale);
-    const messages = useMessages();
+    const messages = await getMessages();
+    const fetchClient = fetchClientGetter({next: {revalidate: 86400, tags: ["config"]}});
+    let config = null
+    try {
+        config = await fetchClient.search.getApiConfig();
+    } catch (e) {
+        console.log(e)
+    }
     return (
-        <html lang={locale}
-              className={`${inter.variable}`}
+        <html lang={locale}>
+        <body className="dark font-sans-serif scroll-hide">
+        <NextIntlClientProvider
+            locale={locale}
+            messages={pick(messages, 'errors', 'buttons', "common")}
         >
-        <body className="dark">
-
-        <style>{`
-            html {
-                font-family: ${inter.variable};
-            }
-        `}</style>
-        <AppProviders options={{key: 'mui'}}>
-            <NextIntlClientProvider
-                locale={locale}
-                messages={pick(messages, 'errors', 'buttons')}
-            >
+            <AppProviders options={{key: 'mui'}} config={config}>
                 {children}
-            </NextIntlClientProvider>
-        </AppProviders>
+            </AppProviders>
+        </NextIntlClientProvider>
         </body>
         </html>
     )

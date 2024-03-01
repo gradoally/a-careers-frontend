@@ -14,7 +14,7 @@ import BackButton from "@/components/ui/buttons/BackButton";
 export default function NotFound() {
     const t = useTranslations();
     const header = (
-        <AppBar>
+        <AppBar height="60px">
             <Stack direction="row" alignItems="center" spacing={1} >
                 <BackButton/>
                 <Typography variant="h5" sx={{color: "info.main"}}>404</Typography>
@@ -27,7 +27,7 @@ export default function NotFound() {
                 {t("buttons.back")}
             </FooterButton>
         </Footer>}>
-                <Stack className="p-[20px]" component="div"
+                <Stack className="p-5" component="div"
                        direction={"column"} justifyContent="center" alignItems={"center"} sx={{height: "100%"}}>
                     <div style={{
                         fontSize: "128px", lineHeight: "155px",

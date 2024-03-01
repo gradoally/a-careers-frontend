@@ -1,5 +1,5 @@
 "use client"
-import {useRef} from "react";
+import {useRef, ReactNode} from "react";
 import {useTranslations} from "next-intl";
 
 import Stack from "@mui/material/Stack";
@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import CopyButton from "@/components/ui/buttons/CopyButton";
 import {toast} from "@/lib/helper";
 
-const CopyContainer = ({text}: { text: string }) => {
+const CopyContainer = ({children, className=""}: { children: ReactNode, className?: string }) => {
     const t = useTranslations("copy")
 
     const textRef = useRef<HTMLDivElement | null>(null)
@@ -27,8 +27,8 @@ const CopyContainer = ({text}: { text: string }) => {
         }
     }
     return (
-        <Stack alignItems="center" direction="row" spacing={0}>
-            <Typography ref={textRef} component="div" variant="body2">{text}</Typography>
+        <Stack alignItems="center" direction="row" spacing={0} className={className}>
+            <div ref={textRef}>{children}</div>
             <CopyButton sx={{fontSize: "10px"}} onClick={handleCopy}/>
         </Stack>
     )

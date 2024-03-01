@@ -2,6 +2,7 @@ import {useTranslations} from "next-intl";
 import clsx from "clsx"
 import React from "react";
 
+
 type StatusType = "declined" | "on_moderation" | "no_responses" | "response_sent"
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 
 
 const StatusChip = ({status}: Props) => {
-    const t = useTranslations("common");
+    const t = useTranslations("status_chip");
 
     const data: Record<StatusType, { className: string, text: string, }> = {
         "no_responses": {
@@ -33,12 +34,12 @@ const StatusChip = ({status}: Props) => {
         <div
             className={
                 clsx(
-                    "h-[14px] border-[0.5px] rounded-[2px] text-[8px] py-[2px] align-middle font-normal",
-                    "tracking-wider text-center uppercase leading-[8px]",
+                    "h-[14px] border rounded-[2px] text-[8px] align-middle font-normal",
+                    "tracking-wider text-center uppercase leading-3",
                     data[status].className,
                 )
             }>
-            {data[status].text}
+             {data[status].text}
         </div>
     )
 }

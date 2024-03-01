@@ -31,5 +31,8 @@ export type Order = {
     deadline?: string;
     description?: string | null;
     technicalTask?: string | null;
+    nameTranslated?: string | null;
+    descriptionTranslated?: string | null;
+    technicalTaskTranslated?: string | null;
 };
 

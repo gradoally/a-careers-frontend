@@ -32,6 +32,7 @@
           "Search"
         ],
         "summary": "Returns list of ACTIVE (available to work at) Orders that meet filter.",
+        "description": "<br>\r\n            With non-empty <b>translateTo</b> param returned top-level objects (Orders) will have fields <b>nameTranslated</b>, <b>descriptionTranslated</b> and <b>technicalTaskTranslated</b> filled with translated values of their corresponding original field values.\r\n            \r\n<br>\r\n            These fields may be null if corresponding value is not translated yet.\r\n            Also, these fields will be null if original order language is equal to the language to translate to.\r\n            \r\n<br>\r\n            Expected usage: ```… = (item.nameTranslated ?? item.name)```.\r\n            ",
         "parameters": [
           {
             "name": "query",
@@ -82,6 +83,14 @@
             "schema": {
               "type": "string",
               "default": "asc"
+            }
+          },
+          {
+            "name": "translateTo",
+            "in": "query",
+            "description": "Language (key or code/name) of language to translate to. Must match one of supported languages (from config).",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -195,6 +204,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "translateTo",
+            "in": "query",
+            "description": "Language (key or code/name) of language to translate to. Must match one of supported languages (from config).",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -228,6 +245,14 @@
             "schema": {
               "type": "integer",
               "format": "int64"
+            }
+          },
+          {
+            "name": "translateTo",
+            "in": "query",
+            "description": "Language (key or code/name) of language to translate to. Must match one of supported languages (from config).",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -263,6 +288,14 @@
               "type": "integer",
               "format": "int64"
             }
+          },
+          {
+            "name": "translateTo",
+            "in": "query",
+            "description": "Language (key or code/name) of language to translate to. Must match one of supported languages (from config).",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -293,6 +326,14 @@
             "name": "address",
             "in": "query",
             "description": "Address of order contract (in user-friendly form).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "translateTo",
+            "in": "query",
+            "description": "Language (key or code/name) of language to translate to. Must match one of supported languages (from config).",
             "schema": {
               "type": "string"
             }
@@ -356,7 +397,6 @@
           "Search"
         ],
         "summary": "Get list of user orders by role and status.",
-        "description": "Only statuses with non-zero number of orders are returned.",
         "parameters": [
           {
             "name": "index",
@@ -382,6 +422,14 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "translateTo",
+            "in": "query",
+            "description": "Language (key or code/name) of language to translate to. Must match one of supported languages (from config).",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -661,6 +709,18 @@
           "technicalTask": {
             "type": "string",
             "nullable": true
+          },
+          "nameTranslated": {
+            "type": "string",
+            "nullable": true
+          },
+          "descriptionTranslated": {
+            "type": "string",
+            "nullable": true
+          },
+          "technicalTaskTranslated": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -802,6 +862,14 @@
             "nullable": true
           },
           "specialization": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "aboutTranslated": {
             "type": "string",
             "nullable": true
           }

@@ -12,6 +12,7 @@ import TaskList from "@/components/TaskList";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 import {unstable_setRequestLocale} from "next-intl/server";
 import {locales} from "@/config";
+import {Order} from "@/openapi/client";
 
 type Props = {
     params: {
@@ -23,36 +24,37 @@ type Props = {
 export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
 }
+
 const Page = ({params: {locale}}: Props) => {
 
     // Enable static rendering
     unstable_setRequestLocale(locale);
     const tc = useTranslations("common");
     const t = useTranslations("tasks");
-    const data  = [
+    const data: Order[] = [
         {
-            "title": "Расширение редактируемого стандарта NFT",
-            "date": "12 июня, 9:00 – 3 августа, 21:00",
-            "proposals": 1,
-            "diamonds": 567,
+            "name": "Расширение редактируемого стандарта NFT",
+            "createdAt": "2024-02-07T10:09:38+00:00",
+            "responsesCount": 0,
+            "price": 567,
         },
         {
-            "title": "Разработка TDA фриланс-биржи (часть II)",
-            "date": "10 июня, 21:00 – 20 июня, 15:00",
-            "proposals": 1,
-            "diamonds": 777,
+            "name": "Расширение редактируемого стандарта NFT",
+            "createdAt": "2024-02-07T10:09:38+00:00",
+            "responsesCount": 1,
+            "price": 567,
         },
         {
-            "title": "Заминтить коллекцию тамагочи NFT",
-            "date": "10 июня, 21:00 – 20 июня, 15:00",
-            "proposals": 0,
-            "diamonds": 100500,
+            "name": "Расширение редактируемого стандарта NFT",
+            "createdAt": "2024-02-07T10:09:38+00:00",
+            "responsesCount": 0,
+            "price": 567,
         },
         {
-            "title": "Extend Editable NFT Standard (add features)",
-            "date": "12 июня, 9:00 – 3 августа, 21:00",
-            "proposals": 1,
-            "diamonds": 567,
+            "name": "Расширение редактируемого стандарта NFT",
+            "createdAt": "2024-02-07T10:09:38+00:00",
+            "responsesCount": 1,
+            "price": 567,
         },
     ];
 
@@ -69,12 +71,11 @@ const Page = ({params: {locale}}: Props) => {
         </AppBar>
     )
     return (
-        <Shell   header={header}>
-            <div className="p-[20px]">
-
+        <Shell header={header}>
+            <div className="pb-5 pt-[15px]">
                 <Suspense fallback={<div>Loading...</div>}>
                     {data ? (
-                        <TaskList link="/create-profile/category" data={data}/>
+                        <TaskList data={data}/>
                     ) : (
                         <CenteredContainer>
                             {tc("no_more_data")}

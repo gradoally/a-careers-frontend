@@ -1,10 +1,8 @@
 import React from "react";
-import {useTranslations} from "next-intl";
-import {unstable_setRequestLocale} from "next-intl/server";
+import {unstable_setRequestLocale, getTranslations} from "next-intl/server";
 
 import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 
 import TaskView from "@/components/TaskView";
 import Shell from "@/components/layout/Shell";
@@ -15,63 +13,55 @@ import BackButton from "@/components/ui/buttons/BackButton";
 import MenuButton from "@/components/ui/buttons/MenuButton";
 import {locales} from "@/config";
 import {NextLinkComposed} from "@/components/Link";
-
+import ConnectButton from "@/components/ui/buttons/ConnectButton";
+import {fetchClientGetter} from "@/openapi/client-getter";
+import {ApiError} from "@/openapi/client"
+import {notFound} from "next/navigation";
 type Props = {
-    params: { locale: string };
+    params: { locale: string, id: number };
 };
 
 export function generateStaticParams() {
     return locales.map((locale) => ({locale}));
 }
 
-const Page = ({params: {locale}}: Props)=>{
+const Page = async ({params: {locale, id}}: Props)=>{
     unstable_setRequestLocale(locale);
 
-    const tc = useTranslations("common");
-    const t = useTranslations("tasks");
-    const data = {
-        "title": "Доработать мета-данные и память смарт-контракта",
-        "diamonds": 1225,
-        "proposals": 0,
-        "language": {"label": "Русский"},
-        "description": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
-        "technicalTask": "Необходимо доработать смарт-контракт таким образом, что бы при деплое он хранил ссылку на одни метаданные, а после передачи собственности с кошелька владельца метаданные менялись на другие. Изначально элементы коллекции должны быть скрыты (по аналогии с лутбоксом). После продажи на маркетплейсе у владельца должен появиться.",
-        "deadline": "21 июня, 21:00",
-        "createdAt": "Создано 7 июня в 16:53 на русском языке",
-        "category": "Категория «Разработка на блокчейне TON»",
-        "customer": {
-            "id": 1,
-            "image": "/avatar.png",
-            "username": "@another_kote",
-            "telegram": "@another_kote"
-        },
-        status: "no_responses" as "no_responses"
+    const tc = await getTranslations("common");
+    const t = await getTranslations("tasks");
+    const fetchClient = fetchClientGetter({locale: locale, next: {revalidate: false}})
+    let response;
+    try {
+        response = await fetchClient.search.getApiGetorder({index: id})
+    } catch (e) {
+        if (e instanceof ApiError && e.status === 404) {
+            return notFound();
+        }
+        throw e
     }
 
     const footer = (
         <Footer>
             <FooterButton
-                color={"secondary"} sx={{color: "common.black"}}
+                color={"secondary"}
                 variant="contained">
-                {tc("log_in_and_respond")}
+                {tc("log_in_and_respond")} ⚡️
             </FooterButton>
         </Footer>
     )
     const header = (
-        <AppBar>
+        <AppBar height="60px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <BackButton component={NextLinkComposed} to={"/"}/>
                 <Typography variant="h5" sx={{color: "info.main"}}>
-                    {t("detail", {value: "#234567"})}
+                    #234567
                 </Typography>
             </Stack>
 
             <div className="flex-grow"/>
             <Stack direction="row" alignItems="center" spacing={"15px"}>
-                <Avatar alt="Diamond"
-                        src="/diamond.png"
-                        sx={{height: '30px', width: "30px"}}
-                />
+                <ConnectButton text={tc('connect')}/>
                 <MenuButton/>
             </Stack>
         </AppBar>
@@ -86,7 +76,7 @@ const Page = ({params: {locale}}: Props)=>{
                 justifyContent="flex-start"
                 alignItems="flex-start"
                 spacing={"20px"}>
-                <TaskView data={data}/>
+                <TaskView data={response}/>
             </Stack>
         </Shell>
     )
