@@ -20,6 +20,7 @@
   },
   "locale_switcher": {
     "ru": "Русский",
+    "zh": "Simplified-Chinese",
     "en": "English"
   },
   "form": {
@@ -32,7 +33,6 @@
       "email": "Пожалуйста, введите корректный адрес электронной почты",
       "url": "Пожалуйста, укажите действительный URL"
     }
-
   },
   "errors": {
     "user_not_found": "Пользователь не найден!",
@@ -52,7 +52,7 @@
     "hide": "Скрыть"
   },
   "common": {
-    "connected_to_ton_wallet":  "Подключено к кошельку TON",
+    "connected_to_ton_wallet": "Подключено к кошельку TON",
 
     "no_more_data": "Нету больше данных",
     "filter": "Фильтр",
@@ -69,6 +69,8 @@
     "responses": "Отклики"
   },
   "tasks": {
+    "task_successfully_created": "Задача успешно создано",
+
     "first_step": "Первый шаг",
     "step_x_from_x": "Шаг {value} из {from}",
     "make_a_response": "Сделать отклик",
@@ -120,14 +122,13 @@
     "confirm_the_deadline": "Подтвердите дедлайн",
     "response_comment": "Комментарий к отклику",
     "make_response_comment_description": "Добавьте подробное описание вашего предложения и потенциальные преимущества для заказчиков"
-
   },
   "profile": {
     "profile_successfully_connected": "Профиль успешно подключнено",
     "profile_successfully_updated": "Профиль успешно обновлено",
     "please_wait": "Подаждите!",
     "website_link": "Ссылка на сайт",
-    "resume_link":  "Ссылка на резюме",
+    "resume_link": "Ссылка на резюме",
     "link_to_portfolio": "Ссылка на портфолио",
     "nickname": "Никнейм",
     "profile_language": "Язык профиля",

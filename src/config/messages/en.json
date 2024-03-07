@@ -3,7 +3,6 @@
     "sort": "Sort",
     "by_deadline": "By deadline",
     "by_publication_date": "By publication date",
-
     "filters": "Filters",
     "categories": "Categories",
     "all": "All",
@@ -14,20 +13,19 @@
   "buttons": {
     "next": "Next",
     "filter": "Filter",
-
     "back": "Back"
   },
-
   "network": {
     "commission": "Network commission ≈ {value}"
   },
   "locale_switcher": {
     "ru": "Русский",
-    "en": "English"
+    "en": "English",
+    "zh": "Simplified-Chinese"
   },
   "form": {
     "required": {
-      "default":"This field required",
+      "default": "This field required",
       "email": "Please fill your email"
     },
     "validation": {
@@ -42,7 +40,6 @@
     "user_not_found": "User not found!",
     "please_provide_valid_data": "Please provide valid data"
   },
-
   "status_chip": {
     "no_responses": "No Responses",
     "on_moderation": "On moderation",
@@ -54,7 +51,7 @@
     "hide": "Hide"
   },
   "common": {
-    "connected_to_ton_wallet":  "Connected to ton wallet",
+    "connected_to_ton_wallet": "Connected to ton wallet",
     "please_wait": "Please wait!",
     "no_more_data": "No more data",
     "filter": "Filters",
@@ -74,6 +71,7 @@
     "profile": "Profile"
   },
   "tasks": {
+    "task_successfully_created": "Task successfully created",
     "first_step": "First step",
     "step_x_from_x": "Step {value} from {from}",
     "make_a_response": "Make a response",
@@ -120,13 +118,11 @@
     "specify_the_budget_for_the_task": "Specify the budget for the task",
     "set_task_price_explained": "Specify the amount of remuneration to the executor after the task is completed in TON",
 
-
     "job_description": "Job Description",
     "add_detailed_description_to_get_more_responses": "Add a detailed job description to get more responses",
 
     "technical_task": "Technical task",
     "technical_task_description": "Add a statement of work. Use TON Byte to store files.",
-
 
     "confirm_the_task_budget": "Confirm the task budget",
     "or_suggest_your_own": "or suggest your own",
@@ -141,8 +137,8 @@
     "freelancer_profile": "Freelancer Profile",
     "fill_if_you_want_make_response": "Fill out if you plan on doing feedback",
     "website_link": "Website link",
-    "resume_link":  "Resume link",
-    "link_to_portfolio":  "Link to portfolio",
+    "resume_link": "Resume link",
+    "link_to_portfolio": "Link to portfolio",
     "nickname": "Nickname",
     "profile_language": "Profile language",
     "create": "Create profile",
