@@ -16,8 +16,14 @@ export const COOKIE_ENABLE_SECURE = process.env.NEXT_PUBLIC_ENABLE_COOKIE_SECURE
 
 export const BASE_URL = process.browser ? process.env.NEXT_PUBLIC_BASE_URL : process.env.NEXT_PUBLIC_BASE_SERVER_URL
 
-export const IS_PRODUCTION = false
-export const WEBAPP_URL = process.env.NEXT_PUBLIC_BASE_URL ?? ""
-export const WEBSITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ""
+export const IS_PRODUCTION = process.env.NODE_ENV === "production";
+export const IS_PRODUCTION_BUILD = process.env.NODE_ENV === "production";
+
+const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : "";
+export const WEBAPP_URL =
+    process.env.NEXT_PUBLIC_WEBAPP_URL ||
+    VERCEL_URL ||
+    "http://localhost:3000";
+
 
 export const DEFAULT_LOCALE = "ru";

@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import {TaskCreateType} from "./stepper";
 import {FormikProps} from "formik";
 import {StyledInputMultiline} from "@/components/forms/fields/StyledInputMultiline";
+import {checkError} from "@/lib/helper";
 
 
 const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
@@ -20,6 +21,8 @@ const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
 
             <div className="grow pb-2.5">
                 <StyledInputMultiline
+                    error={checkError(formik, {}, "technicalTask")}
+
                     fullWidth
                     inputProps={{style: {height: "100%", padding: "10px 20px", overflow: "scroll"}}}
                     multiline

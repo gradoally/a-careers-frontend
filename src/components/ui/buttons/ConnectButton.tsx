@@ -1,24 +1,18 @@
 "use client"
 
-import {useEffect} from 'react';
-import {useTranslations} from "next-intl";
+import { useEffect } from 'react';
+import { useTranslations } from "next-intl";
 import Button from '@mui/material/Button';
 import Avatar from "@mui/material/Avatar";
-import {useTonConnectUI} from "@tonconnect/ui-react";
-import {CHAIN} from "@tonconnect/protocol";
-import {useTonConnect} from "@/hooks/useTonConnect";
-import {useTonClient} from '@/hooks/useTonClient';
-import {useMasterContract} from '@/hooks/useMasterContract';
-import {useAuthContext} from "@/lib/auth-provider";
-import {toast} from "@/lib/helper";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+import { CHAIN } from "@tonconnect/protocol";
+import { useTonConnect } from "@/hooks/useTonConnect";
+import { toast } from "@/lib/helper";
 
-const ConnectButton = ({text}: { text: string }) => {
-    const t = useTranslations()
+const ConnectButton = ({ text }: { text: string }) => {
+    const trans = useTranslations()
     const [tonConnectUI] = useTonConnectUI();
-    const {connected, network, sender} = useTonConnect();
-    const client = useTonClient();
-    const {userNextIndex} = useMasterContract();
-    const {reFetchUserData} = useAuthContext();
+    const { connected, network, sender } = useTonConnect();
 
     useEffect(() => {
         if (network === CHAIN.TESTNET) {
@@ -33,10 +27,9 @@ const ConnectButton = ({text}: { text: string }) => {
     const onConnectWallet = async () => {
         try {
             await tonConnectUI.openModal();
-            await reFetchUserData()
             // toast(t("common.connected_to_ton_wallet"), 'success')
         } catch (e) {
-            toast(t("errors.something_went_wrong_when_try_to_connect_ton_wallet"), 'warning')
+            toast(trans("errors.something_went_wrong_when_try_to_connect_ton_wallet"), 'warning')
             console.log(e)
         }
     };
@@ -44,31 +37,28 @@ const ConnectButton = ({text}: { text: string }) => {
     return (
         connected ?
             (
-                    <Avatar onClick={async () => {
-                        await tonConnectUI.disconnect()
-                        toast(t("common.disconnected_from_ton_wallet"), 'success')
-
-                        await reFetchUserData()
-
-                    }}
-                            className="w-[30px] h-[30px] border border-white"
-                            // sx={{bgcolor:  "common.white"}}
-                            alt="Diamond"
-                            src="/diamond.png"
-                    />
+                <Avatar onClick={async () => {
+                    await tonConnectUI.disconnect()
+                    toast(trans("common.disconnected_from_ton_wallet"), 'success')
+                }}
+                    className="w-[30px] h-[30px] border border-white"
+                    // sx={{bgcolor:  "common.white"}}
+                    alt="Diamond"
+                    src={"/images/diamond.png"}
+                />
             ) :
             (
                 <Button onClick={onConnectWallet}
-                        className="max-w-[146px] h-[30px]"
-                        sx={{
-                            borderRadius: "25px",
-                            padding: "5px 12px 6px 14px",
-                            // backgroundColor: "secondary.main",
-                            color: "common.black",
-                            fontWeight: "600",
-                            fontSize: "16px",
-                        }}
-                        color="secondary" variant="contained"
+                    className="max-w-[146px] h-[30px]"
+                    sx={{
+                        borderRadius: "25px",
+                        padding: "5px 12px 6px 14px",
+                        // backgroundColor: "secondary.main",
+                        color: "common.black",
+                        fontWeight: "600",
+                        fontSize: "16px",
+                    }}
+                    color="secondary" variant="contained"
                 >
                     {text}
                 </Button>

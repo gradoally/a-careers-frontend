@@ -1,7 +1,6 @@
 import {ReactNode} from "react";
 import {StyledAppBar, StyledPaper, StyledToolbar} from "./styled";
 
-
 interface Props {
     height?: string
     padding?: string

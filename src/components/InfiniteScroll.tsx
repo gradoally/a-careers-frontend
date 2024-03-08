@@ -68,7 +68,7 @@ const InfiniteScroll = (
             <div className="mt-4">
 
                 {isReachingEnd && (
-                    <div className="w-full flex justify-center items-center bg-gray-900 py-4 ">
+                    <div className="w-full flex justify-center items-center py-4 ">
                         <Typography component="div" variant="caption">
                             {t("common.no_more_data")}
                         </Typography>

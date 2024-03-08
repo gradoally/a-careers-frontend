@@ -6,10 +6,11 @@ import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 
 import Link from "@/components/Link";
-import {User} from "@/openapi/client";
 import UserAvatar from "@/components/UserAvatar";
 import CopyContainer from "@/components/features/copy";
 import ReadMoreCollapse from "@/components/features/ReadMoreCollapse";
+
+import { IUser } from "@/interfaces";
 
 interface HistoryType {
     date: string;
@@ -48,7 +49,7 @@ const History = ({data}: { data: HistoryType[] }) => {
 }
 
 
-const ProfileView = ({data}: { data: User}) => {
+const ProfileView = ({data}: { data: IUser}) => {
     const t = useTranslations();
 
     const renderSpecialization = () => {
@@ -59,7 +60,7 @@ const ProfileView = ({data}: { data: User}) => {
     return (
         <>
             <div className="bg-info bg-opacity-20 h-[180px] w-full flex flex-col justify-center items-center">
-                <UserAvatar src="/unicorn-hight.gif" height="90px" width="90px"/>
+                <UserAvatar src="/gifs/unicorn-hight" height="90px" width="90px"/>
                 <div className="mt-2.5 text-lg font-bold">{data?.nickname}</div>
             </div>
             <Stack spacing={"20px"} className="pt-[35px] px-5">

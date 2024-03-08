@@ -19,7 +19,6 @@ export const StyledPaper = styled(Paper)`
     overflow-y: hidden;
 `
 
-
 export const StyledToolbar = styled(Toolbar)`
     height: 70px; 
     padding: 15px;

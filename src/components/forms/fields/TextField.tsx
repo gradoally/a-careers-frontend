@@ -39,9 +39,10 @@ const TextField = (
                    defaultValue={props.defaultValue}
                    id={props.id}
                    name={props.name}
+                   error={props.error}
             />
             {props.helperText && (
-                <FormHelperText sx={{marginTop: "10px"}}>
+                <FormHelperText sx={{marginTop: "10px"}} error={props.error}>
                     {props.helperText}
                 </FormHelperText>
             )}

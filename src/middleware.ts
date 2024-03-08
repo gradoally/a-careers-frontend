@@ -5,7 +5,7 @@ import createMiddleware from 'next-intl/middleware';
 // import {checkToken} from "@/lib/auth";
 
 import {DEFAULT_LOCALE} from "./lib/constants";
-import {localePrefix, locales, pathnames} from './config';
+import {localePrefix, locales, pathnames} from './config/config';
 
 
 export default function middleware(request: NextRequest) {

@@ -18,7 +18,10 @@ const FooterButton = ({children,...props}: Props) => {
                     textAlign: "center",
                     fontWeight: "800",
                     width: "100%",
-                    lineHeight: "24px"
+                    lineHeight: "24px",
+                    "&.Mui-disabled": {
+                        "backgroundColor": "rgb(69, 174, 245,0.4)"
+                    }
                 }}
             {...props}
         >

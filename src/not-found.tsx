@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import {parseCookies} from "nookies";
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 
 import "./globals.css";
 import clsx from "clsx";

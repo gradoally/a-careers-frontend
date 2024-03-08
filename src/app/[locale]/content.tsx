@@ -1,35 +1,33 @@
 "use client"
 
 import React from "react";
-import {useSearchParams} from "next/navigation";
-import {useLocale} from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useLocale } from "next-intl";
 import useSWRInfinite from 'swr/infinite'
-import {Order} from "@/openapi/client";
+import { Order } from "@/openapi/client";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import TaskList from "@/components/TaskList";
 import Stack from "@mui/material/Stack";
 import TaskListSkeleton from "@/components/TaskListSkeleton";
 import Divider from "@/components/ui/Divider";
+import { fetcher } from "@/lib/swr";
+import { useAuthContext } from "@/lib/auth-provider";
 
 const PAGE_SIZE = 10;
-const fetcher = async (url: string) => {
-    const response = await fetch(url)
-    return response.json()
-}
-
 
 const Content = () => {
-    const locale = useLocale();
+    const {user} = useAuthContext();
     const searchParams = useSearchParams();
 
     const getKey = (pageIndex: number, previousPageData: Order[]) => {
+        if(!user?.data) return "";
         // Use the previous page data to determine if this is the last page.
         if (previousPageData && !previousPageData.length) return null;
         const params = new URLSearchParams(searchParams)
         params.set("page", (pageIndex).toString());
-
+        //&role=${user.data.isFreelancer?"freelancer":"customer"}&translateTo=${locale}&address=${user.data.address}
         // Index starts from 0
-        return `/${locale}/api/tasks/?${params.toString()}`;
+        return `${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/search/?${params.toString()}&orderBy=createdAt`;
     };
 
     const {
@@ -40,7 +38,7 @@ const Content = () => {
         isLoading,
         isValidating,
         mutate,
-    } = useSWRInfinite<Order[] >(getKey, fetcher, {
+    } = useSWRInfinite<Order[]>(getKey, fetcher, {
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnMount: true,
@@ -55,13 +53,13 @@ const Content = () => {
     const isLoadingInitialData = !data && !error;
     const isRefreshing = isValidating && data && data.length === size;
 
-    if (isLoadingInitialData || isRefreshing){
+    if (isLoadingInitialData || isRefreshing) {
         return (
             <Stack spacing={2} className="px-5">
                 {[1, 2, 3, 4].map((key) => (
                     <React.Fragment key={key}>
-                        <TaskListSkeleton/>
-                        <Divider/>
+                        <TaskListSkeleton />
+                        <Divider />
                     </React.Fragment>
                 ))}
             </Stack>
@@ -80,13 +78,11 @@ const Content = () => {
 
     return (
         <InfiniteScroll isReachingEnd={!!isReachingEnd}
-                        setSize={setSize} size={size} isEmpty={isEmpty}
-                        isLoadingMore={!!isLoadingMore} error={error}>
-            <TaskList data={allRows}/>
+            setSize={setSize} size={size} isEmpty={isEmpty}
+            isLoadingMore={!!isLoadingMore} error={error}>
+            <TaskList data={allRows} />
         </InfiniteScroll>
-    )
-
-
+    );
 }
 
 export default Content;

@@ -1,139 +1,63 @@
-"use client"
+import React, { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
+import { usePathname, useRouter, redirect } from "next/navigation";
 
-import type {ReactNode} from "react";
-import React, {useEffect} from "react";
-import {useLocale, useTranslations} from "next-intl";
-import {usePathname, useRouter} from "next/navigation";
-import useSWR from 'swr'
-import {User} from "@/openapi/client";
-import {fetchClientGetter} from "@/openapi/client-getter";
+import { useTonConnect } from "@/hooks/useTonConnect";
 
-import {useTonConnect} from "@/hooks/useTonConnect";
 import Image from "@/components/Image";
 
-type AuthContextType = {
-    user: User | null
-    reFetchUserData: () => Promise<void>
+import { APIs } from "@/config/api.config";
+import { get } from "@/services/request";
+import { IUser } from "@/interfaces/index";
 
+interface HOCProps {
+    WrappedComponent: React.ComponentType,
+    redirectTo?: string
+}
+
+interface IUserRes {
+    found: boolean;
+    data: IUser | null;
+}
+
+interface IAuth {
+    user: IUserRes | null;
     isLoading: boolean;
     error: string | null;
 }
 
-type Props = {
-    children: ReactNode;
-};
+interface IAuthContext extends IAuth {
+    fetchProfile: () => Promise<void>;
+}
 
-const AuthContext = React.createContext<AuthContextType>({
+const AuthContext = React.createContext<IAuthContext>({
     user: null,
-    isLoading: false,
+    isLoading: true,
     error: null,
-    reFetchUserData: async () => undefined
+    fetchProfile: async () => undefined
 })
 
-const fetcher = async (url: any) => {
-    console.log()
-    const response = await fetch(url)
-    return response.json()
+export const withAuth = ({ WrappedComponent, redirectTo = "/" }: HOCProps) => {
 
-}
-// const fetcher = (url: string|null) => fetch(url).then((res) => res.json());
-
-
-const AuthProvider = (props: Props) => {
-    // const [isLoading, setIsLoading] = React.useState<boolean>(false);
-    // const [error, setError] = React.useState<string | null>(null);
-
-    const {walletAddress, connected} = useTonConnect()
-    const locale = useLocale()
-
-    const t = useTranslations("errors")
-    const router = useRouter();
-    const pathname = usePathname();
-    const fetchClient = fetchClientGetter({locale: locale, next: {revalidate: false}})
-
-    const getKey = () => {
-        if (!walletAddress) return null;
-        return `/${locale}/api/users/get-user/?value=${walletAddress}`;
-    };
-    const { data, mutate, error, isLoading } = useSWR(getKey, fetcher, {
-        revalidateOnReconnect: true,
-    })
-
-    // const fetchData = async () => {
-    //     if (walletAddress) {
-    //         // setIsLoading(true)
-    //         try {
-    //             const response = await fetchClient.search.getApiFinduser({
-    //                 address: walletAddress, translateTo: locale
-    //             })
-    //             if (response?.found && response?.data) {
-    //                 // setUser(response.data)
-    //                 return response.data
-    //             }
-    //             console.log(response, "auth response")
-    //             // setIsLoading(false)
-    //             // setError(null)
-    //         } catch (e) {
-    //             console.log(e, "auth exception")
-    //         }
-    //     }
-    //     return null;
-    // }
-    //
-    // const [user, setUser] = React.useState<User | null>(null)
-
-    useEffect(()=>{
-        console.log("isLoading", "data", "walletAddress")
-        console.log(isLoading, data, walletAddress)
-        if (!walletAddress) return
-        if (!data && pathname !== `/${locale}/profile/create`){
-            router.replace(`/${locale}/profile/create`)
-        } else if (data && pathname === `/${locale}/profile/create`) {
-            router.replace(`/${locale}/profile/`)
-        }
-    },[data])
-
-    // const fecthCallback = React.useCallback(async () => {
-    //     await mutate();
-    //     setUser(data);
-    // }, [walletAddress]);
-    //
-    // useEffect(()=>{
-    //     if (!walletAddress){
-    //         setUser(null);
-    //     }else{
-    //         fecthCallback()
-    //     }
-    // }, [walletAddress])
-
-    const memoValue = React.useMemo(
-        () => ({
-            user: data,
-            isLoading: isLoading,
-            error: error,
-            reFetchUserData: mutate,
-        }),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [data]
-    )
-
-    if (!connected && (walletAddress && !data) || isLoading){
-        return (
-            <div className="bg-primary h-screen flex justify-center items-center">
-                <Image alt={"Alfamater auth loader"} src="/unicorn-low.gif"
-                       width={"100"} height={"100"}/>
-            </div>
-        )
+    // Creating the inner component. The calculated Props type here is the where the magic happens.
+    return function ComponentWithData() {
+        const { user } = useAuthContext();
+        const router = useRouter();
+        const locale = useLocale()
+        useEffect(() => {
+            if (!user) {
+                if (redirectTo?.startsWith("/")) {
+                    router.replace(`/${locale}${redirectTo}`)
+                } else {
+                    router.replace(`/${locale}/${redirectTo}`)
+                }
+            }
+        }, [])
+        return (<WrappedComponent />)
     }
-    return (
-        <AuthContext.Provider value={memoValue}>
-            {props.children}
-        </AuthContext.Provider>
-    );
-};
+}
 
-
-export const useAuthContext = (): AuthContextType => {
+export const useAuthContext = (): IAuthContext => {
     const context = React.useContext(AuthContext)
     if (context === undefined) {
         throw new Error('useAuthContext must be used within a AuthProvider')
@@ -141,5 +65,71 @@ export const useAuthContext = (): AuthContextType => {
     return context
 }
 
+function Loader() {
+    return <div className="bg-primary h-screen flex justify-center items-center">
+        <Image alt={"Alfamater auth loader"} src="/gifs/unicorn-low.gif"
+            width={"100"} height={"100"} />
+    </div>
+}
 
-export default AuthProvider;
+export default function AuthProvider(props: React.PropsWithChildren) {
+
+    const { walletAddress } = useTonConnect();
+    const locale = useLocale()
+    const pathname = usePathname();
+
+    const [auth, setAuth] = useState<IAuth>({
+        user: null,
+        isLoading: false,
+        error: null
+    });
+
+    async function fetchProfile() {
+        if (!walletAddress || !locale) return;
+        //Find user profile
+        setAuth({
+            isLoading: true,
+            user: null,
+            error: null
+        })
+        await get<IUserRes>({ url: `${APIs.user.profile("UQDUwLhRnQ2fk4Iv_CncP0oSxtWOsNMRO76o33zZhI8avh8q", locale)}` })
+            .then((res) => {
+                setAuth({
+                    isLoading: false,
+                    user: res.data || null,
+                    error: null
+                });
+            })
+            .catch(err => {
+                setAuth({
+                    isLoading: false,
+                    user: null,
+                    error: err.message
+                });
+            })
+    }
+
+    useEffect(() => {
+        if (!walletAddress) return;
+        if (auth.isLoading || !auth.user) return;
+        const createProfilePath = `/${locale}/profile/create`;
+
+        if (!auth.user.found && pathname !== createProfilePath)
+            redirect(createProfilePath);
+
+        if (auth.user.found && pathname === createProfilePath)
+            redirect(`/${locale}`);
+
+    }, [auth, walletAddress]);
+
+    useEffect(() => {
+        fetchProfile()
+    }, [walletAddress, locale]);
+
+    return (
+        <AuthContext.Provider value={{ ...auth, fetchProfile: fetchProfile }}>
+            {auth.isLoading ? <Loader /> : props.children}
+        </AuthContext.Provider>
+    );
+};
+

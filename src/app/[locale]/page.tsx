@@ -1,9 +1,9 @@
-import React, {Suspense} from "react";
-import {getMessages, getTranslations, unstable_setRequestLocale} from 'next-intl/server';
+import React, { Suspense } from "react";
+import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import pick from "lodash/pick";
-import {NextIntlClientProvider} from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 
-import {locales} from '@/config';
+import { locales } from '@/config/config';
 import Shell from "@/components/layout/Shell";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -18,28 +18,28 @@ type Props = {
 };
 
 export function generateStaticParams() {
-    return locales.map((locale) => ({locale}));
+    return locales.map((locale) => ({ locale }));
 }
 
-export default async function Home({params: {locale}}: Props) {
+export default async function Home({ params: { locale } }: Props) {
     // Enable static rendering
     unstable_setRequestLocale(locale);
     const messages = await getMessages();
-    const t = await getTranslations();
-    const header = <Header messages={{"connect": t("common.connect"), "find": t("tasks.find")}}/>
+    const trans = await getTranslations();
+    const header = <Header messages={{ "connect": trans("common.connect"), "find": trans("tasks.find") }} />
     return (
         <NextIntlClientProvider
             locale={locale}
-            messages={pick(messages, 'status_chip',"errors", "common")}
+            messages={pick(messages, 'status_chip', "errors", "common")}
         >
-            <Shell   header={header} withDrawer  footer={
+            <Shell header={header} withDrawer footer={
                 <Footer transparent={true}>
-                    <FilterButton>{t("buttons.filter")}</FilterButton>
+                    <FilterButton>{trans("buttons.filter")}</FilterButton>
                 </Footer>}
-                   extra={<Filter/>}>
+                extra={<Filter />}>
                 <div className="pt-[15px]">
-                    <Suspense fallback={<LazyLoading/>}>
-                        <Content/>
+                    <Suspense fallback={<LazyLoading />}>
+                        <Content />
                     </Suspense>
                 </div>
             </Shell>

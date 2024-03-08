@@ -1,7 +1,7 @@
 import React from "react";
 
 import {unstable_setRequestLocale} from "next-intl/server";
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 import Stepper from "./stepper";
 
 import {NextIntlClientProvider, useMessages} from 'next-intl';

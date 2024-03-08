@@ -17,6 +17,7 @@ interface Props {
     helperText?: string;
     onChange?: (event: { target: { name: string; value: string } }) => void;
     placeholder?: string;
+    error?: boolean
 }
 
 const NumberField = (
@@ -26,12 +27,13 @@ const NumberField = (
         fullWidth = true,
         disableUnderline,
         onChange,placeholder,
+        error,
         ...props
     }: Props
 ) => {
     return (
         <FormControl
-            fullWidth={fullWidth} variant="standard"
+            fullWidth={fullWidth} variant="standard" error={error}
         >
             {label && (
                 <InputLabel

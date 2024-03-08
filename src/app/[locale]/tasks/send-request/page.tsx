@@ -10,7 +10,7 @@ import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
 import {Stack} from "@mui/material";
 import BackButton from "@/components/ui/buttons/BackButton";
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 
 import MenuButton from "@/components/ui/buttons/MenuButton";

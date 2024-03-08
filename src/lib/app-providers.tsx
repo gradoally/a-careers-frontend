@@ -1,17 +1,17 @@
 "use client"
 
 import React from "react";
-import type {ReactNode} from "react";
+import type { ReactNode } from "react";
 
-import {useServerInsertedHTML} from "next/navigation";
-import {CacheProvider} from "@emotion/react";
+import { useServerInsertedHTML } from "next/navigation";
+import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-import {TonConnectUIProvider} from "@tonconnect/ui-react";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 import ThemeProvider from "@/lib/theme-provider";
-import {TelegramProvider} from "@/lib/telegram-provider";
+import { TelegramProvider } from "@/lib/telegram-provider";
 import AuthProvider from "@/lib/auth-provider";
-import {BackendConfig} from "@/openapi/client";
+import { BackendConfig } from "@/openapi/client";
 
 export type AppContextType = {
     toggleDrawer: (value: boolean) => void
@@ -19,7 +19,6 @@ export type AppContextType = {
     isDrawerOpen: boolean
     isFilterOpen: boolean
     config: BackendConfig | null;
-
 }
 
 type Props = {
@@ -45,7 +44,7 @@ const AppProviders = (props: Props) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
     const [isFilterOpen, setIsFilterOpen] = React.useState(false)
 
-    const [{cache, flush}] = React.useState(() => {
+    const [{ cache, flush }] = React.useState(() => {
         const cache = createCache(props.options);
         cache.compat = true;
         const prevInsert = cache.insert;
@@ -62,7 +61,7 @@ const AppProviders = (props: Props) => {
             inserted = [];
             return prevInserted;
         };
-        return {cache, flush};
+        return { cache, flush };
     });
 
     useServerInsertedHTML(() => {

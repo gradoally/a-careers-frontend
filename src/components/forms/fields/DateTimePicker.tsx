@@ -30,11 +30,13 @@ interface Props {
     placeholder?: string
     className?: string;
     formControlClassName?: string;
+    error?: boolean;
+    helperText?: string;
 }
 
 const DateTimePicker = (
     {
-        label, value, onChange, placeholder, className, formControlClassName
+        label, value, onChange, placeholder, className, formControlClassName, error
     }:
         Props) => {
     const locale = useLocale();
@@ -43,7 +45,7 @@ const DateTimePicker = (
         <LocalizationProvider
             adapterLocale={localeMap[locale as keyof typeof localeMap]}
             dateAdapter={AdapterDateFns}>
-            <FormControl className={formControlClassName}>
+            <FormControl className={formControlClassName} error={error}>
                 <MobileDateTimePicker
                     disablePast
                     label={label}

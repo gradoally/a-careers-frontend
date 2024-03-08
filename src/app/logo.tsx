@@ -3,7 +3,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import {  Stack } from '@mui/material';
 // Font files can be located inside `app`
 const myFont = localFont({
-    src: './fonts/SF-Pro-Rounded-Bold.ttf',
+    src: '/fonts/SF-Pro-Rounded-Bold.ttf',
     display: 'swap',
 })
 

@@ -7,21 +7,12 @@ import Button from "@mui/material/Button";
 
 import {TaskCreateType} from "./stepper";
 import {FormikProps} from "formik";
+import {useAppContext} from "@/lib/app-providers";
 
 
 const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateType>, setTitle: (value: string)=>void}) => {
     const t = useTranslations("tasks")
-
-    const category: string[] = [
-        "Проект под ключ",
-        "Разработка смарт-контрактов",
-        "Разработка Telegram-ботов и Telegram Web App",
-        "Создание сайтов и TON Sites",
-        "Backend и взаимодействие с блокчейном",
-        "UX/UI дизайн, графический дизайн, 3D",
-        "Frontend-разработка",
-        "Разработка и минт NFT-коллекций",
-    ]
+    const {config} = useAppContext();
 
     const handleClick = async (value: string) =>{
         await formik.setFieldValue("category", value)
@@ -32,19 +23,20 @@ const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateTyp
         <div className={"p-5"}>
             <Typography variant="h4">{t("select_category")}</Typography>
             <Stack component="div" className="mt-4" spacing="20px">
-                {category.map((e, i) => {
-                    const isSelected = formik.values.category === e
+                {config && config?.categories?.map((e, i) => {
+                    if (!e.isActive) return
+                    const isSelected = formik.values.category === e.code
                     return (
-                        <Button variant="outlined" component="div" color="secondary" key={i}
+                        <Button variant="outlined" component="div" color="secondary" key={e?.key}
                                 className={"py-[15px] ps-1"}
                                 sx={{
                                     borderColor: isSelected ? "common.white" : "secondary.main",
                                     color: isSelected ? "common.white" : "secondary.main"
                                 }}
-                                onClick={()=>handleClick(e)}
+                                onClick={()=>handleClick(e?.code??"")}
                             >
                             <Typography variant="body2" className="w-full leading-[20px]" component="div">
-                                {e}
+                                {e?.code}
                             </Typography>
                         </Button>
                     )

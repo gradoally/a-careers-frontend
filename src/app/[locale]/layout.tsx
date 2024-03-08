@@ -1,12 +1,12 @@
-import React, {ReactNode} from "react";
-import type {Metadata} from 'next'
+import React, { ReactNode } from "react";
+import type { Metadata } from 'next'
 import pick from 'lodash/pick';
-import {NextIntlClientProvider} from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 
-import {unstable_setRequestLocale, getMessages} from 'next-intl/server';
-import {locales} from '@/config';
+import { unstable_setRequestLocale, getMessages } from 'next-intl/server';
+import { locales } from '@/config/config';
 import AppProviders from "@/lib/app-providers";
-import {fetchClientGetter} from "@/openapi/client-getter";
+import { fetchClientGetter } from "@/openapi/client-getter";
 import 'react-toastify/dist/ReactToastify.css';
 
 import "../globals.css";
@@ -22,15 +22,15 @@ type Props = {
 };
 
 export function generateStaticParams() {
-    return locales.map((locale) => ({locale}));
+    return locales.map((locale) => ({ locale }));
 }
 
 
-const RootLayout = async ({children, params: {locale}}: Props) => {
+const RootLayout = async ({ children, params: { locale } }: Props) => {
     // Enable static rendering
     unstable_setRequestLocale(locale);
     const messages = await getMessages();
-    const fetchClient = fetchClientGetter({next: {revalidate: 86400, tags: ["config"]}});
+    const fetchClient = fetchClientGetter({ next: { revalidate: 86400, tags: ["config"] } });
     let config = null
     try {
         config = await fetchClient.search.getApiConfig();
@@ -39,16 +39,17 @@ const RootLayout = async ({children, params: {locale}}: Props) => {
     }
     return (
         <html lang={locale}>
-        <body className="dark font-sans-serif scroll-hide">
-        <NextIntlClientProvider
-            locale={locale}
-            messages={pick(messages, 'errors', 'buttons', "common")}
-        >
-            <AppProviders options={{key: 'mui'}} config={config}>
-                {children}
-            </AppProviders>
-        </NextIntlClientProvider>
-        </body>
+            <body className="dark font-sans-serif scroll-hide">
+                <NextIntlClientProvider
+                    locale={locale}
+                    messages={pick(messages, 'errors', 'buttons', "common")}
+                >
+                    <AppProviders options={{ key: 'mui' }} config={config}>
+                        {children}
+                    </AppProviders>
+                </NextIntlClientProvider>
+
+            </body>
         </html>
     )
 }

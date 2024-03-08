@@ -1,37 +1,31 @@
 "use client"
-import {useEffect} from "react";
-import {useTranslations, useLocale} from "next-intl";
-import {useMasterContract} from "@/hooks/useMasterContract";
-import {useTonClient} from '@/hooks/useTonClient';
-import {UserContentData, buildUserContent} from '@/contracts/User';
+import { useRouter } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
 
-import {useAuthContext} from "@/lib/auth-provider";
-import ProfileForm, {UserFormValues} from "@/components/forms/ProfileForm";
-import {useTonConnect} from "@/hooks/useTonConnect";
-import {useRouter} from "next/navigation";
+import { useMasterContract } from "@/hooks/useMasterContract";
+import { useTonClient } from '@/hooks/useTonClient';
+import { UserContentData, buildUserContent } from '@/contracts/User';
+
+import ProfileForm, { UserFormValues } from "@/components/forms/ProfileForm";
+
+import { useAuthContext } from "@/lib/auth-provider";
 
 const Content = () => {
-    const {userNextIndex, address: masterContractAddr, sendCreateUser} = useMasterContract();
-    const {user, reFetchUserData} = useAuthContext()
-    // const {connected} = useTonConnect()
+    const { userNextIndex, address: masterContractAddr, sendCreateUser } = useMasterContract();
+    const { user, fetchProfile } = useAuthContext()
     const router = useRouter();
     const locale = useLocale()
     const t = useTranslations()
-    const {client} = useTonClient();
-    // useEffect(() => {
-    //     // if (!connected) {
-    //     //     router.push(`/${locale}`)
-    //     // } else
-    //     if (connected && user) {
-    //         router.push(`/${locale}/profile`)
-    //     }
-    // }, [])
+    const { client } = useTonClient();
 
     const createUserProfile = async (values: UserFormValues, callback: (props: {
         isError: boolean, message?: string | null
     }) => Promise<void>) => {
-        if (userNextIndex == null || client == null || user)
+
+        if (userNextIndex == null || client == null || user?.found) {
+            await callback({ isError: true, message: t("errors.something_went_wrong_sorry") })
             return;
+        }
 
         try {
             const userContentData: UserContentData = {
@@ -52,19 +46,15 @@ const Content = () => {
                 isError: false,
                 message: t("profile.profile_successfully_connected")
             })
-            await reFetchUserData()
+            await fetchProfile();
             router.push(`/${locale}/profile`)
-
         } catch (e) {
-            console.log(e)
-            await callback({isError: true, message: String(e)})
-
-            // await callback({isError: true, message: t("errors.something_went_wrong_sorry")})
+            await callback({ isError: true, message: t("errors.something_went_wrong_sorry") })
         }
     };
 
     return (
-        <ProfileForm onSubmit={createUserProfile}/>
+        <ProfileForm onSubmit={createUserProfile} />
     )
 }
 

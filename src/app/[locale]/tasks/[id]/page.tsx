@@ -11,7 +11,7 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
 import MenuButton from "@/components/ui/buttons/MenuButton";
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 import {NextLinkComposed} from "@/components/Link";
 import ConnectButton from "@/components/ui/buttons/ConnectButton";
 import {fetchClientGetter} from "@/openapi/client-getter";

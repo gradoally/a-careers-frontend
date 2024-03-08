@@ -3,7 +3,8 @@ import {TaskCreateType} from "./stepper";
 import Typography from "@mui/material/Typography";
 import {FormikProps} from "formik";
 import {StyledInputMultiline} from "@/components/forms/fields/StyledInputMultiline";
-
+import FormControl from "@/components/forms/FormControl";
+import {checkError} from "@/lib/helper";
 
 const Description = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
     const t = useTranslations('tasks')
@@ -16,18 +17,19 @@ const Description = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
                 </Typography>
             </div>
             <div className="grow">
-                <StyledInputMultiline
-                    fullWidth
-                    multiline
-                    onChange={formik.handleChange}
-                    inputProps={{style: {
-                        // height: "100%",
-                            // padding: "10px 20px 0",
-                            // overflow: "scroll"
-                    }}}
-                    id="description"
-                    value={formik.values.description}
-                    name="description"/>
+                    <StyledInputMultiline
+                        error={checkError(formik, {}, "description")}
+                        fullWidth
+                        multiline
+                        onChange={formik.handleChange}
+                        inputProps={{style: {
+                                height: "100%",
+                                // padding: "10px 20px 0",
+                                // overflow: "scroll"
+                            }}}
+                        id="description"
+                        value={formik.values.description}
+                        name="description"/>
             </div>
         </div>
     )

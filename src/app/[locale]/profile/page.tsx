@@ -3,7 +3,7 @@ import React, {Suspense} from "react";
 import {unstable_setRequestLocale} from "next-intl/server";
 import Content from "@/app/[locale]/profile/content";
 import pick from "lodash/pick";
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 
 type Props = {
     params: {

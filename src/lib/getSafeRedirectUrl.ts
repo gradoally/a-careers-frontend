@@ -1,4 +1,4 @@
-import {WEBAPP_URL, WEBSITE_URL} from "@/lib/constants";
+import {WEBAPP_URL} from "@/lib/constants";
 
 
 // It ensures that redirection URL safe where it is accepted through a query params or other means where user can change it.
@@ -17,7 +17,7 @@ export const getSafeRedirectUrl = (url = "", searchParams: URLSearchParams) => {
     urlParsed.search = searchParams.toString();
 
     // Avoid open redirection security vulnerability
-    if (![WEBAPP_URL, WEBSITE_URL].some((u) => new URL(u).origin === urlParsed.origin)) {
+    if (![WEBAPP_URL].some((u) => new URL(u).origin === urlParsed.origin)) {
         url = `${WEBAPP_URL}/`;
     }
 

@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import DateTimePicker from "@/components/forms/fields/DateTimePicker";
 import {TaskCreateType} from "./stepper";
 import Divider from "@/components/ui/Divider";
+import {checkError, getError} from "@/lib/helper";
 
 
 const Deadline = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
@@ -19,6 +20,9 @@ const Deadline = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
                 {t("specify_the_exact_deadline")}
             </Typography>
             <DateTimePicker
+
+                error={checkError(formik, {}, "deadline")}
+                helperText={getError(formik, {}, "deadline")}
                 label=""
                 className="py-5"
                 formControlClassName="mt-6"

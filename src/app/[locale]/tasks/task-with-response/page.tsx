@@ -1,5 +1,5 @@
 import {unstable_setRequestLocale} from "next-intl/server";
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 import {useTranslations} from "next-intl";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";

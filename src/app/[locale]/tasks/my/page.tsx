@@ -3,7 +3,7 @@ import {unstable_setRequestLocale} from "next-intl/server";
 import pick from 'lodash/pick';
 import {NextIntlClientProvider, useMessages} from 'next-intl';
 
-import {locales} from "@/config";
+import {locales} from "@/config/config";
 import {useTranslations} from "next-intl";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
