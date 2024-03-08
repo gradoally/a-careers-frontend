@@ -31,13 +31,13 @@ const EditComponent = ({ data }: { data: IUser }) => {
     const {
         sendChangeContent,
     } = useUserContract(String(data?.address));
-    const t = useTranslations()
+    const trans = useTranslations()
 
     const updateUserProfile = async (values: UserFormValues, callback: (props: {
         isError: boolean, message?: string | null
     }) => Promise<void>) => {
         if (client == null || data == null) {
-            await callback({ isError: true, message: t("errors.something_went_wrong_sorry") })
+            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
             return;
         }
 
@@ -57,20 +57,20 @@ const EditComponent = ({ data }: { data: IUser }) => {
             const result = await sendChangeContent("0.5", 0, buildUserContent(userContentData));
             await callback({
                 isError: false,
-                message: t("profile.profile_successfully_updated")
+                message: trans("profile.profile_successfully_updated")
             })
         } catch (e) {
-            await callback({ isError: true, message: t("errors.something_went_wrong_sorry") })
+            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
         }
     };
 
     return (
-        <ProfileForm onSubmit={updateUserProfile} data={data} />
+        <ProfileForm onSubmit={updateUserProfile} action="update" data={data} />
     )
 }
 
 const Content = () => {
-    const t = useTranslations();
+    const trans = useTranslations();
     const { user, isLoading } = useAuthContext();
     const [edit, setEdit] = useState<boolean>(false);
 
@@ -81,7 +81,7 @@ const Content = () => {
                 <Typography
                     variant="h5"
                     sx={{ color: "info.main" }}>
-                    {t("profile.edit")}
+                    {trans("profile.edit")}
                 </Typography>
             </Stack>
         </AppBar>
@@ -92,7 +92,7 @@ const Content = () => {
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <BackButton component={NextLinkComposed} to={"/my"} />
                 <Typography variant="h5" color="info.main">
-                    {t("profile.profile")}
+                    {trans("profile.profile")}
                 </Typography>
             </Stack>
             <div className="flex-grow" />

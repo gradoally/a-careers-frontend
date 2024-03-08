@@ -8,7 +8,7 @@ const LanguageToggler = ()=> {
     const locale = useLocale();
     const pathname = usePathname();
     const router = useRouter();
-    const t = useTranslations("locale_switcher")
+    const trans = useTranslations("locale_switcher")
     const [isPending, startTransition] = useTransition();
 
     function handleClick() {
@@ -25,7 +25,7 @@ const LanguageToggler = ()=> {
             <Typography component="div"
                         className="cursor-pointer"
                         onClick={()=>handleClick()} sx={{color: "text.secondary"}} variant="body2">
-                🌎 {t(locale)}
+                🌎 {trans(locale)}
             </Typography>
     )
 }

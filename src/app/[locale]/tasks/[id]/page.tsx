@@ -29,7 +29,7 @@ const Page = async ({params: {locale, id}}: Props)=>{
     unstable_setRequestLocale(locale);
 
     const tc = await getTranslations("common");
-    const t = await getTranslations("tasks");
+    const trans = await getTranslations("tasks");
     const fetchClient = fetchClientGetter({locale: locale, next: {revalidate: false}})
     let response;
     try {

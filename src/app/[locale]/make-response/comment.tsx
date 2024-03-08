@@ -7,16 +7,16 @@ import {StyledInputMultiline} from "@/components/forms/fields/StyledInputMultili
 
 
 const Comment = ({data}: { data: TaskCreateType }) => {
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     const handleChange = (event: any) => {
 
     };
     return (
         <div className="h-full flex flex-col">
             <Stack className="p-5" component="div" spacing="20px" direction="column">
-                <Typography variant="h4">{t("response_comment")}</Typography>
+                <Typography variant="h4">{trans("response_comment")}</Typography>
                 <Typography variant="caption">
-                    {t("make_response_comment_description")}
+                    {trans("make_response_comment_description")}
                 </Typography>
             </Stack>
             <div className="flex-grow">

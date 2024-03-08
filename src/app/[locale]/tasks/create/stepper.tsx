@@ -57,38 +57,38 @@ export interface TaskCreateType {
 
 const Stepper = () => {
     const locale = useLocale();
-    const t = useTranslations();
+    const trans = useTranslations();
     const {user} = useAuthContext();
     const {client} = useTonClient();
     const confirm = useConfirm();
 
     const {
         sendCreateOrder
-    } = useUserContract(String(user?.address));
+    } = useUserContract(String(user?.data?.address));
     const {orderNextIndex} = useMasterContract();
 
     const [step, setStep] = useState<number>(1);
-    const [title, setTitle] = useState(t("tasks.create"))
-    const [subtitle, setSubtitle] = useState(t("tasks.first_step"))
+    const [title, setTitle] = useState(trans("tasks.create"))
+    const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
     const [disabled, setDisabled] = useState(false)
 
     useEffect(() => {
         if (step == 1) {
-            setSubtitle(t("tasks.first_step"))
+            setSubtitle(trans("tasks.first_step"))
         } else {
-            setSubtitle(t("tasks.step_x_from_x", {"value": step, "from": 7}))
+            setSubtitle(trans("tasks.step_x_from_x", {"value": step, "from": 7}))
         }
     }, [step])
 
 
     const schema = z.object({
-        language: z.string({required_error: t("form.required.default")}),
-        category: z.string({required_error: t("form.required.default")}),
-        name: z.string({required_error: t("form.required.default")}),
-        price: z.string({required_error: t("form.required.default")}),
-        deadline: z.date({required_error: t("form.required.default")}),
-        description: z.string({required_error: t("form.required.default")}),
-        technicalTask: z.string({required_error: t("form.required.default")}),
+        language: z.string({required_error: trans("form.required.default")}),
+        category: z.string({required_error: trans("form.required.default")}),
+        name: z.string({required_error: trans("form.required.default")}),
+        price: z.string({required_error: trans("form.required.default")}),
+        deadline: z.date({required_error: trans("form.required.default")}),
+        description: z.string({required_error: trans("form.required.default")}),
+        technicalTask: z.string({required_error: trans("form.required.default")}),
     });
 
     const handleSubmit = (values: TaskCreateType)=>{
@@ -97,7 +97,7 @@ const Stepper = () => {
                 return;
             }
             confirm().then(async () => {
-                const toastId = toastLoading(t("common.please_wait"))
+                const toastId = toastLoading(trans("common.please_wait"))
 
                 try {
                     const orderContentData: OrderContentData = {
@@ -116,11 +116,11 @@ const Stepper = () => {
                         orderContentData.deadline,
                         orderContentData.deadline + 259200
                     );
-                    toastUpdate(toastId, t("tasks.task_successfully_created"), 'success');
+                    toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
 
                 } catch (e) {
                     console.log("create_order", e)
-                    toastUpdate(toastId,  t("errors.something_went_wrong_sorry"), 'warning');
+                    toastUpdate(toastId,  trans("errors.something_went_wrong_sorry"), 'warning');
 
                 }
             })
@@ -140,7 +140,7 @@ const Stepper = () => {
                 technicalTask: "",
             },
             initialErrors: {
-                category: t("form.required.default")
+                category: trans("form.required.default")
             },
             validationSchema: toFormikValidationSchema(schema),
 
@@ -222,10 +222,10 @@ const Stepper = () => {
                         className="w-full"
                         color={"secondary"}
                         variant="contained">
-                        {t("tasks.send_task_to_blockchain")}
+                        {trans("tasks.send_task_to_blockchain")}
                     </FooterButton>
                     <Typography variant="body2">
-                        {t("network.commission", {value: "0.011 TON"})}
+                        {trans("network.commission", {value: "0.011 TON"})}
                     </Typography>
                 </>
             ) : (
@@ -234,7 +234,7 @@ const Stepper = () => {
                     onClick={handleClick}
                     color={"secondary"}
                     variant="contained">
-                    {t("buttons.next")}
+                    {trans("buttons.next")}
                 </FooterButton>
             )}
         </Footer>

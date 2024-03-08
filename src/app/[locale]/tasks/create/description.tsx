@@ -7,13 +7,13 @@ import FormControl from "@/components/forms/FormControl";
 import {checkError} from "@/lib/helper";
 
 const Description = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     return (
         <div className="h-full flex flex-col">
             <div className="p-5 mb-4">
-                <Typography variant="h4">{t("job_description")}</Typography>
+                <Typography variant="h4">{trans("job_description")}</Typography>
                 <Typography component="div" variant="caption" sx={{marginTop: "10px"}}>
-                    {t("add_detailed_description_to_get_more_responses")}
+                    {trans("add_detailed_description_to_get_more_responses")}
                 </Typography>
             </div>
             <div className="grow">

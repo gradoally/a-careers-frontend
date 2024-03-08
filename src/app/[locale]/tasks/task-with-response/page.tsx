@@ -22,7 +22,7 @@ export function generateStaticParams() {
 
 const Page = ({params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
-    const t = useTranslations("tasks");
+    const trans = useTranslations("tasks");
     const data = "on moderation";
     const footer = (
         <Footer  >
@@ -37,7 +37,7 @@ const Page = ({params: {locale}}: Props) => {
         <AppBar padding="15px 20px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <MenuButton/>
-                <Typography variant="h5" sx={{color: "info.main"}}>{t("my",)}</Typography>
+                <Typography variant="h5" sx={{color: "info.main"}}>{trans("my",)}</Typography>
             </Stack>
         </AppBar>
     )

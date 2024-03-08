@@ -1,11 +1,14 @@
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
-import {StandardTextFieldProps} from "@mui/material/TextField/TextField";
+import { StandardTextFieldProps } from "@mui/material/TextField/TextField";
 import React from "react";
 import Input from "@/components/forms/fields/Input";
 import FormControl from "@/components/forms/FormControl";
 
+interface ITextFieldProps extends StandardTextFieldProps {
+   readonly?:boolean;
+}
 
 const TextField = (
     {
@@ -14,8 +17,9 @@ const TextField = (
         label,
         fullWidth = true,
         className,
+        readonly = false,
         ...props
-    }: StandardTextFieldProps
+    }: ITextFieldProps
 ) => {
     return (
         <FormControl
@@ -31,18 +35,19 @@ const TextField = (
                 </InputLabel>
             )}
             <Input type={props.type}
-                   sx={{padding: "10px 0"}}
-                   {...InputProps}
-                   onChange={props.onChange}
-                   multiline={props.multiline}
-                   value={props.value}
-                   defaultValue={props.defaultValue}
-                   id={props.id}
-                   name={props.name}
-                   error={props.error}
+                sx={{ padding: "10px 0" }}
+                {...InputProps}
+                onChange={props.onChange}
+                multiline={props.multiline}
+                value={props.value}
+                defaultValue={props.defaultValue}
+                id={props.id}
+                name={props.name}
+                error={props.error}
+                readOnly={readonly}
             />
             {props.helperText && (
-                <FormHelperText sx={{marginTop: "10px"}} error={props.error}>
+                <FormHelperText sx={{ marginTop: "10px" }} error={props.error}>
                     {props.helperText}
                 </FormHelperText>
             )}

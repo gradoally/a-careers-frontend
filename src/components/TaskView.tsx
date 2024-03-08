@@ -28,7 +28,7 @@ const StackContainer = ({primary, secondary}: {
 
 const TaskView = ({data}: {data: Order}) => {
     const tc = useTranslations("common");
-    const t = useTranslations("tasks");
+    const trans = useTranslations("tasks");
     const locale = useLocale();
     let telegram = data?.customer?.telegram
     if (telegram && telegram.startsWith("@")){
@@ -51,7 +51,7 @@ const TaskView = ({data}: {data: Order}) => {
                     </CopyContainer>
                 )}
             </Stack>
-            <StackContainer primary={data?.language??""} secondary={t("language")}/>
+            <StackContainer primary={data?.language??""} secondary={trans("language")}/>
             <StackContainer primary={data?.description??""} secondary={tc("description")}/>
             <StackContainer primary={data?.technicalTask??""} secondary={tc("technical_task")}/>
             <StackContainer
@@ -82,7 +82,7 @@ const TaskView = ({data}: {data: Order}) => {
                                     </div>
                                     {telegram && (
                                         <div className="underline text-white opacity-[40%]">
-                                            <Link noLinkStyle href={`https://t.me/${telegram}`}>
+                                            <Link noLinkStyle href={`https://trans.me/${telegram}`}>
                                                 Telegram ↗
                                             </Link>
                                         </div>

@@ -103,7 +103,7 @@ const CustomListItem = ({iconSrc, title, category}: { iconSrc: string, title: st
 export default function Content({data}: { data: string }) {
     const [value, setValue] = React.useState(0);
     const tc = useTranslations('common')
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -126,19 +126,19 @@ export default function Content({data}: { data: string }) {
                                            disableSticky
                                            component="div" id="nested-list-subheader">
                                 <Typography variant="h4">
-                                    {t("you_have_created", {value: "77"})}
+                                    {trans("you_have_created", {value: "77"})}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={t("on_moderation", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={t("no_responses", {value: 0})}/>
-                        <CustomListItem iconSrc={"/images/gem.png"} title={t("have_responses", {value: 81})}/>
-                        <CustomListItem iconSrc={"/images/offer_made.png"} title={t("offer_made", {value: 1})}/>
-                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={t("in_the_work", {value: 4})}/>
-                        <CustomListItem iconSrc={"/images/money_with_wings.png"} title={t("pending_payment", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/eyes.png"} title={t("arbitration", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/rocket.png"} title={t("completed", {value: 6})}/>
+                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={trans("on_moderation", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={trans("no_responses", {value: 0})}/>
+                        <CustomListItem iconSrc={"/images/gem.png"} title={trans("have_responses", {value: 81})}/>
+                        <CustomListItem iconSrc={"/images/offer_made.png"} title={trans("offer_made", {value: 1})}/>
+                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", {value: 4})}/>
+                        <CustomListItem iconSrc={"/images/money_with_wings.png"} title={trans("pending_payment", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/rocket.png"} title={trans("completed", {value: 6})}/>
                     </List>
                 </nav>
             </CustomTabPanel>
@@ -151,18 +151,18 @@ export default function Content({data}: { data: string }) {
                             <ListSubheader sx={{padding: "0", "color": "common.white"}}
                                            component="div" id="nested-list-subheader-2">
                                 <Typography variant="h4">
-                                    {t("you_have_responded", {value: "777"})}
+                                    {trans("you_have_responded", {value: "777"})}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/dizzy.png"} title={t("response_sent", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/fire.png"} title={t("response_denied", {value: 0})}/>
-                        <CustomListItem iconSrc={"/images/fish_cake.png"} title={t("an_offer_came_in", {value: 81})}/>
-                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={t("in_the_work", {value: 1})}/> 
-                        <CustomListItem iconSrc={"/images/dancer.png"} title={t("on_inspection", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/eyes.png"} title={t("arbitration", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/star.png"} title={t("task_accomplished", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/dizzy.png"} title={trans("response_sent", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/fire.png"} title={trans("response_denied", {value: 0})}/>
+                        <CustomListItem iconSrc={"/images/fish_cake.png"} title={trans("an_offer_came_in", {value: 81})}/>
+                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", {value: 1})}/> 
+                        <CustomListItem iconSrc={"/images/dancer.png"} title={trans("on_inspection", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/star.png"} title={trans("task_accomplished", {value: 2})}/>
                     </List>
                 </nav>
             </CustomTabPanel>

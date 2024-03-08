@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter, redirect } from "next/navigation";
 
@@ -9,6 +9,7 @@ import Image from "@/components/Image";
 import { APIs } from "@/config/api.config";
 import { get } from "@/services/request";
 import { IUser } from "@/interfaces/index";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 interface HOCProps {
     WrappedComponent: React.ComponentType,
@@ -92,7 +93,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
             user: null,
             error: null
         })
-        await get<IUserRes>({ url: `${APIs.user.profile("UQDUwLhRnQ2fk4Iv_CncP0oSxtWOsNMRO76o33zZhI8avh8q", locale)}` })
+        await get<IUserRes>({ url: `${APIs.user.profile(walletAddress, locale)}` })
             .then((res) => {
                 setAuth({
                     isLoading: false,

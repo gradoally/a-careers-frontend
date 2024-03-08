@@ -11,21 +11,21 @@ interface Props {
 
 
 const StatusChip = ({status}: Props) => {
-    const t = useTranslations("status_chip");
+    const trans = useTranslations("status_chip");
 
     const data: Record<StatusType, { className: string, text: string, }> = {
         "no_responses": {
             "className": "w-[75px] text-warning border-warning",
-            "text": t("no_responses"),
+            "text": trans("no_responses"),
         }, "on_moderation": {
             "className": "w-[75px] text-white border-white",
-            "text": t("on_moderation"),
+            "text": trans("on_moderation"),
         }, "response_sent": {
             "className": "w-[107px] text-orange border-orange",
-            "text": t("response_sent"),
+            "text": trans("response_sent"),
         }, "declined": {
             "className": "w-[75px] text-red border-red",
-            "text": t("declined"),
+            "text": trans("declined"),
         },
     }
 

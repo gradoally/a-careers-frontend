@@ -12,7 +12,7 @@ import BackButton from "@/components/ui/buttons/BackButton";
 
 
 export default function NotFound() {
-    const t = useTranslations();
+    const trans = useTranslations();
     const header = (
         <AppBar height="60px">
             <Stack direction="row" alignItems="center" spacing={1} >
@@ -24,7 +24,7 @@ export default function NotFound() {
     return (
         <Shell header={header} footer={<Footer>
             <FooterButton component={NextLinkComposed} to="/">
-                {t("buttons.back")}
+                {trans("buttons.back")}
             </FooterButton>
         </Footer>}>
                 <Stack className="p-5" component="div"
@@ -35,7 +35,7 @@ export default function NotFound() {
                         404
                     </div>
                     <Typography variant="body1">
-                        {t("errors.something_went_wrong_sorry")}
+                        {trans("errors.something_went_wrong_sorry")}
                     </Typography>
                 </Stack>
         </Shell>

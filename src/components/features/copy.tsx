@@ -9,7 +9,7 @@ import CopyButton from "@/components/ui/buttons/CopyButton";
 import {toast} from "@/lib/helper";
 
 const CopyContainer = ({children, className=""}: { children: ReactNode, className?: string }) => {
-    const t = useTranslations("copy")
+    const trans = useTranslations("copy")
 
     const textRef = useRef<HTMLDivElement | null>(null)
     const handleCopy = () => {
@@ -19,10 +19,10 @@ const CopyContainer = ({children, className=""}: { children: ReactNode, classNam
         if (targetText) {
             navigator.clipboard.writeText(targetText)
                 .then(() => {
-                    toast(t("copied"))
+                    toast(trans("copied"))
                 })
                 .catch(() => {
-                    toast(t("error_copying_text_to_clipboard"), "warning")
+                    toast(trans("error_copying_text_to_clipboard"), "warning")
                 });
         }
     }

@@ -30,7 +30,7 @@ const Page = ({params: {locale}}: Props) => {
     // Enable static rendering
     unstable_setRequestLocale(locale);
     const tc = useTranslations("common");
-    const t = useTranslations("tasks");
+    const trans = useTranslations("tasks");
     const data: Order[] = [
         {
             "name": "Расширение редактируемого стандарта NFT",
@@ -65,7 +65,7 @@ const Page = ({params: {locale}}: Props) => {
                 <Typography
                     variant="h5"
                     sx={{color: "info.main"}}>
-                    {t("on_moderation", {value: "777"})}
+                    {trans("on_moderation", {value: "777"})}
                 </Typography>
             </Stack>
         </AppBar>

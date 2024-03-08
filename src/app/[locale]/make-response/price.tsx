@@ -9,13 +9,13 @@ import NumberFormat from "@/components/forms/fields/NumberFormat";
 
 
 const Price = ({data}: {data: TaskCreateType})=>{
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     return (
         <Stack className="p-5" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">{t("confirm_the_task_budget")}</Typography>
-            <Typography variant="caption">{t("or_suggest_your_own")}</Typography>
+            <Typography variant="h4">{trans("confirm_the_task_budget")}</Typography>
+            <Typography variant="caption">{trans("or_suggest_your_own")}</Typography>
             <TextField  onChange={()=>{}}  type="text"
-                        label={t("price")}
+                        label={trans("price")}
                         // InputProps={{
                         //     disableUnderline: true,
                         //     inputComponent: NumberFormat as any,

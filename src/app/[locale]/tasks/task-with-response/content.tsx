@@ -72,7 +72,7 @@ function a11yProps(index: number) {
 export default function Content() {
     const [value, setValue] = React.useState(1);
     const tc = useTranslations('common')
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };

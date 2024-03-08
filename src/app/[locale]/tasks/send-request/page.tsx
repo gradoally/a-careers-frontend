@@ -47,7 +47,7 @@ const StackContainer = ({primary, secondary, primaryHeight="15px"}: {primary: st
 const Page = ({params: {locale, id}}: Props) => {
     unstable_setRequestLocale(locale);
     const tc = useTranslations("common");
-    const t = useTranslations("tasks");
+    const trans = useTranslations("tasks");
     const data = {
         "title": "Доработать мета-данные и память смарт-контракта",
         "diamonds": 1225,
@@ -78,7 +78,7 @@ const Page = ({params: {locale, id}}: Props) => {
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <BackButton/>
-                <Typography variant="h5" sx={{color: "info.main"}}>{t("detail", {value: "#234567"})}</Typography>
+                <Typography variant="h5" sx={{color: "info.main"}}>{trans("detail", {value: "#234567"})}</Typography>
             </Stack>
 
             <Box component="div" sx={{flexGrow: 1}}/>
@@ -112,7 +112,7 @@ const Page = ({params: {locale, id}}: Props) => {
                     </Typography>
                 </div>
                 <StackContainer primary={"EQCISAJu…W_JqYM3t"} secondary={tc("smart_contract_address")}/>
-                <StackContainer primary={data.language.label} secondary={t("language")}/>
+                <StackContainer primary={data.language.label} secondary={trans("language")}/>
 
                 <StackContainer primaryHeight={"20px"} primary={data.description} secondary={tc("description")}/>
                 <StackContainer primaryHeight={"20px"} primary={data.technical_task} secondary={tc("technical_task")}/>

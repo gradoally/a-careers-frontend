@@ -40,13 +40,13 @@ const InfiniteScroll = (
         isEmpty: boolean;
         isReachingEnd: boolean;
     }) => {
-    const t = useTranslations()
+    const trans = useTranslations()
 
     if (error) {
         return (
             <CenteredContainer>
                 <Typography component="div" variant="caption">
-                    {t("errors.something_went_wrong_sorry")}
+                    {trans("errors.something_went_wrong_sorry")}
                 </Typography>
             </CenteredContainer>
         )
@@ -56,7 +56,7 @@ const InfiniteScroll = (
         return (
             <CenteredContainer>
                 <Typography component="div" variant="caption">
-                    {t("common.no_more_data")}
+                    {trans("common.no_more_data")}
                 </Typography>
             </CenteredContainer>
         )
@@ -70,7 +70,7 @@ const InfiniteScroll = (
                 {isReachingEnd && (
                     <div className="w-full flex justify-center items-center py-4 ">
                         <Typography component="div" variant="caption">
-                            {t("common.no_more_data")}
+                            {trans("common.no_more_data")}
                         </Typography>
                     </div>
                 )}

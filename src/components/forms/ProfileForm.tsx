@@ -24,7 +24,7 @@ import React from "react";
 
 const ProfileInput = (
     {
-        label, id, name, value, onChange, multiline, helperText, error,
+        label, id, name, value, onChange, multiline, helperText, error, readonly
     }: {
         error: boolean;
         helperText?: string;
@@ -34,6 +34,7 @@ const ProfileInput = (
         value: string;
         onChange: (e: any) => void;
         multiline?: boolean;
+        readonly?: boolean
     }
 ) => {
     return (
@@ -48,7 +49,9 @@ const ProfileInput = (
             fullWidth
             id={id}
             multiline={multiline}
-            variant="standard" />
+            variant="standard"
+            readonly={readonly}
+        />
     )
 }
 
@@ -68,22 +71,23 @@ interface Props {
     onSubmit: (values: UserFormValues, callback: (props: {
         isError: boolean,
         message?: string | null
-    }) => Promise<void>) => Promise<void>
+    }) => Promise<void>) => Promise<void>;
+    action: string;
 }
 
-const ProfileForm = ({ data, onSubmit }: Props) => {
+const ProfileForm = ({ data, onSubmit, action }: Props) => {
     const locale = useLocale();
-    const t = useTranslations()
+    const trans = useTranslations()
     const confirm = useConfirm();
 
     const schema = z.object({
-        language: z.string({ required_error: t("form.required.default") }),
-        telegram: z.string({ required_error: t("form.required.default") }),
-        nickname: z.string({ required_error: t("form.required.default") }),
-        about: z.string({ required_error: t("form.required.default") }),
-        website: z.string().url(t("form.validation.url")).optional(),
-        portfolio: z.string().url(t("form.validation.url")).optional(),
-        resume: z.string().url(t("form.validation.url")).optional(),
+        language: z.string({ required_error: trans("form.required.default") }),
+        telegram: z.string({ required_error: trans("form.required.default") }),
+        nickname: z.string({ required_error: trans("form.required.default") }),
+        about: z.string({ required_error: trans("form.required.default") }),
+        website: z.string().url(trans("form.validation.url")).optional(),
+        portfolio: z.string().url(trans("form.validation.url")).optional(),
+        resume: z.string().url(trans("form.validation.url")).optional(),
     });
 
     const formik = useFormik(
@@ -101,7 +105,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
             //validationSchema: toFormikValidationSchema(schema),
             onSubmit: (values: UserFormValues) => {
                 confirm().then(async () => {
-                    const toastId = toastLoading(t("common.please_wait"))
+                    const toastId = toastLoading(trans("common.please_wait"))
                     const callback = async (props: { isError: boolean, message?: string | null }) => {
                         if (props.isError) {
                             toastUpdate(toastId, props.message ?? "Failed with error", 'warning');
@@ -118,7 +122,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
         <BaseForm noValidate onSubmit={formik.handleSubmit}>
             <Stack spacing={"30px"} sx={{ marginBottom: "150px" }}>
                 <SelectField variant="standard"
-                    label={t("profile.profile_language")}
+                    label={trans("profile.profile_language")}
                     id="language"
                     name="language"
                     value={formik.values.language}
@@ -143,15 +147,17 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     value={formik.values.telegram}
                     id="telegram"
                     name="telegram"
-                    onChange={formik.handleChange} />
-                <ProfileInput label={t("profile.nickname")}
+                    onChange={formik.handleChange}
+                    readonly={action === "update"}
+                />
+                <ProfileInput label={trans("profile.nickname")}
                     error={checkError(formik, {}, "nickname")}
                     helperText={getError(formik, {}, "nickname")}
                     value={formik.values.nickname}
                     id="nickname"
                     name="nickname"
                     onChange={formik.handleChange} />
-                <ProfileInput label={t("profile.about")}
+                <ProfileInput label={trans("profile.about")}
 
                     error={checkError(formik, {}, "about")}
                     helperText={getError(formik, {}, "about")}
@@ -162,13 +168,13 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     onChange={formik.handleChange} />
 
                 <div>
-                    <Typography variant="h4">{t("profile.freelancer_profile")}</Typography>
+                    <Typography variant="h4">{trans("profile.freelancer_profile")}</Typography>
                     <Typography sx={{ marginTop: "5px", fontHeight: "20px" }} variant="body2">
-                        {t("profile.fill_if_you_want_make_response")}
+                        {trans("profile.fill_if_you_want_make_response")}
                     </Typography>
                 </div>
 
-                <ProfileInput label={`${t("profile.website_link")} (${t("common.optional")})`}
+                <ProfileInput label={`${trans("profile.website_link")} (${trans("common.optional")})`}
                     value={formik.values.website}
 
                     error={checkError(formik, {}, "website")}
@@ -177,7 +183,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     name="website"
                     multiline={true}
                     onChange={formik.handleChange} />
-                <ProfileInput label={`${t("profile.link_to_portfolio")} (${t("common.optional")})`}
+                <ProfileInput label={`${trans("profile.link_to_portfolio")} (${trans("common.optional")})`}
                     value={formik.values.portfolio}
                     id="link_to_portfolio"
                     error={checkError(formik, {}, "portfolio")}
@@ -185,7 +191,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     name="portfolio"
                     multiline={true}
                     onChange={formik.handleChange} />
-                <ProfileInput label={`${t("profile.resume_link")} (${t("common.optional")})`}
+                <ProfileInput label={`${trans("profile.resume_link")} (${trans("common.optional")})`}
                     value={formik.values.resume}
                     error={checkError(formik, {}, "resume")}
                     helperText={getError(formik, {}, "resume")}
@@ -195,7 +201,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     onChange={formik.handleChange} />
 
                 <div>
-                    <Typography variant="caption">{t("profile.specialization")} ({t("common.optional")})</Typography>
+                    <Typography variant="caption">{trans("profile.specialization")} ({trans("common.optional")})</Typography>
                     <Stack spacing={1} alignItems="center" direction="row" className="mt-2 py-2">
                         <AddButton />
                         {formik.values?.specialization && formik.values.specialization.map((e: string, i: number) => (
@@ -213,9 +219,9 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     className="w-full"
                     color={"secondary"}
                     variant="contained">
-                    {t("profile.send_to_blockchain")}
+                    {trans("profile.send_to_blockchain")}
                 </FooterButton>
-                <Typography variant="body2">{t("network.commission", { value: "0.011 TON" })}</Typography>
+                <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
             </Footer>
         </BaseForm>
     )

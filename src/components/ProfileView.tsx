@@ -50,7 +50,7 @@ const History = ({data}: { data: HistoryType[] }) => {
 
 
 const ProfileView = ({data}: { data: IUser}) => {
-    const t = useTranslations();
+    const trans = useTranslations();
 
     const renderSpecialization = () => {
         if (!data?.specialization) return <div/>
@@ -66,7 +66,7 @@ const ProfileView = ({data}: { data: IUser}) => {
             <Stack spacing={"20px"} className="pt-[35px] px-5">
                 <div>
                     <Typography component="div" variant="caption">
-                        {t("common.smart_contract_address")}
+                        {trans("common.smart_contract_address")}
                     </Typography>
                     <CopyContainer className="mt-1">
                         <Typography color="secondary" variant="body2">
@@ -82,7 +82,7 @@ const ProfileView = ({data}: { data: IUser}) => {
                     </Typography>
                     {data?.telegram && (
                         <Typography className="mt-1" color="secondary" variant="body2">
-                            <Link noLinkStyle href={`https://t.me/${data.telegram}`}>
+                            <Link noLinkStyle href={`https://trans.me/${data.telegram}`}>
                                 @{data.telegram}
                             </Link>
                         </Typography>
@@ -90,16 +90,16 @@ const ProfileView = ({data}: { data: IUser}) => {
                 </div>
                 <div>
                     <Typography component="div" variant="caption">
-                        {t("profile.about")}
+                        {trans("profile.about")}
                     </Typography>
                     {data?.about && (
-                        <ReadMoreCollapse read_more={t("read_more.read_more")} hide={t("read_more.hide")}
+                        <ReadMoreCollapse read_more={trans("read_more.read_more")} hide={trans("read_more.hide")}
                                           className="mt-1 text-xs" text={data.about}/>
                     )}
                 </div>
                 <div>
                     <Typography component="div" variant="caption">
-                        {t("profile.site")}
+                        {trans("profile.site")}
                     </Typography>
                     <Typography className="mt-1" variant="body2">
                         {data?.website}
@@ -107,7 +107,7 @@ const ProfileView = ({data}: { data: IUser}) => {
                 </div>
                 <div>
                     <Typography component="div" variant="caption">
-                        {t("profile.portfolio")}
+                        {trans("profile.portfolio")}
                     </Typography>
                     <Typography className="mt-1" variant="body2">
                         {data?.portfolio}
@@ -115,7 +115,7 @@ const ProfileView = ({data}: { data: IUser}) => {
                 </div>
                 <div>
                     <Typography component="div" variant="caption">
-                        {t("profile.resume")}
+                        {trans("profile.resume")}
                     </Typography>
                     <Typography variant="body2">
                         {data?.resume}
@@ -123,7 +123,7 @@ const ProfileView = ({data}: { data: IUser}) => {
                 </div>
                 <div>
                     <Typography component="div" variant="caption">
-                        {t("profile.specialization")}
+                        {trans("profile.specialization")}
                     </Typography>
                     <Stack component="div" className="mt-1" direction={"row"} spacing={1}>
                         {renderSpecialization()}
@@ -131,9 +131,9 @@ const ProfileView = ({data}: { data: IUser}) => {
                 </div>
 
                 <div>
-                    <Typography variant="h4">{t("profile.task_history")}</Typography>
+                    <Typography variant="h4">{trans("profile.task_history")}</Typography>
                     <Typography className="mt-2" variant="body2">
-                        {t("profile.task_result", {"payed": "100%", completed: "99%"})}
+                        {trans("profile.task_result", {"payed": "100%", completed: "99%"})}
                     </Typography>
                 </div>
             </Stack>

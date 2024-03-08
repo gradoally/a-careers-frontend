@@ -11,7 +11,7 @@ import {useAppContext} from "@/lib/app-providers";
 
 
 const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateType>, setTitle: (value: string)=>void}) => {
-    const t = useTranslations("tasks")
+    const trans = useTranslations("tasks")
     const {config} = useAppContext();
 
     const handleClick = async (value: string) =>{
@@ -21,7 +21,7 @@ const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateTyp
 
     return (
         <div className={"p-5"}>
-            <Typography variant="h4">{t("select_category")}</Typography>
+            <Typography variant="h4">{trans("select_category")}</Typography>
             <Stack component="div" className="mt-4" spacing="20px">
                 {config && config?.categories?.map((e, i) => {
                     if (!e.isActive) return

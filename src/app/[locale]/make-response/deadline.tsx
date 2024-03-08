@@ -9,18 +9,18 @@ import DateTimePicker from "@/components/forms/fields/DateTimePicker";
 
 
 const Deadline = ({data}: {data: TaskCreateType})=>{
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     const handleChange = (event: any) => {
 
     };
     return (
         <Stack className="p-5" component="div" spacing="20px" direction="column">
-            <Typography variant="h4">{t('confirm_the_deadline')}</Typography>
+            <Typography variant="h4">{trans('confirm_the_deadline')}</Typography>
 
-            <Typography variant="caption">{t("or_suggest_your_own")}</Typography>
+            <Typography variant="caption">{trans("or_suggest_your_own")}</Typography>
 
             <DateTimePicker
-                placeholder={t("deadline_datetime")}
+                placeholder={trans("deadline_datetime")}
                 onChange={(value) => {}}
                 name="deadline" fullWidth id="deadline"
                 value={null}

@@ -6,14 +6,14 @@ import pick from "lodash/pick";
 import DrawerContent from "@/components/layout/drawer/DrawerContent";
 
 const Drawer = () => {
-    const t = useTranslations("tasks");
+    const trans = useTranslations("tasks");
     const messages = useMessages();
     const locale = useLocale();
 
     const routes = [
-        {"label": t("create"), "to": "/tasks/create"},
-        {"label": t("find"), "to": "/"},
-        {"label": t("my"), "to": "/tasks/my"},
+        {"label": trans("create"), "to": "/tasks/create"},
+        {"label": trans("find"), "to": "/"},
+        {"label": trans("my"), "to": "/tasks/my"},
     ]
     return (
         <NextIntlClientProvider

@@ -24,19 +24,19 @@ export interface TaskCreateType {
 }
 
 const Stepper = () => {
-    const t = useTranslations();
+    const trans = useTranslations();
 
     const [data, setData] = useState<TaskCreateType>({});
     const [step, setStep] = useState<number>(1);
-    const [subtitle, setSubtitle] = useState(t("tasks.firs_step"))
-    const [title, setTitle] = useState(t("tasks.make_a_response"));
+    const [subtitle, setSubtitle] = useState(trans("tasks.firs_step"))
+    const [title, setTitle] = useState(trans("tasks.make_a_response"));
     const [disabled, setDisabled] = useState(false)
 
     useEffect(() => {
         if (step == 1) {
-            setSubtitle(t("tasks.first_step"))
+            setSubtitle(trans("tasks.first_step"))
         } else {
-            setSubtitle(t("tasks.step_x_from_x", {"value": step, "from": 3}))
+            setSubtitle(trans("tasks.step_x_from_x", {"value": step, "from": 3}))
         }
     }, [step])
 
@@ -89,7 +89,7 @@ const Stepper = () => {
                         className="w-full"
                         color={"secondary"}
                         variant="contained">
-                        {t("tasks.send_response")}
+                        {trans("tasks.send_response")}
                     </FooterButton>
                     <Typography variant="body2">Комиссия сети ≈ 0.011 TON</Typography>
                 </>
@@ -100,7 +100,7 @@ const Stepper = () => {
                     className="w-full"
                     color={"secondary"}
                     variant="contained">
-                    {t("buttons.next")}
+                    {trans("buttons.next")}
                 </FooterButton>
             )}
         </Footer>

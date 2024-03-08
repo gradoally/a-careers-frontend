@@ -11,13 +11,13 @@ import {checkError, getError} from "@/lib/helper";
 
 
 const Deadline = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
 
     return (
         <div className="w-full p-5">
-            <Typography variant="h4">{t("when_should_a_task_be_accomplished")}</Typography>
+            <Typography variant="h4">{trans("when_should_a_task_be_accomplished")}</Typography>
             <Typography component="div" variant="caption" sx={{marginTop: "10px"}}>
-                {t("specify_the_exact_deadline")}
+                {trans("specify_the_exact_deadline")}
             </Typography>
             <DateTimePicker
 
@@ -26,7 +26,7 @@ const Deadline = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
                 label=""
                 className="py-5"
                 formControlClassName="mt-6"
-                placeholder={t("deadline_datetime")}
+                placeholder={trans("deadline_datetime")}
                 onChange={(value) => formik.setFieldValue("deadline", value)}
                 name="deadline"
                 fullWidth id="deadline"

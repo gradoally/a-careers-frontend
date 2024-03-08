@@ -14,8 +14,8 @@ const Content = () => {
     const { userNextIndex, address: masterContractAddr, sendCreateUser } = useMasterContract();
     const { user, fetchProfile } = useAuthContext()
     const router = useRouter();
-    const locale = useLocale()
-    const t = useTranslations()
+    const locale = useLocale();
+    const trans = useTranslations();
     const { client } = useTonClient();
 
     const createUserProfile = async (values: UserFormValues, callback: (props: {
@@ -23,7 +23,7 @@ const Content = () => {
     }) => Promise<void>) => {
 
         if (userNextIndex == null || client == null || user?.found) {
-            await callback({ isError: true, message: t("errors.something_went_wrong_sorry") })
+            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
             return;
         }
 
@@ -40,21 +40,21 @@ const Content = () => {
                 specialization: values.specialization.join("##"),
             };
 
-            sendCreateUser("0.3", 0, buildUserContent(userContentData));
+            await sendCreateUser("0.3", 0, buildUserContent(userContentData));
 
             await callback({
                 isError: false,
-                message: t("profile.profile_successfully_connected")
+                message: trans("profile.profile_successfully_connected"),
             })
             await fetchProfile();
             router.push(`/${locale}/profile`)
         } catch (e) {
-            await callback({ isError: true, message: t("errors.something_went_wrong_sorry") })
+            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
         }
     };
 
     return (
-        <ProfileForm onSubmit={createUserProfile} />
+        <ProfileForm action="create" onSubmit={createUserProfile} />
     )
 }
 

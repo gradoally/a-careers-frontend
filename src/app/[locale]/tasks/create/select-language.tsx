@@ -13,13 +13,13 @@ import {checkError, getError} from "@/lib/helper";
 
 
 const SelectLanguage = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     const tl = useTranslations('locale_switcher')
     const {config} = useAppContext();
     return (
         <div className="p-5">
-            <Typography variant="h4">{t("select_language")}</Typography>
-            <Typography variant="caption" component="div" sx={{marginTop: "10px"}}>{t("language")}</Typography>
+            <Typography variant="h4">{trans("select_language")}</Typography>
+            <Typography variant="caption" component="div" sx={{marginTop: "10px"}}>{trans("language")}</Typography>
 
             <SelectField variant="standard"
                          error={checkError(formik, {}, "language")}

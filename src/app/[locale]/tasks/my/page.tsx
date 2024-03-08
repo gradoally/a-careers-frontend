@@ -28,7 +28,7 @@ export function generateStaticParams() {
 const Page = ({params: {locale}}: Props) => {
     unstable_setRequestLocale(locale);
     const messages = useMessages()
-    const t = useTranslations("tasks");
+    const trans = useTranslations("tasks");
     const data = "on moderation";
     const footer = (
         <Footer  >
@@ -36,7 +36,7 @@ const Page = ({params: {locale}}: Props) => {
                 component={NextLinkComposed} to={"/tasks/create"}
                 color={"secondary"}
                 variant="contained">
-                {t("create")}
+                {trans("create")}
             </FooterButton>
         </Footer>
     )
@@ -44,7 +44,7 @@ const Page = ({params: {locale}}: Props) => {
         <AppBar height={"60px"} padding="15px 20px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
                 <MenuButton/>
-                <Typography variant="h5"  fontWeight="500" color="info.main">{t("my",)}</Typography>
+                <Typography variant="h5"  fontWeight="500" color="info.main">{trans("my",)}</Typography>
             </Stack>
         </AppBar>
     )
@@ -60,7 +60,7 @@ const Page = ({params: {locale}}: Props) => {
                     {data ? (
                         <Content data={data}/>
                     ) : (
-                        <CenteredContainer >{t("you_have_not_created_tasks")}</CenteredContainer>
+                        <CenteredContainer >{trans("you_have_not_created_tasks")}</CenteredContainer>
                     )}
                 </Suspense>
             </div>

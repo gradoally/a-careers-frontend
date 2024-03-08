@@ -9,13 +9,13 @@ import {checkError} from "@/lib/helper";
 
 
 const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
-    const t = useTranslations('tasks')
+    const trans = useTranslations('tasks')
     return (
         <Stack direction="column" spacing="10px" className="h-full">
             <div className="p-5 mb-4">
-                <Typography variant="h4">{t("technical_task")}</Typography>
+                <Typography variant="h4">{trans("technical_task")}</Typography>
                 <Typography component="div" variant="caption" sx={{marginTop: "10px"}}>
-                    {t("technical_task_description")}
+                    {trans("technical_task_description")}
                 </Typography>
             </div>
 

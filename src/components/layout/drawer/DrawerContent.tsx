@@ -40,7 +40,7 @@ export default function DrawerContent({ routes }: Props) {
     const { user } = useAuthContext()
     const { isDrawerOpen, toggleDrawer } = useAppContext()
     const pathname = usePathname();
-    const t = useTranslations("common");
+    const trans = useTranslations("common");
 
     const header = (
         <AppBar>
@@ -48,7 +48,7 @@ export default function DrawerContent({ routes }: Props) {
                 <Logo />
             </Stack>
             <Box component="div" sx={{ flexGrow: 1 }} />
-            <ConnectButton text={t('connect')} />
+            <ConnectButton text={trans('connect')} />
             <Stack direction="row" alignItems="center" style={{ marginLeft: 10 }}>
                 <CloseButton onClick={() => toggleDrawer(false)} />
             </Stack>
@@ -77,7 +77,7 @@ export default function DrawerContent({ routes }: Props) {
                     <Stack direction="row" spacing={2}
                         justifyContent="space-between">
                         <Typography component="div" sx={{ color: "text.secondary" }} variant="body2">
-                            {t("text_support")}
+                            {trans("text_support")}
                         </Typography>
                         <LanguageToggler />
                     </Stack>
@@ -90,13 +90,13 @@ export default function DrawerContent({ routes }: Props) {
                                 alignItems="center">
                                 <UserAvatar />
                                 <div className="text-center">
-                                    {user?.telegram && <Typography variant="h4">
-                                        {user.telegram}
+                                    {user?.data?.telegram && <Typography variant="h4">
+                                        {user?.data?.telegram}
                                     </Typography>}
                                     <Typography component="div" variant="caption">
                                         <Link onClick={() => toggleDrawer(false)} className="underline"
                                             noLinkStyle href={"/profile"}>
-                                            {t("profile")} 📖
+                                            {trans("profile")} 📖
                                         </Link>
                                     </Typography>
                                 </div>

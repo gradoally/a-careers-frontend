@@ -26,7 +26,7 @@ import Shell from "@/components/layout/Shell";
 
 const FilterContent = () => {
     const {isFilterOpen, toggleFilter} = useAppContext()
-    const t = useTranslations("filter");
+    const trans = useTranslations("filter");
     const [filters, setFilters] = React.useState<Record<string, string>>({})
     const router = useRouter()
     const pathname = usePathname();
@@ -73,7 +73,7 @@ const FilterContent = () => {
         <AppBar padding="15px" height="60px">
             <Stack direction="row" alignItems="center" spacing={1}>
                 <BackButton onClick={handleBack}/>
-                <Typography variant="h5" color="info.main">{t("filters")}</Typography>
+                <Typography variant="h5" color="info.main">{trans("filters")}</Typography>
             </Stack>
         </AppBar>
     )
@@ -107,7 +107,7 @@ const FilterContent = () => {
                                    src="/images/puzzle-piece.svg"/>
                         </div>
                         <SelectField variant="standard"
-                                     label={t("categories")}
+                                     label={trans("categories")}
                                      id="category"
                                      name="category"
                                      value={filters?.category ?? "all"}
@@ -119,7 +119,7 @@ const FilterContent = () => {
                                          IconComponent: () => null
                                      }}
                         >
-                            <MenuItem value={"all"}>{t("all")}</MenuItem>
+                            <MenuItem value={"all"}>{trans("all")}</MenuItem>
                         </SelectField>
                         <ArrowRightIcon/>
                     </Stack>
@@ -133,7 +133,7 @@ const FilterContent = () => {
                                    src="/images/earth_americas.png"/>
                         </div>
                         <SelectField variant="standard"
-                                     label={t("show_tasks_on_language")}
+                                     label={trans("show_tasks_on_language")}
                                      id="language"
                                      name="language"
                                      value={filters?.language ?? "all"}
@@ -144,7 +144,7 @@ const FilterContent = () => {
                                          IconComponent: () => null
                                      }}
                         >
-                            <MenuItem value={"all"}>{t("all_languages")}</MenuItem>
+                            <MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
                             <MenuItem value={"ru"}>Русский</MenuItem>
                             <MenuItem value={"en"}>English</MenuItem>
                         </SelectField>
@@ -162,7 +162,7 @@ const FilterContent = () => {
                         type="text"
                         InputProps={{
                             sx: {fontSize: "16px", 'fontWeight': "400"},
-                            placeholder: t("tasks_price_from"),
+                            placeholder: trans("tasks_price_from"),
                             disableUnderline: true,
                             inputComponent: NumberFormat as any,
                             inputProps: {
