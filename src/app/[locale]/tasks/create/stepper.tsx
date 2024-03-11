@@ -1,19 +1,30 @@
 "use client"
-import {useTranslations, useLocale} from "next-intl";
+import React, { useState, useEffect, useMemo } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useFormik, FormikProps } from "formik";
+import { useConfirm } from "material-ui-confirm";
 
-import React, {useState, useEffect} from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import {useFormik} from "formik";
+
+import { z } from "zod";
+import { toNano } from "@ton/core";
+
+import { useAuthContext } from "@/lib/auth-provider";
+import { buildOrderContent, OrderContentData } from "@/contracts/Order";
+import { useMasterContract } from "@/hooks/useMasterContract";
+import { useTonClient } from "@/hooks/useTonClient";
+import { useUserContract } from "@/hooks/useUserContract";
 
 import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
-import {NextLinkComposed} from "@/components/Link";
+import { NextLinkComposed } from "@/components/Link";
 import CloseButton from "@/components/ui/buttons/CloseButton";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
-import {checkError, toastLoading, toastUpdate} from "@/lib/helper";
+import { checkError, getError, toastLoading, toastUpdate } from "@/lib/helper";
 
 import SelectLanguage from "./select-language";
 import SelectCategory from "./select-category";
@@ -22,16 +33,6 @@ import Deadline from "./deadline";
 import Price from "./price";
 import Description from "./description";
 import TechnicalTask from "./technical_task";
-import {z} from "zod";
-import {toFormikValidationSchema} from "zod-formik-adapter";
-import {useMasterContract} from "@/hooks/useMasterContract";
-import {buildOrderContent, OrderContentData} from "@/contracts/Order";
-import {toNano} from "@ton/core";
-import {useUserContract} from "@/hooks/useUserContract";
-import {useAuthContext} from "@/lib/auth-provider";
-import {useTonClient} from "@/hooks/useTonClient";
-import {useConfirm} from "material-ui-confirm";
-
 
 const keys: Record<number, string> = {
     1: "language",
@@ -53,45 +54,71 @@ export interface TaskCreateType {
     technicalTask: string;
 }
 
+export interface IForm {
+    formik: FormikProps<TaskCreateType>;
+    error?: string
+}
 
+export interface ICategoryForm extends IForm {
+    setTitle: (text: string) => void;
+}
 
-const Stepper = () => {
+function MemoizedRenderForm(props: {
+    step: number;
+    formik: FormikProps<TaskCreateType>;
+    setTitle: (value: string) => void;
+    errorMessage: string;
+}) {
+    return useMemo(() => {
+        return [
+            <SelectLanguage key={1} formik={props.formik} />,
+            <SelectCategory key={2} setTitle={props.setTitle} formik={props.formik} />,
+            <Title key={3} formik={props.formik} error={props.errorMessage} />,
+            <Deadline key={4} formik={props.formik} error={props.errorMessage} />,
+            <Price key={5} formik={props.formik} error={props.errorMessage} />,
+            <Description key={6} formik={props.formik} error={props.errorMessage} />,
+            <TechnicalTask key={7} formik={props.formik} />,
+        ][props.step - 1];
+    }, [props.step, props.formik]);
+}
+
+export default function Stepper() {
     const locale = useLocale();
     const trans = useTranslations();
-    const {user} = useAuthContext();
-    const {client} = useTonClient();
+    const { user } = useAuthContext();
+    const { client } = useTonClient();
     const confirm = useConfirm();
 
     const {
         sendCreateOrder
     } = useUserContract(String(user?.data?.address));
-    const {orderNextIndex} = useMasterContract();
+    const { orderNextIndex } = useMasterContract();
 
     const [step, setStep] = useState<number>(1);
+    const [errorMessage, setErrorMessage] = useState("");
     const [title, setTitle] = useState(trans("tasks.create"))
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
-    const [disabled, setDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         if (step == 1) {
             setSubtitle(trans("tasks.first_step"))
         } else {
-            setSubtitle(trans("tasks.step_x_from_x", {"value": step, "from": 7}))
+            setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 7 }))
         }
     }, [step])
 
-
     const schema = z.object({
-        language: z.string({required_error: trans("form.required.default")}),
-        category: z.string({required_error: trans("form.required.default")}),
-        name: z.string({required_error: trans("form.required.default")}),
-        price: z.string({required_error: trans("form.required.default")}),
-        deadline: z.date({required_error: trans("form.required.default")}),
-        description: z.string({required_error: trans("form.required.default")}),
-        technicalTask: z.string({required_error: trans("form.required.default")}),
+        language: z.string({ required_error: trans("form.required.default") }),
+        category: z.string({ required_error: trans("form.required.default") }),
+        name: z.string({ required_error: trans("form.required.default") }),
+        price: z.string({ required_error: trans("form.required.default") }),
+        deadline: z.date({ required_error: trans("form.required.default") }),
+        description: z.string({ required_error: trans("form.required.default") }),
+        technicalTask: z.string({ required_error: trans("form.required.default") }),
     });
 
-    const handleSubmit = (values: TaskCreateType)=>{
+    const handleSubmit = (values: TaskCreateType) => {
         {
             if (orderNextIndex == null || client == null || user == null) {
                 return;
@@ -104,13 +131,13 @@ const Stepper = () => {
                         category: values.category,
                         language: values.language,
                         name: values.name,
-                        price:  toNano(values.price),
+                        price: toNano(values.price),
                         deadline: Math.round(Date.now() / 1000) + 604800,
                         description: values.description,
                         technicalTask: values.technicalTask,
                     };
                     const orderContentDataCell = buildOrderContent(orderContentData);
-                    sendCreateOrder("0.3",
+                    await sendCreateOrder("0.3",
                         0, orderContentDataCell,
                         toNano(orderContentData.price),
                         orderContentData.deadline,
@@ -119,9 +146,8 @@ const Stepper = () => {
                     toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
 
                 } catch (e) {
-                    console.log("create_order", e)
-                    toastUpdate(toastId,  trans("errors.something_went_wrong_sorry"), 'warning');
-
+                    console.log("create_order", e);
+                    toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');
                 }
             })
         }
@@ -129,7 +155,6 @@ const Stepper = () => {
 
     const formik = useFormik<TaskCreateType>(
         {
-
             initialValues: {
                 language: locale,
                 category: "",
@@ -143,59 +168,44 @@ const Stepper = () => {
                 category: trans("form.required.default")
             },
             validationSchema: toFormikValidationSchema(schema),
-
-            onSubmit:  handleSubmit
+            onSubmit: handleSubmit
         },
     )
 
-    useEffect(()=>{
-        if(checkError(formik, {}, keys[step])){
+    useEffect(() => {
+        if (checkError(formik, {}, keys[step])) {
             setDisabled(true)
-        }else(
+        } else (
             setDisabled(false)
         )
-    }, [formik.errors])
+    }, [formik.errors]);
+
+    const ButtonStatus = useMemo(() => {
+        const errorMsg = getError(formik, {}, keys[step]);
+        return {
+            disabled: errorMsg ? true : false,
+            error: errorMsg
+        }
+    }, [formik, step]);
 
     const handleBack = () => {
         const newStep = step == 1 ? 1 : step - 1
         setStep(newStep)
     }
 
-
     const handleClick = () => {
-        const newStep = step + 1;
-        setStep(newStep);
-    }
-
-    const renderStep = () => {
-        switch (step) {
-            case 7:
-                return (<TechnicalTask formik={formik}/>)
-            case 6:
-                return (<Description formik={formik}/>)
-            case 5:
-                return (<Price formik={formik}/>)
-            case 4:
-                return (<Deadline formik={formik}/>)
-            case 3:
-                return (
-                    <Title formik={formik}/>
-                )
-            case 2:
-                return (
-                    <SelectCategory setTitle={setTitle} formik={formik}/>
-                )
-            case 1:
-            default:
-                return (<SelectLanguage formik={formik}/>)
+        if (!ButtonStatus.disabled) {
+            const newStep = step + 1;
+            setStep(newStep);
+            setErrorMessage("");
         }
+        setErrorMessage(ButtonStatus.error || "");
     }
 
-
-    const header = (
-        <AppBar height="70px">
+    const MemoizedHeader = useMemo(() => {
+        return <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
-                {step === 1 ? <div className="h-[30px] w-[30px]"/> : <BackButton onClick={handleBack}/>}
+                {step === 1 ? <div className="h-[30px] w-[30px]" /> : <BackButton onClick={handleBack} />}
                 <div className="flex-grow text-center ">
                     <div className="max-w-[200px] mx-auto">
                         <Typography variant="body1" className="truncate">
@@ -206,44 +216,49 @@ const Stepper = () => {
                         </Typography>
                     </div>
                 </div>
-                <CloseButton component={NextLinkComposed} to={"/tasks/my"}/>
+                <CloseButton component={NextLinkComposed} to={"/tasks/my"} />
             </Stack>
         </AppBar>
-    )
-    console.log(formik.errors, step,keys[step])
+    }, [step]);
 
-    const footer = (
-        <Footer>
-            {step === 7 ? (
-                <>
-                    <FooterButton
-                        onClick={()=>handleSubmit(formik.values)}
-                        disabled={disabled}
-                        className="w-full"
-                        color={"secondary"}
-                        variant="contained">
-                        {trans("tasks.send_task_to_blockchain")}
-                    </FooterButton>
-                    <Typography variant="body2">
-                        {trans("network.commission", {value: "0.011 TON"})}
-                    </Typography>
-                </>
-            ) : (
+    //Footer
+    const footer = (<Footer>
+        {step === 7 ? (
+            <>
                 <FooterButton
-                    disabled={checkError(formik, {}, keys[step])}
-                    onClick={handleClick}
+                    onClick={() => handleSubmit(formik.values)}
+                    disabled={disabled}
+                    className="w-full"
                     color={"secondary"}
                     variant="contained">
-                    {trans("buttons.next")}
+                    {trans("tasks.send_task_to_blockchain")}
                 </FooterButton>
-            )}
-        </Footer>
-    )
+                <Typography variant="body2">
+                    {trans("network.commission", { value: "0.011 TON" })}
+                </Typography>
+            </>
+        ) : (
+            <FooterButton
+                style={{
+                    opacity: ButtonStatus.disabled ? 0.5 : 1
+                }}
+                onClick={handleClick}
+                color={"secondary"}
+                variant="contained">
+                {trans("buttons.next")}
+            </FooterButton>
+        )}
+    </Footer>
+    );
+
     return (
-        <Shell header={header} footer={footer}>
-            {renderStep()}
+        <Shell header={MemoizedHeader} footer={footer}>
+            {<MemoizedRenderForm
+                step={step}
+                formik={formik}
+                setTitle={setTitle}
+                errorMessage={errorMessage}
+            />}
         </Shell>
     )
 }
-
-export default Stepper;

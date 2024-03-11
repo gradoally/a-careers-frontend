@@ -1,12 +1,12 @@
 "use client"
 
-import {IconButton, SvgIcon} from '@mui/material';
+import { IconButton } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
-import {useAppContext} from "@/lib/app-providers";
+import { useAppContext } from "@/lib/app-providers";
 
 const MenuButton = () => {
-    const {toggleDrawer} = useAppContext()
+    const { toggleDrawer } = useAppContext()
     return (
         <IconButton
             onClick={() => toggleDrawer(true)} aria-label="menu"
@@ -18,10 +18,10 @@ const MenuButton = () => {
                 "& .MuiTouchRipple-root .MuiTouchRipple-child": {
                     borderRadius: "8px"
                 },
-                "&:hover": {backgroundColor: "info.main"},
-                "&:focus": {backgroundColor: "info.main"}
+                "&:hover": { backgroundColor: "info.main" },
+                "&:focus": { backgroundColor: "info.main" }
             }}>
-            <MenuRoundedIcon/>
+            <MenuRoundedIcon />
         </IconButton>
     )
 }

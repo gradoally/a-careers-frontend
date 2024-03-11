@@ -26,18 +26,24 @@ export default async function Home({ params: { locale } }: IPageProps) {
     unstable_setRequestLocale(locale);
     const messages = await getMessages();
     const trans = await getTranslations();
-    const header = <Header messages={{ "connect": trans("common.connect"), "find": trans("tasks.find") }} />
-    
+
     return (
         <NextIntlClientProvider
             locale={locale}
             messages={pick(messages, 'status_chip', "errors", "common")}
         >
-            <Shell header={header} withDrawer footer={
-                <Footer transparent={true}>
-                    <FilterButton>{trans("buttons.filter")}</FilterButton>
-                </Footer>}
-                extra={<Filter />}>
+            <Shell
+                header={
+                    <Header messages={{ "connect": trans("common.connect"), "find": trans("tasks.find") }} />
+                }
+                withDrawer
+                footer={
+                    <Footer transparent={true}>
+                        <FilterButton>{trans("buttons.filter")}</FilterButton>
+                    </Footer>
+                }
+                extra={<Filter />}
+            >
                 <div className="pt-[15px]">
                     <Suspense fallback={<LazyLoading />}>
                         <Content />

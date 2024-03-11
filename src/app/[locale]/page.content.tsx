@@ -4,9 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useSWRInfinite from 'swr/infinite';
 
-import { useAuthContext } from "@/lib/auth-provider";
-import { useTonConnect } from "@/hooks/useTonConnect";
-
 import Stack from "@mui/material/Stack";
 
 import InfiniteScroll from "@/components/InfiniteScroll";
@@ -20,14 +17,11 @@ import { Order } from "@/openapi/client";
 import { get } from "@/services/request";
 
 const Content = () => {
-    const { user } = useAuthContext();
-    const { connected } = useTonConnect();
     const searchParams = useSearchParams();
 
     const [pageLimit, setPageLimit] = useState(0);
 
     const getKey = (pageIndex: number, previousPageData: Order[]) => {
-        if (!user?.data) return "";
         // Use the previous page data to determine if this is the last page.
         if (previousPageData && !previousPageData.length) return null;
         const params = new URLSearchParams(searchParams)
@@ -84,16 +78,15 @@ const Content = () => {
 
     //Fetch search counts
     useEffect(() => {
-        if (!connected) return;
         get<number>({ url: APIs.orders.counts })
             .then(res => {
-                setPageLimit(res.data || 0);
+                setPageLimit(res.data || 1);
             }).catch(err => {
                 alert((err as Error).message);
             });
-    }, [connected]);
+    }, []);
 
-    if ((isLoadingInitialData || isRefreshing) && connected) {
+    if ((isLoadingInitialData || isRefreshing) && pageLimit) {
         return (
             <Stack spacing={2} className="px-5">
                 {[1, 2, 3, 4].map((key) => (
@@ -106,22 +99,19 @@ const Content = () => {
         )
     }
 
-    if (connected) {
-        return (
-            <InfiniteScroll
-                isReachingEnd={!!status.isReachingEnd}
-                setSize={setSize}
-                size={size}
-                isEmpty={status.isEmpty}
-                isLoadingMore={!!status.isLoadingMore}
-                error={error}
-            >
-                <TaskList data={status.rows} />
-            </InfiniteScroll>
-        );
-    }
 
-    return <></>
+    return (
+        <InfiniteScroll
+            isReachingEnd={!!status.isReachingEnd}
+            setSize={setSize}
+            size={size}
+            isEmpty={status.isEmpty}
+            isLoadingMore={!!status.isLoadingMore}
+            error={error}
+        >
+            <TaskList data={status.rows} />
+        </InfiniteScroll>
+    );
 }
 
 export default Content;

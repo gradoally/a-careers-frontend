@@ -1,35 +1,32 @@
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import {TaskCreateType} from "./stepper";
-import {FormikProps} from "formik";
-import {StyledInputMultiline} from "@/components/forms/fields/StyledInputMultiline";
-import {checkError} from "@/lib/helper";
+import { StyledInputMultiline } from "@/components/forms/fields/StyledInputMultiline";
 
+import { IForm } from "./stepper";
 
-const TechnicalTask = ({formik}: { formik: FormikProps<TaskCreateType> }) => {
+const TechnicalTask = ({ formik, error }: IForm) => {
     const trans = useTranslations('tasks')
     return (
         <Stack direction="column" spacing="10px" className="h-full">
             <div className="p-5 mb-4">
                 <Typography variant="h4">{trans("technical_task")}</Typography>
-                <Typography component="div" variant="caption" sx={{marginTop: "10px"}}>
+                <Typography component="div" variant="caption" sx={{ marginTop: "10px" }}>
                     {trans("technical_task_description")}
                 </Typography>
             </div>
 
             <div className="grow pb-2.5">
                 <StyledInputMultiline
-                    error={checkError(formik, {}, "technicalTask")}
-
+                    error={error ? true : false}
                     fullWidth
-                    inputProps={{style: {height: "100%", padding: "10px 20px", overflow: "scroll"}}}
+                    inputProps={{ style: { height: "100%", padding: "10px 20px", overflow: "scroll" } }}
                     multiline
                     onChange={formik.handleChange}
                     value={formik.values.technicalTask}
                     id="technicalTask"
-                    name="technicalTask"/>
+                    name="technicalTask" />
             </div>
         </Stack>
     )

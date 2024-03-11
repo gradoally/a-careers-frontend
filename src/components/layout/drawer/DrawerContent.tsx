@@ -32,7 +32,7 @@ import Logo from "@/app/logo";
 import UserAvatar from "@/components/UserAvatar";
 
 interface Props {
-    routes: { label: string, to: string }[];
+    routes: { label: string, to: string, secure: boolean }[];
 }
 
 export default function DrawerContent({ routes }: Props) {
@@ -107,6 +107,7 @@ export default function DrawerContent({ routes }: Props) {
                     <nav className={clsx("grow", walletAddress ? "" : "flex flex-col justify-center items-center")}>
                         <List sx={{ width: "100%" }}>
                             {routes.map((e, index) => {
+                                if (!walletAddress && e.secure) return;
                                 const [, , ...segments] = pathname.split('/');
                                 const pathnameWithoutLocale = segments.join("/");
 

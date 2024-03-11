@@ -1,20 +1,18 @@
-import {useTranslations} from "next-intl";
-import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import {TaskCreateType} from "./stepper";
-import {FormikProps} from "formik";
-import {useAppContext} from "@/lib/app-providers";
+import { useAppContext } from "@/lib/app-providers";
 
+import { ICategoryForm } from "./stepper";
 
-const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateType>, setTitle: (value: string)=>void}) => {
+export default function SelectCategory({ formik, setTitle }: ICategoryForm) {
     const trans = useTranslations("tasks")
-    const {config} = useAppContext();
+    const { config } = useAppContext();
 
-    const handleClick = async (value: string) =>{
+    const handleClick = async (value: string) => {
         await formik.setFieldValue("category", value)
         setTitle(value)
     }
@@ -28,13 +26,13 @@ const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateTyp
                     const isSelected = formik.values.category === e.code
                     return (
                         <Button variant="outlined" component="div" color="secondary" key={e?.key}
-                                className={"py-[15px] ps-1"}
-                                sx={{
-                                    borderColor: isSelected ? "common.white" : "secondary.main",
-                                    color: isSelected ? "common.white" : "secondary.main"
-                                }}
-                                onClick={()=>handleClick(e?.code??"")}
-                            >
+                            className={"py-[15px] ps-1"}
+                            sx={{
+                                borderColor: isSelected ? "common.white" : "secondary.main",
+                                color: isSelected ? "common.white" : "secondary.main"
+                            }}
+                            onClick={() => handleClick(e?.code ?? "")}
+                        >
                             <Typography variant="body2" className="w-full leading-[20px]" component="div">
                                 {e?.code}
                             </Typography>
@@ -45,5 +43,3 @@ const SelectCategory = ({formik, setTitle}: {  formik: FormikProps<TaskCreateTyp
         </div>
     )
 }
-
-export default SelectCategory;
