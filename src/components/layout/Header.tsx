@@ -9,12 +9,13 @@ import SearchForm from "@/components/forms/search-form";
 export default function Header({ messages }: { messages: { connect: string, find: string } }) {
     return (
         <AppBar>
-            <Stack sx={{ paddingRight: "5px" }} direction="row" alignItems="center" spacing={"15px"} >
+            <Stack sx={{ paddingRight: "5px",flex:1,marginRight:"15px" }} direction="row" alignItems="center" spacing={"15px"} >
                 <MenuButton />
                 <SearchForm text={messages.find} />
             </Stack>
-            <Box component="div" sx={{ flexGrow: 1 }} />
-            <Stack><ConnectButton text={messages.connect} /></Stack>
+            <Stack>
+                <ConnectButton text={messages.connect} />
+            </Stack>
         </AppBar>
     );
 }

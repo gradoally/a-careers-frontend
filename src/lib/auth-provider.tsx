@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter, redirect } from "next/navigation";
 
@@ -9,7 +9,6 @@ import Image from "@/components/Image";
 import { APIs } from "@/config/api.config";
 import { get } from "@/services/request";
 import { IUser } from "@/interfaces/index";
-import { useTonConnectUI } from "@tonconnect/ui-react";
 
 interface HOCProps {
     WrappedComponent: React.ComponentType,
@@ -95,6 +94,15 @@ export default function AuthProvider(props: React.PropsWithChildren) {
         })
         await get<IUserRes>({ url: `${APIs.user.profile(walletAddress, locale)}` })
             .then((res) => {
+                if (res.status != 'success') {
+                    setAuth({
+                        isLoading: false,
+                        user: res.data || null,
+                        error: "Fail to find user"
+                    });
+                    return;
+                }
+
                 setAuth({
                     isLoading: false,
                     user: res.data || null,
@@ -111,9 +119,13 @@ export default function AuthProvider(props: React.PropsWithChildren) {
     }
 
     useEffect(() => {
-        if (!walletAddress) return;
-        if (auth.isLoading || !auth.user) return;
+
         const createProfilePath = `/${locale}/profile/create`;
+
+        if (!walletAddress && createProfilePath === pathname)
+            redirect(`/${locale}`);
+
+        if (auth.isLoading || !auth.user) return;
 
         if (!auth.user.found && pathname !== createProfilePath)
             redirect(createProfilePath);

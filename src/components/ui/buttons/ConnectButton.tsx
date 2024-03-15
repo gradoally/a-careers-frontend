@@ -8,10 +8,9 @@ import { useTonConnectUI } from "@tonconnect/ui-react";
 import { CHAIN } from "@tonconnect/protocol";
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { toast } from "@/lib/helper";
-import { useAuthContext } from '@/lib/auth-provider';
 
 const ConnectButton = ({ text }: { text: string }) => {
-    const trans = useTranslations()
+    const trans = useTranslations();
     const [tonConnectUI] = useTonConnectUI();
     const { connected, network, sender } = useTonConnect();
 

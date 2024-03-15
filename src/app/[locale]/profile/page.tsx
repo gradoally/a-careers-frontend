@@ -22,7 +22,7 @@ const Page = ({params: {locale}}: IPageProps) => {
             messages={pick(messages, 'profile', 'network', "common", "copy", "errors", 'form', "read_more")}
         >
             <Suspense fallback={<div>Loading...</div>}>
-                <Content />
+                <Content locale={locale} />
             </Suspense>
         </NextIntlClientProvider>
     )

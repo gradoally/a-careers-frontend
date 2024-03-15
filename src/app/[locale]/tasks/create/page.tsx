@@ -1,11 +1,13 @@
-import React from "react";
+"use client"
+import React, { Fragment, useState } from "react";
 
 import pick from 'lodash/pick';
-import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl';
 import { unstable_setRequestLocale } from "next-intl/server";
 
 import { locales } from "@/config/config";
 import Stepper from "./stepper";
+import TransactionProgress from "@/components/Progress/TransactionProgress";
 
 type Props = {
     params: {
@@ -15,22 +17,22 @@ type Props = {
 };
 
 
-export function generateStaticParams() {
+/*export function generateStaticParams() {
     return locales.map((locale) => ({ locale }));
-}
+}*/
 
-const Page = ({ params: { locale } }: Props) => {
+const Page = () => {
     // Enable static rendering
-    unstable_setRequestLocale(locale);
+    const locale = useLocale();
+    //unstable_setRequestLocale(locale);
 
     const messages = useMessages();
+    const [transaction, setTransaction] = useState(false);
     return (
-        <NextIntlClientProvider
-            locale={locale}
-            messages={pick(messages, "tasks", "buttons", "network", "locale_switcher", "form", "errors")}
-        >
-            <Stepper />
-        </NextIntlClientProvider>
+        <Fragment>
+            <Stepper toggleProgress={() => setTransaction(!transaction)} />
+            {transaction && <TransactionProgress />}
+        </Fragment>
     )
 }
 

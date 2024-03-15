@@ -52,6 +52,7 @@
   },
   "common": {
     "connected_to_ton_wallet": "Connected to ton wallet",
+    "disconnected_from_ton_wallet":"Disconnected from ton wallet",
     "please_wait": "Please wait!",
     "no_more_data": "No more data",
     "filter": "Filters",

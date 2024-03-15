@@ -39,6 +39,7 @@ export type UserContentData = {
     portfolio: string;
     resume: string;
     specialization: string;
+    language: string;
 };
 
 export function buildUserContent(data: UserContentData): Cell {
@@ -52,6 +53,7 @@ export function buildUserContent(data: UserContentData): Cell {
     content.set(sha256Hash('portfolio'), beginCell().storeStringTail(data.portfolio).endCell());
     content.set(sha256Hash('resume'), beginCell().storeStringTail(data.resume).endCell());
     content.set(sha256Hash('specialization'), beginCell().storeStringTail(data.specialization).endCell());
+    content.set(sha256Hash('language'), beginCell().storeUint(sha256Hash(data.language), 256).endCell());
 
     return beginCell().storeDictDirect(content, Dictionary.Keys.BigUint(256), Dictionary.Values.Cell()).endCell();
 }

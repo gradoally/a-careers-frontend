@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import {useTranslations} from "next-intl";
 
@@ -11,6 +12,8 @@ import CopyContainer from "@/components/features/copy";
 import ReadMoreCollapse from "@/components/features/ReadMoreCollapse";
 
 import { IUser } from "@/interfaces";
+
+import ProfileIcon from "@/assets/profile.png";
 
 interface HistoryType {
     date: string;
@@ -60,7 +63,8 @@ const ProfileView = ({data}: { data: IUser}) => {
     return (
         <>
             <div className="bg-info bg-opacity-20 h-[180px] w-full flex flex-col justify-center items-center">
-                <UserAvatar src="/gifs/unicorn-hight" height="90px" width="90px"/>
+                {/*<UserAvatar src="/gifs/unicorn-hight" height="90px" width="90px"/>*/}
+                <Image src={ProfileIcon} alt="Fixed" width={90} height={90}/>
                 <div className="mt-2.5 text-lg font-bold">{data?.nickname}</div>
             </div>
             <Stack spacing={"20px"} className="pt-[35px] px-5">
@@ -137,7 +141,7 @@ const ProfileView = ({data}: { data: IUser}) => {
                     </Typography>
                 </div>
             </Stack>
-            {/*{history && <History data={history}/>}*/}
+            {/*history && <History data={history}/>*/}
         </>
     )
 }

@@ -3,7 +3,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useFormik, FormikProps } from "formik";
-import { useConfirm } from "material-ui-confirm";
 
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -82,12 +81,11 @@ function MemoizedRenderForm(props: {
     }, [props.step, props.formik]);
 }
 
-export default function Stepper() {
+export default function Stepper(props: { toggleProgress: () => void }) {
     const locale = useLocale();
     const trans = useTranslations();
     const { user } = useAuthContext();
     const { client } = useTonClient();
-    const confirm = useConfirm();
 
     const {
         sendCreateOrder
@@ -118,38 +116,37 @@ export default function Stepper() {
         technicalTask: z.string({ required_error: trans("form.required.default") }),
     });
 
-    const handleSubmit = (values: TaskCreateType) => {
+    const handleSubmit = async (values: TaskCreateType) => {
         {
             if (orderNextIndex == null || client == null || user == null) {
                 return;
             }
-            confirm().then(async () => {
-                const toastId = toastLoading(trans("common.please_wait"))
+            const toastId = toastLoading(trans("common.please_wait"))
 
-                try {
-                    const orderContentData: OrderContentData = {
-                        category: values.category,
-                        language: values.language,
-                        name: values.name,
-                        price: toNano(values.price),
-                        deadline: Math.round(Date.now() / 1000) + 604800,
-                        description: values.description,
-                        technicalTask: values.technicalTask,
-                    };
-                    const orderContentDataCell = buildOrderContent(orderContentData);
-                    await sendCreateOrder("0.3",
-                        0, orderContentDataCell,
-                        toNano(orderContentData.price),
-                        orderContentData.deadline,
-                        orderContentData.deadline + 259200
-                    );
-                    toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
-
-                } catch (e) {
-                    console.log("create_order", e);
-                    toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');
-                }
-            })
+            try {
+                const orderContentData: OrderContentData = {
+                    category: values.category,
+                    language: values.language,
+                    name: values.name,
+                    price: toNano(values.price),
+                    deadline: Math.round(Date.now() / 1000) + 604800,
+                    description: values.description,
+                    technicalTask: values.technicalTask,
+                };
+                //props.toggleProgress();
+                const orderContentDataCell = buildOrderContent(orderContentData);
+                await sendCreateOrder("0.3",
+                    0, orderContentDataCell,
+                    orderContentData.price,
+                    orderContentData.deadline,
+                    orderContentData.deadline + 259200
+                );
+                //props.toggleProgress();
+                toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
+            } catch (e) {
+                console.log("create_order", e);
+                toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');
+            }
         }
     }
 
@@ -216,7 +213,7 @@ export default function Stepper() {
                         </Typography>
                     </div>
                 </div>
-                <CloseButton component={NextLinkComposed} to={"/tasks/my"} />
+                <CloseButton component={NextLinkComposed} to={"/"} />
             </Stack>
         </AppBar>
     }, [step]);

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, memo } from "react";
 import { useSearchParams } from "next/navigation";
 import useSWRInfinite from 'swr/infinite';
 
@@ -16,12 +16,13 @@ import { fetcher } from "@/lib/swr";
 import { Order } from "@/openapi/client";
 import { get } from "@/services/request";
 
-const Content = () => {
+function Content() {
     const searchParams = useSearchParams();
 
     const [pageLimit, setPageLimit] = useState(0);
 
     const getKey = (pageIndex: number, previousPageData: Order[]) => {
+        if (!pageLimit) return null;
         // Use the previous page data to determine if this is the last page.
         if (previousPageData && !previousPageData.length) return null;
         const params = new URLSearchParams(searchParams)
@@ -56,11 +57,18 @@ const Content = () => {
             isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
         const isEmpty = data?.[0]?.length === 0;
         const isReachingEnd =
-            isEmpty || (data && data[data.length - 1]?.length < pageLimit);
+            isEmpty || (data && data[data.length - 1]?.length < pageLimit && (data.length < 10 * pageLimit));
 
         const allRows = data ? data.reduce((
             acc: Order[], pageData) => acc.concat(pageData), []
         ) : [];
+
+        console.log({
+            isLoadingMore,
+            isEmpty,
+            isReachingEnd,
+            rows: allRows
+        });
 
         return {
             isLoadingMore,
@@ -78,6 +86,7 @@ const Content = () => {
 
     //Fetch search counts
     useEffect(() => {
+        if (pageLimit) return;
         get<number>({ url: APIs.orders.counts })
             .then(res => {
                 setPageLimit(res.data || 1);
@@ -114,4 +123,4 @@ const Content = () => {
     );
 }
 
-export default Content;
+export default memo(Content);

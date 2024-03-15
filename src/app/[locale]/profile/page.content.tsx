@@ -1,10 +1,9 @@
 "use client"
+import Image from "next/image";
+import React, { useState } from "react";
 
-import React, { useEffect, useState } from "react";
-
-import { User } from "@/openapi/client";
 import Shell from "@/components/layout/Shell";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import ProfileForm, { UserFormValues } from "@/components/forms/ProfileForm";
 import AppBar from "@/components/layout/app-bar";
@@ -18,12 +17,12 @@ import EditButton from "@/components/ui/buttons/EditButton";
 import { useUserContract } from "@/hooks/useUserContract";
 import { useTonClient } from "@/hooks/useTonClient";
 import { useAuthContext, withAuth } from "@/lib/auth-provider";
-import { useTonConnect } from "@/hooks/useTonConnect";
-import { buildUserContent } from '@/contracts/User';
+import { UserContentData, buildUserContent } from '@/contracts/User';
 import LazyLoading from "@/components/features/LazyLoading";
 
 import { IUser } from "@/interfaces";
 
+import ProfileIcon from "@/assets/profile.png";
 
 const EditComponent = ({ data }: { data: IUser }) => {
     const { client } = useTonClient();
@@ -42,7 +41,7 @@ const EditComponent = ({ data }: { data: IUser }) => {
         }
 
         try {
-            const userContentData = {
+            const userContentData: UserContentData = {
                 isUser: true,
                 isFreelancer: true,
                 nickname: values.nickname,
@@ -52,6 +51,7 @@ const EditComponent = ({ data }: { data: IUser }) => {
                 portfolio: values.portfolio,
                 resume: values.resume,
                 specialization: values.specialization.join("##"),
+                language: values.language,
             };
 
             const result = await sendChangeContent("0.5", 0, buildUserContent(userContentData));
@@ -69,7 +69,7 @@ const EditComponent = ({ data }: { data: IUser }) => {
     )
 }
 
-const Content = () => {
+const Content = (props: { locale: string }) => {
     const trans = useTranslations();
     const { user, isLoading } = useAuthContext();
     const [edit, setEdit] = useState<boolean>(false);
@@ -90,7 +90,7 @@ const Content = () => {
     const profileHeader = (
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={"10px"}>
-                <BackButton component={NextLinkComposed} to={"/my"} />
+                <BackButton component={NextLinkComposed} to={"/"} />
                 <Typography variant="h5" color="info.main">
                     {trans("profile.profile")}
                 </Typography>
@@ -120,7 +120,8 @@ const Content = () => {
         <Shell header={header}>
             <div className="p-5">
                 <div className="flex justify-center mb-[30px]">
-                    <UserAvatar height={"90px"} width={"90px"} />
+                    {/*<UserAvatar height={"90px"} width={"90px"} />*/}
+                    <Image src={ProfileIcon} alt="profile" width={90} height={90} />
                 </div>
                 <EditComponent data={user.data} />
             </div>
@@ -128,4 +129,4 @@ const Content = () => {
     )
 }
 
-export default withAuth({ WrappedComponent: Content })
+export default Content;  //withAuth({ WrappedComponent: Content })

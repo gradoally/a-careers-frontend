@@ -2,8 +2,8 @@ import {StyledInput} from "./styled";
 
 const SearchForm = ({text}: { text: string }) => {
     return (
-        <form>
-            <StyledInput placeholder={text}/>
+        <form className="!w-full">
+            <StyledInput className="w-full" placeholder={text}/>
         </form>
     )
 }

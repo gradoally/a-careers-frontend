@@ -38,6 +38,7 @@ const Content = () => {
                 portfolio: values.portfolio,
                 resume: values.resume,
                 specialization: values.specialization.join("##"),
+                language: values.language,
             };
 
             await sendCreateUser("0.3", 0, buildUserContent(userContentData));

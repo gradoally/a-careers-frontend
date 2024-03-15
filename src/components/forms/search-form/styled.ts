@@ -4,7 +4,6 @@ import InputBase from '@mui/material/InputBase';
 
 
 export const StyledInput = styled(InputBase)(({theme}) => ({
-    maxWidth: "129px",
     'label + &': {
         marginTop: theme.spacing(3),
     },
@@ -16,7 +15,7 @@ export const StyledInput = styled(InputBase)(({theme}) => ({
         "color": theme.palette.common.black,
         fontWeight: "400",
         fontSize: "10px",
-        width: 'auto',
+        width: '100%',
         padding: '8px 10px 8px 10px',
         lineHeight: "15px",
         transition: theme.transitions.create([

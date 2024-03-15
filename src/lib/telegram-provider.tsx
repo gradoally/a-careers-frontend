@@ -1,9 +1,9 @@
 "use client"
 
-import React, {createContext, useContext, useEffect, useMemo, useState} from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import Script from "next/script";
 
-import type {ITelegramUser, IWebApp} from "./twa-types";
+import type { ITelegramUser, IWebApp } from "./twa-types";
 
 export interface ITelegramContext {
     webApp?: IWebApp;
@@ -13,7 +13,7 @@ export interface ITelegramContext {
 export const TelegramContext = createContext<ITelegramContext>({});
 
 export const TelegramProvider = (
-    {children}: { children: React.ReactNode; }
+    { children }: { children: React.ReactNode; }
 ) => {
     const [webApp, setWebApp] = useState<IWebApp | null>(null);
 
@@ -21,7 +21,7 @@ export const TelegramProvider = (
         const app = (window as any).Telegram?.WebApp;
         if (app) {
             app.ready();
-            app.expand()
+            app.expand();
             setWebApp(app);
         }
     }, []);

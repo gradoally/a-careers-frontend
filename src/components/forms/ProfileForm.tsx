@@ -6,7 +6,6 @@ import Chip from '@mui/material/Chip';
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import { useConfirm } from "material-ui-confirm";
 import MenuItem from "@mui/material/MenuItem";
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -19,7 +18,7 @@ import { checkError, getError, toastLoading, toastUpdate } from "@/lib/helper";
 import { User } from "@/openapi/client";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
-import React from "react";
+import React, { useRef } from "react";
 
 
 const ProfileInput = (
@@ -77,14 +76,13 @@ interface Props {
 
 const ProfileForm = ({ data, onSubmit, action }: Props) => {
     const locale = useLocale();
-    const trans = useTranslations()
-    const confirm = useConfirm();
+    const trans = useTranslations();
 
     const schema = z.object({
-        language: z.string({ required_error: trans("form.required.default") }),
-        telegram: z.string({ required_error: trans("form.required.default") }),
-        nickname: z.string({ required_error: trans("form.required.default") }),
-        about: z.string({ required_error: trans("form.required.default") }),
+        //language: z.string({ required_error: trans("form.required.default") }),
+        //telegram: z.string({ required_error: trans("form.required.default") }),
+        //nickname: z.string({ required_error: trans("form.required.default") }),
+        //about: z.string({ required_error: trans("form.required.default") }),
         website: z.string().url(trans("form.validation.url")).optional(),
         portfolio: z.string().url(trans("form.validation.url")).optional(),
         resume: z.string().url(trans("form.validation.url")).optional(),
@@ -102,19 +100,17 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                 resume: data?.resume ?? "",
                 specialization: []
             },
-            //validationSchema: toFormikValidationSchema(schema),
-            onSubmit: (values: UserFormValues) => {
-                confirm().then(async () => {
-                    const toastId = toastLoading(trans("common.please_wait"))
-                    const callback = async (props: { isError: boolean, message?: string | null }) => {
-                        if (props.isError) {
-                            toastUpdate(toastId, props.message ?? "Failed with error", 'warning');
-                        } else {
-                            toastUpdate(toastId, props.message ?? "Successfully completed", 'success');
-                        }
+            validationSchema: toFormikValidationSchema(schema),
+            onSubmit: async (values: UserFormValues) => {
+                const toastId = toastLoading(trans("common.please_wait"))
+                const callback = async (props: { isError: boolean, message?: string | null }) => {
+                    if (props.isError) {
+                        toastUpdate(toastId, props.message ?? "Failed with error", 'warning');
+                    } else {
+                        toastUpdate(toastId, props.message ?? "Successfully completed", 'success');
                     }
-                    await onSubmit(values, callback)
-                })
+                }
+                await onSubmit(values, callback)
             }
         },
     )
@@ -125,7 +121,7 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                     label={trans("profile.profile_language")}
                     id="language"
                     name="language"
-                    value={formik.values.language}
+                    value={formik.values.language || locale}
                     SelectProps={{
                         startAdornment: (
                             <InputAdornment position="start">

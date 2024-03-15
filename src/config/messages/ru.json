@@ -53,7 +53,7 @@
   },
   "common": {
     "connected_to_ton_wallet": "Подключено к кошельку TON",
-
+    "disconnected_from_ton_wallet":"Отключено от кошелька ton",
     "no_more_data": "Нету больше данных",
     "filter": "Фильтр",
     "connect": "Подключиться",
