@@ -14,4 +14,5 @@ export interface IUser {
   specialization?: string | null;
   language?: string | null;
   aboutTranslated?: string | null;
+  userStatus?: string | null;
 }

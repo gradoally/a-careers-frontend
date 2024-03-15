@@ -1,8 +1,8 @@
 "use client"
+import React, { useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import Chip from '@mui/material/Chip';
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -18,8 +18,16 @@ import { checkError, getError, toastLoading, toastUpdate } from "@/lib/helper";
 import { User } from "@/openapi/client";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
-import React, { useRef } from "react";
 
+import CrossIcon from "@/assets/Cross.svg";
+import { useTelegram } from "@/lib/telegram-provider";
+
+export function Skill(props: { name: string; remove?: () => void }) {
+    return <div className="flex bg-[#3A4362] font-[400] px-3 py-1 rounded-[20px]">
+        <span className="text-[#FFFFFF] text-[0.9rem]">{props.name}</span>
+        {props.remove && <Image src={CrossIcon} className="ml-2" alt="close" onClick={(props.remove)} />}
+    </div>
+}
 
 const ProfileInput = (
     {
@@ -75,7 +83,9 @@ interface Props {
 }
 
 const ProfileForm = ({ data, onSubmit, action }: Props) => {
+
     const locale = useLocale();
+    const telegram = useTelegram();
     const trans = useTranslations();
 
     const schema = z.object({
@@ -93,12 +103,12 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
             initialValues: {
                 language: data?.language ?? locale,
                 nickname: data?.nickname ?? "",
-                telegram: data?.telegram ?? "",
+                telegram: telegram.user?.username || data?.telegram || "",
                 about: data?.about ?? "",
                 website: data?.website ?? "",
                 portfolio: data?.portfolio ?? "",
                 resume: data?.resume ?? "",
-                specialization: []
+                specialization: ["FunC", "FIFT"]
             },
             validationSchema: toFormikValidationSchema(schema),
             onSubmit: async (values: UserFormValues) => {
@@ -114,6 +124,11 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
             }
         },
     )
+
+    useEffect(() => {
+      formik.setFieldValue("telegram", telegram.user?.username || '');
+    },[telegram]);
+
     return (
         <BaseForm noValidate onSubmit={formik.handleSubmit}>
             <Stack spacing={"30px"} sx={{ marginBottom: "150px" }}>
@@ -144,7 +159,7 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                     id="telegram"
                     name="telegram"
                     onChange={formik.handleChange}
-                    readonly={action === "update"}
+                    readonly={true}
                 />
                 <ProfileInput label={trans("profile.nickname")}
                     error={checkError(formik, {}, "nickname")}
@@ -154,14 +169,14 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                     name="nickname"
                     onChange={formik.handleChange} />
                 <ProfileInput label={trans("profile.about")}
-
                     error={checkError(formik, {}, "about")}
                     helperText={getError(formik, {}, "about")}
                     value={formik.values.about}
                     id="about"
                     name="about"
                     multiline={true}
-                    onChange={formik.handleChange} />
+                    onChange={formik.handleChange}
+                />
 
                 <div>
                     <Typography variant="h4">{trans("profile.freelancer_profile")}</Typography>
@@ -201,9 +216,7 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                     <Stack spacing={1} alignItems="center" direction="row" className="mt-2 py-2">
                         <AddButton />
                         {formik.values?.specialization && formik.values.specialization.map((e: string, i: number) => (
-                            <Chip size="small" color="secondary" key={i} label={e} onDelete={() => {
-                                console.log(`Delete: ${e}`)
-                            }} />
+                            <Skill key={i} name={e} remove={() => console.log(e)} />
                         ))}
                     </Stack>
                 </div>

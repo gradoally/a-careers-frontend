@@ -14,7 +14,7 @@ import Divider from "@/components/ui/Divider";
 import { APIs } from "@/config/api.config";
 import { fetcher } from "@/lib/swr";
 import { Order } from "@/openapi/client";
-import { get } from "@/services/request";
+import { get } from "@/utils/request";
 
 function Content() {
     const searchParams = useSearchParams();

@@ -10,7 +10,6 @@ import AppBar from "@/components/layout/app-bar";
 import { Stack } from "@mui/material";
 import BackButton from "@/components/ui/buttons/BackButton";
 import Typography from "@mui/material/Typography";
-import UserAvatar from "@/components/UserAvatar";
 import ProfileView from "@/components/ProfileView";
 import { NextLinkComposed } from "@/components/Link";
 import EditButton from "@/components/ui/buttons/EditButton";
@@ -69,7 +68,7 @@ const EditComponent = ({ data }: { data: IUser }) => {
     )
 }
 
-const Content = (props: { locale: string }) => {
+const Content = () => {
     const trans = useTranslations();
     const { user, isLoading } = useAuthContext();
     const [edit, setEdit] = useState<boolean>(false);
@@ -120,7 +119,6 @@ const Content = (props: { locale: string }) => {
         <Shell header={header}>
             <div className="p-5">
                 <div className="flex justify-center mb-[30px]">
-                    {/*<UserAvatar height={"90px"} width={"90px"} />*/}
                     <Image src={ProfileIcon} alt="profile" width={90} height={90} />
                 </div>
                 <EditComponent data={user.data} />
@@ -129,4 +127,4 @@ const Content = (props: { locale: string }) => {
     )
 }
 
-export default Content;  //withAuth({ WrappedComponent: Content })
+export default Content;

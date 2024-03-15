@@ -6,18 +6,14 @@ import { useTonConnect } from "@/hooks/useTonConnect";
 
 import Image from "@/components/Image";
 
-import { APIs } from "@/config/api.config";
-import { get } from "@/services/request";
-import { IUser } from "@/interfaces/index";
+import { getUserProfile, getUserStatus } from "@/services/profile";
+
+import { IUserRes } from "@/interfaces/request";
+import local from "next/font/local";
 
 interface HOCProps {
     WrappedComponent: React.ComponentType,
     redirectTo?: string
-}
-
-interface IUserRes {
-    found: boolean;
-    data: IUser | null;
 }
 
 interface IAuth {
@@ -92,7 +88,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
             user: null,
             error: null
         })
-        await get<IUserRes>({ url: `${APIs.user.profile(walletAddress, locale)}` })
+        await getUserProfile({ address: walletAddress, locale })
             .then((res) => {
                 if (res.status != 'success') {
                     setAuth({
@@ -102,10 +98,9 @@ export default function AuthProvider(props: React.PropsWithChildren) {
                     });
                     return;
                 }
-
                 setAuth({
                     isLoading: false,
-                    user: res.data || null,
+                    user:  { found: false, data: null } || null,
                     error: null
                 });
             })
@@ -119,22 +114,16 @@ export default function AuthProvider(props: React.PropsWithChildren) {
     }
 
     useEffect(() => {
-
         const createProfilePath = `/${locale}/profile/create`;
-
-        if (!walletAddress && createProfilePath === pathname)
-            redirect(`/${locale}`);
-
+       
         if (auth.isLoading || !auth.user) return;
-
         if (!auth.user.found && pathname !== createProfilePath)
             redirect(createProfilePath);
-
         if (auth.user.found && pathname === createProfilePath)
             redirect(`/${locale}`);
-
     }, [auth, walletAddress]);
 
+    //Fetch User Profile
     useEffect(() => {
         fetchProfile()
     }, [walletAddress, locale]);

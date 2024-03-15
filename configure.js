@@ -1,12 +1,11 @@
-// import axios from "axios";
-// import { createInterface } from "linebyline";
-
 const axios = require("axios");
-const readline = require('readline');
+const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
+
+const BOT_TOKEN = "7061384825:AAFcsbmJS-btv35JILJyriZcSfQPQtz-Umg";
 
 const question = (question) =>
   new Promise((resolve) => rl.question(question, resolve));
@@ -26,29 +25,24 @@ const banner = `
 `;
 
 console.log(banner);
-
 let botUsername;
 
 (async () => {
-
-  const accessToken = await question("Enter your bot access token: ");
+  const accessToken = BOT_TOKEN;
   if (!accessToken?.length > 0) exitError("Token is required");
 
   const url = await question("Enter your webapp http url: ");
   if (!url?.length > 0) exitError("URL is required");
 
-  const getBot = await axios.get(
-    `https://api.telegram.org/bot${accessToken}/getMe`
-  ).catch(exitError);
+  const getBot = await axios
+    .get(`https://api.telegram.org/bot${accessToken}/getMe`)
+    .catch(exitError);
   //
   botUsername = getBot.data.result.username;
-  // const url = `https://${githubUsername}.github.io/${githubRepo}`;
-
   console.log(`\n\nSetting bot ${botUsername} webapp url to ${url}`);
 
-  const resp = await axios.post(
-    `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
-    {
+  const resp = await axios
+    .post(`https://api.telegram.org/bot${accessToken}/setChatMenuButton`, {
       menu_button: {
         type: "web_app",
         text: "Launch Webapp",
@@ -56,8 +50,8 @@ let botUsername;
           url: url,
         },
       },
-    }
-  ).catch(exitError);
+    })
+    .catch(exitError);
 
   if (resp.status === 200) {
     console.log(
