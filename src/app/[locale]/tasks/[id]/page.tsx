@@ -1,5 +1,10 @@
-import React from "react";
-import { getTranslations } from "next-intl/server";
+"use client"
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+
+import { useTonConnect } from "@/hooks/useTonConnect";
+import { Order } from "@/openapi/client";
 
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -11,42 +16,85 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
 import MenuButton from "@/components/ui/buttons/MenuButton";
-import { locales } from "@/config/config";
+
 import { NextLinkComposed } from "@/components/Link";
 import ConnectButton from "@/components/ui/buttons/ConnectButton";
-import { fetchClientGetter } from "@/openapi/client-getter";
-import { ApiError } from "@/openapi/client"
-import { notFound } from "next/navigation";
+
+import { Loader } from "@/components/Loader";
+
+import { getOrder } from "@/services/order";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 type Props = {
     params: { locale: string, id: number };
 };
 
-export function generateStaticParams() {
-    return locales.map((locale) => ({ locale }));
-}
+export default function Page({ params: { locale, id } }: Props) {
 
-const Page = async ({ params: { locale, id } }: Props) => {
+    const [tonConnectUI] = useTonConnectUI();
+    const { connected } = useTonConnect();
+    const router = useRouter();
+    const trans = useTranslations();
+    const [task, setTask] = useState<{
+        loading: boolean,
+        status: string,
+        content: Order | null
+    }>({
+        loading: false,
+        status: "",
+        content: null
+    });
 
-    const trans = await getTranslations("common");
-    const fetchClient = fetchClientGetter({ locale: locale, next: { revalidate: false } })
-    let response;
-    try {
-        response = await fetchClient.search.getApiGetorder({ index: id })
-    } catch (e) {
-        if (e instanceof ApiError && e.status === 404) {
-            return notFound();
+    async function connect() {
+        try {
+            await tonConnectUI.openModal();
+            router.push(`${task.content?.index}/response`);
+        } catch (err) {
+            console.log(err);
         }
-        throw e
+    }
+
+    useEffect(() => {
+        if (task.loading) return;
+        setTask({
+            loading: true,
+            status: "loading",
+            content: null
+        });
+        getOrder({ index: `${id}`, locale })
+            .then(res => {
+                setTask({
+                    loading: false,
+                    status: "success",
+                    content: res.data
+                });
+            }).catch(() => {
+                setTask({
+                    loading: false,
+                    status: "fail",
+                    content: null
+                });
+            })
+
+    }, [id]);
+
+    if (["loading", ""].includes(task.status)) {
+        return <Loader />
     }
 
     const footer = (
         <Footer>
-            <FooterButton
+            {!connected ? <FooterButton
+                onClick={connect}
                 color={"secondary"}
                 variant="contained">
-                {trans("log_in_and_respond")} ⚡️
-            </FooterButton>
+                {trans("common.log_in_and_respond")} ⚡️
+            </FooterButton> : <FooterButton
+                onClick={() => router.push(`${task.content?.index}/response`)}
+                color={"secondary"}
+                variant="contained">
+                {trans("tasks.make_a_response")} ⚡️
+            </FooterButton>}
         </Footer>
     )
     const header = (
@@ -60,7 +108,7 @@ const Page = async ({ params: { locale, id } }: Props) => {
 
             <div className="flex-grow" />
             <Stack direction="row" alignItems="center" spacing={"15px"}>
-                <ConnectButton text={trans('connect')} />
+                <ConnectButton text={trans('common.connect')} />
                 <MenuButton />
             </Stack>
         </AppBar>
@@ -75,10 +123,8 @@ const Page = async ({ params: { locale, id } }: Props) => {
                 justifyContent="flex-start"
                 alignItems="flex-start"
                 spacing={"20px"}>
-                <TaskView data={response} />
+                {(task.status === "success" && task.content) && <TaskView data={task.content} />}
             </Stack>
         </Shell>
     )
 }
-
-export default Page;

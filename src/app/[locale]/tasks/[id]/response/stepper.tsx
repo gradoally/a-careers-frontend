@@ -1,7 +1,8 @@
 "use client"
 
-import React, {useEffect, useState} from "react";
-import {useTranslations} from "next-intl";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -9,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
-import {NextLinkComposed} from "@/components/Link";
+import { NextLinkComposed } from "@/components/Link";
 import CloseButton from "@/components/ui/buttons/CloseButton";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
@@ -23,7 +24,7 @@ export interface TaskCreateType {
     category?: string;
 }
 
-const Stepper = () => {
+const Stepper = (props:{id:string}) => {
     const trans = useTranslations();
 
     const [data, setData] = useState<TaskCreateType>({});
@@ -36,7 +37,7 @@ const Stepper = () => {
         if (step == 1) {
             setSubtitle(trans("tasks.first_step"))
         } else {
-            setSubtitle(trans("tasks.step_x_from_x", {"value": step, "from": 3}))
+            setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 3 }))
         }
     }, [step])
 
@@ -48,14 +49,14 @@ const Stepper = () => {
     const header = (
         <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
-                {step === 1 ? <div className="h-[30px] w-[30px]"/> : <BackButton onClick={handleBack}/>}
+                {step === 1 ? <div className="h-[30px] w-[30px]" /> : <BackButton onClick={handleBack} />}
                 <div className="flex-grow text-center">
                     <Typography variant="body1">
                         {title}
                     </Typography>
                     <Typography className="mt-[5px]" variant="caption" component="div">{subtitle}</Typography>
                 </div>
-                <CloseButton component={NextLinkComposed} to={"/make-response"}/>
+                <CloseButton component={NextLinkComposed} to={`/tasks/${props.id}`} />
             </Stack>
         </AppBar>
     )
@@ -69,12 +70,12 @@ const Stepper = () => {
     const renderStep = () => {
         switch (step) {
             case 3:
-                return (<Comment data={data}/>)
+                return (<Comment data={data} />)
             case 2:
-                return (<Deadline data={data}/>)
+                return (<Deadline data={data} />)
             case 1:
             default:
-                return (<Price data={data}/>)
+                return (<Price data={data} />)
         }
     }
 

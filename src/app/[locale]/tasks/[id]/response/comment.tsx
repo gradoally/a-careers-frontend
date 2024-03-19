@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import {TaskCreateType} from "./stepper";
 import {StyledInputMultiline} from "@/components/forms/fields/StyledInputMultiline";
 
-
 const Comment = ({data}: { data: TaskCreateType }) => {
     const trans = useTranslations('tasks')
     const handleChange = (event: any) => {

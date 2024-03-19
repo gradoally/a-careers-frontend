@@ -9,6 +9,8 @@ export const APIs = {
       `${BASE_URL}/api/getuseractivity?index=${index}&page=${page}&pageSize=${limit}`,
   },
   orders: {
+    get: (index: string, language: string) =>
+      `${BASE_URL}/api/getorder?index=${index}&translateTo=${language}`,
     search: (query: string) => `${BASE_URL}/api/search?${query}`,
     counts: `${BASE_URL}/api/searchcount`,
   },

@@ -1,93 +1,99 @@
 "use client"
 
-import React, { useEffect, useMemo, useState, memo } from "react";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import useSWRInfinite from 'swr/infinite';
+import React, { useEffect, useState, useRef, memo } from "react";
 
+import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
-
-import InfiniteScroll from "@/components/InfiniteScroll";
-import TaskList from "@/components/TaskList";
+import LazyLoading from "@/components/features/LazyLoading";
+import CenteredContainer from "@/components/ui/CenteredContainer";
 import TaskListSkeleton from "@/components/TaskListSkeleton";
+import TaskList from "@/components/TaskList";
 import Divider from "@/components/ui/Divider";
 
-import { APIs } from "@/config/api.config";
-import { fetcher } from "@/lib/swr";
+import { getOrders } from "@/services/order";
 import { Order } from "@/openapi/client";
-import { get } from "@/utils/request";
+
+import { getOrdersCount } from "@/services/order";
+
+function SkeletonLoader() {
+    return (
+        <Stack spacing={2} className="px-5">
+            {[1, 2, 3, 4].map((key) => (
+                <React.Fragment key={key}>
+                    <TaskListSkeleton />
+                    <Divider />
+                </React.Fragment>
+            ))}
+        </Stack>
+    )
+}
 
 function Content() {
     const searchParams = useSearchParams();
-
+    const trans = useTranslations();
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [loading, setLoading] = useState(true);
     const [pageLimit, setPageLimit] = useState(0);
-
-    const getKey = (pageIndex: number, previousPageData: Order[]) => {
-        if (!pageLimit) return null;
-        // Use the previous page data to determine if this is the last page.
-        if (previousPageData && !previousPageData.length) return null;
-        const params = new URLSearchParams(searchParams)
-        params.set("page", (pageIndex).toString());
-        // Index starts from 0
-        const query = `${params.toString()}&orderBy=createdAt`;
-        return APIs.orders.search(query);
-    };
-
-    const {
-        data,
-        error,
-        size,
-        setSize,
-        isLoading,
-        isValidating,
-        mutate,
-    } = useSWRInfinite<Order[]>(getKey, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnMount: true,
-        revalidateFirstPage: false,
-        revalidateAll: false,
+    const [query, setQuery] = useState<Record<string, any>>({
+        page: -1,
+        orderBy: "createdAt",
+        translateTo:"en"
     });
-
-    const isLoadingInitialData = !data && !error;
-    const isRefreshing = isValidating && data && data.length === size;
-
-    //Page status
-    const status = useMemo(() => {
-        const isLoadingMore =
-            isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
-        const isEmpty = data?.[0]?.length === 0;
-        const isReachingEnd =
-            isEmpty || (data && data[data.length - 1]?.length < pageLimit && (data.length < 10 * pageLimit));
-
-        const allRows = data ? data.reduce((
-            acc: Order[], pageData) => acc.concat(pageData), []
-        ) : [];
-
-        console.log({
-            isLoadingMore,
-            isEmpty,
-            isReachingEnd,
-            rows: allRows
-        });
-
-        return {
-            isLoadingMore,
-            isEmpty,
-            isReachingEnd,
-            rows: allRows
-        }
-
-    }, [isLoading, size, data, pageLimit]);
-
+    const [tasks, setTasks] = useState<Order[]>([]);
 
     useEffect(() => {
-        mutate()
-    }, [searchParams])
+        if (!pageLimit) return;
+        setQuery({ ...query, page: 0 });
+    }, [pageLimit]);
+
+    //Update Query State
+    useEffect(() => {
+
+    }, [searchParams]);
+
+    //Load orders on query update
+    useEffect(() => {
+        if (query.page < 0) return;
+        if (loading && tasks.length) return;
+        setLoading(true);
+        const queryStr = new URLSearchParams(query).toString();
+        getOrders(queryStr)
+            .then((res) => {
+                setTasks([...tasks, ...(res.data || [])])
+            })
+            .catch(console.log)
+            .finally(() => setLoading(false));
+    }, [query]);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+        //setup scroll event
+        const handleScroll = () => {
+            const scrolled = Math.round(container.scrollHeight - container.scrollTop);
+            const isEndReached = (scrolled === container.clientHeight ||
+                scrolled - container.clientHeight < 10) &&
+                !loading
+
+            //update query to fetch new posts
+            if (isEndReached) {
+                query.page += 1;
+                setQuery({ ...query });
+            }
+        };
+
+        container.addEventListener("scroll", handleScroll);
+        return () => {
+            container.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     //Fetch search counts
     useEffect(() => {
         if (pageLimit) return;
-        get<number>({ url: APIs.orders.counts })
+        getOrdersCount()
             .then(res => {
                 setPageLimit(res.data || 1);
             }).catch(err => {
@@ -95,31 +101,22 @@ function Content() {
             });
     }, []);
 
-    if ((isLoadingInitialData || isRefreshing) && pageLimit) {
-        return (
-            <Stack spacing={2} className="px-5">
-                {[1, 2, 3, 4].map((key) => (
-                    <React.Fragment key={key}>
-                        <TaskListSkeleton />
-                        <Divider />
-                    </React.Fragment>
-                ))}
-            </Stack>
-        )
-    }
-
-
     return (
-        <InfiniteScroll
-            isReachingEnd={!!status.isReachingEnd}
-            setSize={setSize}
-            size={size}
-            isEmpty={status.isEmpty}
-            isLoadingMore={!!status.isLoadingMore}
-            error={error}
+        <div
+            className="w-full h-full"
+            ref={containerRef}
         >
-            <TaskList data={status.rows} />
-        </InfiniteScroll>
+            {
+                !loading && !tasks.length ? (
+                    <CenteredContainer>
+                        <Typography component="div" variant="caption">
+                            {trans("common.no_more_data")}
+                        </Typography>
+                    </CenteredContainer>
+                ) : <TaskList data={tasks} />
+            }
+            {loading && (tasks.length ? <LazyLoading /> : <SkeletonLoader />)}
+        </div>
     );
 }
 

@@ -4,12 +4,11 @@ import { usePathname, useRouter, redirect } from "next/navigation";
 
 import { useTonConnect } from "@/hooks/useTonConnect";
 
-import Image from "@/components/Image";
+import { getUserProfile } from "@/services/profile";
 
-import { getUserProfile, getUserStatus } from "@/services/profile";
+import { Loader } from "@/components/Loader";
 
 import { IUserRes } from "@/interfaces/request";
-import local from "next/font/local";
 
 interface HOCProps {
     WrappedComponent: React.ComponentType,
@@ -61,12 +60,7 @@ export const useAuthContext = (): IAuthContext => {
     return context
 }
 
-function Loader() {
-    return <div className="bg-primary h-screen flex justify-center items-center">
-        <Image alt={"Alfamater auth loader"} src="/gifs/unicorn-low.gif"
-            width={"100"} height={"100"} />
-    </div>
-}
+
 
 export default function AuthProvider(props: React.PropsWithChildren) {
 
@@ -100,7 +94,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
                 }
                 setAuth({
                     isLoading: false,
-                    user:  { found: false, data: null } || null,
+                    user:  res.data || null,
                     error: null
                 });
             })
