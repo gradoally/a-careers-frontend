@@ -17,7 +17,7 @@ export const StyledInput = styled(InputBase)(({theme}) => ({
         fontSize: "10px",
         width: '100%',
         padding: '8px 10px 8px 10px',
-        lineHeight: "15px",
+        lineHeight: "0",
         transition: theme.transitions.create([
             'border-color',
             'background-color',

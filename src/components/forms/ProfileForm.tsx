@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -82,11 +82,13 @@ interface Props {
     action: string;
 }
 
-const ProfileForm = ({ data, onSubmit, action }: Props) => {
+const ProfileForm = ({ data, onSubmit }: Props) => {
 
     const locale = useLocale();
     const telegram = useTelegram();
     const trans = useTranslations();
+
+    const [skill, setSkill] = useState("");
 
     const schema = z.object({
         //language: z.string({ required_error: trans("form.required.default") }),
@@ -108,7 +110,7 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                 website: data?.website ?? "",
                 portfolio: data?.portfolio ?? "",
                 resume: data?.resume ?? "",
-                specialization: ["FunC", "FIFT"]
+                specialization: data?.specialization ? data.specialization.split(",") : []
             },
             validationSchema: toFormikValidationSchema(schema),
             onSubmit: async (values: UserFormValues) => {
@@ -125,9 +127,21 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
         },
     )
 
+    const setSpecialization = () => {
+        if (!skill) return;
+        formik.values.specialization.push(skill);
+        formik.setFieldValue("specialization", [...formik.values.specialization]);
+        setSkill("");
+    }
+
+    const removeSpecialization = (index: number) => {
+        formik.values.specialization.splice(index, 1);
+        formik.setFieldValue("specialization", [...formik.values.specialization]);
+    }
+
     useEffect(() => {
-      formik.setFieldValue("telegram", telegram.user?.username || '');
-    },[telegram]);
+        formik.setFieldValue("telegram", telegram.user?.username || '');
+    }, [telegram]);
 
     return (
         <BaseForm noValidate onSubmit={formik.handleSubmit}>
@@ -214,10 +228,15 @@ const ProfileForm = ({ data, onSubmit, action }: Props) => {
                 <div>
                     <Typography variant="caption">{trans("profile.specialization")} ({trans("common.optional")})</Typography>
                     <Stack spacing={1} alignItems="center" direction="row" className="mt-2 py-2">
-                        <AddButton />
+                        <AddButton onClick={setSpecialization} />
                         {formik.values?.specialization && formik.values.specialization.map((e: string, i: number) => (
-                            <Skill key={i} name={e} remove={() => console.log(e)} />
+                            <Skill key={i} name={e} remove={() => removeSpecialization(i)} />
                         ))}
+                        <input
+                            onChange={(event) => setSkill(event.currentTarget.value)}
+                            value={skill}
+                            className="bg-primary outline-none text-grey font-[400]"
+                        />
                     </Stack>
                 </div>
             </Stack>

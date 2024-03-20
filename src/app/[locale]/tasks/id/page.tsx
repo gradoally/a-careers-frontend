@@ -1,37 +1,39 @@
 "use client"
-import React, { useState, useEffect } from "react";
-import { NextLinkComposed } from "@/components/Link";
-import { useTranslations } from "next-intl";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTonConnect } from "@/hooks/useTonConnect";
+import { Order } from "@/openapi/client";
 
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
+import TaskView from "@/components/TaskView";
+import Shell from "@/components/layout/Shell";
 import Footer from "@/components/layout/Footer";
+import FooterButton from "@/components/ui/buttons/FooterButton";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
-import FooterButton from "@/components/ui/buttons/FooterButton";
-import Shell from "@/components/layout/Shell";
+import MenuButton from "@/components/ui/buttons/MenuButton";
 
-import { Order } from "@/openapi/client";
+import { NextLinkComposed } from "@/components/Link";
+import ConnectButton from "@/components/ui/buttons/ConnectButton";
+
+import { Loader } from "@/components/Loader";
 
 import { getOrder } from "@/services/order";
-
-import Content from "./page.content";
 
 type Props = {
     params: { locale: string, id: number };
 };
 
-const Page = ({ params: { locale, id } }: Props) => {
+export default function Page({ params: { locale, id } }: Props) {
 
-    const trans = useTranslations();
-    const router = useRouter();
     const [tonConnectUI] = useTonConnectUI();
     const { connected } = useTonConnect();
-
+    const router = useRouter();
+    const trans = useTranslations();
     const [task, setTask] = useState<{
         loading: boolean,
         status: string,
@@ -75,6 +77,10 @@ const Page = ({ params: { locale, id } }: Props) => {
 
     }, [id]);
 
+    if (["loading", ""].includes(task.status)) {
+        return <Loader />
+    }
+
     const footer = (
         <Footer>
             {!connected ? <FooterButton
@@ -86,7 +92,7 @@ const Page = ({ params: { locale, id } }: Props) => {
                 onClick={() => router.push(`${task.content?.index}/response`)}
                 color={"secondary"}
                 variant="contained">
-                {trans("response.offerCooperation")}
+                {trans("tasks.make_a_response")} ⚡️
             </FooterButton>}
         </Footer>
     )
@@ -98,17 +104,26 @@ const Page = ({ params: { locale, id } }: Props) => {
                     #{id}
                 </Typography>
             </Stack>
+
             <div className="flex-grow" />
+            <Stack direction="row" alignItems="center" spacing={"15px"}>
+                <ConnectButton text={trans('common.connect')} />
+                <MenuButton />
+            </Stack>
         </AppBar>
     )
 
     return (
-        <Shell withDrawer header={header} footer={footer}>
-            <div className="px-[20px] pb-[20px]">
-                <Content task={task.content} />
-            </div>
+        <Shell header={header} footer={footer} withDrawer>
+            <Stack
+                className="p-5"
+                component="div"
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+                spacing={"20px"}>
+                {(task.status === "success" && task.content) && <TaskView data={task.content} />}
+            </Stack>
         </Shell>
     )
 }
-
-export default Page;

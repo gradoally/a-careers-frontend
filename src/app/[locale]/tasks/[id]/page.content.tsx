@@ -1,7 +1,7 @@
 "use client"
 
-import React, {ReactNode} from 'react';
-import {useTranslations} from "next-intl";
+import React from 'react';
+import { useTranslations } from "next-intl";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -9,6 +9,8 @@ import Stack from '@mui/material/Stack';
 
 import Divider from "@/components/ui/Divider";
 import ResponseCard from "./card";
+import TaskView from '@/components/TaskView';
+import { Order } from '@/openapi/client';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -17,7 +19,7 @@ interface TabPanelProps {
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-    const {children, value, index, ...other} = props;
+    const { children, value, index, ...other } = props;
 
     return (
         <div
@@ -28,7 +30,7 @@ function CustomTabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{paddingTop: "20px"}}>
+                <Box sx={{ paddingTop: "20px" }}>
                     {children}
                 </Box>
             )}
@@ -55,7 +57,6 @@ function a11yProps(index: number) {
             },
             '&.Mui-selected': {
                 color: 'common.white',
-                // fontWeight: theme.typography.fontWeightMedium,
             },
             '&.Mui-focusVisible': {
                 backgroundColor: 'common.white',
@@ -65,14 +66,11 @@ function a11yProps(index: number) {
     };
 }
 
+export default function Content(props: { task: Order | null }) {
+    const trans = useTranslations();
 
+    const [value, setValue] = React.useState(0);
 
-
-
-export default function Content() {
-    const [value, setValue] = React.useState(1);
-    const tc = useTranslations('common')
-    const trans = useTranslations('tasks')
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -81,19 +79,19 @@ export default function Content() {
         <div className="w-full">
             <div className="h-[50px]">
                 <Tabs centered value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label={tc("task")} {...a11yProps(0)} />
-                    <Tab label={tc("responses")} {...a11yProps(1)} />
+                    <Tab label={trans("common.task")} {...a11yProps(0)} />
+                    <Tab label={`${trans("common.responses")} (3)`} {...a11yProps(1)} />
                 </Tabs>
             </div>
-            <Divider/>
+            <Divider />
             <CustomTabPanel value={value} index={0}>
-                <div>Tasks</div>
+                {props.task && <TaskView data={props.task} />}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <Stack spacing="30px" direction="column">
-                    <ResponseCard/>
-                    <ResponseCard isSelected/>
-                    <ResponseCard/>
+                    <ResponseCard />
+                    <ResponseCard isSelected />
+                    <ResponseCard />
                 </Stack>
             </CustomTabPanel>
         </div>

@@ -21,7 +21,7 @@ import LazyLoading from "@/components/features/LazyLoading";
 
 import { IUser } from "@/interfaces";
 
-import ProfileIcon from "@/assets/profile.png";
+import ProfileIcon from "@/assets/gif/unicorn-low.gif";
 
 const EditComponent = ({ data }: { data: IUser }) => {
     const { client } = useTonClient();

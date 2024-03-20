@@ -12,7 +12,7 @@ import { toast } from "@/lib/helper";
 const ConnectButton = ({ text }: { text: string }) => {
     const trans = useTranslations();
     const [tonConnectUI] = useTonConnectUI();
-    const { connected, network, sender } = useTonConnect();
+    const { connected, network } = useTonConnect();
 
     useEffect(() => {
         if (!network) return;
@@ -24,6 +24,7 @@ const ConnectButton = ({ text }: { text: string }) => {
     }, [network])
 
     const onConnectWallet = async () => {
+        console.log("clicked");
         try {
             await tonConnectUI.openModal();
         } catch (e) {

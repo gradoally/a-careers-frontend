@@ -25,7 +25,6 @@ export function generateStaticParams() {
     return locales.map((locale) => ({ locale }));
 }
 
-
 const RootLayout = async ({ children, params: { locale } }: Props) => {
     // Enable static rendering
     unstable_setRequestLocale(locale);
@@ -42,7 +41,7 @@ const RootLayout = async ({ children, params: { locale } }: Props) => {
             <body className="dark font-sans-serif scroll-hide">
                 <NextIntlClientProvider
                     locale={locale}
-                    messages={pick(messages, 'tasks', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy")}
+                    messages={pick(messages, 'tasks', 'response', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy")}
                 >
                     <AppProviders options={{ key: 'mui' }} config={config}>
                         {children}

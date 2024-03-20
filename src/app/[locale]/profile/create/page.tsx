@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import pick from "lodash/pick";
 import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl';
@@ -10,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import AppBar from "@/components/layout/app-bar";
 import Shell from "@/components/layout/Shell";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-import UserAvatar from "@/components/UserAvatar";
+import Unicorn from "@/assets/gif/unicorn-low.gif";
 
 import Content from "@/app/[locale]/profile/create/page.content";
 
@@ -38,7 +39,7 @@ export default function Page({ params: { locale } }: IPageProps) {
         <Shell withDrawer header={header}>
             <div className="p-5">
                 <div className="flex justify-center mb-[30px]">
-                    <UserAvatar height={"90px"} width={"90px"} />
+                    <Image src={Unicorn} alt="unicorn" width={90} height={90} />
                 </div>
                 <NextIntlClientProvider
                     locale={locale}

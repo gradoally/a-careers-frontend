@@ -53,7 +53,7 @@
   },
   "common": {
     "connected_to_ton_wallet": "Подключено к кошельку TON",
-    "disconnected_from_ton_wallet":"Отключено от кошелька ton",
+    "disconnected_from_ton_wallet": "Отключено от кошелька ton",
     "no_more_data": "Нету больше данных",
     "filter": "Фильтр",
     "connect": "Подключиться",
@@ -66,7 +66,8 @@
     "profile": "Профиль",
     "smart_contract_address": "Адрес смарт-контракта",
     "created": "Созданные",
-    "responses": "Отклики"
+    "responses": "Отклики",
+    "task":"ЗАДАЧА"
   },
   "tasks": {
     "task_successfully_created": "Задача успешно создано",
@@ -151,5 +152,10 @@
   "copy": {
     "copied": "Скопировано",
     "error_copying_text_to_clipboard": "Ошибка при копировании текста в буфер обмена"
+  },
+  "response": {
+    "offer": "Оффер",
+    "profile":"Профиль",
+    "offerCooperation":"Предложить сотрудничество"
   }
 }

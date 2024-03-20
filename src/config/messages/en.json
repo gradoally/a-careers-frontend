@@ -52,7 +52,7 @@
   },
   "common": {
     "connected_to_ton_wallet": "Connected to ton wallet",
-    "disconnected_from_ton_wallet":"Disconnected from ton wallet",
+    "disconnected_from_ton_wallet": "Disconnected from ton wallet",
     "please_wait": "Please wait!",
     "no_more_data": "No more data",
     "filter": "Filters",
@@ -69,7 +69,8 @@
     "created": "Created",
     "responses": "Responses",
     "optional": "optional",
-    "profile": "Profile"
+    "profile": "Profile",
+    "task":"Task"
   },
   "tasks": {
     "task_successfully_created": "Task successfully created",
@@ -160,5 +161,10 @@
   "copy": {
     "copied": "Copied",
     "error_copying_text_to_clipboard": "Error copying text to clipboard"
+  },
+  "response": {
+    "offer": "Offer",
+    "profile": "Profile",
+    "offerCooperation":"Offer Cooperation"
   }
 }
