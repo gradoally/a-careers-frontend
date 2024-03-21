@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import Script from "next/script";
 
-import type { ITelegramUser, IWebApp } from "./twa-types";
+import type { ITelegramUser, IWebApp } from "../twa-types";
 
 export interface ITelegramContext {
     webApp?: IWebApp;

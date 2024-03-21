@@ -3,7 +3,7 @@
 import { IconButton } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
-import { useAppContext } from "@/lib/app-providers";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 const MenuButton = () => {
     const { toggleDrawer } = useAppContext()

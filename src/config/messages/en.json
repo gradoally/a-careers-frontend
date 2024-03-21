@@ -104,7 +104,8 @@
 
     "select_language": "Select task language",
     "task_accomplished": "Task accomplished · {value}",
-
+    "select_checking_period":"Task Checking Period",
+    "checking_period_description":"Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
     "select_category": "Select category",
     "send_task_to_blockchain": "Send a task to the blockchain",
 

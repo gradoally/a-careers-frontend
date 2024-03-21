@@ -10,7 +10,7 @@ import {locales} from "@/config/config";
 
 import "./globals.css";
 import clsx from "clsx";
-import AppProviders from "@/lib/app-providers";
+import AppProviders from "@/lib/provider/app.providers";
 import type {Metadata} from "next";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";

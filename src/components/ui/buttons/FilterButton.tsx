@@ -4,7 +4,7 @@ import {PropsWithChildren} from "react";
 
 import Button from '@mui/material/Button';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import {useAppContext} from "@/lib/app-providers";
+import {useAppContext} from "@/lib/provider/app.providers";
 const FilterButton = (props: PropsWithChildren)=>{
     const {isFilterOpen, toggleFilter} = useAppContext()
 

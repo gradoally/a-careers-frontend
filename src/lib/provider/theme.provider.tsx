@@ -124,7 +124,7 @@ const ThemeProvider = ({children}: PropsWithChildren) => {
                     hideProgressBar={false}
                     theme={"dark"}
                     toastStyle={{
-                        zIndex: 99999
+                        zIndex: 500
                     }}
                 />
             </>

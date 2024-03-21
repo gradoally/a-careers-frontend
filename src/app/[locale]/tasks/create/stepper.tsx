@@ -10,7 +10,8 @@ import Stack from "@mui/material/Stack";
 import { z } from "zod";
 import { toNano } from "@ton/core";
 
-import { useAuthContext } from "@/lib/auth-provider";
+import { useAuthContext } from "@/lib/provider/auth.provider";
+import { useTxProgress } from "@/lib/provider/txProgress.provider";
 import { buildOrderContent, OrderContentData } from "@/contracts/Order";
 import { useMasterContract } from "@/hooks/useMasterContract";
 import { useTonClient } from "@/hooks/useTonClient";
@@ -32,20 +33,23 @@ import Deadline from "./deadline";
 import Price from "./price";
 import Description from "./description";
 import TechnicalTask from "./technical_task";
+import SelectCheckingPeriod from "./period";
 
 const keys: Record<number, string> = {
     1: "language",
     2: "category",
     3: "name",
     4: "deadline",
-    5: "price",
-    6: "description",
-    7: "technicalTask"
+    5: "period",
+    6: "price",
+    7: "description",
+    8: "technicalTask"
 }
 
 export interface TaskCreateType {
     language: string;
     category: string;
+    period: string;
     price: string;
     deadline: string | null;
     name: string;
@@ -74,18 +78,20 @@ function MemoizedRenderForm(props: {
             <SelectCategory key={2} setTitle={props.setTitle} formik={props.formik} />,
             <Title key={3} formik={props.formik} error={props.errorMessage} />,
             <Deadline key={4} formik={props.formik} error={props.errorMessage} />,
-            <Price key={5} formik={props.formik} error={props.errorMessage} />,
-            <Description key={6} formik={props.formik} error={props.errorMessage} />,
-            <TechnicalTask key={7} formik={props.formik} />,
+            <SelectCheckingPeriod key={5} formik={props.formik} />,
+            <Price key={6} formik={props.formik} error={props.errorMessage} />,
+            <Description key={7} formik={props.formik} error={props.errorMessage} />,
+            <TechnicalTask key={8} formik={props.formik} />,
         ][props.step - 1];
     }, [props.step, props.formik]);
 }
 
-export default function Stepper(props: { toggleProgress: () => void }) {
+export default function Stepper() {
     const locale = useLocale();
     const trans = useTranslations();
     const { user } = useAuthContext();
     const { client } = useTonClient();
+    const { toggleTxProgress } = useTxProgress();
 
     const {
         sendCreateOrder
@@ -99,16 +105,17 @@ export default function Stepper(props: { toggleProgress: () => void }) {
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
-        if (step == 1) {
+        if (step === 1) {
             setSubtitle(trans("tasks.first_step"))
         } else {
-            setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 7 }))
+            setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 8 }))
         }
     }, [step])
 
     const schema = z.object({
         language: z.string({ required_error: trans("form.required.default") }),
         category: z.string({ required_error: trans("form.required.default") }),
+        period: z.string({ required_error: trans("form.required.default") }),
         name: z.string({ required_error: trans("form.required.default") }),
         price: z.string({ required_error: trans("form.required.default") }),
         deadline: z.date({ required_error: trans("form.required.default") }),
@@ -133,7 +140,7 @@ export default function Stepper(props: { toggleProgress: () => void }) {
                     description: values.description,
                     technicalTask: values.technicalTask,
                 };
-                //props.toggleProgress();
+                toggleTxProgress(true);
                 const orderContentDataCell = buildOrderContent(orderContentData);
                 await sendCreateOrder("0.3",
                     0, orderContentDataCell,
@@ -147,6 +154,7 @@ export default function Stepper(props: { toggleProgress: () => void }) {
                 console.log("create_order", e);
                 toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');
             }
+            toggleTxProgress(false);
         }
     }
 
@@ -155,6 +163,7 @@ export default function Stepper(props: { toggleProgress: () => void }) {
             initialValues: {
                 language: locale,
                 category: "",
+                period: "",
                 price: "",
                 deadline: null,
                 description: "",
@@ -220,7 +229,7 @@ export default function Stepper(props: { toggleProgress: () => void }) {
 
     //Footer
     const footer = (<Footer>
-        {step === 7 ? (
+        {step === 8 ? (
             <>
                 <FooterButton
                     onClick={() => handleSubmit(formik.values)}

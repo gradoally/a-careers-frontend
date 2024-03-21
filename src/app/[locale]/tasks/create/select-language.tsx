@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import SelectField from "@/components/forms/fields/SelectField";
 import Image from "@/components/Image";
 import { IForm } from "./stepper";
-import { useAppContext } from "@/lib/app-providers";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 export default function SelectLanguage({ formik, error }: IForm) {
     const trans = useTranslations('tasks')

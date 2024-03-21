@@ -8,7 +8,7 @@ import { UserContentData, buildUserContent } from '@/contracts/User';
 
 import ProfileForm, { UserFormValues } from "@/components/forms/ProfileForm";
 
-import { useAuthContext } from "@/lib/auth-provider";
+import { useAuthContext } from "@/lib/provider/auth.provider";
 
 const Content = () => {
     const { userNextIndex, address: masterContractAddr, sendCreateUser } = useMasterContract();

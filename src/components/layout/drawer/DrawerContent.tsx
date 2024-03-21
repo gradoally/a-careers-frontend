@@ -15,8 +15,8 @@ import {
 
 import { useTonConnect } from "@/hooks/useTonConnect";
 
-import { useAuthContext } from "@/lib/auth-provider";
-import { useAppContext } from "@/lib/app-providers";
+import { useAuthContext } from "@/lib/provider/auth.provider";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 import Divider from "@/components/ui/Divider";
 import CloseButton from "@/components/ui/buttons/CloseButton";

@@ -8,10 +8,11 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
-import ThemeProvider from "@/lib/theme-provider";
-import { TelegramProvider } from "@/lib/telegram-provider";
-import AuthProvider from "@/lib/auth-provider";
+import ThemeProvider from "@/lib/provider/theme.provider";
+import { TelegramProvider } from "@/lib/provider/telegram.provider";
+import AuthProvider from "@/lib/provider/auth.provider";
 import { BackendConfig } from "@/openapi/client";
+import TransactionProgressProvider from "./txProgress.provider";
 
 export type AppContextType = {
     toggleDrawer: (value: boolean) => void
@@ -108,11 +109,13 @@ const AppProviders = (props: Props) => {
             <AppContext.Provider value={memoValue}>
                 <TonConnectUIProvider manifestUrl={manifestUrl}>
                     <AuthProvider>
-                        <CacheProvider value={cache}>
-                            <ThemeProvider>
-                                {props.children}
-                            </ThemeProvider>
-                        </CacheProvider>
+                        <TransactionProgressProvider>
+                            <CacheProvider value={cache}>
+                                <ThemeProvider>
+                                    {props.children}
+                                </ThemeProvider>
+                            </CacheProvider>
+                        </TransactionProgressProvider>
                     </AuthProvider>
                 </TonConnectUIProvider>
             </AppContext.Provider>

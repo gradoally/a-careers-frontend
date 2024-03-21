@@ -14,7 +14,7 @@ import React, { Suspense } from "react";
 import Content from "./content";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 import { NextLinkComposed } from "@/components/Link";
-import { useAuthContext } from "@/lib/auth-provider";
+import { useAuthContext } from "@/lib/provider/auth.provider";
 import { IPageProps } from "@/interfaces/page";
 
 const Page = (props: IPageProps) => {

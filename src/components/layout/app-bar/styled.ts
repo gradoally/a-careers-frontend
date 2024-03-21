@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import { AppBar, Paper, Toolbar } from '@mui/material' 
 
 export const StyledAppBar = styled(AppBar)`
-    //z-index: ${({theme}) => theme.zIndex.drawer + 1};
+    z-index:300 !important;
     box-shadow: none;
     position: relative;
 `

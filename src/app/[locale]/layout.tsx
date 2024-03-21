@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 
 import { unstable_setRequestLocale, getMessages } from 'next-intl/server';
 import { locales } from '@/config/config';
-import AppProviders from "@/lib/app-providers";
+import AppProviders from "@/lib/provider/app.providers";
 import { fetchClientGetter } from "@/openapi/client-getter";
 import 'react-toastify/dist/ReactToastify.css';
 

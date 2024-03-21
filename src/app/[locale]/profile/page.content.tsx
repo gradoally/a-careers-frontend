@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Shell from "@/components/layout/Shell";
 import { useTranslations } from "next-intl";
 
+import { useTxProgress } from "@/lib/provider/txProgress.provider";
+
 import ProfileForm, { UserFormValues } from "@/components/forms/ProfileForm";
 import AppBar from "@/components/layout/app-bar";
 import { Stack } from "@mui/material";
@@ -15,7 +17,7 @@ import { NextLinkComposed } from "@/components/Link";
 import EditButton from "@/components/ui/buttons/EditButton";
 import { useUserContract } from "@/hooks/useUserContract";
 import { useTonClient } from "@/hooks/useTonClient";
-import { useAuthContext, withAuth } from "@/lib/auth-provider";
+import { useAuthContext, withAuth } from "@/lib/provider/auth.provider";
 import { UserContentData, buildUserContent } from '@/contracts/User';
 import LazyLoading from "@/components/features/LazyLoading";
 
@@ -25,6 +27,7 @@ import ProfileIcon from "@/assets/gif/unicorn-low.gif";
 
 const EditComponent = ({ data }: { data: IUser }) => {
     const { client } = useTonClient();
+    const { toggleTxProgress } = useTxProgress();
 
     const {
         sendChangeContent,
@@ -38,7 +41,6 @@ const EditComponent = ({ data }: { data: IUser }) => {
             await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
             return;
         }
-
         try {
             const userContentData: UserContentData = {
                 isUser: true,
@@ -53,14 +55,17 @@ const EditComponent = ({ data }: { data: IUser }) => {
                 language: values.language,
             };
 
-            const result = await sendChangeContent("0.5", 0, buildUserContent(userContentData));
+            toggleTxProgress(true);
+            await sendChangeContent("0.5", 0, buildUserContent(userContentData));
             await callback({
                 isError: false,
                 message: trans("profile.profile_successfully_updated")
             })
         } catch (e) {
+            console.log("error occured!");
             await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
         }
+        toggleTxProgress(false);
     };
 
     return (

@@ -60,8 +60,6 @@ export const useAuthContext = (): IAuthContext => {
     return context
 }
 
-
-
 export default function AuthProvider(props: React.PropsWithChildren) {
 
     const { walletAddress } = useTonConnect();

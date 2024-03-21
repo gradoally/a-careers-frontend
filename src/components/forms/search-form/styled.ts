@@ -2,7 +2,6 @@
 import {alpha, styled} from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 
-
 export const StyledInput = styled(InputBase)(({theme}) => ({
     'label + &': {
         marginTop: theme.spacing(3),

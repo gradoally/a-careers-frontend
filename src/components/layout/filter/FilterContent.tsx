@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { useAppContext } from "@/lib/app-providers";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 import { Drawer as MuiDrawer, Stack, Typography, } from '@mui/material';
 import MuiDivider from "@mui/material/Divider";
