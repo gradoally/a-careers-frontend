@@ -148,7 +148,6 @@ export default function Stepper() {
                     orderContentData.deadline,
                     orderContentData.deadline + 259200
                 );
-                //props.toggleProgress();
                 toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
             } catch (e) {
                 console.log("create_order", e);
@@ -208,8 +207,8 @@ export default function Stepper() {
         setErrorMessage(ButtonStatus.error || "");
     }
 
-    const MemoizedHeader = useMemo(() => {
-        return <AppBar height="70px">
+    const Header = (
+    <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
                 {step === 1 ? <div className="h-[30px] w-[30px]" /> : <BackButton onClick={handleBack} />}
                 <div className="flex-grow text-center ">
@@ -222,10 +221,10 @@ export default function Stepper() {
                         </Typography>
                     </div>
                 </div>
-                <CloseButton component={NextLinkComposed} to={"/"} />
+                <CloseButton style={{marginRight:"1px"}} component={NextLinkComposed} to={"/"} />
             </Stack>
         </AppBar>
-    }, [step]);
+    );
 
     //Footer
     const footer = (<Footer>
@@ -258,7 +257,7 @@ export default function Stepper() {
     );
 
     return (
-        <Shell header={MemoizedHeader} footer={footer}>
+        <Shell header={Header} footer={footer}>
             {<MemoizedRenderForm
                 step={step}
                 formik={formik}

@@ -3,7 +3,6 @@ import {useRef, ReactNode} from "react";
 import {useTranslations} from "next-intl";
 
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 
 import CopyButton from "@/components/ui/buttons/CopyButton";
 import {toast} from "@/lib/helper";
@@ -29,7 +28,7 @@ const CopyContainer = ({children, className=""}: { children: ReactNode, classNam
     return (
         <Stack alignItems="center" direction="row" spacing={0} className={className}>
             <div ref={textRef}>{children}</div>
-            <CopyButton sx={{fontSize: "10px"}} onClick={handleCopy}/>
+            <CopyButton sx={{fontSize: "10px", paddingTop:"2px",paddingBottom:"2px"}} onClick={handleCopy}/>
         </Stack>
     )
 }

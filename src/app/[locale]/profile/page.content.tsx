@@ -17,7 +17,7 @@ import { NextLinkComposed } from "@/components/Link";
 import EditButton from "@/components/ui/buttons/EditButton";
 import { useUserContract } from "@/hooks/useUserContract";
 import { useTonClient } from "@/hooks/useTonClient";
-import { useAuthContext, withAuth } from "@/lib/provider/auth.provider";
+import { useAuthContext } from "@/lib/provider/auth.provider";
 import { UserContentData, buildUserContent } from '@/contracts/User';
 import LazyLoading from "@/components/features/LazyLoading";
 
@@ -55,6 +55,8 @@ const EditComponent = ({ data }: { data: IUser }) => {
                 language: values.language,
             };
 
+            console.log(userContentData);
+            console.log(buildUserContent(userContentData));
             toggleTxProgress(true);
             await sendChangeContent("0.5", 0, buildUserContent(userContentData));
             await callback({

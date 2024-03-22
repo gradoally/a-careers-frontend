@@ -78,8 +78,9 @@
     "step_x_from_x": "Step {value} from {from}",
     "make_a_response": "Make a response",
 
-    "create": "Create task",
-    "find": "Find task",
+    "task":"Task",
+    "create": "Create a task",
+    "find": "Find the task",
     "my": "My tasks",
     "show": "Show {count} assignments",
     "detail": "Task {value}",
@@ -101,7 +102,7 @@
     "response_denied": "Response denied · {value}",
     "an_offer_came_in": "An offer came in · {value}",
     "on_inspection": "On inspection · {value}",
-
+    "choose_specialist":"Choose a specialist",
     "select_language": "Select task language",
     "task_accomplished": "Task accomplished · {value}",
     "select_checking_period":"Task Checking Period",
@@ -166,6 +167,7 @@
   "response": {
     "offer": "Offer",
     "profile": "Profile",
-    "offerCooperation":"Offer Cooperation"
+    "offerCooperation":"Offer Cooperation",
+    "send_feedback":"Send feedback"
   }
 }

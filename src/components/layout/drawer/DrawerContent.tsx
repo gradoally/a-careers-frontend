@@ -49,7 +49,7 @@ export default function DrawerContent({ routes }: Props) {
             </Stack>
             <Box component="div" sx={{ flexGrow: 1 }} />
             <ConnectButton text={trans('connect')} />
-            <Stack direction="row" alignItems="center" style={{ marginLeft: 10 }}>
+            <Stack direction="row" alignItems="center" style={{ marginLeft: 10, marginRight: "1px" }}>
                 <CloseButton onClick={() => toggleDrawer(false)} />
             </Stack>
         </AppBar>
@@ -60,7 +60,7 @@ export default function DrawerContent({ routes }: Props) {
             onClose={() => toggleDrawer(false)}
             open={isDrawerOpen}
             sx={{
-                zIndex: theme => theme.zIndex.drawer + 2,
+                zIndex: theme => 400,
                 width: "100vw",
 
             }}
@@ -125,7 +125,11 @@ export default function DrawerContent({ routes }: Props) {
                                             selected={isSelectedRoute}>
                                             <ListItemText
                                                 sx={{ textAlign: "center" }}
-                                                primaryTypographyProps={{ "color": isSelectedRoute ? "text.primary" : "text.secondary" }}
+                                                primaryTypographyProps={{
+                                                    "color": isSelectedRoute ? "text.primary" : "text.secondary",
+                                                    fontFamily:"InterRegular",
+                                                    "fontWeight":"700 !important"
+                                                }}
                                                 primary={e.label} />
                                         </ListItemButton>
                                     </ListItem>

@@ -17,14 +17,8 @@ import ProfileIcon from "@/assets/gif/unicorn-low.gif";
 import { getUserActivity } from "@/services/profile";
 
 import { OrderActivity } from "@/openapi/client";
+import { truncateMiddleText } from "@/utils/tools";
 
-/*interface HistoryType {
-    date: string;
-    type: string;
-    title: string;
-    smartContract: string;
-    price: string;
-}*/
 
 const History = ({ data }: { data: OrderActivity[] }) => {
     return (
@@ -130,7 +124,7 @@ const ProfileView = ({ data }: { data: IUser }) => {
                     <CopyContainer className="mt-1">
                         <Typography color="secondary" variant="body2">
                             <Link target="_blank" noLinkStyle href={`http://tonviewer.com/${data?.address}`}>
-                                {data?.address}
+                                {truncateMiddleText(data?.address || "",8)}
                             </Link>
                         </Typography>
                     </CopyContainer>
@@ -184,7 +178,7 @@ const ProfileView = ({ data }: { data: IUser }) => {
                     <Typography component="div" variant="caption">
                         {trans("profile.specialization")}
                     </Typography>
-                    <Stack component="div" className="mt-1" direction={"row"} spacing={1}>
+                    <Stack component="div" className="mt-1 gap-2" direction={"row"} spacing={1}>
                         {renderSpecialization()}
                     </Stack>
                 </div>

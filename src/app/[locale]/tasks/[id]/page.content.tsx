@@ -66,28 +66,26 @@ function a11yProps(index: number) {
     };
 }
 
-export default function Content(props: { task: Order | null }) {
+export default function Content(props: {
+    isCustomer: boolean,
+    task: Order | null,
+    tab: number,
+    changeTab: (e: any, newValue: number) => void;
+}) {
     const trans = useTranslations();
-
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
     return (
         <div className="w-full">
-            <div className="h-[50px]">
-                <Tabs centered value={value} onChange={handleChange} aria-label="basic tabs example">
+            {!props.isCustomer && <div className="h-[50px]">
+                <Tabs centered value={props.tab} onChange={props.changeTab} aria-label="basic tabs example">
                     <Tab label={trans("common.task")} {...a11yProps(0)} />
                     <Tab label={`${trans("common.responses")} (3)`} {...a11yProps(1)} />
                 </Tabs>
-            </div>
+            </div>}
             <Divider />
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={props.tab} index={0}>
                 {props.task && <TaskView data={props.task} />}
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={props.tab} index={1}>
                 <Stack spacing="30px" direction="column">
                     <ResponseCard />
                     <ResponseCard isSelected />

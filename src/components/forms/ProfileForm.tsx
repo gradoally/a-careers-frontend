@@ -26,9 +26,9 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import CrossIcon from "@/assets/Cross.svg";
 
 export function Skill(props: { name: string; remove?: () => void }) {
-    return <div className="flex bg-[#3A4362] font-[400] px-3 py-1 rounded-[20px]">
+    return <div className="flex shrink-0 w-auto bg-[#3A4362] font-[400] px-3 py-1 !ml-0 mb-[2px] rounded-[20px]">
         <span className="text-[#FFFFFF] text-[0.9rem]">{props.name}</span>
-        {props.remove && <Image src={CrossIcon} className="ml-2" alt="close" onClick={(props.remove)} />}
+        {props.remove && <Image src={CrossIcon} className="block ml-2" alt="close" onClick={(props.remove)} />}
     </div>
 }
 
@@ -230,7 +230,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
 
                 <div>
                     <Typography variant="caption">{trans("profile.specialization")} ({trans("common.optional")})</Typography>
-                    <Stack spacing={1} alignItems="center" direction="row" className="mt-2 py-2">
+                    <Stack spacing={1} alignItems="center" direction="row" className="mt-2 py-2 gap-2 flex-wrap">
                         <AddButton onClick={setSpecialization} />
                         {formik.values?.specialization && formik.values.specialization.map((e: string, i: number) => (
                             <Skill key={i} name={e} remove={() => removeSpecialization(i)} />
@@ -238,7 +238,8 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                         <input
                             onChange={(event) => setSkill(event.currentTarget.value)}
                             value={skill}
-                            className="bg-primary outline-none text-grey font-[400]"
+                            className="bg-primary flex-shrink outline-none text-grey font-[400]"
+                            autoFocus={true}
                         />
                     </Stack>
                 </div>

@@ -12,6 +12,7 @@ export const StyledInput = styled(InputBase)(({theme}) => ({
         borderRadius: "5px",
         border: 'none',
         "color": theme.palette.common.black,
+        fontFamily:"InterRegular",
         fontWeight: "400",
         fontSize: "10px",
         width: '100%',
@@ -26,7 +27,10 @@ export const StyledInput = styled(InputBase)(({theme}) => ({
             boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
             borderColor: theme.palette.primary.main,
         },
-        "&::placeholder": {"color": theme.palette.common.black, opacity: "100%"}
+        "&::placeholder": {
+            "color": theme.palette.common.black, 
+            opacity: "100%",
+        }
     },
 }));
  

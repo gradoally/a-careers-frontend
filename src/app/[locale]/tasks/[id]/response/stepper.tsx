@@ -24,7 +24,7 @@ export interface TaskCreateType {
     category?: string;
 }
 
-const Stepper = (props:{id:string}) => {
+const Stepper = (props: { id: string }) => {
     const trans = useTranslations();
 
     const [data, setData] = useState<TaskCreateType>({});
@@ -56,7 +56,7 @@ const Stepper = (props:{id:string}) => {
                     </Typography>
                     <Typography className="mt-[5px]" variant="caption" component="div">{subtitle}</Typography>
                 </div>
-                <CloseButton component={NextLinkComposed} to={`/tasks/${props.id}`} />
+                <CloseButton style={{ marginRight: "5px" }} component={NextLinkComposed} to={`/tasks/${props.id}`} />
             </Stack>
         </AppBar>
     )

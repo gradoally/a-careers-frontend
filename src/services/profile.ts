@@ -5,6 +5,7 @@ import { APIs } from "@/config/api.config";
 import { IUserRes } from "@/interfaces/request";
 
 import { OrderActivity } from "@/openapi/client";
+import { IUser } from "@/interfaces";
 
 export async function getUserProfile(args: {
   address: string;
@@ -15,9 +16,19 @@ export async function getUserProfile(args: {
   });
 }
 
-export async function getUserStatus(args: { address: string; locale: string }) {
+export async function getUser(args: { index: string; locale: string }) {
+  return await get<IUser>({
+    url: `${APIs.user.get(args.index, args.locale)}`,
+  });
+}
+
+export async function getUserStatus(args: {
+  address: string;
+  index: number;
+  locale: string;
+}) {
   return await get<any>({
-    url: `${APIs.user.status(args.address)}`,
+    url: `${APIs.user.status(args.address, args.index)}`,
   });
 }
 

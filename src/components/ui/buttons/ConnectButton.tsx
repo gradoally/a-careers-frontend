@@ -2,10 +2,13 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from "next-intl";
+
 import Button from '@mui/material/Button';
 import Avatar from "@mui/material/Avatar";
+
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { CHAIN } from "@tonconnect/protocol";
+
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { toast } from "@/lib/helper";
 
@@ -24,7 +27,6 @@ const ConnectButton = ({ text }: { text: string }) => {
     }, [network])
 
     const onConnectWallet = async () => {
-        console.log("clicked");
         try {
             await tonConnectUI.openModal();
         } catch (e) {
@@ -50,10 +52,10 @@ const ConnectButton = ({ text }: { text: string }) => {
                     sx={{
                         borderRadius: "25px",
                         padding: "5px 12px 6px 14px",
-                        // backgroundColor: "secondary.main",
                         color: "common.black",
                         fontWeight: "600",
                         fontSize: "16px",
+                        lineHeight:"normal"
                     }}
                     color="secondary" variant="contained"
                 >
