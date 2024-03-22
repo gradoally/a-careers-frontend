@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 import UserAvatar from "@/components/UserAvatar";
 import { Order } from "@/openapi/client";
 import { formatDatetime } from "@/lib/helper";
-import { truncateMiddleText } from "@/utils/tools";
+import { truncateMiddleText } from "@/lib/utils/tools";
 import { getUserStatus } from "@/services/profile";
 
 const StackContainer = ({ primary, secondary }: {

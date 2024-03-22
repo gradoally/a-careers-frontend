@@ -95,7 +95,7 @@ const FilterContent = () => {
 
                 <HoverOpacityComponent>
                     <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
-                        className="h-20 px-[15px]">
+                        className="px-[16px] py-[20px]">
                         <div className="h-6 w-6 flex-shrink-0">
                             <Image style={{ width: "24px", height: "24px" }} width="24" height="24" alt="puzzle-piece"
                                 src="/images/puzzle-piece.svg" />
@@ -121,12 +121,13 @@ const FilterContent = () => {
                 </HoverOpacityComponent>
                 <HoverOpacityComponent>
                     <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
-                        className="h-20 px-[15px]">
+                        className="px-[16px] py-[20px]">
                         <div className="h-6 w-6 flex-shrink-0">
                             <Image style={{ width: "24px", height: "24px" }} width="24" height="24" alt="earth"
                                 src="/images/earth_americas.png" />
                         </div>
-                        <SelectField variant="standard"
+                        <SelectField 
+                            variant="standard"
                             label={trans("show_tasks_on_language")}
                             id="language"
                             name="language"
@@ -147,8 +148,8 @@ const FilterContent = () => {
                     <Divider className="hover-opacity transition-opacity" />
                 </HoverOpacityComponent>
                 <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
-                    className="h-20 px-[15px]">
-                    <div className="h-6 w-6 flex-shrink-0">
+                    className="px-[16px] py-[25px]">
+                    <div className="h-6 w-6 flex-shrink-0 my-auto">
                         <Image width="24" height="24" alt="gem" src="/images/gem.png" />
                     </div>
                     <TextField

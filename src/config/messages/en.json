@@ -1,8 +1,8 @@
 {
   "filter": {
     "sort": "Sort",
-    "by_deadline": "By deadline",
-    "by_publication_date": "By publication date",
+    "by_deadline": "Deadline",
+    "by_publication_date": "Publication date",
     "filters": "Filters",
     "categories": "Categories",
     "all": "All",

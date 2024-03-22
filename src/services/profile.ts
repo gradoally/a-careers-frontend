@@ -1,4 +1,4 @@
-import { get } from "@/utils/request";
+import { get } from "@/lib/utils/request";
 
 import { APIs } from "@/config/api.config";
 

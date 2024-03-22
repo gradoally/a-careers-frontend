@@ -21,8 +21,10 @@ export default function CustomizedRadios(
     return (
         <FormControl className="w-full">
             <FormLabel sx={{
-                padding: "0 15px",
+                padding: "0 16px",
                 color: "common.white",
+                fontFamily: "InterSemiBold",
+                fontSize: "14px",
                 "&.Mui-focused": {
                     color: "common.white"
                 }
@@ -34,28 +36,35 @@ export default function CustomizedRadios(
                 name="sort-radios"
             >
                 <FormControlLabel
-                    sx={{ padding: "0 25px 0 0", margin: "20px 15px" }}
-                    slotProps={{ typography: { variant: "caption", "component": "div", sx: { marginRight: "auto" } } }}
+                    sx={{ padding: "0 25px 0 0", margin: "15px 16px 13px 16px" }}
+                    slotProps={{
+                        typography: {
+                            variant: "caption",
+                            "component": "div",
+
+                            sx: { marginRight: "auto", fontSize: "12px" }
+                        }
+                    }}
                     labelPlacement="start"
                     value="createdAt"
                     control={<BpRadio />}
                     label={(
                         <>
                             {trans("by_publication_date")}
-                            {value === "createdAt" && <span className="text-secondary"> ↑</span>}
+                            {value === "createdAt" && <span className="text-secondary font-extrabold"> ↑</span>}
                         </>
                     )}
                     onClick={() => onChange("createdAt")}
                 />
                 <Divider />
                 <FormControlLabel
-                    sx={{ padding: "0 25px 0 0px", margin: "20px 15px" }}
+                    sx={{ padding: "0 25px 0 0px", margin: "13px 16px 20px 16px" }}
                     onClick={() => onChange("deadline")}
-                    slotProps={{ typography: { variant: "caption", "component": "div", sx: { marginRight: "auto" } } }}
+                    slotProps={{ typography: { variant: "caption", "component": "div", sx: { marginRight: "auto", fontSize: "12px" } } }}
                     labelPlacement="start" value="deadline" control={<BpRadio />} label={(
                         <>
                             {trans("by_deadline")}
-                            {value === "deadline" && <span className="text-secondary"> ↑</span>}
+                            {value === "deadline" && <span className="text-secondary font-extrabold"> ↑</span>}
                         </>
                     )} />
             </RadioGroup>

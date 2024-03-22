@@ -66,6 +66,7 @@ export const getTheme = () => {
                 textTransform: "none"
             },
             caption: {
+                fontFamily:'InterLight',
                 color: "rgba(255, 255, 255, 0.4)",
             }
         },

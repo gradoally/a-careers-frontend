@@ -1,5 +1,5 @@
-import {ReactNode} from "react";
-import MuiSelect, {SelectProps, SelectChangeEvent} from '@mui/material/Select';
+import { ReactNode } from "react";
+import MuiSelect, { SelectProps, SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 
@@ -32,20 +32,20 @@ interface Props {
 const SelectField = (
     {
         id, label, name, children, error, variant = "standard", helperText, required, value,
-        SelectProps = {}, onChange, className, disableUnderline=false,dividerClassName,shrink=true,
+        SelectProps = {}, onChange, className, disableUnderline = false, dividerClassName, shrink = true,
     }: Props) => {
     return (
 
-        <FormControl className={className}
-                     variant={variant}
-                     fullWidth
-                     margin={'normal'}
-                     error={error}>
+        <FormControl
+            className={className}
+            variant={variant}
+            fullWidth
+            margin={'normal'}
+            error={error}>
             {label && <InputLabel
                 shrink={shrink}
                 id={`label-${id}`} required={required ?? false}>{label}</InputLabel>}
             <MuiSelect
-                sx={{padding: "10px 0"}}
                 IconComponent={ArrowRightIcon}
                 {...SelectProps}
                 disableUnderline
@@ -54,11 +54,12 @@ const SelectField = (
                 label={label}
                 onChange={onChange}
                 value={value}
-                MenuProps={{sx: {"& .MuiMenu-paper":{"border": "1px solid #fff"}}}}
+                inputProps={{ sx: { paddingBottom: 0 } }}
+                MenuProps={{ sx: { "& .MuiMenu-paper": { "border": "1px solid #fff" } } }}
             >
                 {children}
             </MuiSelect>
-            {!disableUnderline && <Divider className={`hover-opacity transition-opacity ${dividerClassName}`}/>}
+            {!disableUnderline && <Divider className={`hover-opacity transition-opacity ${dividerClassName}`} />}
             {helperText && (<FormHelperText>{helperText}</FormHelperText>)}
         </FormControl>
     )

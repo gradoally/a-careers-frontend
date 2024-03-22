@@ -17,7 +17,7 @@ import ProfileIcon from "@/assets/gif/unicorn-low.gif";
 import { getUserActivity } from "@/services/profile";
 
 import { OrderActivity } from "@/openapi/client";
-import { truncateMiddleText } from "@/utils/tools";
+import { truncateMiddleText } from "@/lib/utils/tools";
 
 
 const History = ({ data }: { data: OrderActivity[] }) => {
