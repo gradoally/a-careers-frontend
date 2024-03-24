@@ -12,30 +12,20 @@ interface Props {
     withDrawer?: boolean;
     extra?: ReactNode;
     footer?: ReactNode;
+    contentClassName?:string;
 }
 
 const Shell = (props: Props) => {
     return (
         <div
             className="flex flex-col justify-center items-center min-h-screen h-full w-screen min-w-[300px] overflow-x-scroll"
-            style={{
-                // justifyContent: "center",
-                // alignItems: "center",
-                // overflowX: "scroll",
-                // height: "100%",
-                // minHeight: "100vh",
-                // width: "100vw",
-                // minWidth: "300px",
-                // display: "flex",
-                // flexDirection: "column",
-            }}
         >
             {props.header && props.header}
             {props.withDrawer && <Drawer/>}
             {props.extra && props.extra}
             <div
                 id="styled-content"
-                className="h-full overflow-y-scroll w-full max-w-[768px]"
+                className={`h-full overflow-y-scroll w-full max-w-[768px] ${props.contentClassName}`}
             >
                 {props.children}
             </div>

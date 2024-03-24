@@ -1,6 +1,6 @@
 import Button, { ButtonProps } from '@mui/material/Button';
 
-interface Props extends ButtonProps {
+interface Props extends ButtonProps{
     to?: string;
 }
 
@@ -17,8 +17,8 @@ export default function FooterButton({ children, ...props }: Props) {
                 textAlign: "center",
                 fontSize: "16px",
                 lineHeight: "24px",
-                textTransform:"none",
-                fontFamily:"InterBold",
+                textTransform: "none",
+                fontFamily: "InterBold",
                 "&.Mui-disabled": {
                     "backgroundColor": "rgb(69, 174, 245,0.4)"
                 }

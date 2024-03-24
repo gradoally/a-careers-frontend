@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslations } from "next-intl";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -11,6 +11,12 @@ import Divider from "@/components/ui/Divider";
 import ResponseCard from "./card";
 import TaskView from '@/components/TaskView';
 import { Order } from '@/openapi/client';
+
+
+import DaimondIcon from "@/assets/DaimondProfile.svg";
+import CatIcon from "@/assets/CatProfile.svg";
+
+import { IResponse } from './card';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -73,6 +79,15 @@ export default function Content(props: {
     changeTab: (e: any, newValue: number) => void;
 }) {
     const trans = useTranslations();
+    const [responses] = useState<IResponse[]>([
+        {
+            profile: DaimondIcon,
+            offerPrice: 1200,
+            description: "Designed the architecture, ready to show.",
+            specialization:"Blockchain Developer, FunC, FIFT",
+            nickname: "SomeDao"
+        }
+    ]);
     return (
         <div className="w-full">
             {!props.isCustomer && <div className="h-[50px]">
@@ -87,9 +102,7 @@ export default function Content(props: {
             </CustomTabPanel>
             <CustomTabPanel value={props.tab} index={1}>
                 <Stack spacing="30px" direction="column">
-                    <ResponseCard />
-                    <ResponseCard isSelected />
-                    <ResponseCard />
+                    {responses.map((response,index) => <ResponseCard key={index} isSelected={false} response={response} />)}
                 </Stack>
             </CustomTabPanel>
         </div>

@@ -42,7 +42,7 @@ const RootLayout = async ({ children, params: { locale } }: Props) => {
             <body className="dark font-sans-serif scroll-hide">
                 <NextIntlClientProvider
                     locale={locale}
-                    messages={pick(messages,"task", "read_more", "profile", 'tasks', 'response', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy")}
+                    messages={pick(messages,"task", "read_more", "profile", 'tasks', 'response', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy",'profile', 'common', "errors", 'form', 'network')}
                 >
                     <AppProviders options={{ key: 'mui' }} config={config}>
                         {children}

@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useFormik, FormikProps } from "formik";
@@ -34,6 +35,7 @@ import Price from "./steps/TaskPrice";
 import Description from "./steps/TaskDescription";
 import TechnicalTask from "./steps/TaskTechnicalDescription";
 import SelectCheckingPeriod from "./steps/TaskCheckingPeriod";
+import { Router } from "next/router";
 
 const keys: Record<number, string> = {
     1: "language",
@@ -88,6 +90,7 @@ function MemoizedRenderForm(props: {
 
 export default function Stepper() {
     const locale = useLocale();
+    const router = useRouter();
     const trans = useTranslations();
     const { user } = useAuthContext();
     const { client } = useTonClient();
@@ -98,7 +101,7 @@ export default function Stepper() {
     } = useUserContract(String(user?.data?.address));
     const { orderNextIndex } = useMasterContract();
 
-    const [step, setStep] = useState<number>(6);
+    const [step, setStep] = useState<number>(1);
     const [errorMessage, setErrorMessage] = useState("");
     const [title, setTitle] = useState(trans("tasks.create"))
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
@@ -145,6 +148,7 @@ export default function Stepper() {
                     orderContentData.deadline + 259200
                 );
                 toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
+                router.push(`/${locale}/tasks/${orderNextIndex}`)
             } catch (e) {
                 console.log("create_order", e);
                 toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');

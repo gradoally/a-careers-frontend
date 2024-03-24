@@ -67,7 +67,8 @@
     "smart_contract_address": "Адрес смарт-контракта",
     "created": "Созданные",
     "responses": "Отклики",
-    "task":"ЗАДАЧА"
+    "task":"ЗАДАЧА",
+    "optional":"Необязательный"
   },
   "tasks": {
     "task_successfully_created": "Задача успешно создано",

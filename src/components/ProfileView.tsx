@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@/components/Link";
 import CopyContainer from "@/components/features/copy";
 import ReadMoreCollapse from "@/components/features/ReadMoreCollapse";
-import { Skill } from "./forms/ProfileForm";
+import { Skill } from "./forms/Profile/ProfileForm";
 
 import { IUser } from "@/interfaces";
 
