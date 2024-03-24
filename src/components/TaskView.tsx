@@ -17,32 +17,32 @@ const StackContainer = ({ primary, secondary }: {
     secondary: string;
 }) => {
     return (
-        <Stack component="div" className="mt-4" direction="column">
+        <Stack component="div" className="mt-[20px]" direction="column">
             <Typography component="div" variant={"caption"}>
                 {secondary}
             </Typography>
-            <Typography variant="body2" style={{ wordBreak: "break-word", }}>
+            <Typography variant="body2" style={{ wordBreak: "break-word", marginTop: "4px" }}>
                 {primary}
             </Typography>
         </Stack>
     )
 }
 
+const Customer = (props: {
+    locale: string;
+    index?: number;
+    address?: string | null;
+    nickname?: string | null;
+    telegram?: string | null;
+}) => {
 
-const TaskView = ({ data }: { data: Order }) => {
-    const tc = useTranslations("common");
-    const trans = useTranslations("tasks");
-    const locale = useLocale();
-    const [status, setStatus] = useState<{ freelancer: number; customer: 0 }>({ freelancer: 0, customer: 0 })
+    const trans = useTranslations();
 
-    let telegram = data?.customer?.telegram
-    if (telegram && telegram.startsWith("@")) {
-        telegram.slice(1)
-    }
+    const [status, setStatus] = useState<{ freelancer: number; customer: number }>({ freelancer: 0, customer: 0 })
 
     useEffect(() => {
-        if (!data.customer || !data.customer?.address || !data.customer?.index) return;
-        getUserStatus({ address: data.customer.address, index: data.customer.index, locale })
+        if (!props?.address || (props?.index || -1) < 0) return;
+        getUserStatus({ address: props.address, index: props.index || -1, locale: props.locale })
             .then(res => {
                 setStatus({
                     freelancer: res.data?.asFreelancerTotal || 0,
@@ -51,65 +51,84 @@ const TaskView = ({ data }: { data: Order }) => {
             }).catch(err => {
                 console.log((err as Error).message);
             });
-    }, [data.customer]);
+    }, [props]);
+
+    return <Stack className="mt-6" direction={"column"}>
+        <Typography className="!font-InterSemiBold !text-[12px]" >{trans("common.customer")}</Typography>
+        <div className="mt-3">
+            <Stack component="div" direction="row" spacing={3}>
+                <UserAvatar height="80px" width="80px" />
+                <Stack direction="column" className="!my-auto" spacing="7px" component="div">
+                    <Typography variant="body2">@{props?.nickname}</Typography>
+                    <Stack component="div" sx={{ fontSize: "10px" }} direction="row" spacing="5px">
+                        <div className="opacity-70">✅ {status.freelancer}</div>
+                        <div className="opacity-40">❎ {status.customer}</div>
+                    </Stack>
+                    <Stack component="div" className="text-[10px]" direction="row" spacing="10px">
+                        <div className="border-b border-white text-white opacity-[40%]">
+                            <Link noLinkStyle href={`/profile/${props?.index}`}>
+                                {trans("common.profile")} 📖
+                            </Link>
+                        </div>
+                        {props.telegram && (
+                            <div className="border-b border-white text-white opacity-[40%]">
+                                <Link noLinkStyle href={`https://t.me/${props.telegram}`}>
+                                    Telegram ↗
+                                </Link>
+                            </div>
+                        )}
+                    </Stack>
+                </Stack>
+            </Stack>
+        </div>
+    </Stack>
+}
+
+const TaskView = ({ data }: { data: Order }) => {
+
+    const trans = useTranslations("");
+    const locale = useLocale();
+
+    let telegram = data?.customer?.telegram
+    if (telegram && telegram.startsWith("@")) {
+        telegram.slice(1)
+    }
 
     return (
         <>
             <Stack spacing={1}>
                 <StatusChip status={"no_responses"} />
-                <Typography variant="h4">{data?.name}</Typography>
-                <Typography variant="body2">💎 {data?.price}</Typography>
+                <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{data?.name}</Typography>
+                <Typography className="!text-[12px] !font-InterLight">💎 {data?.price}</Typography>
             </Stack>
-            <Stack component="div" spacing={"3px"} className="mt-4" direction="column">
-                <Typography component="div" variant={"caption"}>{tc("smart_contract_address")}</Typography>
+            <Stack component="div" className="mt-4" direction="column">
+                <Typography component="div" variant={"caption"}>{trans("common.smart_contract_address")}</Typography>
                 {data?.address && (
-                    <CopyContainer className="!m-0 !h-fit">
-                        <Typography variant="body2">{truncateMiddleText(data.address, 10)}</Typography>
+                    <CopyContainer className="!m-0 !mt-1 !h-fit">
+                        <Typography className="!font-InterRegular !text-[12px]" >{truncateMiddleText(data.address, 10)}</Typography>
                     </CopyContainer>
                 )}
             </Stack>
-            <StackContainer primary={data?.language ?? ""} secondary={trans("language")} />
-            <StackContainer primary={data?.description ?? ""} secondary={tc("description")} />
-            <StackContainer primary={data?.technicalTask ?? ""} secondary={tc("technical_task")} />
+            <StackContainer primary={data?.language ?? ""} secondary={trans("tasks.language")} />
+            <StackContainer primary={data?.description ?? ""} secondary={trans("common.description")} />
+            <StackContainer primary={data?.technicalTask ?? ""} secondary={trans("common.technical_task")} />
             <StackContainer
                 primary={formatDatetime({ date: data?.deadline, locale: locale })}
-                secondary={tc("deadline")} />
+                secondary={trans("common.deadline")} />
             <Divider className="!my-3" />
-            <Stack className="text-[10px] leading-5 opacity-[40%]" direction="column">
-                <div>{formatDatetime({ date: data?.createdAt, locale: locale })}</div>
-                <div className="truncate w-[200px]">{data?.category}</div>
+            <Stack className="!text-[10px] !font-InterRegular !leading-5 opacity-[40%]" direction="column">
+                <div className="truncate w-[300px]">{trans("task.createdAt", { date: formatDatetime({ date: data?.createdAt, locale: locale }), language: data?.language })}</div>
+                <div className="truncate w-[200px] mt-1">{trans("task.category", { value: data?.category || "" })}</div>
             </Stack>
-            {data?.customer && (
-                <Stack className="mt-6" direction={"column"}>
-                    <Typography variant="body2">{tc("customer")}</Typography>
-                    <div className="mt-2">
-                        <Stack component="div" direction="row" spacing={3}>
-                            <UserAvatar height="80px" width="80px" />
-                            <Stack direction="column" className="!my-auto" spacing="7px" component="div">
-                                <Typography variant="body2">@{data?.customer?.nickname}</Typography>
-                                <Stack component="div" sx={{ fontSize: "10px" }} direction="row" spacing="5px">
-                                    <div className="opacity-70">✅ {status.freelancer}</div>
-                                    <div className="opacity-40">❎ {status.customer}</div>
-                                </Stack>
-                                <Stack component="div" className="text-[10px]" direction="row" spacing="10px">
-                                    <div className="underline text-white opacity-[40%]">
-                                        <Link noLinkStyle href={`/profile/${data?.customer?.index}`}>
-                                            {tc("profile")} 📖
-                                        </Link>
-                                    </div>
-                                    {telegram && (
-                                        <div className="underline text-white opacity-[40%]">
-                                            <Link noLinkStyle href={`https://t.me/${telegram}`}>
-                                                Telegram ↗
-                                            </Link>
-                                        </div>
-                                    )}
-                                </Stack>
-                            </Stack>
-                        </Stack>
-                    </div>
-                </Stack>
-            )}
+            {
+                data?.customer && <Customer
+                    locale={locale}
+                    address={data?.customer?.address}
+                    index={data?.customer?.index}
+                    nickname={data?.customer?.nickname}
+                    telegram={telegram}
+                />
+            }
         </>
     )
 }

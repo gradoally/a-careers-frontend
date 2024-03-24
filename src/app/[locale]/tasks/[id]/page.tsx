@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTonConnect } from "@/hooks/useTonConnect";
 
+import { useAuthContext } from "@/lib/provider/auth.provider";
+
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
@@ -14,13 +16,12 @@ import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 import Shell from "@/components/layout/Shell";
+import LazyLoading from "@/components/features/LazyLoading";
+import Content from "./page.content";
 
 import { Order } from "@/openapi/client";
 
 import { getOrder } from "@/services/order";
-
-import Content from "./page.content";
-import { useAuthContext } from "@/lib/provider/auth.provider";
 
 type Props = {
     params: { locale: string, id: number };
@@ -92,14 +93,19 @@ const Page = ({ params: { locale, id } }: Props) => {
                 onClick={() => router.push(`${task.content?.index}/response`)}
                 color={"secondary"}
                 variant="contained">
-                {trans("response.sendFeedback")}
+                {trans("response.offerCooperation")}
             </FooterButton>}
         </Footer>
     );
 
     const TaskFooter = (
         <Footer>
-            {user?.data?.index === task.content?.customer?.index ? <FooterButton
+            {!connected ? <FooterButton
+                onClick={connect}
+                color={"secondary"}
+                variant="contained">
+                {trans("common.log_in_and_respond")} ⚡️
+            </FooterButton> : (user?.data?.index === task.content?.customer?.index ? <FooterButton
                 onClick={(event: any) => handleChange(event, 1)}
                 color={"secondary"}
                 variant="contained">
@@ -108,8 +114,8 @@ const Page = ({ params: { locale, id } }: Props) => {
                 onClick={() => router.push(`${task.content?.index}/response`)}
                 color={"secondary"}
                 variant="contained">
-                {trans("response.offerCooperation")}
-            </FooterButton>}
+                {trans("response.send_feedback")}
+            </FooterButton>)}
         </Footer>
     )
 
@@ -130,11 +136,11 @@ const Page = ({ params: { locale, id } }: Props) => {
     return (
         <Shell withDrawer header={header} footer={footer}>
             <div className="px-[20px] pb-[20px]">
-                <Content
+                {task.loading ? <LazyLoading /> : <Content
                     isCustomer={task.content?.customer?.index !== user?.data?.index}
                     tab={value} changeTab={handleChange}
                     task={task.content}
-                />
+                />}
             </div>
         </Shell>
     )

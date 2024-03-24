@@ -72,7 +72,7 @@ const Status = ({ status }: { status: keyof typeof statusObj }) => {
     </div>
 }
 
-const ProfileView = ({ data }: { data: IUser }) => {
+const ProfileView = ({ data, publicView }: { data: IUser; publicView?: boolean }) => {
 
     const trans = useTranslations();
 
@@ -83,8 +83,7 @@ const ProfileView = ({ data }: { data: IUser }) => {
 
     const renderSpecialization = () => {
         if (!data?.specialization) {
-            data.specialization = "FunC,FIFT";
-            //return <div/>
+            data.specialization = "";
         }
         const specialization = data.specialization.split(",")
         return specialization.map((e: string, i: number) => <Skill key={i} name={e} />)
@@ -110,11 +109,10 @@ const ProfileView = ({ data }: { data: IUser }) => {
 
     return (
         <>
-            <div className="bg-info bg-opacity-20 h-[180px] w-full flex flex-col justify-center items-center">
-                {/*<UserAvatar src="/gifs/unicorn-hight" height="90px" width="90px"/>*/}
+            <div className="bg-info bg-opacity-20 py-10 w-full flex flex-col justify-center items-center">
                 <Image src={ProfileIcon} alt="Fixed" width={90} height={90} />
                 <div className="mt-2.5 text-lg font-bold">{data?.nickname}</div>
-                <Status status={((data?.userStatus || "pending") as keyof typeof statusObj)} />
+                {!publicView && <Status status={((data?.userStatus || "pending") as keyof typeof statusObj)} />}
             </div>
             <Stack spacing={"20px"} className="pt-[35px] px-5">
                 <div>
@@ -124,7 +122,7 @@ const ProfileView = ({ data }: { data: IUser }) => {
                     <CopyContainer className="mt-1">
                         <Typography color="secondary" variant="body2">
                             <Link target="_blank" noLinkStyle href={`http://tonviewer.com/${data?.address}`}>
-                                {truncateMiddleText(data?.address || "",8)}
+                                {truncateMiddleText(data?.address || "", 8)}
                             </Link>
                         </Typography>
                     </CopyContainer>
@@ -147,7 +145,7 @@ const ProfileView = ({ data }: { data: IUser }) => {
                     </Typography>
                     {data?.about && (
                         <ReadMoreCollapse read_more={trans("read_more.read_more")} hide={trans("read_more.hide")}
-                            className="mt-1 text-xs" text={data.about} />
+                            className="mt-1 text-xs !font-InterRegular" text={data.about} />
                     )}
                 </div>
                 <div>
@@ -178,18 +176,17 @@ const ProfileView = ({ data }: { data: IUser }) => {
                     <Typography component="div" variant="caption">
                         {trans("profile.specialization")}
                     </Typography>
-                    <Stack component="div" className="mt-1 gap-2" direction={"row"} spacing={1}>
+                    <Stack component="div" className="mt-2 gap-3" direction={"row"} spacing={1}>
                         {renderSpecialization()}
                     </Stack>
                 </div>
-
-                <div>
-                    <Typography variant="h4">{trans("profile.task_history")}</Typography>
-                    <Typography className="mt-2" variant="body2">
-                        {trans("profile.task_result", { "payed": "100%", completed: "99%" })}
-                    </Typography>
-                </div>
             </Stack>
+            <div className="mt-8 px-5">
+                <Typography variant="h4" className="!font-InterSemiBold">{trans("profile.task_history")}</Typography>
+                <Typography className="!mt-2" variant="body2">
+                    {trans("profile.task_result", { "payed": "100%", completed: "99%" })}
+                </Typography>
+            </div>
             <History data={history.activities} />
         </>
     )

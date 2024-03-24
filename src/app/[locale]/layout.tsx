@@ -9,6 +9,7 @@ import AppProviders from "@/lib/provider/app.providers";
 import { fetchClientGetter } from "@/openapi/client-getter";
 import 'react-toastify/dist/ReactToastify.css';
 
+import "../fonts.css";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ const RootLayout = async ({ children, params: { locale } }: Props) => {
             <body className="dark font-sans-serif scroll-hide">
                 <NextIntlClientProvider
                     locale={locale}
-                    messages={pick(messages, "read_more", "profile", 'tasks', 'response', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy")}
+                    messages={pick(messages,"task", "read_more", "profile", 'tasks', 'response', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy")}
                 >
                     <AppProviders options={{ key: 'mui' }} config={config}>
                         {children}

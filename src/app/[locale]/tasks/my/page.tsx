@@ -16,6 +16,7 @@ import CenteredContainer from "@/components/ui/CenteredContainer";
 import { NextLinkComposed } from "@/components/Link";
 import { useAuthContext } from "@/lib/provider/auth.provider";
 import { IPageProps } from "@/interfaces/page";
+import LazyLoading from '@/components/features/LazyLoading';
 
 const Page = (props: IPageProps) => {
     const { user } = useAuthContext();
@@ -23,13 +24,13 @@ const Page = (props: IPageProps) => {
     const data = "on moderation";
     const footer = (
         <Footer>
-            {user?.data && 
-            <FooterButton
-                component={NextLinkComposed} to={"/tasks/create"}
-                color={"secondary"}
-                variant="contained">
-                {trans("create")}
-            </FooterButton>}
+            {user?.data &&
+                <FooterButton
+                    component={NextLinkComposed} to={"/tasks/create"}
+                    color={"secondary"}
+                    variant="contained">
+                    {trans("create")}
+                </FooterButton>}
         </Footer>
     )
     const header = (
@@ -43,7 +44,7 @@ const Page = (props: IPageProps) => {
 
     return (<Shell withDrawer header={header} footer={footer}>
         <div className="px-[20px] pb-[20px]">
-            <Suspense fallback={"Loading..."}>
+            <Suspense fallback={<LazyLoading />}>
                 {user?.data ?
                     (data ? (
                         <Content data={data} />

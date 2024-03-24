@@ -5,18 +5,17 @@ import { StyledInputMultiline } from "@/components/forms/fields/StyledInputMulti
 
 import { checkError } from "@/lib/helper";
 
-import { IForm } from "./stepper";
+import { IForm } from "../stepper";
+import { TaskFormWrapper } from "@/components/Task/form.component";
 
 export default function Description({ formik }: IForm) {
     const trans = useTranslations('tasks')
     return (
         <div className="h-full flex flex-col">
-            <div className="p-5 mb-4">
-                <Typography variant="h4">{trans("job_description")}</Typography>
-                <Typography component="div" variant="caption" sx={{ marginTop: "10px" }}>
-                    {trans("add_detailed_description_to_get_more_responses")}
-                </Typography>
-            </div>
+            <TaskFormWrapper
+                title={trans("job_description")}
+                description={trans("add_detailed_description_to_get_more_responses")}
+            />
             <div className="grow">
                 <StyledInputMultiline
                     error={checkError(formik, {}, "description")}
@@ -26,8 +25,6 @@ export default function Description({ formik }: IForm) {
                     inputProps={{
                         style: {
                             height: "100%",
-                            // padding: "10px 20px 0",
-                            // overflow: "scroll"
                         }
                     }}
                     id="description"

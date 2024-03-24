@@ -1,13 +1,15 @@
+import React from "react";
+
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import { StandardTextFieldProps } from "@mui/material/TextField/TextField";
-import React from "react";
+
 import Input from "@/components/forms/fields/Input";
 import FormControl from "@/components/forms/FormControl";
 
 interface ITextFieldProps extends StandardTextFieldProps {
-   readonly?:boolean;
+    readonly?: boolean;
 }
 
 const TextField = (
@@ -25,16 +27,20 @@ const TextField = (
         <FormControl
             error={props.error}
             className={className}
-            fullWidth={fullWidth} variant="standard"
+            fullWidth={fullWidth}
+            variant="standard"
         >
+            {/*
+            shrink={InputLabelProps?.shrink}
+                    htmlFor={props.id}
+    */}
             {label && (
-                <InputLabel
-                    shrink={InputLabelProps?.shrink}
-                    htmlFor={props.id}>
-                    <Typography variant="caption">{label}</Typography>
+                <InputLabel>
+                    <Typography variant="caption" className="!text-[12px]">{label}</Typography>
                 </InputLabel>
             )}
-            <Input type={props.type}
+            <Input
+                type={props.type}
                 sx={{ padding: "10px 0" }}
                 {...InputProps}
                 onChange={props.onChange}

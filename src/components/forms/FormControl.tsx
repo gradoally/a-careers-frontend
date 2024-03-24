@@ -13,7 +13,7 @@ const FormControl = ({children, fullWidth=true, variant="standard", ...props}: F
                 "& .MuiInputLabel-formControl": {
                     color: "rgba(255, 255, 255, 0.33)",
                     '&.Mui-focused': {
-                        color: "rgba(255, 255, 255, 0.33)"
+                        color: "rgba(255, 255, 255, 0.33)",
                     }
                 }
             }} variant={variant} fullWidth={fullWidth} {...props}>

@@ -59,15 +59,15 @@ export const getTheme = () => {
             },
             body2: {
                 fontFamily:'InterRegular',
-                fontSize:"12px"
-            },
-            button: {
-                fontFamily: 'InterRegular',
-                textTransform: "none"
+                fontSize:"12px",
+                lineHeight:"20px"
             },
             caption: {
                 fontFamily:'InterLight',
                 color: "rgba(255, 255, 255, 0.4)",
+            },
+            button:{
+                textTransform:"none"
             }
         },
     })

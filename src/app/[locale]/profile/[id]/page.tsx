@@ -72,7 +72,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
     return (
         <Shell header={ProfileHeader}>
-            {user.loading ? <LazyLoading /> : (user.content ? <ProfileView data={user.content} /> : <></>)}
+            {user.loading ? <LazyLoading /> : (user.content ? <ProfileView data={user.content} publicView={true} /> : <></>)}
         </Shell>
     )
 }

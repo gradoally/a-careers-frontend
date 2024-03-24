@@ -1,7 +1,7 @@
 "use client"
 
-import React, {ReactNode} from 'react';
-import {useTranslations} from "next-intl";
+import React, { ReactNode } from 'react';
+import { useTranslations } from "next-intl";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -14,7 +14,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import Divider from "@/components/ui/Divider";
-import {NextLinkComposed} from "@/components/Link";
+import { NextLinkComposed } from "@/components/Link";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 import Image from "@/components/Image";
 
@@ -25,7 +25,7 @@ interface TabPanelProps {
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-    const {children, value, index, ...other} = props;
+    const { children, value, index, ...other } = props;
 
     return (
         <div
@@ -74,33 +74,33 @@ function a11yProps(index: number) {
 }
 
 
-const CustomListItem = ({iconSrc, title, category}: { iconSrc: string, title: string, category?: string }) => {
+const CustomListItem = ({ iconSrc, title, category }: { iconSrc: string, title: string, category?: string }) => {
     return (
         <>
             <ListItem
                 disablePadding
-                secondaryAction={<ArrowRightIcon/>}>
+                secondaryAction={<ArrowRightIcon />}>
                 <ListItemButton
                     component={NextLinkComposed}
-                    to={'/tasks/my/on_moderation'}
-                    sx={{"height": "80px", "padding": "0"}}
+                    to={`/tasks/my/${category}`}
+                    sx={{ "height": "80px", "padding": "0" }}
                     alignItems={"center"}>
                     <ListItemIcon>
-                        <Image width="24" height="24" alt="" src={iconSrc}/>
+                        <Image width="24" height="24" alt="" src={iconSrc} />
                     </ListItemIcon>
                     <ListItemText primary={
                         <Typography variant="h4" color="secondary.main" sx={{
                             fontWeight: 400,
                         }}>{title}</Typography>
-                    }/>
+                    } />
                 </ListItemButton>
             </ListItem>
-            <Divider component="li"/>
+            <Divider component="li" />
         </>
     )
 }
 
-export default function Content({data}: { data: string }) {
+export default function Content({ data }: { data: string }) {
     const [value, setValue] = React.useState(0);
     const tc = useTranslations('common')
     const trans = useTranslations('tasks')
@@ -116,29 +116,29 @@ export default function Content({data}: { data: string }) {
                     <Tab label={tc("responses")} {...a11yProps(1)} />
                 </Tabs>
             </div>
-            <Divider/>
+            <Divider />
             <CustomTabPanel value={value} index={0}>
                 <nav>
                     <List
                         disablePadding
                         subheader={
-                            <ListSubheader sx={{padding: "0", "color": "common.white"}}
-                                           disableSticky
-                                           component="div" id="nested-list-subheader">
+                            <ListSubheader sx={{ padding: "0", "color": "common.white" }}
+                                disableSticky
+                                component="div" id="nested-list-subheader">
                                 <Typography variant="h4">
-                                    {trans("you_have_created", {value: "77"})}
+                                    {trans("you_have_created", { value: "77" })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={trans("on_moderation", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={trans("no_responses", {value: 0})}/>
-                        <CustomListItem iconSrc={"/images/gem.png"} title={trans("have_responses", {value: 81})}/>
-                        <CustomListItem iconSrc={"/images/offer_made.png"} title={trans("offer_made", {value: 1})}/>
-                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", {value: 4})}/>
-                        <CustomListItem iconSrc={"/images/money_with_wings.png"} title={trans("pending_payment", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/rocket.png"} title={trans("completed", {value: 6})}/>
+                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={trans("on_moderation", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={trans("no_responses", { value: 0 })} />
+                        <CustomListItem iconSrc={"/images/gem.png"} title={trans("have_responses", { value: 81 })} />
+                        <CustomListItem iconSrc={"/images/offer_made.png"} title={trans("offer_made", { value: 1 })} />
+                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", { value: 4 })} />
+                        <CustomListItem iconSrc={"/images/money_with_wings.png"} title={trans("pending_payment", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/rocket.png"} title={trans("completed", { value: 6 })} />
                     </List>
                 </nav>
             </CustomTabPanel>
@@ -146,23 +146,22 @@ export default function Content({data}: { data: string }) {
                 <nav>
                     <List
                         disablePadding
-
                         subheader={
-                            <ListSubheader sx={{padding: "0", "color": "common.white"}}
-                                           component="div" id="nested-list-subheader-2">
+                            <ListSubheader sx={{ padding: "0", "color": "common.white" }}
+                                component="div" id="nested-list-subheader-2">
                                 <Typography variant="h4">
-                                    {trans("you_have_responded", {value: "777"})}
+                                    {trans("you_have_responded", { value: "777" })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/dizzy.png"} title={trans("response_sent", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/fire.png"} title={trans("response_denied", {value: 0})}/>
-                        <CustomListItem iconSrc={"/images/fish_cake.png"} title={trans("an_offer_came_in", {value: 81})}/>
-                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", {value: 1})}/> 
-                        <CustomListItem iconSrc={"/images/dancer.png"} title={trans("on_inspection", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", {value: 2})}/>
-                        <CustomListItem iconSrc={"/images/star.png"} title={trans("task_accomplished", {value: 2})}/>
+                        <CustomListItem iconSrc={"/images/dizzy.png"} title={trans("response_sent", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/fire.png"} title={trans("response_denied", { value: 0 })} />
+                        <CustomListItem iconSrc={"/images/fish_cake.png"} title={trans("an_offer_came_in", { value: 81 })} />
+                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", { value: 1 })} />
+                        <CustomListItem iconSrc={"/images/dancer.png"} title={trans("on_inspection", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/star.png"} title={trans("task_accomplished", { value: 2 })} />
                     </List>
                 </nav>
             </CustomTabPanel>

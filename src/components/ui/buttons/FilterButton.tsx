@@ -18,6 +18,7 @@ const FilterButton = (props: PropsWithChildren) => {
                 borderRadius: "25px",
                 padding: "3px 20px",
                 color: "common.black",
+                fontFamily:"InterSemiBold",
                 fontWeight: "600",
                 fontSize: "16px",
                 lineHeight: "normal"

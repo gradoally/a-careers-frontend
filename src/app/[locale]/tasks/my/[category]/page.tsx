@@ -1,18 +1,18 @@
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 
 import Shell from "@/components/layout/Shell";
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 import AppBar from "@/components/layout/app-bar";
-import {Stack} from "@mui/material";
+import { Stack } from "@mui/material";
 import BackButton from "@/components/ui/buttons/BackButton";
 import Typography from "@mui/material/Typography";
 
-import {NextLinkComposed} from "@/components/Link";
+import { NextLinkComposed } from "@/components/Link";
 import TaskList from "@/components/TaskList";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-import {unstable_setRequestLocale} from "next-intl/server";
-import {locales} from "@/config/config";
-import {Order} from "@/openapi/client";
+import { unstable_setRequestLocale } from "next-intl/server";
+import { locales } from "@/config/config";
+import { Order } from "@/openapi/client";
 
 type Props = {
     params: {
@@ -22,10 +22,10 @@ type Props = {
 
 
 export function generateStaticParams() {
-    return locales.map((locale) => ({locale}));
+    return locales.map((locale) => ({ locale }));
 }
 
-const Page = ({params: {locale}}: Props) => {
+const Page = ({ params: { locale } }: Props) => {
 
     // Enable static rendering
     unstable_setRequestLocale(locale);
@@ -61,11 +61,11 @@ const Page = ({params: {locale}}: Props) => {
     const header = (
         <AppBar>
             <Stack direction="row" alignItems="center" spacing={"10px"}>
-                <BackButton component={NextLinkComposed} to={"/tasks/my"}/>
+                <BackButton component={NextLinkComposed} to={"/tasks/my"} />
                 <Typography
                     variant="h5"
-                    sx={{color: "info.main"}}>
-                    {trans("on_moderation", {value: "777"})}
+                    sx={{ color: "info.main" }}>
+                    {trans("on_moderation", { value: "777" })}
                 </Typography>
             </Stack>
         </AppBar>
@@ -75,7 +75,7 @@ const Page = ({params: {locale}}: Props) => {
             <div className="pb-5 pt-[15px]">
                 <Suspense fallback={<div>Loading...</div>}>
                     {data ? (
-                        <TaskList data={data}/>
+                        <TaskList data={data} />
                     ) : (
                         <CenteredContainer>
                             {tc("no_more_data")}

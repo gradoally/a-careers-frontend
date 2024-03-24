@@ -1,0 +1,81 @@
+@font-face {
+  font-family: "SFProThin";
+  src: url("./fonts/SFPro/SFProDisplay-Thin.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SFProLight";
+  src: url("./fonts/SFPro/SFProDisplay-Light.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SFProRegular";
+  src: url("./fonts/SFPro/SFProDisplay-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SFProSemiBold";
+  src: url("./fonts/SFPro/SFProDisplay-Semibold.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SFProBold";
+  src: url("./fonts/SFPro/SFProDisplay-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SFProRoundedBold";
+  src: url("./fonts/SFPro/SF-Pro-Rounded-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "InterThin";
+  src: url("./fonts/Inter/Inter-Thin.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+  line-height: normal;
+}
+
+@font-face {
+  font-family: "InterLight";
+  src: url("./fonts/Inter/Inter-Light.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+  line-height: normal;
+}
+
+@font-face {
+  font-family: "InterRegular";
+  src: url("./fonts/Inter/Inter-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+  line-height: normal;
+}
+
+@font-face {
+  font-family: "InterSemiBold";
+  src: url("./fonts/Inter/Inter-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+  line-height: normal;
+}
+
+@font-face {
+  font-family: "InterBold";
+  src: url("./fonts/Inter/Inter-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+  line-height: normal;
+}

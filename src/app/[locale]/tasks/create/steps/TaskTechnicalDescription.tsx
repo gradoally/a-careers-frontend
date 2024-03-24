@@ -4,19 +4,17 @@ import Typography from "@mui/material/Typography";
 
 import { StyledInputMultiline } from "@/components/forms/fields/StyledInputMultiline";
 
-import { IForm } from "./stepper";
+import { IForm } from "../stepper";
+import { TaskFormWrapper } from "@/components/Task/form.component";
 
 const TechnicalTask = ({ formik, error }: IForm) => {
     const trans = useTranslations('tasks')
     return (
-        <Stack direction="column" spacing="10px" className="h-full">
-            <div className="p-5 mb-4">
-                <Typography variant="h4">{trans("technical_task")}</Typography>
-                <Typography component="div" variant="caption" sx={{ marginTop: "10px" }}>
-                    {trans("technical_task_description")}
-                </Typography>
-            </div>
-
+        <Stack direction="column" className="h-full">
+            <TaskFormWrapper
+                title={trans("technical_task")}
+                description={trans("technical_task_description")}
+            />
             <div className="grow pb-2.5">
                 <StyledInputMultiline
                     error={error ? true : false}

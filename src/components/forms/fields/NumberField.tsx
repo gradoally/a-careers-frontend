@@ -50,7 +50,8 @@ const NumberField = (
                    id={props.id}
                    name={props.name}
                    placeholder={placeholder}
-                   className="bg-primary focus:outline-none"
+                   className="bg-primary focus:outline-none !text-[21px]"
+                   suffix=' 💎'
             />
             {!disableUnderline && <Divider className="hover-opacity transition-opacity"/>}
 

@@ -24,10 +24,11 @@ import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 
 import CrossIcon from "@/assets/Cross.svg";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 export function Skill(props: { name: string; remove?: () => void }) {
     return <div className="flex shrink-0 w-auto bg-[#3A4362] font-[400] px-3 py-1 !ml-0 mb-[2px] rounded-[20px]">
-        <span className="text-[#FFFFFF] text-[0.9rem]">{props.name}</span>
+        <span className="text-[#FFFFFF] text-[12px] !font-InterLight !font-[600]">{props.name}</span>
         {props.remove && <Image src={CrossIcon} className="block ml-2" alt="close" onClick={(props.remove)} />}
     </div>
 }
@@ -53,13 +54,24 @@ const ProfileInput = (
             helperText={helperText}
             type="text"
             label={label}
-            InputProps={{ sx: { opacity: "40%", 'fontWeight': "500", 'fontSize': "12px", padding: "10px 0" } }}
+            InputProps={{
+                sx: {
+                    opacity: "40%",
+                    'fontWeight': "500",
+                    'fontSize': "12px",
+                    padding: "10px 0"
+                }
+            }}
+            InputLabelProps={{
+                sx: {
+                    "color": "#ffffff !important"
+                }
+            }}
             value={value}
             onChange={onChange}
             fullWidth
             id={id}
             multiline={multiline}
-            variant="standard"
             readonly={readonly}
         />
     )
@@ -90,6 +102,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
     const locale = useLocale();
     const telegram = useTelegram();
     const trans = useTranslations();
+    const { config } = useAppContext();
 
     const [skill, setSkill] = useState("");
 
@@ -113,7 +126,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                 website: data?.website ?? "",
                 portfolio: data?.portfolio ?? "",
                 resume: data?.resume ?? "",
-                specialization: data?.specialization ? data.specialization.split(",") : []
+                specialization: data?.specialization ? data.specialization.split(",") : (config?.categories || []).map(ca => ca?.code || "")
             },
             validationSchema: toFormikValidationSchema(schema),
             onSubmit: async (values: UserFormValues) => {
@@ -148,7 +161,7 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
 
     return (
         <BaseForm noValidate onSubmit={formik.handleSubmit}>
-            <Stack spacing={"30px"} sx={{ marginBottom: "150px" }}>
+            <Stack spacing={"20px"}>
                 <SelectField variant="standard"
                     label={trans("profile.profile_language")}
                     id="language"
@@ -194,17 +207,16 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                     multiline={true}
                     onChange={formik.handleChange}
                 />
-
-                <div>
-                    <Typography variant="h4">{trans("profile.freelancer_profile")}</Typography>
+            </Stack>
+            <Stack spacing={"20px"} sx={{ marginBottom: "50px" }}>
+                <div className="!mt-10">
+                    <Typography className="!font-InterSemiBold !font-[800]">{trans("profile.freelancer_profile")}</Typography>
                     <Typography sx={{ marginTop: "5px", fontHeight: "20px" }} variant="body2">
                         {trans("profile.fill_if_you_want_make_response")}
                     </Typography>
                 </div>
-
                 <ProfileInput label={`${trans("profile.website_link")} (${trans("common.optional")})`}
                     value={formik.values.website}
-
                     error={checkError(formik, {}, "website")}
                     helperText={getError(formik, {}, "website")}
                     id="website"
@@ -235,17 +247,17 @@ const ProfileForm = ({ data, onSubmit }: Props) => {
                         {formik.values?.specialization && formik.values.specialization.map((e: string, i: number) => (
                             <Skill key={i} name={e} remove={() => removeSpecialization(i)} />
                         ))}
-                        <input
+                        {/*<input
                             onChange={(event) => setSkill(event.currentTarget.value)}
                             value={skill}
                             className="bg-primary flex-shrink outline-none text-grey font-[400]"
                             autoFocus={true}
-                        />
+                        />*/}
                     </Stack>
                 </div>
             </Stack>
 
-            <Footer className="fixed bottom-0 left-0 bg-primary">
+            <Footer className="left-0 bg-primary">
                 <FooterButton
                     type="submit"
                     className="w-full"

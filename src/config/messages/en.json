@@ -25,7 +25,7 @@
   },
   "form": {
     "required": {
-      "default": "This field required",
+      "default": "This field is required",
       "email": "Please fill your email"
     },
     "validation": {
@@ -75,7 +75,7 @@
   "tasks": {
     "task_successfully_created": "Task successfully created",
     "first_step": "First step",
-    "step_x_from_x": "Step {value} from {from}",
+    "step_x_from_x": "Step {value} of {from}",
     "make_a_response": "Make a response",
 
     "task":"Task",
@@ -103,11 +103,11 @@
     "an_offer_came_in": "An offer came in · {value}",
     "on_inspection": "On inspection · {value}",
     "choose_specialist":"Choose a specialist",
-    "select_language": "Select task language",
+    "select_language": "Select task language of the task",
     "task_accomplished": "Task accomplished · {value}",
     "select_checking_period":"Task Checking Period",
     "checking_period_description":"Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
-    "select_category": "Select category",
+    "select_category": "Select a category",
     "send_task_to_blockchain": "Send a task to the blockchain",
 
     "what_needs_to_be_done": "What needs to be done?",
@@ -134,7 +134,10 @@
     "response_comment": "Response Comment",
     "make_response_comment_description": "Add a detailed description of your offer and potential customer benefits"
   },
-
+  "task":{
+    "category":"Category {value}",
+    "createdAt":"Created on {date} in {language}"
+  },
   "profile": {
     "profile_successfully_connected": "Profile successfully connected",
     "profile_successfully_updated": "Profile successfully updated",
@@ -155,7 +158,7 @@
     "edit": "Edit profile",
 
     "task_result": "{payed} tasks payed, {completed} completed",
-    "task_history": "Task history",
+    "task_history": "Task History",
     "specialization": "Specialization",
     "resume": "Resume",
     "portfolio": "Portfolio"

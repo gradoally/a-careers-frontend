@@ -2,45 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "InterThin";
-  src: url("./fonts/Inter/Inter-Thin.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-  line-height: normal;
-}
-
-@font-face {
-  font-family: "InterLight";
-  src: url("./fonts/Inter/Inter-Light.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-  line-height: normal;
-}
-
-@font-face {
-  font-family: "InterRegular";
-  src: url("./fonts/Inter/Inter-Regular.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-  line-height: normal;
-}
-
-@font-face {
-  font-family: "InterSemiBold";
-  src: url("./fonts/Inter/Inter-SemiBold.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-  line-height: normal;
-}
-
-@font-face {
-  font-family: "SFProRoundedBold";
-  src: url("./fonts/SFPro/SF-Pro-Rounded-Bold.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   --divider-gradient: linear-gradient(
     90deg,

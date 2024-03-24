@@ -9,7 +9,7 @@ const ReadMoreCollapse = ({className = "", text, read_more, hide,}: {
     read_more: string,
     hide: string
 }) => {
-    const [isCollapsed, setIsCollapsed] = useState(true);
+    const [isCollapsed, setIsCollapsed] = useState(false);
     const toggleReadMore = () => {
         setIsCollapsed(!isCollapsed);
     };
@@ -27,9 +27,9 @@ const ReadMoreCollapse = ({className = "", text, read_more, hide,}: {
             }} className={
                 clsx("w-full text-right", isCollapsed && "absolute bottom-0 ")
             }>
-                <div className="text-secondary leading-5 text-xs" onClick={toggleReadMore}>
+                {/*<div className="text-secondary leading-5 text-xs" onClick={toggleReadMore}>
                     {isCollapsed ? read_more : hide}
-                </div>
+        </div>*/}
             </div>
         </div>
     )

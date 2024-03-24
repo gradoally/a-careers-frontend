@@ -54,9 +54,6 @@ const EditComponent = ({ data }: { data: IUser }) => {
                 specialization: values.specialization.join("##"),
                 language: values.language,
             };
-
-            console.log(userContentData);
-            console.log(buildUserContent(userContentData));
             toggleTxProgress(true);
             await sendChangeContent("0.5", 0, buildUserContent(userContentData));
             await callback({
@@ -125,7 +122,7 @@ const Content = () => {
     return (
         <Shell header={header}>
             <div className="p-5">
-                <div className="flex justify-center mb-[30px]">
+                <div className="flex justify-center py-[20px]">
                     <Image src={ProfileIcon} alt="profile" width={90} height={90} />
                 </div>
                 <EditComponent data={user.data} />

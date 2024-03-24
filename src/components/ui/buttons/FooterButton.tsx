@@ -6,18 +6,19 @@ interface Props extends ButtonProps {
 
 export default function FooterButton({ children, ...props }: Props) {
     return (
-        <Button color={"secondary"}
+        <Button
+            color={"secondary"}
             variant="contained"
             sx={{
+                width: "100%",
                 color: "common.black",
-                // width: "100%",
                 height: "40px",
                 borderRadius: "5px",
-                fontSize: "16px",
                 textAlign: "center",
-                fontWeight: "800",
-                width: "100%",
+                fontSize: "16px",
                 lineHeight: "24px",
+                textTransform:"none",
+                fontFamily:"InterBold",
                 "&.Mui-disabled": {
                     "backgroundColor": "rgb(69, 174, 245,0.4)"
                 }

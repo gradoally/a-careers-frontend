@@ -126,6 +126,10 @@
     "response_comment": "Комментарий к отклику",
     "make_response_comment_description": "Добавьте подробное описание вашего предложения и потенциальные преимущества для заказчиков"
   },
+  "task":{
+    "category":"Категория {value}",
+    "createdAt":"Создано {date} в {language}"
+  },
   "profile": {
     "profile_successfully_connected": "Профиль успешно подключнено",
     "profile_successfully_updated": "Профиль успешно обновлено",

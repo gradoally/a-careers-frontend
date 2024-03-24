@@ -27,17 +27,32 @@ interface Props {
     dividerClassName?: string;
     shrink?: boolean;
     disableUnderline?: boolean;
+    paddingBottom?: string;
 }
 
 const SelectField = (
     {
-        id, label, name, children, error, variant = "standard", helperText, required, value,
-        SelectProps = {}, onChange, className, disableUnderline = false, dividerClassName, shrink = true,
+        id,
+        label,
+        paddingBottom,
+        name,
+        children,
+        error,
+        variant = "standard",
+        helperText,
+        required,
+        value,
+        SelectProps = {},
+        onChange,
+        className,
+        disableUnderline = false,
+        dividerClassName,
+        shrink = true,
     }: Props) => {
     return (
 
         <FormControl
-            className={className}
+            className={`${className}`}
             variant={variant}
             fullWidth
             margin={'normal'}
@@ -54,8 +69,11 @@ const SelectField = (
                 label={label}
                 onChange={onChange}
                 value={value}
-                inputProps={{ sx: { paddingBottom: 0 } }}
-                MenuProps={{ sx: { "& .MuiMenu-paper": { "border": "1px solid #fff" } } }}
+                sx={{
+                    padding:"20px 0"
+                }}
+                inputProps={{ sx: { paddingBottom: paddingBottom || 0 } }}
+                MenuProps={{ sx: { "& .MuiMenu-paper": { "border": "1px solid #fff" },textTransform:"capitalize" } }}
             >
                 {children}
             </MuiSelect>

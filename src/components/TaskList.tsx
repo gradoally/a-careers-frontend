@@ -8,10 +8,10 @@ import Link from "@/components/Link";
 import StatusChip from "@/components/StatusChip";
 import { Order } from "@/openapi/client";
 
-import { convertIsoToCustomFormat } from "@/lib/utils/tools";
+import { formatDatetime } from "@/lib/helper";
 
 
-const TaskItem = ({ order }: { order: Order, locale: string }) => {
+const TaskItem = ({ order, locale }: { order: Order, locale: string }) => {
     return (
         <Link className="flex flex-col space-y-[3px] transition-colors hover:bg-gray-900 delay-200 px-5 py-2"
             sx={{
@@ -25,7 +25,7 @@ const TaskItem = ({ order }: { order: Order, locale: string }) => {
                 {order?.name}
             </div>
             <Typography component="div" variant="caption" className="!text-[10px] leading-[15px]">
-                {convertIsoToCustomFormat(order?.createdAt || "")} - {convertIsoToCustomFormat(order?.deadline || "")}
+                {formatDatetime({ date: order?.createdAt, locale })} - {formatDatetime({ date: order?.deadline, locale })}
             </Typography>
             <Typography className="font-InterLight !text-[12px] leading-[14px]">
                 💎 {order?.price}

@@ -1,23 +1,25 @@
 import { useTranslations } from "next-intl";
 
-import InputAdornment from '@mui/material/InputAdornment';
-import Typography from "@mui/material/Typography";
-import MenuItem from '@mui/material/MenuItem';
-
-import SelectField from "@/components/forms/fields/SelectField";
-import Image from "@/components/Image";
-import { IForm } from "./stepper";
 import { useAppContext } from "@/lib/provider/app.providers";
 
-export default function SelectLanguage({ formik, error }: IForm) {
-    const trans = useTranslations('tasks')
-    const tl = useTranslations('locale_switcher')
-    const { config } = useAppContext();
-    return (
-        <div className="p-5">
-            <Typography variant="h4">{trans("select_language")}</Typography>
-            <Typography variant="caption" component="div" sx={{ marginTop: "10px" }}>{trans("language")}</Typography>
+import InputAdornment from '@mui/material/InputAdornment';
+import MenuItem from '@mui/material/MenuItem';
 
+import { TaskFormWrapper } from "@/components/Task/form.component";
+import SelectField from "@/components/forms/fields/SelectField";
+import Image from "@/components/Image";
+
+import { IForm } from "../stepper";
+
+export default function SelectLanguage({ formik, error }: IForm) {
+    const trans = useTranslations();
+    const { config } = useAppContext();
+
+    return (
+        <TaskFormWrapper
+            title={trans("tasks.select_language")}
+            description={trans("tasks.language")}
+        >
             <SelectField variant="standard"
                 error={error ? true : false}
                 helperText={error}
@@ -33,14 +35,15 @@ export default function SelectLanguage({ formik, error }: IForm) {
                         </InputAdornment>
                     ),
                 }}
+                className="!m-0"
                 onChange={(e) => formik.setFieldValue("language", e.target.value)}
             >
                 {config ? config?.languages?.map((e, i) => {
                     return (
-                        <MenuItem key={i} value={e.code}>{tl(e.code)}</MenuItem>
+                        <MenuItem className="!capitalize" key={i} value={e.code}>{trans(`locale_switcher.${e.code}`)}</MenuItem>
                     )
                 }) : <div />}
             </SelectField>
-        </div>
+        </TaskFormWrapper>
     )
 }

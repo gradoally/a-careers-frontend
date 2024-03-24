@@ -26,14 +26,14 @@ import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 import { checkError, getError, toastLoading, toastUpdate } from "@/lib/helper";
 
-import SelectLanguage from "./select-language";
-import SelectCategory from "./select-category";
-import Title from "./title";
-import Deadline from "./deadline";
-import Price from "./price";
-import Description from "./description";
-import TechnicalTask from "./technical_task";
-import SelectCheckingPeriod from "./period";
+import SelectLanguage from "./steps/Language";
+import SelectCategory from "./steps/Category";
+import Title from "./steps/TaskTitle";
+import Deadline from "./steps/TaskDeadline";
+import Price from "./steps/TaskPrice";
+import Description from "./steps/TaskDescription";
+import TechnicalTask from "./steps/TaskTechnicalDescription";
+import SelectCheckingPeriod from "./steps/TaskCheckingPeriod";
 
 const keys: Record<number, string> = {
     1: "language",
@@ -98,19 +98,15 @@ export default function Stepper() {
     } = useUserContract(String(user?.data?.address));
     const { orderNextIndex } = useMasterContract();
 
-    const [step, setStep] = useState<number>(1);
+    const [step, setStep] = useState<number>(6);
     const [errorMessage, setErrorMessage] = useState("");
     const [title, setTitle] = useState(trans("tasks.create"))
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
     const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
-        if (step === 1) {
-            setSubtitle(trans("tasks.first_step"))
-        } else {
-            setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 8 }))
-        }
-    }, [step])
+        setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 8 }))
+    }, [step]);
 
     const schema = z.object({
         language: z.string({ required_error: trans("form.required.default") }),
@@ -208,20 +204,20 @@ export default function Stepper() {
     }
 
     const Header = (
-    <AppBar height="70px">
+        <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
                 {step === 1 ? <div className="h-[30px] w-[30px]" /> : <BackButton onClick={handleBack} />}
                 <div className="flex-grow text-center ">
                     <div className="max-w-[200px] mx-auto">
-                        <Typography variant="body1" className="truncate">
+                        <Typography className="truncate !font-InterSemiBold">
                             {title}
                         </Typography>
-                        <Typography className="mt-[5px]" variant="caption" component="div">
+                        <Typography className="mt-[5px] !font-InterLight" variant="caption" component="div">
                             {subtitle}
                         </Typography>
                     </div>
                 </div>
-                <CloseButton style={{marginRight:"1px"}} component={NextLinkComposed} to={"/"} />
+                <CloseButton style={{ marginRight: "1px" }} component={NextLinkComposed} to={"/"} />
             </Stack>
         </AppBar>
     );
@@ -245,7 +241,7 @@ export default function Stepper() {
         ) : (
             <FooterButton
                 style={{
-                    opacity: ButtonStatus.disabled ? 0.5 : 1
+                    opacity: ButtonStatus.disabled ? 0.5 : 1,
                 }}
                 onClick={handleClick}
                 color={"secondary"}
