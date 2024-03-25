@@ -62,7 +62,7 @@ export const useAuthContext = (): IAuthContext => {
 
 export default function AuthProvider(props: React.PropsWithChildren) {
 
-    const { walletAddress } = useTonConnect();
+    const { walletAddress, connected } = useTonConnect();
     const locale = useLocale()
     const pathname = usePathname();
 
@@ -73,7 +73,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
     });
 
     async function fetchProfile() {
-        if (!walletAddress || !locale) return;
+        if (!walletAddress) return;
         //Find user profile
         setAuth({
             isLoading: true,
@@ -92,7 +92,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
                 }
                 setAuth({
                     isLoading: false,
-                    user:  res.data || null,
+                    user: res.data || null,
                     error: null
                 });
             })
@@ -107,18 +107,24 @@ export default function AuthProvider(props: React.PropsWithChildren) {
 
     useEffect(() => {
         const createProfilePath = `/${locale}/profile/create`;
-       
+     
+        if (!connected && pathname === createProfilePath)
+            redirect(`/${locale}`);
+
         if (auth.isLoading || !auth.user) return;
+
         if (!auth.user.found && pathname !== createProfilePath)
             redirect(createProfilePath);
+
         if (auth.user.found && pathname === createProfilePath)
             redirect(`/${locale}`);
-    }, [auth, walletAddress]);
+
+    }, [auth, connected]);
 
     //Fetch User Profile
     useEffect(() => {
         fetchProfile()
-    }, [walletAddress, locale]);
+    }, [connected, locale]);
 
     return (
         <AuthContext.Provider value={{ ...auth, fetchProfile: fetchProfile }}>

@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { useEffect } from "react";
 import type { ReactNode } from "react";
 
 import { useServerInsertedHTML } from "next/navigation";
@@ -11,8 +11,9 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import ThemeProvider from "@/lib/provider/theme.provider";
 import { TelegramProvider } from "@/lib/provider/telegram.provider";
 import AuthProvider from "@/lib/provider/auth.provider";
-import { BackendConfig } from "@/openapi/client";
+import { BackendConfig, Category, Language } from "@/openapi/client";
 import TransactionProgressProvider from "./txProgress.provider";
+import { config } from "process";
 
 export type AppContextType = {
     toggleDrawer: (value: boolean) => void
@@ -20,6 +21,9 @@ export type AppContextType = {
     isDrawerOpen: boolean
     isFilterOpen: boolean
     config: BackendConfig | null;
+    getCategory: (key: string) => Category | undefined;
+    getLanguage: (key: string) => Language | undefined;
+    isDesktopView: boolean;
 }
 
 type Props = {
@@ -34,6 +38,9 @@ const AppContext = React.createContext<AppContextType>({
     toggleFilter: (value: boolean) => undefined,
     isDrawerOpen: false,
     config: null,
+    getCategory: (key: string) => undefined,
+    getLanguage: (key: string) => undefined,
+    isDesktopView: false
 })
 
 // this manifest is used temporarily for development purposes
@@ -43,6 +50,7 @@ const manifestUrl =
 const AppProviders = (props: Props) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
     const [isFilterOpen, setIsFilterOpen] = React.useState(false)
+    const [isDesktopView, setDesktopView] = React.useState(false);
 
     const [{ cache, flush }] = React.useState(() => {
         const cache = createCache(props.options);
@@ -91,6 +99,16 @@ const AppProviders = (props: Props) => {
         setIsFilterOpen(value)
     }
 
+    const getCategory = (key: string): Category | undefined => {
+        if (!props.config || !props.config.categories) return;
+        return props.config.categories.find(obj => obj.key === key);
+    }
+
+    const getLanguage = (key: string): Language | undefined => {
+        if (!props.config || !props.config.languages) return;
+        return props.config.languages.find(obj => obj.key === key);
+    }
+
     const memoValue = React.useMemo(
         () => ({
             isFilterOpen,
@@ -98,10 +116,18 @@ const AppProviders = (props: Props) => {
             toggleDrawer,
             toggleFilter,
             config: props.config,
+            getCategory,
+            getLanguage,
+            isDesktopView
         }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [isDrawerOpen, isFilterOpen]
-    )
+        [isDrawerOpen, isFilterOpen, isDesktopView]
+    );
+
+
+    useEffect(() => {
+        setDesktopView(document.body.clientWidth >= 720);
+    }, []);
 
     return (
         <TelegramProvider>

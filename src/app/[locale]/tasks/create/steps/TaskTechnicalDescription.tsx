@@ -15,11 +15,11 @@ const TechnicalTask = ({ formik, error }: IForm) => {
                 title={trans("technical_task")}
                 description={trans("technical_task_description")}
             />
-            <div className="grow pb-2.5">
+            <div className="grow">
                 <StyledInputMultiline
                     error={error ? true : false}
                     fullWidth
-                    inputProps={{ style: { height: "100%", padding: "10px 20px", overflow: "scroll" } }}
+                    inputProps={{ style: { height: "100%", padding: "10px 20px" } }}
                     multiline
                     onChange={formik.handleChange}
                     value={formik.values.technicalTask}

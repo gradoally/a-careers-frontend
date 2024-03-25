@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 
 import { useFormik } from "formik";
@@ -104,14 +104,16 @@ interface Props {
     back?: () => void;
 }
 
-const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
+const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
 
     const locale = useLocale();
     const telegram = useTelegram();
     const trans = useTranslations();
-    const { config } = useAppContext();
+    const { config, getLanguage, isDesktopView } = useAppContext();
 
     const [skill, setSkill] = useState("");
+    const [key, setKey] = useState<string | undefined>("");
+    const skillInputRef = useRef<HTMLInputElement>(null);
 
     const schema = z.object({
         //language: z.string({ required_error: trans("form.required.default") }),
@@ -126,14 +128,14 @@ const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
     const formik = useFormik(
         {
             initialValues: {
-                language: data?.language ?? locale,
+                language: getLanguage(data?.language || "")?.code || locale,
                 nickname: data?.nickname ?? "",
                 telegram: telegram.user?.username || data?.telegram || "",
                 about: data?.about ?? "",
                 website: data?.website ?? "",
                 portfolio: data?.portfolio ?? "",
                 resume: data?.resume ?? "",
-                specialization: data?.specialization && action === "update" ? data.specialization.split(",") : (config?.categories || []).map(ca => ca?.code || "")
+                specialization: data?.specialization ? data.specialization.split(",") : []
             },
             validationSchema: toFormikValidationSchema(schema),
             onSubmit: async (values: UserFormValues) => {
@@ -150,11 +152,13 @@ const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
         },
     )
 
-    const setSpecialization = () => {
-        if (!skill) return;
-        formik.values.specialization.push(skill);
+    const setSpecialization = (custom?: string) => {
+        const newSkill = skill || custom;
+        if (!newSkill) return;
+        formik.values.specialization.push(newSkill);
         formik.setFieldValue("specialization", [...formik.values.specialization]);
         setSkill("");
+        skillInputRef.current && (skillInputRef.current.focus());
     }
 
     const removeSpecialization = (index: number) => {
@@ -166,6 +170,26 @@ const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
         formik.setFieldValue("telegram", telegram.user?.username || '');
     }, [telegram]);
 
+    useEffect(() => {
+        if ((!key || key === "Enter") && skill) {
+            setSpecialization();
+            setSkill("");
+            setKey("Done");
+        }
+    }, [skill, key]);
+
+    useEffect(() => {
+        if (!skillInputRef.current) return;
+        function handleClick(e: any) {
+            setKey(e.key);
+        }
+        skillInputRef.current.addEventListener('keydown', handleClick);
+        () => {
+            if (!skillInputRef.current) return;
+            skillInputRef.current.removeEventListener('keydown', handleClick)
+        }
+    }, []);
+
     const header = (
         <AppBar height="60px">
             {action === "update" ? <Stack direction="row" alignItems="center" spacing={"10px"}>
@@ -175,7 +199,7 @@ const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
                     sx={{ color: "info.main" }}>
                     {title}
                 </Typography>
-            </Stack>: <CenteredContainer>
+            </Stack> : <CenteredContainer>
                 <Typography variant="h5" sx={{ color: "info.main" }}>{title}</Typography>
             </CenteredContainer>}
         </AppBar>
@@ -229,7 +253,7 @@ const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
                         id="telegram"
                         name="telegram"
                         onChange={formik.handleChange}
-                        readonly={true}
+                        readonly={!isDesktopView}
                     />
                     <ProfileInput label={trans("profile.nickname")}
                         error={checkError(formik, {}, "nickname")}
@@ -280,19 +304,35 @@ const ProfileForm = ({ data, onSubmit, action, title,back }: Props) => {
                         multiline={true}
                         onChange={formik.handleChange} />
 
-                    <div>
+                    <div
+                        onClick={() => {
+                            skillInputRef.current && (skillInputRef.current.focus());
+                        }}
+                    >
                         <Typography variant="caption">{trans("profile.specialization")} ({trans("common.optional")})</Typography>
                         <Stack spacing={1} alignItems="center" direction="row" className="mt-2 py-2 gap-2 flex-wrap">
-                            <AddButton onClick={setSpecialization} />
+                            <AddButton onClick={() => setSpecialization()} />
                             {formik.values?.specialization && formik.values.specialization.map((e: string, i: number) => (
                                 <Skill key={i} name={e} remove={() => removeSpecialization(i)} />
                             ))}
-                            {/*<input
-                            onChange={(event) => setSkill(event.currentTarget.value)}
-                            value={skill}
-                            className="bg-primary flex-shrink outline-none text-grey font-[400]"
-                            autoFocus={true}
-                        />*/}
+                            <div className="flex-1">
+                                <input
+                                    ref={skillInputRef}
+                                    onChange={(event) => setSkill(event.currentTarget.value)}
+                                    value={skill}
+                                    className="bg-primary flex-shrink outline-none text-grey font-[400]"
+                                    autoFocus={true}
+                                    list="programmingLanguages"
+                                    autoComplete="on"
+                                />
+                                <datalist id="programmingLanguages" onClick={console.log}>
+                                    {config?.categories && config.categories.map((cat,indx) => <option
+                                        key={indx}
+                                        value={cat.code}
+                                    >{cat.code}
+                                    </option>)}
+                                </datalist>
+                            </div>
                         </Stack>
                     </div>
                 </Stack>

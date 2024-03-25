@@ -1,5 +1,7 @@
 "use client"
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -17,6 +19,7 @@ import { useTonConnect } from "@/hooks/useTonConnect";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
 import { useAppContext } from "@/lib/provider/app.providers";
+import { toast } from "@/lib/helper";
 
 import Divider from "@/components/ui/Divider";
 import CloseButton from "@/components/ui/buttons/CloseButton";
@@ -36,11 +39,37 @@ interface Props {
 }
 
 export default function DrawerContent({ routes }: Props) {
-    const { walletAddress } = useTonConnect()
+    const { walletAddress, connected } = useTonConnect();
+    const [tonConnectUI] = useTonConnectUI();
     const { user } = useAuthContext()
     const { isDrawerOpen, toggleDrawer } = useAppContext()
     const pathname = usePathname();
+    const router = useRouter();
     const trans = useTranslations("common");
+    const pathRef = useRef<string | null>(null);
+
+    const goTo = async (to: string, auth: boolean) => {
+        if (!auth || (auth && connected)) {
+            router.push(to);
+            toggleDrawer(false);
+            return;
+        }
+        if (auth && !connected) {
+            try {
+                pathRef.current = to;
+                await tonConnectUI.openModal();
+            } catch (e) {
+                toast(trans("errors.something_went_wrong_when_try_to_connect_ton_wallet"), 'warning')
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (!connected || !pathRef.current) return;
+        toggleDrawer(false);
+        router.push(pathRef.current);
+        pathRef.current = null;
+    }, [connected]);
 
     const header = (
         <AppBar>
@@ -119,16 +148,15 @@ export default function DrawerContent({ routes }: Props) {
                                                     color: "text.primary"
                                                 }
                                             }}
-                                            onClick={() => toggleDrawer(false)}
-                                            component={NextLinkComposed}
-                                            to={e.to}
-                                            selected={isSelectedRoute}>
+                                            onClick={() => goTo(e.to, e.secure)}
+                                            selected={isSelectedRoute}
+                                        >
                                             <ListItemText
                                                 sx={{ textAlign: "center" }}
                                                 primaryTypographyProps={{
                                                     "color": isSelectedRoute ? "text.primary" : "text.secondary",
-                                                    fontFamily:"InterRegular",
-                                                    "fontWeight":"700 !important"
+                                                    fontFamily: "InterRegular",
+                                                    "fontWeight": "700 !important"
                                                 }}
                                                 primary={e.label} />
                                         </ListItemButton>

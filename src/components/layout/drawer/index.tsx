@@ -9,7 +9,7 @@ const Drawer = () => {
     const locale = useLocale();
 
     const routes = [
-        { "label": trans("create"), "to": "/tasks/create", secure: false },
+        { "label": trans("create"), "to": "/tasks/create", secure: true },
         { "label": trans("find"), "to": "/", secure: false },
         { "label": trans("my"), "to": "/tasks/my", secure: true },
     ]

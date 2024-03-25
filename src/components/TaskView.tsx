@@ -11,6 +11,7 @@ import { Order } from "@/openapi/client";
 import { formatDatetime } from "@/lib/helper";
 import { truncateMiddleText } from "@/lib/utils/tools";
 import { getUserStatus } from "@/services/profile";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 const StackContainer = ({ primary, secondary }: {
     primary: string;
@@ -37,7 +38,6 @@ const Customer = (props: {
 }) => {
 
     const trans = useTranslations();
-
     const [status, setStatus] = useState<{ freelancer: number; customer: number }>({ freelancer: 0, customer: 0 })
 
     useEffect(() => {
@@ -89,6 +89,8 @@ const TaskView = ({ data }: { data: Order }) => {
     const trans = useTranslations("");
     const locale = useLocale();
 
+    const { getCategory, getLanguage } = useAppContext();
+
     let telegram = data?.customer?.telegram
     if (telegram && telegram.startsWith("@")) {
         telegram.slice(1)
@@ -109,7 +111,7 @@ const TaskView = ({ data }: { data: Order }) => {
                     </CopyContainer>
                 )}
             </Stack>
-            <StackContainer primary={data?.language ?? ""} secondary={trans("tasks.language")} />
+            <StackContainer primary={trans(`locale_switcher.${getLanguage(data?.language || "")?.code}`)} secondary={trans("tasks.language")} />
             <StackContainer primary={data?.description ?? ""} secondary={trans("common.description")} />
             <StackContainer primary={data?.technicalTask ?? ""} secondary={trans("common.technical_task")} />
             <StackContainer
@@ -117,8 +119,12 @@ const TaskView = ({ data }: { data: Order }) => {
                 secondary={trans("common.deadline")} />
             <Divider className="!my-3" />
             <Stack className="!text-[10px] !font-InterRegular !leading-5 opacity-[40%]" direction="column">
-                <div className="truncate w-[300px]">{trans("task.createdAt", { date: formatDatetime({ date: data?.createdAt, locale: locale }), language: data?.language })}</div>
-                <div className="truncate w-[200px] mt-1">{trans("task.category", { value: data?.category || "" })}</div>
+                <div className="truncate w-[300px]">{trans("task.createdAt", {
+                    date: formatDatetime({ date: data?.createdAt, locale: locale }),
+                    language:trans(`locale_switcher.${getLanguage(data?.language || "")?.code}`)
+                })}
+                </div>
+                <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(data?.category || "")?.code })}</div>
             </Stack>
             {
                 data?.customer && <Customer
