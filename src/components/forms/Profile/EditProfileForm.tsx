@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-import { useTxProgress } from "@/lib/provider/txProgress.provider";
+import { useScreen } from "@/lib/provider/screen.provider";
 import { useUserContract } from "@/hooks/useUserContract";
 import { useTonClient } from "@/hooks/useTonClient";
 
@@ -16,7 +16,7 @@ export default function EditProfileForm(props: {
 
     const trans = useTranslations()
     const { client } = useTonClient();
-    const { toggleTxProgress } = useTxProgress();
+    const { toggleTxProgress, toggleFailScreen } = useScreen();
 
     const {
         sendChangeContent,
@@ -39,7 +39,7 @@ export default function EditProfileForm(props: {
                 website: values.website,
                 portfolio: values.portfolio,
                 resume: values.resume,
-                specialization: values.specialization.join("##"),
+                specialization: values.specialization.join(","),
                 language: values.language,
             };
             toggleTxProgress(true);
@@ -50,7 +50,8 @@ export default function EditProfileForm(props: {
             })
         } catch (e) {
             console.log("error occured!");
-            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
+            //await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
+            toggleFailScreen(true);
         }
         toggleTxProgress(false);
     };

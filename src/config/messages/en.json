@@ -70,7 +70,8 @@
     "responses": "Responses",
     "optional": "optional",
     "profile": "Profile",
-    "task":"Task"
+    "task":"Task",
+    "back_to_app":"Back to the app"
   },
   "tasks": {
     "task_successfully_created": "Task successfully created",

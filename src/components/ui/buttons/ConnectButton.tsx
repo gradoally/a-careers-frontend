@@ -11,11 +11,13 @@ import { CHAIN } from "@tonconnect/protocol";
 
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { toast } from "@/lib/helper";
+import { useScreen } from '@/lib/provider/screen.provider';
 
 const ConnectButton = ({ text }: { text: string }) => {
     const trans = useTranslations();
     const [tonConnectUI] = useTonConnectUI();
     const { connected, network } = useTonConnect();
+    const { toggleFailScreen } = useScreen();
 
     useEffect(() => {
         if (!network) return;
@@ -30,7 +32,8 @@ const ConnectButton = ({ text }: { text: string }) => {
         try {
             await tonConnectUI.openModal();
         } catch (e) {
-            toast(trans("errors.something_went_wrong_when_try_to_connect_ton_wallet"), 'warning')
+            //toast(trans("errors.something_went_wrong_when_try_to_connect_ton_wallet"), 'warning')
+            toggleFailScreen(true);
         }
     };
 
@@ -53,10 +56,10 @@ const ConnectButton = ({ text }: { text: string }) => {
                         borderRadius: "25px",
                         padding: "5px 12px 6px 14px",
                         color: "common.black",
-                        fontFamily:"InterSemiBold",
+                        fontFamily: "InterSemiBold",
                         fontWeight: "600",
                         fontSize: "16px",
-                        lineHeight:"normal"
+                        lineHeight: "normal"
                     }}
                     color="secondary" variant="contained"
                 >

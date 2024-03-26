@@ -68,7 +68,8 @@
     "created": "Созданные",
     "responses": "Отклики",
     "task":"ЗАДАЧА",
-    "optional":"Необязательный"
+    "optional":"Необязательный",
+    "back_to_app":"Вернуться в приложение"
   },
   "tasks": {
     "task_successfully_created": "Задача успешно создано",

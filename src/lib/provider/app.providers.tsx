@@ -11,8 +11,10 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import ThemeProvider from "@/lib/provider/theme.provider";
 import { TelegramProvider } from "@/lib/provider/telegram.provider";
 import AuthProvider from "@/lib/provider/auth.provider";
+import ScreenProvider from "@/lib/provider/screen.provider";
+
 import { BackendConfig, Category, Language } from "@/openapi/client";
-import TransactionProgressProvider from "./txProgress.provider";
+
 import { config } from "process";
 
 export type AppContextType = {
@@ -133,15 +135,15 @@ const AppProviders = (props: Props) => {
         <TelegramProvider>
             <AppContext.Provider value={memoValue}>
                 <TonConnectUIProvider manifestUrl={manifestUrl}>
-                    <AuthProvider>
-                        <TransactionProgressProvider>
-                            <CacheProvider value={cache}>
-                                <ThemeProvider>
+                    <CacheProvider value={cache}>
+                        <ThemeProvider>
+                            <ScreenProvider>
+                                <AuthProvider>
                                     {props.children}
-                                </ThemeProvider>
-                            </CacheProvider>
-                        </TransactionProgressProvider>
-                    </AuthProvider>
+                                </AuthProvider>
+                            </ScreenProvider>
+                        </ThemeProvider>
+                    </CacheProvider>
                 </TonConnectUIProvider>
             </AppContext.Provider>
         </TelegramProvider>

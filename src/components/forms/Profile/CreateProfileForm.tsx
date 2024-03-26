@@ -11,6 +11,7 @@ import { UserContentData, buildUserContent } from '@/contracts/User';
 import ProfileForm, { UserFormValues } from "@/components/forms/Profile/ProfileForm";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
+import { useScreen } from "@/lib/provider/screen.provider";
 
 export default function CreateProfile() {
 
@@ -20,6 +21,7 @@ export default function CreateProfile() {
     const locale = useLocale();
     const trans = useTranslations();
     const { client } = useTonClient();
+    const { toggleFailScreen } = useScreen();
 
     const createUserProfile = async (values: UserFormValues, callback: (props: {
         isError: boolean, message?: string | null
@@ -50,10 +52,11 @@ export default function CreateProfile() {
                 isError: false,
                 message: trans("profile.profile_successfully_connected"),
             });
-            //await fetchProfile();
-            //router.push(`/${locale}`);
+            await fetchProfile();
+            router.push(`/${locale}`);
         } catch (e) {
-            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
+            //await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") });
+            toggleFailScreen(true);
         }
     };
 

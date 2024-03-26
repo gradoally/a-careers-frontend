@@ -12,7 +12,7 @@ import { z } from "zod";
 import { toNano } from "@ton/core";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
-import { useTxProgress } from "@/lib/provider/txProgress.provider";
+import { useScreen } from "@/lib/provider/screen.provider";
 import { buildOrderContent, OrderContentData } from "@/contracts/Order";
 import { useMasterContract } from "@/hooks/useMasterContract";
 import { useTonClient } from "@/hooks/useTonClient";
@@ -94,7 +94,7 @@ export default function Stepper() {
     const trans = useTranslations();
     const { user } = useAuthContext();
     const { client } = useTonClient();
-    const { toggleTxProgress } = useTxProgress();
+    const { toggleTxProgress } = useScreen();
 
     const {
         sendCreateOrder
