@@ -70,8 +70,8 @@
     "responses": "Responses",
     "optional": "optional",
     "profile": "Profile",
-    "task":"Task",
-    "back_to_app":"Back to the app"
+    "task": "Task",
+    "back_to_app": "Back to the app"
   },
   "tasks": {
     "task_successfully_created": "Task successfully created",
@@ -79,7 +79,7 @@
     "step_x_from_x": "Step {value} of {from}",
     "make_a_response": "Make a response",
 
-    "task":"Task",
+    "task": "Task",
     "create": "Create a task",
     "find": "Find the task",
     "my": "My tasks",
@@ -103,11 +103,11 @@
     "response_denied": "Response denied · {value}",
     "an_offer_came_in": "An offer came in · {value}",
     "on_inspection": "On inspection · {value}",
-    "choose_specialist":"Choose a specialist",
+    "choose_specialist": "Choose a specialist",
     "select_language": "Select task language of the task",
     "task_accomplished": "Task accomplished · {value}",
-    "select_checking_period":"Task Checking Period",
-    "checking_period_description":"Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
+    "select_checking_period": "Task Checking Period",
+    "checking_period_description": "Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
     "select_category": "Select a category",
     "send_task_to_blockchain": "Send a task to the blockchain",
 
@@ -135,9 +135,9 @@
     "response_comment": "Response Comment",
     "make_response_comment_description": "Add a detailed description of your offer and potential customer benefits"
   },
-  "task":{
-    "category":"Category {value}",
-    "createdAt":"Created on {date} in {language}"
+  "task": {
+    "category": "Category {value}",
+    "createdAt": "Created on {date} in {language}"
   },
   "profile": {
     "profile_successfully_connected": "Profile successfully connected",
@@ -171,7 +171,17 @@
   "response": {
     "offer": "Offer",
     "profile": "Profile",
-    "offerCooperation":"Offer Cooperation",
-    "send_feedback":"Send feedback"
+    "offerCooperation": "Offer Cooperation",
+    "send_feedback": "Send feedback"
+  },
+  "screen": {
+    "error": {
+      "heading": "Something went wrong",
+      "subheading": "Please try again later"
+    },
+    "tx_progress": {
+      "heading": "Transaction is in progress",
+      "subheading": "Please do not close the app"
+    }
   }
 }

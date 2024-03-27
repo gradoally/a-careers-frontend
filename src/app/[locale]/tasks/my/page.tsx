@@ -1,5 +1,4 @@
 "use client"
-import { useMessages } from 'next-intl';
 
 import { useTranslations } from "next-intl";
 import Footer from "@/components/layout/Footer";
@@ -16,7 +15,7 @@ import CenteredContainer from "@/components/ui/CenteredContainer";
 import { NextLinkComposed } from "@/components/Link";
 import { useAuthContext } from "@/lib/provider/auth.provider";
 import { IPageProps } from "@/interfaces/page";
-import LazyLoading from '@/components/features/LazyLoading';
+import { CircularLoading } from '@/components/features/Loaders';
 
 const Page = (props: IPageProps) => {
     const { user } = useAuthContext();
@@ -44,7 +43,7 @@ const Page = (props: IPageProps) => {
 
     return (<Shell withDrawer header={header} footer={footer}>
         <div className="px-[20px] pb-[20px]">
-            <Suspense fallback={<LazyLoading />}>
+            <Suspense fallback={<CircularLoading />}>
                 {user?.data ?
                     (data ? (
                         <Content data={data} />

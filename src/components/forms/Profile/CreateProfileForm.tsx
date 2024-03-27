@@ -6,22 +6,25 @@ import { useTranslations, useLocale } from "next-intl";
 
 import { useMasterContract } from "@/hooks/useMasterContract";
 import { useTonClient } from '@/hooks/useTonClient';
+import useTxChecker from "@/hooks/useTxChecker";
+
 import { UserContentData, buildUserContent } from '@/contracts/User';
 
 import ProfileForm, { UserFormValues } from "@/components/forms/Profile/ProfileForm";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
-import { useScreen } from "@/lib/provider/screen.provider";
+
+import { getUserProfile } from "@/services/profile";
 
 export default function CreateProfile() {
 
     const { userNextIndex, address: masterContractAddr, sendCreateUser } = useMasterContract();
-    const { user, fetchProfile } = useAuthContext()
+    const { user, updateUser } = useAuthContext()
     const router = useRouter();
     const locale = useLocale();
     const trans = useTranslations();
     const { client } = useTonClient();
-    const { toggleFailScreen } = useScreen();
+    const { checkTxProgress } = useTxChecker();
 
     const createUserProfile = async (values: UserFormValues, callback: (props: {
         isError: boolean, message?: string | null
@@ -46,17 +49,23 @@ export default function CreateProfile() {
                 language: values.language,
             };
 
-            await sendCreateUser("0.3", 0, buildUserContent(userContentData));
+            await sendCreateUser("0.2", 0, buildUserContent(userContentData));
 
-            await callback({
-                isError: false,
-                message: trans("profile.profile_successfully_connected"),
+            checkTxProgress(async (successCB) => {
+                //Fetch profile
+                const profileRes = await getUserProfile({ address: user?.data?.userAddress || "", locale });
+                if (profileRes.data?.found) {
+                    successCB();
+                    await callback({
+                        isError: false,
+                        message: trans("profile.profile_successfully_connected"),
+                    });
+                    updateUser(profileRes.data);
+                    router.push(`/${locale}`);
+                }
             });
-            await fetchProfile();
-            router.push(`/${locale}`);
         } catch (e) {
-            //await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") });
-            toggleFailScreen(true);
+            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") });
         }
     };
 

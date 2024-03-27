@@ -16,7 +16,7 @@ import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 import Shell from "@/components/layout/Shell";
-import LazyLoading from "@/components/features/LazyLoading";
+import { CircularLoading } from "@/components/features/Loaders";
 import Content from "./page.content";
 
 import { Order } from "@/openapi/client";
@@ -136,7 +136,7 @@ const Page = ({ params: { locale, id } }: Props) => {
     return (
         <Shell withDrawer header={header} footer={footer}>
             <div className="px-[20px] pb-[20px]">
-                {task.loading ? <LazyLoading /> : <Content
+                {task.loading ? <CircularLoading /> : <Content
                     isCustomer={task.content?.customer?.index !== user?.data?.index}
                     tab={value} changeTab={handleChange}
                     task={task.content}

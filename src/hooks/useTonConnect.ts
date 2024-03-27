@@ -1,15 +1,33 @@
-import { CHAIN, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import {
+  CHAIN,
+  useIsConnectionRestored,
+  useTonConnectUI,
+  useTonWallet,
+} from "@tonconnect/ui-react";
 import { toUserFriendlyAddress } from "@tonconnect/sdk";
 import { Sender, SenderArguments } from "@ton/core";
+import { useEffect } from "react";
 
 export function useTonConnect(): {
   sender: Sender;
   connected: boolean | undefined;
+  connectionChecked: boolean;
   walletAddress: string | null;
   network: CHAIN | null;
 } {
   const [tonConnectUI] = useTonConnectUI();
+  const connectionRestored = useIsConnectionRestored();
+
   const wallet = useTonWallet();
+
+  useEffect(() => {
+    console.log(`Connection restored: ${connectionRestored}`);
+  }, [connectionRestored]);
+
+  useEffect(() => {
+    console.log(`Connected: ${tonConnectUI.connected}`);
+  }, [tonConnectUI.connected]);
+
   return {
     sender: {
       send: async (args: SenderArguments) => {
@@ -26,6 +44,7 @@ export function useTonConnect(): {
       },
     },
     connected: tonConnectUI?.connected,
+    connectionChecked: connectionRestored,
     walletAddress: wallet
       ? toUserFriendlyAddress(wallet.account.address)
       : null,

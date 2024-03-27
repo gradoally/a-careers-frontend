@@ -1,5 +1,5 @@
 import useInfiniteScroll from "react-infinite-scroll-hook";
-import LazyLoading from "@/components/features/LazyLoading";
+import  {CircularLoading} from "@/components/features/Loaders";
 import React from "react";
 import { useTranslations } from "next-intl";
 import CenteredContainer from "@/components/ui/CenteredContainer";
@@ -23,7 +23,7 @@ const ScrollLoading = ({ isLoadingMore, isReachingEnd, setSize, size }: {
     if (isReachingEnd) return <div />
     return (
         <div ref={sentryRef} className="mt-3">
-            {isLoadingMore && <div className="h-15"><LazyLoading /></div>}
+            {isLoadingMore && <div className="h-15"><CircularLoading /></div>}
         </div>
     )
 }

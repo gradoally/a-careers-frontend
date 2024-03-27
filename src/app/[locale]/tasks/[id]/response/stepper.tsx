@@ -1,11 +1,14 @@
 "use client"
-
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useFormik, FormikProps } from "formik";
+import { z } from "zod";
 
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+
+import { toNano } from "@ton/core";
 
 import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
@@ -15,23 +18,77 @@ import CloseButton from "@/components/ui/buttons/CloseButton";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 
-import Deadline from "./deadline";
-import Price from "./price";
-import Comment from "./comment";
+import { checkError, getError } from "@/lib/helper";
+import { useAuthContext } from "@/lib/provider/auth.provider";
 
-export interface TaskCreateType {
-    language?: string;
-    category?: string;
+import { useUserContract } from "@/hooks/useUserContract";
+
+import { ResponseData, buildResponseContent } from '@/contracts/User';
+
+import Deadline from "./step/deadline";
+import Price from "./step/price";
+import Comment from "./step/comment";
+
+export interface IResponseFormProps {
+    formik: FormikProps<IResponseField>;
+    error: string;
 }
 
-const Stepper = (props: { id: string }) => {
+export interface IResponseField {
+    price: string;
+    deadline: string | null;
+    comment: string;
+}
+
+interface IRenderFormProps extends IResponseFormProps {
+    step: number;
+}
+
+const keys: Record<number, string> = {
+    1: "price",
+    2: "deadline",
+    3: "comment"
+}
+
+function MemoizedRenderForm(props: IRenderFormProps) {
+    return useMemo(() => {
+        return [
+            <Price key={1} formik={props.formik} error={props.error} />,
+            <Deadline key={2} formik={props.formik} error={props.error} />,
+            <Comment key={3} formik={props.formik} error={props.error} />
+        ][props.step - 1];
+    }, [props.step, props.formik]);
+}
+
+export default function Stepper(props: { id: number }) {
     const trans = useTranslations();
 
-    const [data, setData] = useState<TaskCreateType>({});
     const [step, setStep] = useState<number>(1);
     const [subtitle, setSubtitle] = useState(trans("tasks.firs_step"))
     const [title, setTitle] = useState(trans("tasks.make_a_response"));
-    const [disabled, setDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const { user } = useAuthContext();
+    const { sendAddResponse } = useUserContract(String(user?.data?.address));
+
+    const schema = z.object({
+        price: z.string({ required_error: trans("form.required.default") }),
+        deadline: z.date({ required_error: trans("form.required.default") }),
+        comment: z.string({ required_error: trans("form.required.default") })
+    });
+
+    const formik = useFormik<IResponseField>(
+        {
+            initialValues: {
+                price: "",
+                deadline: null,
+                comment: ""
+            },
+            validationSchema: toFormikValidationSchema(schema),
+            onSubmit: () => { }
+        },
+    );
 
     useEffect(() => {
         if (step == 1) {
@@ -41,9 +98,34 @@ const Stepper = (props: { id: string }) => {
         }
     }, [step])
 
+    useEffect(() => {
+        if (checkError(formik, {}, keys[step])) {
+            setDisabled(true)
+        } else (
+            setDisabled(false)
+        )
+    }, [formik.errors]);
+
+    const ButtonStatus = useMemo(() => {
+        const errorMsg = getError(formik, {}, keys[step]);
+        return {
+            disabled: errorMsg ? true : false,
+            error: errorMsg
+        }
+    }, [formik, step]);
+
     const handleBack = () => {
         const newStep = step == 1 ? 1 : step - 1
         setStep(newStep)
+    }
+
+    const handleClick = () => {
+        if (!ButtonStatus.disabled) {
+            const newStep = step + 1;
+            setStep(newStep);
+            setErrorMessage("");
+        }
+        setErrorMessage(ButtonStatus.error || "");
     }
 
     const header = (
@@ -61,22 +143,16 @@ const Stepper = (props: { id: string }) => {
         </AppBar>
     )
 
-    const handleClick = () => {
-        const newStep = step + 1;
 
-        setStep(newStep);
-    }
+    async function submitResponse() {
+        console.log(`"offer cooperation, order: ${props.id}, price:${formik.values.price}, deadline:${formik.values.deadline}, comment:${formik.values.comment}`);
+        const respData: ResponseData = {
+            text: formik.values.comment,
+            price: toNano(formik.values.price),
+            deadline: formik.values.deadline ? new Date(formik.values.deadline).getTime() / 1000 : 0,
+        };
 
-    const renderStep = () => {
-        switch (step) {
-            case 3:
-                return (<Comment data={data} />)
-            case 2:
-                return (<Deadline data={data} />)
-            case 1:
-            default:
-                return (<Price data={data} />)
-        }
+        await sendAddResponse("0.2", 0, props.id, buildResponseContent(respData));
     }
 
     const footer = (
@@ -84,15 +160,14 @@ const Stepper = (props: { id: string }) => {
             {step === 3 ? (
                 <>
                     <FooterButton
-                        component={NextLinkComposed}
-                        to={"/make-response/task"}
+                        onClick={submitResponse}
                         disabled={disabled}
                         className="w-full"
                         color={"secondary"}
                         variant="contained">
-                        {trans("tasks.send_response")}
+                        {trans("response.send_feedback")}
                     </FooterButton>
-                    <Typography variant="body2">Комиссия сети ≈ 0.011 TON</Typography>
+                    <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
                 </>
             ) : (
                 <FooterButton
@@ -108,9 +183,10 @@ const Stepper = (props: { id: string }) => {
     )
     return (
         <Shell header={header} footer={footer}>
-            {renderStep()}
+            <MemoizedRenderForm
+                step={step}
+                formik={formik}
+                error={errorMessage} />
         </Shell>
     )
 }
-
-export default Stepper;

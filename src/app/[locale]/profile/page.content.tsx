@@ -13,7 +13,7 @@ import { NextLinkComposed } from "@/components/Link";
 import EditButton from "@/components/ui/buttons/EditButton";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
-import LazyLoading from "@/components/features/LazyLoading";
+import { CircularLoading } from "@/components/features/Loaders";
 
 import EditProfileForm from "@/components/forms/Profile/EditProfileForm";
 
@@ -46,7 +46,7 @@ const Content = () => {
     if (!edit) {
         return (
             <Shell header={profileHeader}>
-                {isLoading ? <LazyLoading /> : <ProfileView data={user.data} />}
+                {isLoading ? <CircularLoading /> : <ProfileView data={user.data} />}
             </Shell>
         )
     }

@@ -3,14 +3,14 @@ import { useTranslations } from "next-intl";
 import { TaskFormWrapper } from "@/components/Task/form.component";
 import NumberField from "@/components/forms/fields/NumberField";
 
-import { IForm } from "../stepper";
+import { IResponseFormProps } from "../stepper";
 
-export default function Price({ formik, error }: IForm) {
+export default function Price({ error, formik }: IResponseFormProps) {
     const trans = useTranslations('tasks')
     return (
         <TaskFormWrapper
-            title={trans("specify_the_budget_for_the_task")}
-            description={trans("set_task_price_explained")}
+            title={trans("confirm_the_task_budget")}
+            description={trans("or_suggest_your_own")}
         >
             <NumberField
                 id="price"

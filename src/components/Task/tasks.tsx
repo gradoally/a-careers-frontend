@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 import { Typography } from "@mui/material";
 
-import LazyLoading from "@/components/features/LazyLoading";
+import { CircularLoading } from "@/components/features/Loaders";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 
 import { getOrders } from "@/services/order";
@@ -75,7 +75,7 @@ export default function Tasks(props: React.PropsWithChildren) {
                     </CenteredContainer>
                 ) : props.children
             }
-            {loading && <LazyLoading />}
+            {loading && <CircularLoading />}
         </div>
     );
 }

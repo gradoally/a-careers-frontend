@@ -9,7 +9,7 @@ export function truncateMiddleText(text: string = "", length: number): string {
 }
 
 export function convertIsoToCustomFormat(isoDate: string): string {
-  if(!isoDate) return "";
+  if (!isoDate) return "";
   // Convert ISO date to Date object
   const dateObj = new Date(isoDate);
 
@@ -19,12 +19,27 @@ export function convertIsoToCustomFormat(isoDate: string): string {
 
   // Check if the given date is today
   if (dateObj.toDateString() === today.toDateString()) {
-      // Replace "Date" with "Today" if the date is today
-      return "Today";
+    // Replace "Date" with "Today" if the date is today
+    return "Today";
   } else {
-      // Format the date as "Month day, time"
-      const options:DateTimeFormatOptions = { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" };
-      const formattedDate = dateObj.toLocaleDateString('en-US', options);
-      return `${formattedDate.replace("PM","p.m.").replace("AM","a.m.").replace(" at",",")}`;
+    // Format the date as "Month day, time"
+    const options: DateTimeFormatOptions = {
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    };
+    const formattedDate = dateObj.toLocaleDateString("en-US", options);
+    return `${formattedDate
+      .replace("PM", "p.m.")
+      .replace("AM", "a.m.")
+      .replace(" at", ",")}`;
   }
+}
+
+export function isObjectChanged<T>(obj1: T, obj2: T): boolean {
+  for (let key in obj1) {
+    if (obj1[key] !== obj2[key]) return true;
+  }
+  return false;
 }

@@ -12,7 +12,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Filter from "@/components/layout/filter";
 import FilterButton from "@/components/ui/buttons/FilterButton";
-import LazyLoading from "@/components/features/LazyLoading";
+import {CircularLoading} from "@/components/features/Loaders";
 import Content from "./page.content";
 
 import { IPageProps } from "@/interfaces/page";
@@ -45,7 +45,7 @@ export default async function Home({ params: { locale } }: IPageProps) {
                 extra={<Filter />}
             >
                 <div className="pt-[15px]">
-                    <Suspense fallback={<LazyLoading />}>
+                    <Suspense fallback={<CircularLoading />}>
                         <Content />
                     </Suspense>
                 </div>

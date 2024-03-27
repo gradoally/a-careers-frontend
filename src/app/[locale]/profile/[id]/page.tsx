@@ -10,7 +10,7 @@ import AppBar from "@/components/layout/app-bar";
 import Shell from "@/components/layout/Shell";
 import BackButton from "@/components/ui/buttons/BackButton";
 import ProfileView from "@/components/ProfileView";
-import LazyLoading from "@/components/features/LazyLoading";
+import { CircularLoading } from "@/components/features/Loaders";
 
 import { getUser } from "@/services/profile";
 
@@ -72,7 +72,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
     return (
         <Shell header={ProfileHeader}>
-            {user.loading ? <LazyLoading /> : (user.content ? <ProfileView data={user.content} publicView={true} /> : <></>)}
+            {user.loading ? <CircularLoading /> : (user.content ? <ProfileView data={user.content} publicView={true} /> : <></>)}
         </Shell>
     )
 }

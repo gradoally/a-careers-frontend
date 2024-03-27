@@ -35,7 +35,6 @@ import Price from "./steps/TaskPrice";
 import Description from "./steps/TaskDescription";
 import TechnicalTask from "./steps/TaskTechnicalDescription";
 import SelectCheckingPeriod from "./steps/TaskCheckingPeriod";
-import { Router } from "next/router";
 
 const keys: Record<number, string> = {
     1: "language",
@@ -51,7 +50,7 @@ const keys: Record<number, string> = {
 export interface TaskCreateType {
     language: string;
     category: string;
-    period: string;
+    period: number;
     price: string;
     deadline: string | null;
     name: string;
@@ -107,10 +106,6 @@ export default function Stepper() {
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
     const [disabled, setDisabled] = useState(false);
 
-    useEffect(() => {
-        setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 8 }))
-    }, [step]);
-
     const schema = z.object({
         language: z.string({ required_error: trans("form.required.default") }),
         category: z.string({ required_error: trans("form.required.default") }),
@@ -134,18 +129,16 @@ export default function Stepper() {
                     category: values.category,
                     language: values.language,
                     name: values.name,
-                    price: toNano(values.price),
-                    deadline: Math.round(Date.now() / 1000) + 604800,
                     description: values.description,
                     technicalTask: values.technicalTask,
                 };
                 toggleTxProgress(true);
                 const orderContentDataCell = buildOrderContent(orderContentData);
-                await sendCreateOrder("0.3",
+                await sendCreateOrder("0.2",
                     0, orderContentDataCell,
-                    orderContentData.price,
-                    orderContentData.deadline,
-                    orderContentData.deadline + 259200
+                    toNano(values.price),
+                    new Date(values.deadline || "date time in ISO").getTime() / 1000,
+                    values.period
                 );
                 toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
                 router.push(`/${locale}/tasks/${orderNextIndex}`)
@@ -162,7 +155,7 @@ export default function Stepper() {
             initialValues: {
                 language: locale,
                 category: "",
-                period: "",
+                period: 0,
                 price: "",
                 deadline: null,
                 description: "",
@@ -175,7 +168,11 @@ export default function Stepper() {
             validationSchema: toFormikValidationSchema(schema),
             onSubmit: handleSubmit
         },
-    )
+    );
+
+    useEffect(() => {
+        setSubtitle(trans("tasks.step_x_from_x", { "value": step, "from": 8 }))
+    }, [step]);
 
     useEffect(() => {
         if (checkError(formik, {}, keys[step])) {

@@ -1,6 +1,6 @@
 import Image from "next/image";
-
-import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 import { useScreen } from "@/lib/provider/screen.provider";
 
@@ -11,7 +11,9 @@ import FailGif from "@/assets/gif/fail.gif";
 
 export default function FailScreen() {
 
+    const locale = useLocale();
     const trans = useTranslations();
+    const router = useRouter();
     const { toggleFailScreen } = useScreen();
 
     return <div
@@ -21,12 +23,15 @@ export default function FailScreen() {
             <div className="bg-primary p-10">
                 <Image src={FailGif} alt="unicorn" className="mx-auto" width={90} height={90} />
             </div>
-            <h1 className="text-[16px] font-InterBold my-2">Something went wrong</h1>
-            <h3 className="font-[400] font-InterRegular text-[13px]">Please try again later</h3>
+            <h1 className="text-[16px] font-InterBold my-2">{trans("screen.error.heading")}</h1>
+            <h3 className="font-[400] font-InterRegular text-[13px]">{trans("screen.error.subheading")}</h3>
         </div>
         <Footer className="left-0 mb-0 bg-primary !border-none">
             <FooterButton
-                onClick={() => toggleFailScreen(false)}
+                onClick={() => {
+                    toggleFailScreen(false);
+                    router.push(`/${locale}`);
+                }}
                 className="w-full"
                 variant="contained">
                 {trans("common.back_to_app")}

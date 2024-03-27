@@ -1,22 +1,28 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-import { useScreen } from "@/lib/provider/screen.provider";
 import { useUserContract } from "@/hooks/useUserContract";
 import { useTonClient } from "@/hooks/useTonClient";
+import useTxChecker from "@/hooks/useTxChecker";
 
 import ProfileForm, { UserFormValues } from "@/components/forms/Profile/ProfileForm";
 
+import { getUserProfile } from "@/services/profile";
+
 import { UserContentData, buildUserContent } from '@/contracts/User';
 import { IUser } from "@/interfaces";
+import { useAuthContext } from "@/lib/provider/auth.provider";
+import { isObjectChanged } from "@/lib/utils/tools";
 
 export default function EditProfileForm(props: {
     close: () => void;
     user: IUser;
 }) {
 
+    const locale = useLocale();
     const trans = useTranslations()
     const { client } = useTonClient();
-    const { toggleTxProgress, toggleFailScreen } = useScreen();
+    const { updateUser } = useAuthContext();
+    const { checkTxProgress } = useTxChecker();
 
     const {
         sendChangeContent,
@@ -42,18 +48,30 @@ export default function EditProfileForm(props: {
                 specialization: values.specialization.join(","),
                 language: values.language,
             };
-            toggleTxProgress(true);
-            await sendChangeContent("0.5", 0, buildUserContent(userContentData));
-            await callback({
-                isError: false,
-                message: trans("profile.profile_successfully_updated")
-            })
+
+            await sendChangeContent("0.2", 0, buildUserContent(userContentData));
+
+            checkTxProgress(async (successCB) => {
+                //Fetch profile
+                const profileRes = await getUserProfile({ address: props.user?.userAddress || "", locale });
+                if (!profileRes.data) throw new Error();
+                //check profile properties changed or not
+                const newUser = profileRes.data.data as IUser;
+                const oldUser = props.user as IUser;
+                //if changed call success CB else continue
+                if (isObjectChanged(oldUser, newUser)) {
+                    successCB();
+                    await callback({
+                        isError: false,
+                        message: trans("profile.profile_successfully_updated")
+                    });
+                    updateUser(profileRes.data);
+                }
+            });
         } catch (e) {
             console.log("error occured!");
-            //await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
-            toggleFailScreen(true);
+            await callback({ isError: true, message: trans("errors.something_went_wrong_sorry") })
         }
-        toggleTxProgress(false);
     };
 
     return <ProfileForm

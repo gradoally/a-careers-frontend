@@ -42,6 +42,12 @@ export type UserContentData = {
     language: string;
 };
 
+export type ResponseData = {
+    text: string;
+    price: bigint;
+    deadline: number;
+};
+
 export function buildUserContent(data: UserContentData): Cell {
     const content = Dictionary.empty<bigint, Cell>();
     content.set(sha256Hash('is_user'), beginCell().storeBit(data.isUser).endCell());
@@ -54,6 +60,15 @@ export function buildUserContent(data: UserContentData): Cell {
     content.set(sha256Hash('resume'), beginCell().storeStringTail(data.resume).endCell());
     content.set(sha256Hash('specialization'), beginCell().storeStringTail(data.specialization).endCell());
     content.set(sha256Hash('language'), beginCell().storeUint(sha256Hash(data.language), 256).endCell());
+
+    return beginCell().storeDictDirect(content, Dictionary.Keys.BigUint(256), Dictionary.Values.Cell()).endCell();
+}
+
+export function buildResponseContent(data: ResponseData): Cell {
+    const content = Dictionary.empty<bigint, Cell>();
+    content.set(sha256Hash('text'), beginCell().storeStringTail(data.text).endCell());
+    content.set(sha256Hash('price'), beginCell().storeCoins(data.price).endCell());
+    content.set(sha256Hash('deadline'), beginCell().storeUint(data.deadline, 32).endCell());
 
     return beginCell().storeDictDirect(content, Dictionary.Keys.BigUint(256), Dictionary.Values.Cell()).endCell();
 }

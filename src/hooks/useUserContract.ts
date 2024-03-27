@@ -40,5 +40,8 @@ export function useUserContract(address: string) {
     sendCreateOrder: (value: bigint | string, queryID: number, content: Cell, price: bigint, deadline: number, timeForCheck: number) => {
       return userContract?.sendCreateOrder(sender, toNano(value), queryID, content, price, deadline, timeForCheck);
     },
+    sendAddResponse: (value: bigint | string, queryID: number, orderIndex: number, content: Cell) => {
+      return userContract?.sendAddResponse(sender, toNano(value), queryID, orderIndex, content);
+    },
   };
 }

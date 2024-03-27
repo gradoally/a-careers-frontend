@@ -6,7 +6,7 @@ import React, { useEffect, useState, useRef, memo } from "react";
 
 import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import LazyLoading from "@/components/features/LazyLoading";
+import { CircularLoading } from "@/components/features/Loaders";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 import TaskListSkeleton from "@/components/TaskListSkeleton";
 import TaskList from "@/components/TaskList";
@@ -16,6 +16,7 @@ import { getOrders } from "@/services/order";
 import { Order } from "@/openapi/client";
 
 import { getOrdersCount } from "@/services/order";
+import { useTonConnect } from "@/hooks/useTonConnect";
 
 function SkeletonLoader() {
     return (
@@ -33,13 +34,14 @@ function SkeletonLoader() {
 function Content() {
     const searchParams = useSearchParams();
     const trans = useTranslations();
+    const { connectionChecked } = useTonConnect();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [loading, setLoading] = useState(true);
     const [pageLimit, setPageLimit] = useState(0);
     const [query, setQuery] = useState<Record<string, any>>({
         page: -1,
         orderBy: "createdAt",
-        translateTo:"en"
+        translateTo: "en"
     });
     const [tasks, setTasks] = useState<Order[]>([]);
 
@@ -55,6 +57,7 @@ function Content() {
 
     //Load orders on query update
     useEffect(() => {
+        if (!connectionChecked) return;
         if (query.page < 0) return;
         if (loading && tasks.length) return;
         setLoading(true);
@@ -65,7 +68,7 @@ function Content() {
             })
             .catch(console.log)
             .finally(() => setLoading(false));
-    }, [query]);
+    }, [query, connectionChecked]);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -92,6 +95,7 @@ function Content() {
 
     //Fetch search counts
     useEffect(() => {
+        if (!connectionChecked) return;
         if (pageLimit) return;
         getOrdersCount()
             .then(res => {
@@ -99,7 +103,7 @@ function Content() {
             }).catch(err => {
                 alert((err as Error).message);
             });
-    }, []);
+    }, [connectionChecked]);
 
     return (
         <div
@@ -115,7 +119,7 @@ function Content() {
                     </CenteredContainer>
                 ) : <TaskList data={tasks} />
             }
-            {loading && (tasks.length ? <LazyLoading /> : <SkeletonLoader />)}
+            {loading && (tasks.length ? <CircularLoading /> : <SkeletonLoader />)}
         </div>
     );
 }

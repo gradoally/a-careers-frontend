@@ -20,7 +20,7 @@ import MenuButton from "@/components/ui/buttons/MenuButton";
 import { NextLinkComposed } from "@/components/Link";
 import ConnectButton from "@/components/ui/buttons/ConnectButton";
 
-import { Loader } from "@/components/Loader";
+import { Loader } from "@/components/features/Loaders";
 
 import { getOrder } from "@/services/order";
 
