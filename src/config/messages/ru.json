@@ -42,10 +42,16 @@
     "please_provide_valid_data": "Пожалуйста заполните валидные данные"
   },
   "status_chip": {
+    "on_moderation": "На модерации",
     "no_responses": "Без откликов",
-    "on_moderation": "В модерации",
-    "response_sent": "Отправлен отклик",
-    "declined": "Отказано"
+    "response_sent": "Ответил",
+    "responses": "Ответы {count}",
+    "declined": "Отказ",
+    "cp_sent": "КП отправлено",
+    "in_work": "В работе",
+    "deadline_passed": "Срок истек",
+    "awaiting_payment": "Ожидание оплаты",
+    "completed": "Завершенный"
   },
   "read_more": {
     "read_more": "Подробнее",
@@ -105,7 +111,6 @@
     "select_checking_period": "Период проверки задачи",
     "checking_period_description": "Выберите период, в течение которого вам потребуется просмотреть задачу после ее выполнения. Если вы не ответите фрилансеру в течение этого срока после выполнения задания, фрилансер получит возможность получить оплату без вашего подтверждения.",
     "send_task_to_blockchain": "Отправить задачу в блокчейн",
-    "choose_specialist": "Выберите специалиста",
     "what_needs_to_be_done": "Что нужно сделать?",
     "job_title": "Название задания",
     "task_title_example": "Например, создать бот для блокчейн-голосования",
@@ -130,7 +135,12 @@
   },
   "task": {
     "category": "Категория {value}",
-    "createdAt": "Создано {date} в {language}"
+    "createdAt": "Создано {date} в {language}",
+    "button": {
+      "offer_cooperation": "Предложить сотрудничество",
+      "send_feedback": "Отправить отзыв",
+      "choose_specialist": "Выберите специалиста"
+    }
   },
   "profile": {
     "profile_successfully_connected": "Профиль успешно подключнено",
@@ -163,9 +173,7 @@
   },
   "response": {
     "offer": "Оффер",
-    "profile": "Профиль",
-    "offerCooperation": "Предложить сотрудничество",
-    "send_feedback": "Отправить отзыв"
+    "profile": "Профиль"
   },
   "screen": {
     "error": {

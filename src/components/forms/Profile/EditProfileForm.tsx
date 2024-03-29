@@ -11,7 +11,6 @@ import { getUserProfile } from "@/services/profile";
 import { UserContentData, buildUserContent } from '@/contracts/User';
 import { IUser } from "@/interfaces";
 import { useAuthContext } from "@/lib/provider/auth.provider";
-import { isObjectChanged } from "@/lib/utils/tools";
 
 export default function EditProfileForm(props: {
     close: () => void;
@@ -56,10 +55,10 @@ export default function EditProfileForm(props: {
                 const profileRes = await getUserProfile({ address: props.user?.userAddress || "", locale });
                 if (!profileRes.data) throw new Error();
                 //check profile properties changed or not
-                const newUser = profileRes.data.data as IUser;
-                const oldUser = props.user as IUser;
+                const newStatus = profileRes.data.data?.userStatus || "";
+                const oldStatus = props.user.userStatus;
                 //if changed call success CB else continue
-                if (isObjectChanged(oldUser, newUser)) {
+                if (oldStatus !== newStatus) {
                     successCB();
                     await callback({
                         isError: false,

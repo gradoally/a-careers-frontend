@@ -27,7 +27,7 @@ export default function SelectCategory({ formik, setTitle }: ICategoryForm) {
                         key={i}
                         isSelected={isSelected}
                         select={() => handleClick(e?.code ?? "")}
-                        name={e?.key || ""}
+                        name={e?.code || ""}
                         value={e?.code || ""}
                     />
                 })}

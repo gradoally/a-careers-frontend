@@ -9,7 +9,7 @@ import { Order } from "@/openapi/client";
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-import TaskView from "@/components/TaskView";
+import TaskView from "@/components/Task/TaskView";
 import Shell from "@/components/layout/Shell";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";

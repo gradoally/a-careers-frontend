@@ -8,8 +8,8 @@ import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { CircularLoading } from "@/components/features/Loaders";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-import TaskListSkeleton from "@/components/TaskListSkeleton";
-import TaskList from "@/components/TaskList";
+import TaskListSkeleton from "@/components/Task/TaskListSkeleton";
+import TaskList from "@/components/Task/TaskList";
 import Divider from "@/components/ui/Divider";
 
 import { getOrders } from "@/services/order";

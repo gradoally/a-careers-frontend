@@ -12,11 +12,11 @@ import { z } from "zod";
 import { toNano } from "@ton/core";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
-import { useScreen } from "@/lib/provider/screen.provider";
 import { buildOrderContent, OrderContentData } from "@/contracts/Order";
 import { useMasterContract } from "@/hooks/useMasterContract";
 import { useTonClient } from "@/hooks/useTonClient";
 import { useUserContract } from "@/hooks/useUserContract";
+import useTxChecker from "@/hooks/useTxChecker";
 
 import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
@@ -35,6 +35,7 @@ import Price from "./steps/TaskPrice";
 import Description from "./steps/TaskDescription";
 import TechnicalTask from "./steps/TaskTechnicalDescription";
 import SelectCheckingPeriod from "./steps/TaskCheckingPeriod";
+import { getOrder } from "@/services/order";
 
 const keys: Record<number, string> = {
     1: "language",
@@ -93,7 +94,7 @@ export default function Stepper() {
     const trans = useTranslations();
     const { user } = useAuthContext();
     const { client } = useTonClient();
-    const { toggleTxProgress } = useScreen();
+    const { checkTxProgress } = useTxChecker();
 
     const {
         sendCreateOrder
@@ -109,7 +110,7 @@ export default function Stepper() {
     const schema = z.object({
         language: z.string({ required_error: trans("form.required.default") }),
         category: z.string({ required_error: trans("form.required.default") }),
-        period: z.string({ required_error: trans("form.required.default") }),
+        period: z.number({ required_error: trans("form.required.default") }),
         name: z.string({ required_error: trans("form.required.default") }),
         price: z.string({ required_error: trans("form.required.default") }),
         deadline: z.date({ required_error: trans("form.required.default") }),
@@ -132,7 +133,6 @@ export default function Stepper() {
                     description: values.description,
                     technicalTask: values.technicalTask,
                 };
-                toggleTxProgress(true);
                 const orderContentDataCell = buildOrderContent(orderContentData);
                 await sendCreateOrder("0.2",
                     0, orderContentDataCell,
@@ -140,13 +140,24 @@ export default function Stepper() {
                     new Date(values.deadline || "date time in ISO").getTime() / 1000,
                     values.period
                 );
-                toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
-                router.push(`/${locale}/tasks/${orderNextIndex}`)
+
+                checkTxProgress(async (successCB) => {
+                    try {
+                        const orderRes = await getOrder({ index: `${orderNextIndex}`, locale });
+                        if (orderRes.data) {
+                            successCB();
+                            toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
+                            router.push(`/${locale}/tasks/${orderNextIndex}`);
+                        }
+                    } catch (err) {
+                        console.log(`${(err as Error).message}`);
+                    }
+                });
+
             } catch (e) {
                 console.log("create_order", e);
                 toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');
             }
-            toggleTxProgress(false);
         }
     }
 

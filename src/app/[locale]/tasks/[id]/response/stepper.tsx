@@ -64,7 +64,7 @@ export default function Stepper(props: { id: number }) {
     const trans = useTranslations();
 
     const [step, setStep] = useState<number>(1);
-    const [subtitle, setSubtitle] = useState(trans("tasks.firs_step"))
+    const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
     const [title, setTitle] = useState(trans("tasks.make_a_response"));
     const [disabled, setDisabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");

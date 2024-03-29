@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 
 import Divider from "@/components/ui/Divider";
 import ResponseCard from "./card";
-import TaskView from '@/components/TaskView';
+import TaskView from '@/components/Task/TaskView';
 import { Order } from '@/openapi/client';
 
 
@@ -73,7 +73,7 @@ function a11yProps(index: number) {
 }
 
 export default function Content(props: {
-    isCustomer: boolean,
+    tabVisibility: boolean,
     task: Order | null,
     tab: number,
     changeTab: (e: any, newValue: number) => void;
@@ -90,7 +90,7 @@ export default function Content(props: {
     ]);
     return (
         <div className="w-full">
-            {!props.isCustomer && <div className="h-[50px]">
+            {props.tabVisibility && <div className="h-[50px]">
                 <Tabs centered value={props.tab} onChange={props.changeTab} aria-label="basic tabs example">
                     <Tab label={trans("common.task")} {...a11yProps(0)} />
                     <Tab label={`${trans("common.responses")} (3)`} {...a11yProps(1)} />

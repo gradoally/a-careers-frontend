@@ -6,7 +6,6 @@ import {
 } from "@tonconnect/ui-react";
 import { toUserFriendlyAddress } from "@tonconnect/sdk";
 import { Sender, SenderArguments } from "@ton/core";
-import { useEffect } from "react";
 
 export function useTonConnect(): {
   sender: Sender;
@@ -19,14 +18,6 @@ export function useTonConnect(): {
   const connectionRestored = useIsConnectionRestored();
 
   const wallet = useTonWallet();
-
-  useEffect(() => {
-    console.log(`Connection restored: ${connectionRestored}`);
-  }, [connectionRestored]);
-
-  useEffect(() => {
-    console.log(`Connected: ${tonConnectUI.connected}`);
-  }, [tonConnectUI.connected]);
 
   return {
     sender: {

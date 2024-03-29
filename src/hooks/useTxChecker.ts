@@ -37,7 +37,7 @@ export default function useTxChecker(): ITxCheckerHook {
   }
 
   function checkTxProgress(request: RequestFunc, options?: IOptions) {
-    let timeoutInMs = options?.timeoutInMs || 33000;
+    let timeoutInMs = options?.timeoutInMs || 60000;
     let retryInMs = options?.retryInMs || 3000;
 
     toggleTxProgress(true);

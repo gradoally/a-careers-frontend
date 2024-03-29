@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -34,8 +34,10 @@ import Shell from "@/components/layout/Shell";
 import Logo from "@/app/logo";
 import UserAvatar from "@/components/UserAvatar";
 
+interface IRoute { label: string, to: string, secure: boolean; disable: boolean }
+
 interface Props {
-    routes: { label: string, to: string, secure: boolean }[];
+    routes: IRoute[];
 }
 
 export default function DrawerContent({ routes }: Props) {
@@ -48,15 +50,24 @@ export default function DrawerContent({ routes }: Props) {
     const trans = useTranslations("common");
     const pathRef = useRef<string | null>(null);
 
-    const goTo = async (to: string, auth: boolean) => {
-        if (!auth || (auth && connected)) {
-            router.push(to);
+    const isRoutedisabled = (route: IRoute): boolean => {
+        if (!route.disable) return false;
+        return (!user?.data || user?.data?.userStatus === "moderation") ? true : false;
+    }
+
+    const goTo = async (route: IRoute) => {
+
+        if (!route.secure || (route.secure && connected)) {
+            router.push(route.to);
             toggleDrawer(false);
             return;
         }
-        if (auth && !connected) {
+
+        if (isRoutedisabled(route)) return;
+
+        if (route.secure && !connected) {
             try {
-                pathRef.current = to;
+                pathRef.current = route.to;
                 await tonConnectUI.openModal();
             } catch (e) {
                 toast(trans("errors.something_went_wrong_when_try_to_connect_ton_wallet"), 'warning')
@@ -144,11 +155,13 @@ export default function DrawerContent({ routes }: Props) {
                                     <ListItem key={index} disablePadding>
                                         <ListItemButton
                                             sx={{
+                                                "opacity": isRoutedisabled(e) ? 0.7 : 1,
+                                                "cursor": isRoutedisabled(e) ? "not-allowed" : "pointer",
                                                 "&.Mui-selected": {
                                                     color: "text.primary"
                                                 }
                                             }}
-                                            onClick={() => goTo(e.to, e.secure)}
+                                            onClick={() => goTo(e)}
                                             selected={isSelectedRoute}
                                         >
                                             <ListItemText

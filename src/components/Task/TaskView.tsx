@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import StatusChip from "@/components/StatusChip";
+import StatusChip, { Statuses } from "@/components/Task/StatusChip";
 import Typography from "@mui/material/Typography";
 import CopyContainer from "@/components/features/copy";
 import Divider from "@/components/ui/Divider";
@@ -99,7 +99,7 @@ const TaskView = ({ data }: { data: Order }) => {
     return (
         <>
             <Stack spacing={1}>
-                <StatusChip status={"no_responses"} />
+                <StatusChip status={Statuses[data?.status || -1]} count={data.responsesCount || 0} />
                 <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{data?.name}</Typography>
                 <Typography className="!text-[12px] !font-InterLight">💎 {data?.price}</Typography>
             </Stack>
@@ -121,7 +121,7 @@ const TaskView = ({ data }: { data: Order }) => {
             <Stack className="!text-[10px] !font-InterRegular !leading-5 opacity-[40%]" direction="column">
                 <div className="truncate w-[300px]">{trans("task.createdAt", {
                     date: formatDatetime({ date: data?.createdAt, locale: locale }),
-                    language:trans(`locale_switcher.${getLanguage(data?.language || "")?.code}`)
+                    language: trans(`locale_switcher.${getLanguage(data?.language || "")?.code}`)
                 })}
                 </div>
                 <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(data?.category || "")?.code })}</div>

@@ -41,10 +41,16 @@
     "please_provide_valid_data": "Please provide valid data"
   },
   "status_chip": {
+    "on_moderation": "Moderation",
     "no_responses": "No Responses",
-    "on_moderation": "On moderation",
-    "response_sent": "Response sent",
-    "declined": "Declined"
+    "response_sent": "Responded",
+    "responses": "Responses {count}",
+    "declined": "Refusal",
+    "cp_sent": "Cp sended",
+    "in_work": "In work",
+    "deadline_passed": "Deadline passed",
+    "awaiting_payment": "Awaiting payment",
+    "completed": "Completed"
   },
   "read_more": {
     "read_more": "Read more",
@@ -103,7 +109,6 @@
     "response_denied": "Response denied · {value}",
     "an_offer_came_in": "An offer came in · {value}",
     "on_inspection": "On inspection · {value}",
-    "choose_specialist": "Choose a specialist",
     "select_language": "Select task language of the task",
     "task_accomplished": "Task accomplished · {value}",
     "select_checking_period": "Task Checking Period",
@@ -137,7 +142,12 @@
   },
   "task": {
     "category": "Category {value}",
-    "createdAt": "Created on {date} in {language}"
+    "createdAt": "Created on {date} in {language}",
+    "button": {
+      "offer_cooperation": "Offer Cooperation",
+      "send_feedback": "Send feedback",
+      "choose_specialist": "Choose a specialist"
+    }
   },
   "profile": {
     "profile_successfully_connected": "Profile successfully connected",
@@ -170,9 +180,7 @@
   },
   "response": {
     "offer": "Offer",
-    "profile": "Profile",
-    "offerCooperation": "Offer Cooperation",
-    "send_feedback": "Send feedback"
+    "profile": "Profile"
   },
   "screen": {
     "error": {

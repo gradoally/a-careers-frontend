@@ -99,6 +99,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
                     });
                     return;
                 }
+                
                 setAuth({
                     isLoading: false,
                     user: res.data || null,

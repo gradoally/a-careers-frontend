@@ -33,7 +33,7 @@ export function Selector(props:ISelectorProps) {
     onClick={props.select}
 >
     <Typography className="w-full !font-InterRegular !text-[12px] leading-[20px]" component="div">
-        {props.value}
+        {props.name}
     </Typography>
 </Button>
 }

@@ -31,7 +31,7 @@ const Content = () => {
                 </Typography>
             </Stack>
             <div className="flex-grow" />
-            <EditButton disabled={isLoading} onClick={() => setEdit(true)} />
+            {(user?.data?.userStatus && user?.data?.userStatus !== "moderation") && <EditButton disabled={isLoading} onClick={() => setEdit(true)} />}
         </AppBar>
     )
 

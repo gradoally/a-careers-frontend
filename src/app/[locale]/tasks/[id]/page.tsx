@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { NextLinkComposed } from "@/components/Link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,10 @@ import BackButton from "@/components/ui/buttons/BackButton";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 import Shell from "@/components/layout/Shell";
 import { CircularLoading } from "@/components/features/Loaders";
+
+import CustomerButtons from "@/components/Task/Buttons/CustomerButtons";
+import FreelancerButtons from "@/components/Task/Buttons/FreelancerButtons";
+
 import Content from "./page.content";
 
 import { Order } from "@/openapi/client";
@@ -34,7 +38,7 @@ const Page = ({ params: { locale, id } }: Props) => {
     const { user } = useAuthContext();
     const [tonConnectUI] = useTonConnectUI();
     const { connected } = useTonConnect();
-    const [value, setValue] = useState(0);
+    const [tab, setTab] = useState(0);
     const [task, setTask] = useState<{
         loading: boolean,
         status: string,
@@ -46,7 +50,7 @@ const Page = ({ params: { locale, id } }: Props) => {
     });
 
     const handleChange = (e: any, newValue: number) => {
-        setValue(newValue);
+        setTab(newValue);
     };
 
     async function connect() {
@@ -57,6 +61,10 @@ const Page = ({ params: { locale, id } }: Props) => {
             console.log(err);
         }
     }
+
+    const isCustomer = useMemo(() => {
+        return user?.data?.index === task.content?.customer?.index;
+    }, [task, user]);
 
     useEffect(() => {
         if (task.loading) return;
@@ -82,45 +90,6 @@ const Page = ({ params: { locale, id } }: Props) => {
 
     }, [id]);
 
-    const ResponseFooter = (
-        <Footer>
-            {!connected ? <FooterButton
-                onClick={connect}
-                color={"secondary"}
-                variant="contained">
-                {trans("common.log_in_and_respond")} ⚡️
-            </FooterButton> : <FooterButton
-                onClick={() => router.push(`${task.content?.index}/response`)}
-                color={"secondary"}
-                variant="contained">
-                {trans("response.offerCooperation")}
-            </FooterButton>}
-        </Footer>
-    );
-
-    const TaskFooter = (
-        <Footer>
-            {!connected ? <FooterButton
-                onClick={connect}
-                color={"secondary"}
-                variant="contained">
-                {trans("common.log_in_and_respond")} ⚡️
-            </FooterButton> : (user?.data?.index === task.content?.customer?.index ? <FooterButton
-                onClick={(event: any) => handleChange(event, 1)}
-                color={"secondary"}
-                variant="contained">
-                {trans("tasks.choose_specialist")}
-            </FooterButton> : <FooterButton
-                onClick={() => router.push(`${task.content?.index}/response`)}
-                color={"secondary"}
-                variant="contained">
-                {trans("response.send_feedback")}
-            </FooterButton>)}
-        </Footer>
-    )
-
-    const footer = !value ? TaskFooter : ResponseFooter;
-
     const header = (
         <AppBar height="60px">
             <Stack direction="row" alignItems="center" spacing={"10px"}>
@@ -133,12 +102,49 @@ const Page = ({ params: { locale, id } }: Props) => {
         </AppBar>
     )
 
+    const ResponseFooter = (
+        <Footer>
+            <FooterButton
+                onClick={() => router.push(`${task.content?.index}/response`)}
+                color={"secondary"}
+                variant="contained">
+                {trans("task.button.offer_cooperation")}
+            </FooterButton>
+        </Footer>
+    );
+
+    const footer = () => {
+        if (!task.content) return <></>;
+        if (!connected) {
+            return <Footer>
+                <FooterButton
+                    onClick={connect}
+                    color={"secondary"}
+                    variant="contained">
+                    {trans("common.log_in_and_respond")} ⚡️
+                </FooterButton>
+            </Footer>
+        }
+
+        if (isCustomer) {
+            return tab ? ResponseFooter : <CustomerButtons
+                order={task.content}
+                clicks={{
+                    2: () => handleChange(undefined, 1)
+                }}
+            />
+        }
+        
+        return <FreelancerButtons order={task.content} />
+    }
+
     return (
-        <Shell withDrawer header={header} footer={footer}>
+        <Shell withDrawer header={header} footer={footer()}>
             <div className="px-[20px] pb-[20px]">
                 {task.loading ? <CircularLoading /> : <Content
-                    isCustomer={task.content?.customer?.index !== user?.data?.index}
-                    tab={value} changeTab={handleChange}
+                    tabVisibility={isCustomer && task.content?.status === 2 ? true : false}
+                    tab={tab}
+                    changeTab={handleChange}
                     task={task.content}
                 />}
             </div>

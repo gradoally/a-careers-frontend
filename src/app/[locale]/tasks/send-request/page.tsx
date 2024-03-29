@@ -16,7 +16,7 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import MenuButton from "@/components/ui/buttons/MenuButton";
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
-import StatusChip from "@/components/StatusChip";
+import StatusChip from "@/components/Task/StatusChip";
 
 type Props = {
     params: { locale: string, id: number };

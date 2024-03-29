@@ -3,12 +3,12 @@ import { useLocale } from "next-intl";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import Divider from "@/components/ui/Divider";
-import Link from "@/components/Link";
-import StatusChip from "@/components/StatusChip";
-import { Order } from "@/openapi/client";
+import Divider from "../ui/Divider";
+import Link from "../Link";
+import StatusChip from "./StatusChip";
+import { Order } from "../../openapi/client";
 
-import { formatDatetime } from "@/lib/helper";
+import { formatDatetime } from "../../lib/helper";
 
 
 const TaskItem = ({ order, locale }: { order: Order, locale: string }) => {

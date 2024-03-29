@@ -18,7 +18,7 @@ export default function Price({ formik, error }: IForm) {
                 error={error ? true : false}
                 helperText={error}
                 placeholder={trans("price")}
-                value={`${formik.values.price}`}
+                value={`${formik.values.price || 0}`}
                 onChange={formik.handleChange}
             />
         </TaskFormWrapper>

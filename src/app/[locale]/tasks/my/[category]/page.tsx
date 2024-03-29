@@ -8,7 +8,7 @@ import BackButton from "@/components/ui/buttons/BackButton";
 import Typography from "@mui/material/Typography";
 
 import { NextLinkComposed } from "@/components/Link";
-import TaskList from "@/components/TaskList";
+import TaskList from "@/components/Task/TaskList";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { locales } from "@/config/config";

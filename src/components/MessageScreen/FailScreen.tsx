@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import { useScreen } from "@/lib/provider/screen.provider";
 
@@ -11,9 +10,7 @@ import FailGif from "@/assets/gif/fail.gif";
 
 export default function FailScreen() {
 
-    const locale = useLocale();
     const trans = useTranslations();
-    const router = useRouter();
     const { toggleFailScreen } = useScreen();
 
     return <div
@@ -30,7 +27,6 @@ export default function FailScreen() {
             <FooterButton
                 onClick={() => {
                     toggleFailScreen(false);
-                    router.push(`/${locale}`);
                 }}
                 className="w-full"
                 variant="contained">

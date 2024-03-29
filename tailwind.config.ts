@@ -36,7 +36,7 @@ const config: Config = {
       secondary: "#45AEF5",
       info: "#3A4362",
       warning: "#00FF47",
-      orange: "#45F58B",
+      green: "#45F58B",
       "light-gray": "#CCCCCC",
       divider: "rgba(217, 217, 217, 0.2)",
       "gray-900": "rgb(17 24 39)",
