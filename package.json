@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "gcf": "openapi --input ./swagger.json --output ./src/openapi/client-fetch-temp --name FetchClient --client fetch --request ./src/openapi/request-fetch.ts --useOptions"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

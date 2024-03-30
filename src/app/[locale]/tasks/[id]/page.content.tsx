@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import Divider from "@/components/ui/Divider";
 import ResponseCard from "./card";
 import TaskView from '@/components/Task/TaskView';
-import { Order } from '@/openapi/client';
+import { Order } from '@/openapi/client/models/Order';
 
 import DaimondIcon from "@/assets/DaimondProfile.svg";
 

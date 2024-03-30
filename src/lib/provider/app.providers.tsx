@@ -15,7 +15,7 @@ import ScreenProvider from "@/lib/provider/screen.provider";
 
 import { BackendConfig, Category, Language } from "@/openapi/client";
 
-import { config } from "process";
+import { getConfig } from "@/services/config";
 
 export type AppContextType = {
     toggleDrawer: (value: boolean) => void
@@ -53,6 +53,7 @@ const AppProviders = (props: Props) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
     const [isFilterOpen, setIsFilterOpen] = React.useState(false)
     const [isDesktopView, setDesktopView] = React.useState(false);
+    const [config, setConfig] = React.useState<BackendConfig | null>(null)
 
     const [{ cache, flush }] = React.useState(() => {
         const cache = createCache(props.options);
@@ -102,13 +103,13 @@ const AppProviders = (props: Props) => {
     }
 
     const getCategory = (key: string): Category | undefined => {
-        if (!props.config || !props.config.categories) return;
-        return props.config.categories.find(obj => obj.key === key);
+        if (!config || !config.categories) return;
+        return config.categories.find(obj => obj.key === key);
     }
 
     const getLanguage = (key: string): Language | undefined => {
-        if (!props.config || !props.config.languages) return;
-        return props.config.languages.find(obj => obj.key === key);
+        if (!config || !config.languages) return;
+        return config.languages.find(obj => obj.key === key);
     }
 
     const memoValue = React.useMemo(
@@ -117,18 +118,25 @@ const AppProviders = (props: Props) => {
             isDrawerOpen,
             toggleDrawer,
             toggleFilter,
-            config: props.config,
+            config,
             getCategory,
             getLanguage,
             isDesktopView
         }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [isDrawerOpen, isFilterOpen, isDesktopView]
+        [isDrawerOpen, isFilterOpen, isDesktopView, config]
     );
 
 
     useEffect(() => {
         setDesktopView(document.body.clientWidth >= 720);
+        //Fetch config
+        getConfig().then(res => {
+            console.log(res.data);
+            res.data && setConfig(res.data)
+        }).then(err => {
+            console.log(err);
+        });
     }, []);
 
     return (

@@ -13,7 +13,7 @@ import TaskList from "@/components/Task/TaskList";
 import Divider from "@/components/ui/Divider";
 
 import { getOrders } from "@/services/order";
-import { Order } from "@/openapi/client";
+import { Order } from "@/openapi/client/models/Order";
 
 import { getOrdersCount } from "@/services/order";
 import { useTonConnect } from "@/hooks/useTonConnect";

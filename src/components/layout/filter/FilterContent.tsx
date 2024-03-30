@@ -21,8 +21,9 @@ import TextField from "@/components/forms/fields/TextField";
 import SelectField from "@/components/forms/fields/SelectField";
 
 const FilterContent = () => {
-    const { isFilterOpen, toggleFilter } = useAppContext()
+    const { isFilterOpen, toggleFilter, config } = useAppContext()
     const trans = useTranslations("filter");
+    const tc = useTranslations("locale_switcher");
     const [filters, setFilters] = React.useState<Record<string, string>>({})
     const router = useRouter()
     const pathname = usePathname();
@@ -113,7 +114,8 @@ const FilterContent = () => {
                                 IconComponent: () => null
                             }}
                         >
-                            <MenuItem value={"all"}>{trans("all")}</MenuItem>
+                            {/*<MenuItem key={0} value={"all"}>{trans("all")}</MenuItem>*/}
+                            {config?.categories && config.categories.filter(cat => cat.isActive && cat?.code).map((cat, index) => <MenuItem key={index + 1} value={cat.code}>{cat.code}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />
                     </Stack>
@@ -126,7 +128,7 @@ const FilterContent = () => {
                             <Image style={{ width: "24px", height: "24px" }} width="24" height="24" alt="earth"
                                 src="/images/earth_americas.png" />
                         </div>
-                        <SelectField 
+                        <SelectField
                             variant="standard"
                             label={trans("show_tasks_on_language")}
                             id="language"
@@ -139,9 +141,11 @@ const FilterContent = () => {
                                 IconComponent: () => null
                             }}
                         >
-                            <MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
+                            {/*<MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
                             <MenuItem value={"ru"}>Русский</MenuItem>
-                            <MenuItem value={"en"}>English</MenuItem>
+                        <MenuItem value={"en"}>English</MenuItem>*/}
+                            <MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
+                            {config?.languages && config.languages.map((lang, index) => <MenuItem key={index + 1} value={lang.code}>{lang.code ? tc(lang.code):""}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />
                     </Stack>

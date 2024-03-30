@@ -12,7 +12,7 @@ import TaskList from "@/components/Task/TaskList";
 import CenteredContainer from "@/components/ui/CenteredContainer";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { locales } from "@/config/config";
-import { Order } from "@/openapi/client";
+import { Order } from "@/openapi/client/models/Order";
 
 type Props = {
     params: {
