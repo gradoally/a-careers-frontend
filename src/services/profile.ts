@@ -2,7 +2,7 @@ import { get } from "@/lib/utils/request";
 
 import { APIs } from "@/config/api.config";
 
-import { IUserRes } from "@/interfaces/request";
+import { IUserRes, IUserStats } from "@/interfaces/request";
 
 import { OrderActivity } from "@/openapi/client";
 import { IUser } from "@/interfaces";
@@ -27,7 +27,7 @@ export async function getUserStatus(args: {
   index: number;
   locale: string;
 }) {
-  return await get<any>({
+  return await get<IUserStats>({
     url: `${APIs.user.status(args.address, args.index)}`,
   });
 }

@@ -18,11 +18,11 @@ import { getUserProfile } from "@/services/profile";
 
 export default function CreateProfile() {
 
+    const locale = useLocale();
+    const trans = useTranslations();
     const { userNextIndex, address: masterContractAddr, sendCreateUser } = useMasterContract();
     const { user, updateUser } = useAuthContext()
     const router = useRouter();
-    const locale = useLocale();
-    const trans = useTranslations();
     const { client } = useTonClient();
     const { checkTxProgress } = useTxChecker();
 

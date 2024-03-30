@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState, useMemo } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useFormik, FormikProps } from "formik";
 import { z } from "zod";
@@ -28,6 +28,10 @@ import { ResponseData, buildResponseContent } from '@/contracts/User';
 import Deadline from "./step/deadline";
 import Price from "./step/price";
 import Comment from "./step/comment";
+import useTxChecker from "@/hooks/useTxChecker";
+import { getOrder } from "@/services/order";
+import { useTask } from "@/lib/provider/task.provider";
+import { useRouter } from "next/navigation";
 
 export interface IResponseFormProps {
     formik: FormikProps<IResponseField>;
@@ -61,16 +65,21 @@ function MemoizedRenderForm(props: IRenderFormProps) {
 }
 
 export default function Stepper(props: { id: number }) {
+    const locale = useLocale();
     const trans = useTranslations();
+    const router = useRouter();
+
+    const { user } = useAuthContext();
+    const { task, updateTask } = useTask();
 
     const [step, setStep] = useState<number>(1);
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
-    const [title, setTitle] = useState(trans("tasks.make_a_response"));
+    const [title] = useState(trans("tasks.make_a_response"));
     const [disabled, setDisabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const { user } = useAuthContext();
     const { sendAddResponse } = useUserContract(String(user?.data?.address));
+    const { checkTxProgress } = useTxChecker();
 
     const schema = z.object({
         price: z.string({ required_error: trans("form.required.default") }),
@@ -81,8 +90,8 @@ export default function Stepper(props: { id: number }) {
     const formik = useFormik<IResponseField>(
         {
             initialValues: {
-                price: "",
-                deadline: null,
+                price: `${task.content?.price || ""}`,
+                deadline: task.content?.deadline || null,
                 comment: ""
             },
             validationSchema: toFormikValidationSchema(schema),
@@ -128,6 +137,23 @@ export default function Stepper(props: { id: number }) {
         setErrorMessage(ButtonStatus.error || "");
     }
 
+    async function submitResponse() {
+        const respData: ResponseData = {
+            text: formik.values.comment,
+            price: toNano(formik.values.price),
+            deadline: formik.values.deadline ? new Date(formik.values.deadline).getTime() / 1000 : 0,
+        };
+        await sendAddResponse("0.2", 0, props.id, buildResponseContent(respData));
+        checkTxProgress(async (successCB) => {
+            const orderRes = await getOrder({ index: props.id, locale });
+            if (orderRes.data && (orderRes.data?.responsesCount !== task.content?.responsesCount)) {
+                successCB();
+                updateTask(orderRes.data);
+                router.push(`/en/tasks/${props.id}`)
+            }
+        });
+    }
+
     const header = (
         <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
@@ -143,18 +169,6 @@ export default function Stepper(props: { id: number }) {
         </AppBar>
     )
 
-
-    async function submitResponse() {
-        console.log(`"offer cooperation, order: ${props.id}, price:${formik.values.price}, deadline:${formik.values.deadline}, comment:${formik.values.comment}`);
-        const respData: ResponseData = {
-            text: formik.values.comment,
-            price: toNano(formik.values.price),
-            deadline: formik.values.deadline ? new Date(formik.values.deadline).getTime() / 1000 : 0,
-        };
-
-        await sendAddResponse("0.2", 0, props.id, buildResponseContent(respData));
-    }
-
     const footer = (
         <Footer>
             {step === 3 ? (
@@ -165,7 +179,7 @@ export default function Stepper(props: { id: number }) {
                         className="w-full"
                         color={"secondary"}
                         variant="contained">
-                        {trans("response.send_feedback")}
+                        {trans("task.button.send_feedback")}
                     </FooterButton>
                     <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
                 </>
@@ -182,11 +196,15 @@ export default function Stepper(props: { id: number }) {
         </Footer>
     )
     return (
-        <Shell header={header} footer={footer}>
+        <Shell
+            header={header}
+            footer={footer}
+        >
             <MemoizedRenderForm
                 step={step}
                 formik={formik}
-                error={errorMessage} />
+                error={errorMessage}
+            />
         </Shell>
     )
 }

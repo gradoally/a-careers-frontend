@@ -25,7 +25,6 @@ import { NextLinkComposed } from "@/components/Link";
 import CloseButton from "@/components/ui/buttons/CloseButton";
 import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
-import { checkError, getError, toastLoading, toastUpdate } from "@/lib/helper";
 
 import SelectLanguage from "./steps/Language";
 import SelectCategory from "./steps/Category";
@@ -35,6 +34,9 @@ import Price from "./steps/TaskPrice";
 import Description from "./steps/TaskDescription";
 import TechnicalTask from "./steps/TaskTechnicalDescription";
 import SelectCheckingPeriod from "./steps/TaskCheckingPeriod";
+
+import { checkError, getError, toast } from "@/lib/helper";
+
 import { getOrder } from "@/services/order";
 
 const keys: Record<number, string> = {
@@ -123,7 +125,6 @@ export default function Stepper() {
             if (orderNextIndex == null || client == null || user == null) {
                 return;
             }
-            const toastId = toastLoading(trans("common.please_wait"))
 
             try {
                 const orderContentData: OrderContentData = {
@@ -134,7 +135,7 @@ export default function Stepper() {
                     technicalTask: values.technicalTask,
                 };
                 const orderContentDataCell = buildOrderContent(orderContentData);
-                await sendCreateOrder("0.2",
+                await sendCreateOrder("0.3",
                     0, orderContentDataCell,
                     toNano(values.price),
                     new Date(values.deadline || "date time in ISO").getTime() / 1000,
@@ -143,10 +144,10 @@ export default function Stepper() {
 
                 checkTxProgress(async (successCB) => {
                     try {
-                        const orderRes = await getOrder({ index: `${orderNextIndex}`, locale });
+                        const orderRes = await getOrder({ index: orderNextIndex, locale });
                         if (orderRes.data) {
                             successCB();
-                            toastUpdate(toastId, trans("tasks.task_successfully_created"), 'success');
+                            toast(trans("tasks.task_successfully_created"), 'success');
                             router.push(`/${locale}/tasks/${orderNextIndex}`);
                         }
                     } catch (err) {
@@ -156,7 +157,7 @@ export default function Stepper() {
 
             } catch (e) {
                 console.log("create_order", e);
-                toastUpdate(toastId, trans("errors.something_went_wrong_sorry"), 'warning');
+                toast(trans("errors.something_went_wrong_sorry"), 'warning');
             }
         }
     }

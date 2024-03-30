@@ -52,7 +52,7 @@ export default function DrawerContent({ routes }: Props) {
 
     const isRoutedisabled = (route: IRoute): boolean => {
         if (!route.disable) return false;
-        return (!user?.data || user?.data?.userStatus === "moderation") ? true : false;
+        return (user?.data?.userStatus === "moderation") ? true : false;
     }
 
     const goTo = async (route: IRoute) => {

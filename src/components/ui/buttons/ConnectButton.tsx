@@ -41,7 +41,7 @@ const ConnectButton = ({ text }: { text: string }) => {
                 await tonConnectUI.disconnect()
                 toast(trans("common.disconnected_from_ton_wallet"), 'success')
             }}
-                className="w-[30px] h-[30px] border border-white"
+                className="!w-[30px] !h-[30px] border border-white"
                 alt="Diamond"
                 src={"/images/diamond.png"}
             />

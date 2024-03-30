@@ -1,11 +1,11 @@
 "use client"
 
-import React, { ReactNode } from 'react';
-import { useTranslations } from "next-intl";
+import React, { useState } from 'react';
+import { useLocale, useTranslations } from "next-intl";
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -17,12 +17,16 @@ import Divider from "@/components/ui/Divider";
 import { NextLinkComposed } from "@/components/Link";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 import Image from "@/components/Image";
+import { IUserStats } from '@/interfaces/request';
 
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
     value: number;
 }
+
+interface ICustomListProps { iconSrc: string, title: string, status?: number }
+
 
 function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -73,8 +77,7 @@ function a11yProps(index: number) {
     };
 }
 
-
-const CustomListItem = ({ iconSrc, title, category }: { iconSrc: string, title: string, category?: string }) => {
+function CustomListItem({ iconSrc, title, status }: ICustomListProps) {
     return (
         <>
             <ListItem
@@ -82,7 +85,7 @@ const CustomListItem = ({ iconSrc, title, category }: { iconSrc: string, title: 
                 secondaryAction={<ArrowRightIcon />}>
                 <ListItemButton
                     component={NextLinkComposed}
-                    to={`/tasks/my/${category}`}
+                    to={`/tasks/my/${status}?user=freelancer`}
                     sx={{ "height": "80px", "padding": "0" }}
                     alignItems={"center"}>
                     <ListItemIcon>
@@ -100,24 +103,27 @@ const CustomListItem = ({ iconSrc, title, category }: { iconSrc: string, title: 
     )
 }
 
-export default function Content({ data }: { data: string }) {
-    const [value, setValue] = React.useState(0);
-    const tc = useTranslations('common')
-    const trans = useTranslations('tasks')
+export default function Content({ stats }: { stats: IUserStats }) {
+
+    const tc = useTranslations('common');
+    const trans = useTranslations('tasks');
+
+    const [tab, setTab] = useState(0);
+
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        setTab(newValue);
     };
 
     return (
         <div className="w-full">
             <div className="h-[50px]">
-                <Tabs centered value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tabs centered value={tab} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label={tc("created")} {...a11yProps(0)} />
                     <Tab label={tc("responses")} {...a11yProps(1)} />
                 </Tabs>
             </div>
             <Divider />
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tab} index={0}>
                 <nav>
                     <List
                         disablePadding
@@ -126,12 +132,12 @@ export default function Content({ data }: { data: string }) {
                                 disableSticky
                                 component="div" id="nested-list-subheader">
                                 <Typography variant="h4">
-                                    {trans("you_have_created", { value: "77" })}
+                                    {trans("you_have_created", { value: stats.asCustomerTotal })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={trans("on_moderation", { value: 2 })} />
+                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={trans("on_moderation", { value: 0 })} />
                         <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={trans("no_responses", { value: 0 })} />
                         <CustomListItem iconSrc={"/images/gem.png"} title={trans("have_responses", { value: 81 })} />
                         <CustomListItem iconSrc={"/images/offer_made.png"} title={trans("offer_made", { value: 1 })} />
@@ -142,7 +148,7 @@ export default function Content({ data }: { data: string }) {
                     </List>
                 </nav>
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={tab} index={1}>
                 <nav>
                     <List
                         disablePadding
@@ -150,7 +156,7 @@ export default function Content({ data }: { data: string }) {
                             <ListSubheader sx={{ padding: "0", "color": "common.white" }}
                                 component="div" id="nested-list-subheader-2">
                                 <Typography variant="h4">
-                                    {trans("you_have_responded", { value: "777" })}
+                                    {trans("you_have_responded", { value: stats.asFreelancerTotal })}
                                 </Typography>
                             </ListSubheader>
                         }

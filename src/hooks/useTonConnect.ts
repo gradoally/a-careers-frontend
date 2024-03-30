@@ -9,6 +9,7 @@ import { Sender, SenderArguments } from "@ton/core";
 
 export function useTonConnect(): {
   sender: Sender;
+  connect: (cb?: () => void) => Promise<void>;
   connected: boolean | undefined;
   connectionChecked: boolean;
   walletAddress: string | null;
@@ -18,6 +19,15 @@ export function useTonConnect(): {
   const connectionRestored = useIsConnectionRestored();
 
   const wallet = useTonWallet();
+
+  async function connect(cb?: () => void) {
+    try {
+      await tonConnectUI.openModal();
+      cb && cb();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return {
     sender: {
@@ -34,6 +44,7 @@ export function useTonConnect(): {
         });
       },
     },
+    connect,
     connected: tonConnectUI?.connected,
     connectionChecked: connectionRestored,
     walletAddress: wallet

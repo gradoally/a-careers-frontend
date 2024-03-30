@@ -4,7 +4,6 @@ import Image, { StaticImageData } from 'next/image';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Link from "@/components/Link";
 import { useTranslations } from 'next-intl';

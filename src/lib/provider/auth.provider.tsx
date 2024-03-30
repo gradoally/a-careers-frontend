@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter, redirect } from "next/navigation";
 
@@ -9,7 +9,6 @@ import { getUserProfile } from "@/services/profile";
 import { Loader } from "@/components/features/Loaders";
 
 import { IUserRes } from "@/interfaces/request";
-import { IUser } from "@/interfaces";
 
 interface HOCProps {
     WrappedComponent: React.ComponentType,
@@ -25,15 +24,17 @@ interface IAuth {
 interface IAuthContext extends IAuth {
     fetchProfile: () => Promise<void>;
     updateUser: (userRes: IUserRes) => void;
+    isRegistered: boolean;
 }
 
 const AuthContext = React.createContext<IAuthContext>({
     user: null,
     isLoading: true,
     error: null,
+    isRegistered: false,
     fetchProfile: async () => undefined,
     updateUser: (userRes: IUserRes) => { }
-})
+});
 
 export const withAuth = ({ WrappedComponent, redirectTo = "/" }: HOCProps) => {
 
@@ -67,6 +68,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
 
     const { walletAddress, connected, connectionChecked } = useTonConnect();
     const locale = useLocale()
+    const router = useRouter();
     const pathname = usePathname();
 
     const [auth, setAuth] = useState<IAuth>({
@@ -75,10 +77,16 @@ export default function AuthProvider(props: React.PropsWithChildren) {
         error: null
     });
 
+    const createProfilePath = useMemo(() => `/${locale}/profile/create`, [locale]);
+
     function updateUser(userRes: IUserRes) {
         auth.user = userRes;
         setAuth({ ...auth });
     }
+
+    const isRegistered = useMemo(() => {
+        return auth.user?.found ? true : false
+    }, [auth]);
 
     async function fetchProfile() {
         if (!walletAddress) return;
@@ -99,7 +107,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
                     });
                     return;
                 }
-                
+
                 setAuth({
                     isLoading: false,
                     user: res.data || null,
@@ -116,32 +124,38 @@ export default function AuthProvider(props: React.PropsWithChildren) {
     }
 
     useEffect(() => {
-
-        const createProfilePath = `/${locale}/profile/create`;
-
         if (!connected && pathname === createProfilePath)
             redirect(`/${locale}`);
-
-        if (!connectionChecked) return;
-
-        if (auth.isLoading || !auth.user) return;
-
-        if (!auth.user.found && pathname !== createProfilePath)
-            redirect(createProfilePath);
-
+        if (!connectionChecked || auth.isLoading || !auth.user) return;
         if (auth.user.found && pathname === createProfilePath)
             redirect(`/${locale}`);
-
     }, [auth, connected, connectionChecked]);
+
+    useEffect(() => {
+        if (!walletAddress || auth.isLoading || !auth.user || isRegistered) return;
+
+        const path = pathname.replace(`/${locale}`, "");
+        //Check task routes
+        let restrictedTaskRoute = false;
+        if (path.startsWith("/tasks")) {
+            const splittedRoute = path.split("/").filter(path => path);
+            if (splittedRoute.length === 2) {
+                restrictedTaskRoute = isNaN(Number.parseInt(splittedRoute[1]))
+            }
+            if (splittedRoute.length !== 2) restrictedTaskRoute = true;
+        }
+        const isRestrictedRoutes = restrictedTaskRoute || path === "/profile";
+        if (isRestrictedRoutes) router.push(createProfilePath)
+    }, [walletAddress, auth, pathname]);
 
     //Fetch User Profile
     useEffect(() => {
         if (!walletAddress) return;
-        fetchProfile()
+        fetchProfile();
     }, [walletAddress, locale]);
 
     return (
-        <AuthContext.Provider value={{ ...auth, fetchProfile, updateUser }}>
+        <AuthContext.Provider value={{ ...auth, isRegistered, fetchProfile, updateUser }}>
             {props.children}
             {auth.isLoading && <Loader className="absolute top-0 left-0 z-[500]" />}
         </AuthContext.Provider>

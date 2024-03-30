@@ -22,9 +22,9 @@ export default function FreelancerButtons(props: IButtonWrapperProps) {
     const trans = useTranslations();
 
     return <>
-        <SendFeedbackButton
+        {props.order.status === 1 && <SendFeedbackButton
             title={trans("task.button.send_feedback")}
             index={props.order?.index || -1}
-        />
+        />}
     </>
 }

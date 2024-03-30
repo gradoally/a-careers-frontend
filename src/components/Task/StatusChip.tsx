@@ -12,10 +12,11 @@ interface Props {
 export const Statuses: Record<number, StatusType> = {
     0: "on_moderation",
     1: "no_responses",
-    2: "responses",
+    2: "cp_sent",
     3: "in_work",
     6: "completed",
-    11: "deadline_passed"
+    11: "deadline_passed",
+    20: "responses"
 }
 
 const StatusChip = ({ status, count }: Props) => {

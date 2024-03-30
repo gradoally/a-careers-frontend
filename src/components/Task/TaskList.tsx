@@ -31,7 +31,7 @@ const TaskItem = ({ order, locale }: { order: Order, locale: string }) => {
                 💎 {order?.price}
             </Typography>
             {
-                order?.responsesCount === 0 && <StatusChip status={"no_responses"} />
+                order?.responsesCount ? <StatusChip status={"responses"} count={order.responsesCount} /> : <StatusChip status={"no_responses"} />
             }
         </Link>
     )
@@ -39,21 +39,11 @@ const TaskItem = ({ order, locale }: { order: Order, locale: string }) => {
 
 const MemoTaskItem = React.memo(TaskItem)
 
-
 const TaskList = ({ data }: { data: Order[] }) => {
     const locale = useLocale();
-
     return (
         <Stack spacing={"15px"} divider={<Divider />}>
-            {data.map((e, i) => {
-                return (
-                    <MemoTaskItem
-                        key={i}
-                        order={e}
-                        locale={locale}
-                    />
-                )
-            })}
+            {data.map((e, i) => <MemoTaskItem key={i} order={e} locale={locale} />)}
         </Stack>
     )
 }

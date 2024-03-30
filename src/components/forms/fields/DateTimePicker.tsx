@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react";
-import {useLocale} from "next-intl";
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import { useLocale } from "next-intl";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ruLocale from "date-fns/locale/ru";
 import enLocale from "date-fns/locale/en-US";
 
-import {MobileDateTimePicker} from '@mui/x-date-pickers/MobileDateTimePicker';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 
@@ -49,35 +49,35 @@ const DateTimePicker = (
                 <MobileDateTimePicker
                     disablePast
                     label={label}
-                    value={value}
+                    value={value ? new Date(value) : ""}
                     onChange={onChange}
                     className={className}
                     slotProps={{
-                        layout: {sx: {backgroundColor: "info.main"}},
+                        layout: { sx: { backgroundColor: "info.main" } },
                         textField: {
                             variant: "standard",
                             InputProps: {
-                                sx: {padding: "20px 0"},
+                                sx: { padding: "20px 0" },
                                 disableUnderline: true,
                                 placeholder: placeholder,
                                 startAdornment: (
                                     <InputAdornment position="start">
                                         <div className="h-6 w-6">
                                             <Image width="24" height="24" alt="earth"
-                                                   src="/images/spiral_calendar_pad.png"/>
+                                                src="/images/spiral_calendar_pad.png" />
                                         </div>
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
                                     <InputAdornment className="hover-opactiry  transition-opacity" position="start">
-                                        <ArrowRightIcon/>
+                                        <ArrowRightIcon />
                                     </InputAdornment>
                                 ),
                             },
                         }
                     }}
                 />
-                <Divider className="hover-opacity transition-opacity"/>
+                <Divider className="hover-opacity transition-opacity" />
             </FormControl>
         </LocalizationProvider>
     );

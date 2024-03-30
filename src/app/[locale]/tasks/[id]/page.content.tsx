@@ -12,9 +12,7 @@ import ResponseCard from "./card";
 import TaskView from '@/components/Task/TaskView';
 import { Order } from '@/openapi/client';
 
-
 import DaimondIcon from "@/assets/DaimondProfile.svg";
-import CatIcon from "@/assets/CatProfile.svg";
 
 import { IResponse } from './card';
 
@@ -73,6 +71,7 @@ function a11yProps(index: number) {
 }
 
 export default function Content(props: {
+    isCustomer: boolean,
     tabVisibility: boolean,
     task: Order | null,
     tab: number,
@@ -84,7 +83,7 @@ export default function Content(props: {
             profile: DaimondIcon,
             offerPrice: 1200,
             description: "Designed the architecture, ready to show.",
-            specialization:"Blockchain Developer, FunC, FIFT",
+            specialization: "Blockchain Developer, FunC, FIFT",
             nickname: "SomeDao"
         }
     ]);
@@ -98,11 +97,14 @@ export default function Content(props: {
             </div>}
             <Divider />
             <CustomTabPanel value={props.tab} index={0}>
-                {props.task && <TaskView data={props.task} />}
+                {props.task && <TaskView
+                    data={props.task}
+                    isCustomer={props.isCustomer}
+                />}
             </CustomTabPanel>
             <CustomTabPanel value={props.tab} index={1}>
                 <Stack spacing="30px" direction="column">
-                    {responses.map((response,index) => <ResponseCard key={index} isSelected={false} response={response} />)}
+                    {responses.map((response, index) => <ResponseCard key={index} isSelected={false} response={response} />)}
                 </Stack>
             </CustomTabPanel>
         </div>

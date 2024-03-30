@@ -1,11 +1,12 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+
 import { Stack } from "@mui/material";
 import StatusChip, { Statuses } from "@/components/Task/StatusChip";
 import Typography from "@mui/material/Typography";
 import CopyContainer from "@/components/features/copy";
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
-import React, { useEffect, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
 import UserAvatar from "@/components/UserAvatar";
 import { Order } from "@/openapi/client";
 import { formatDatetime } from "@/lib/helper";
@@ -84,22 +85,32 @@ const Customer = (props: {
     </Stack>
 }
 
-const TaskView = ({ data }: { data: Order }) => {
+const MemoizedCustomer = React.memo(Customer);
 
-    const trans = useTranslations("");
+export default function TaskView({ data, isCustomer }: { data: Order, isCustomer: boolean }) {
+
     const locale = useLocale();
-
+    const trans = useTranslations();
     const { getCategory, getLanguage } = useAppContext();
 
-    let telegram = data?.customer?.telegram
-    if (telegram && telegram.startsWith("@")) {
-        telegram.slice(1)
-    }
+    const memoizedTask = useMemo(() => {
+        const taskData = { status: data.status || -1, telegram: data?.customer?.telegram };
+        if (data.status === 1 && data.responsesCount) {
+            taskData.status = 20
+        }
+        if (taskData.telegram && taskData.telegram.startsWith("@")) {
+            taskData.telegram = taskData.telegram.slice(1)
+        }
+        return taskData;
+    }, [data]);
 
     return (
         <>
             <Stack spacing={1}>
-                <StatusChip status={Statuses[data?.status || -1]} count={data.responsesCount || 0} />
+                <StatusChip
+                    status={Statuses[memoizedTask.status]}
+                    count={data.responsesCount || 0}
+                />
                 <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{data?.name}</Typography>
                 <Typography className="!text-[12px] !font-InterLight">💎 {data?.price}</Typography>
             </Stack>
@@ -127,16 +138,14 @@ const TaskView = ({ data }: { data: Order }) => {
                 <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(data?.category || "")?.code })}</div>
             </Stack>
             {
-                data?.customer && <Customer
+                !isCustomer && <MemoizedCustomer
                     locale={locale}
                     address={data?.customer?.address}
                     index={data?.customer?.index}
                     nickname={data?.customer?.nickname}
-                    telegram={telegram}
+                    telegram={memoizedTask.telegram}
                 />
             }
         </>
     )
 }
-
-export default TaskView;

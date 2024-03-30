@@ -21,12 +21,13 @@ import BaseForm from "@/components/forms/BaseForm";
 import TextField from "@/components/forms/fields/TextField";
 import AddButton from "@/components/ui/buttons/AddButton";
 import SelectField from "@/components/forms/fields/SelectField";
-import CenteredContainer from "@/components/ui/CenteredContainer";
 import Image from "@/components/Image";
 import { User } from "@/openapi/client";
 import Footer from "@/components/layout/Footer";
 import BackButton from "@/components/ui/buttons/BackButton";
 import FooterButton from "@/components/ui/buttons/FooterButton";
+import CloseButton from "@/components/ui/buttons/CloseButton";
+import { NextLinkComposed } from "@/components/Link";
 
 import CrossIcon from "@/assets/Cross.svg";
 import ProfileIcon from "@/assets/gif/unicorn-low.gif";
@@ -199,9 +200,10 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                     sx={{ color: "info.main" }}>
                     {title}
                 </Typography>
-            </Stack> : <CenteredContainer>
-                <Typography variant="h5" sx={{ color: "info.main" }}>{title}</Typography>
-            </CenteredContainer>}
+            </Stack> : <Stack style={{ width: "100%" }} direction={"row"} alignContent={"space-between"}>
+                <Typography variant="h5" sx={{ color: "info.main", margin: "auto 0" }}>{title}</Typography>
+                <CloseButton style={{ marginRight: "5px", marginLeft:"auto" }} component={NextLinkComposed} to={`/`} />
+            </Stack>}
         </AppBar>
     )
 
@@ -326,7 +328,7 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                                     autoComplete="on"
                                 />
                                 <datalist id="programmingLanguages" onClick={console.log}>
-                                    {config?.categories && config.categories.map((cat,indx) => <option
+                                    {config?.categories && config.categories.map((cat, indx) => <option
                                         key={indx}
                                         value={cat.code}
                                     >{cat.code}

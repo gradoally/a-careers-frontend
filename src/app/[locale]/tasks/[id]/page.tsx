@@ -1,16 +1,14 @@
 "use client"
 import React, { useState, useEffect, useMemo } from "react";
-import { NextLinkComposed } from "@/components/Link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useTonConnectUI } from "@tonconnect/ui-react";
-import { useTonConnect } from "@/hooks/useTonConnect";
 
-import { useAuthContext } from "@/lib/provider/auth.provider";
+import { useTonConnect } from "@/hooks/useTonConnect";
 
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
+import { NextLinkComposed } from "@/components/Link";
 import Footer from "@/components/layout/Footer";
 import AppBar from "@/components/layout/app-bar";
 import BackButton from "@/components/ui/buttons/BackButton";
@@ -23,9 +21,7 @@ import FreelancerButtons from "@/components/Task/Buttons/FreelancerButtons";
 
 import Content from "./page.content";
 
-import { Order } from "@/openapi/client";
-
-import { getOrder } from "@/services/order";
+import { useTask } from "@/lib/provider/task.provider";
 
 type Props = {
     params: { locale: string, id: number };
@@ -35,59 +31,20 @@ const Page = ({ params: { locale, id } }: Props) => {
 
     const trans = useTranslations();
     const router = useRouter();
-    const { user } = useAuthContext();
-    const [tonConnectUI] = useTonConnectUI();
-    const { connected } = useTonConnect();
+    const { connect, connected } = useTonConnect();
     const [tab, setTab] = useState(0);
-    const [task, setTask] = useState<{
-        loading: boolean,
-        status: string,
-        content: Order | null
-    }>({
-        loading: false,
-        status: "",
-        content: null
-    });
+    const { task, loadTask, isCustomer, isResponses } = useTask();
 
     const handleChange = (e: any, newValue: number) => {
         setTab(newValue);
     };
 
-    async function connect() {
-        try {
-            await tonConnectUI.openModal();
-            router.push(`${task.content?.index}/response`);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const isCustomer = useMemo(() => {
-        return user?.data?.index === task.content?.customer?.index;
-    }, [task, user]);
+    const tabVisibility = useMemo(() => {
+        return isCustomer && isResponses ? true : false
+    }, [isCustomer, isResponses]);
 
     useEffect(() => {
-        if (task.loading) return;
-        setTask({
-            loading: true,
-            status: "loading",
-            content: null
-        });
-        getOrder({ index: `${id}`, locale })
-            .then(res => {
-                setTask({
-                    loading: false,
-                    status: "success",
-                    content: res.data
-                });
-            }).catch(() => {
-                setTask({
-                    loading: false,
-                    status: "fail",
-                    content: null
-                });
-            })
-
+        loadTask({ index: id, locale });
     }, [id]);
 
     const header = (
@@ -118,7 +75,11 @@ const Page = ({ params: { locale, id } }: Props) => {
         if (!connected) {
             return <Footer>
                 <FooterButton
-                    onClick={connect}
+                    onClick={() => connect(() => {
+                        if (!isCustomer) {
+                            router.push(`${task.content?.index}/response`);
+                        }
+                    })}
                     color={"secondary"}
                     variant="contained">
                     {trans("common.log_in_and_respond")} ⚡️
@@ -134,7 +95,7 @@ const Page = ({ params: { locale, id } }: Props) => {
                 }}
             />
         }
-        
+
         return <FreelancerButtons order={task.content} />
     }
 
@@ -142,7 +103,8 @@ const Page = ({ params: { locale, id } }: Props) => {
         <Shell withDrawer header={header} footer={footer()}>
             <div className="px-[20px] pb-[20px]">
                 {task.loading ? <CircularLoading /> : <Content
-                    tabVisibility={isCustomer && task.content?.status === 2 ? true : false}
+                    isCustomer={isCustomer}
+                    tabVisibility={tabVisibility}
                     tab={tab}
                     changeTab={handleChange}
                     task={task.content}

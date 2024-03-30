@@ -10,7 +10,7 @@ export async function getOrders(query: string) {
   });
 }
 
-export async function getOrder(args: { index: string; locale: string }) {
+export async function getOrder(args: { index: number; locale: string }) {
   return await get<Order>({
     url: `${APIs.orders.get(args.index, args.locale)}`,
   });
