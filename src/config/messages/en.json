@@ -84,7 +84,7 @@
     "first_step": "First step",
     "step_x_from_x": "Step {value} of {from}",
     "make_a_response": "Make a response",
-
+    "commercial_proposal":"Commercial proposal",
     "task": "Task",
     "create": "Create a task",
     "find": "Find the task",
@@ -138,15 +138,17 @@
     "or_suggest_your_own": "or suggest your own",
     "confirm_the_deadline": "Confirm the deadline",
     "response_comment": "Response Comment",
-    "make_response_comment_description": "Add a detailed description of your offer and potential customer benefits"
+    "make_response_comment_description": "Add a detailed description of your offer and potential customer benefits",
+    "make_offer_comment":"Make an offer to a freelancer and freeze the remuneration"
   },
   "task": {
     "category": "Category {value}",
     "createdAt": "Created on {date} in {language}",
     "button": {
-      "offer_cooperation": "Offer Cooperation",
       "send_feedback": "Send feedback",
-      "choose_specialist": "Choose a specialist"
+      "choose_specialist": "Choose a specialist",
+      "offer_cooperation": "Offer Cooperation",
+      "cancel_offer":"Cancel the offer"
     }
   },
   "profile": {

@@ -144,7 +144,7 @@ export default function Stepper() {
 
                 checkTxProgress(async (successCB) => {
                     try {
-                        const orderRes = await getOrder({ index: orderNextIndex, locale });
+                        const orderRes = await getOrder({ index: orderNextIndex, translateTo:locale });
                         if (orderRes.data) {
                             successCB();
                             toast(trans("tasks.task_successfully_created"), 'success');

@@ -15,6 +15,9 @@ import { Order } from '@/openapi/client/models/Order';
 import DaimondIcon from "@/assets/DaimondProfile.svg";
 
 import { IResponse } from './card';
+import { ITaskMetaInfo } from '@/hooks/useTaskFunc';
+import { useTask } from '@/lib/provider/task.provider';
+import { useAuthContext } from '@/lib/provider/auth.provider';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -71,19 +74,22 @@ function a11yProps(index: number) {
 }
 
 export default function Content(props: {
-    isCustomer: boolean,
-    tabVisibility: boolean,
-    task: Order | null,
-    tab: number,
+    task: Order | null;
+    taskMetaInfo: ITaskMetaInfo;
+    tabVisibility: boolean;
+    tab: number;
     changeTab: (e: any, newValue: number) => void;
 }) {
     const trans = useTranslations();
+    const { response, selectResponse } = useTask();
     const [responses] = useState<IResponse[]>([
         {
+            id: 1,
             profile: DaimondIcon,
             offerPrice: 1200,
             description: "Designed the architecture, ready to show.",
             specialization: "Blockchain Developer, FunC, FIFT",
+            deadline: new Date().toISOString(),
             nickname: "SomeDao"
         }
     ]);
@@ -99,12 +105,41 @@ export default function Content(props: {
             <CustomTabPanel value={props.tab} index={0}>
                 {props.task && <TaskView
                     data={props.task}
-                    isCustomer={props.isCustomer}
+                    info={props.taskMetaInfo}
                 />}
             </CustomTabPanel>
             <CustomTabPanel value={props.tab} index={1}>
                 <Stack spacing="30px" direction="column">
-                    {responses.map((response, index) => <ResponseCard key={index} isSelected={false} response={response} />)}
+                    {responses.map((res, index) => <ResponseCard
+                        key={index}
+                        isSelected={response?.id === res.id ? true : false}
+                        response={res}
+                        select={() => selectResponse({
+                            id: res.id,
+                            price: res.offerPrice,
+                            text: res.description,
+                            deadline: res.deadline,
+                            freelancerAddress: "UQB0Nv1ucHN_7XJLkFlckrtQCjxEwPoiym2DqV_cAfvYaBKG",
+                            freelancer: {
+                                "index": 0,
+                                "address": "EQAqPwkjnAIKJs57CLCGYfA2-pOpb-EzpkhL9fQkCSPUbD0u",
+                                "userAddress": "UQB0Nv1ucHN_7XJLkFlckrtQCjxEwPoiym2DqV_cAfvYaBKG",
+                                "revokedAt": "",
+                                "userStatus": "active",
+                                "isUser": true,
+                                "isFreelancer": true,
+                                "nickname": "Jonathan",
+                                "telegram": "",
+                                "about": "Web developer with 3 years of experience",
+                                "website": "https://codernuub.com",
+                                "portfolio": "",
+                                "resume": "",
+                                "specialization": "Javascript,Css,Pythong,Html",
+                                "language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
+                                "aboutTranslated": null
+                            }
+                        })}
+                    />)}
                 </Stack>
             </CustomTabPanel>
         </div>

@@ -16,7 +16,8 @@ export const Statuses: Record<number, StatusType> = {
     3: "in_work",
     6: "completed",
     11: "deadline_passed",
-    20: "responses"
+    20: "responses",
+    21: "response_sent"
 }
 
 const StatusChip = ({ status, count }: Props) => {
@@ -36,7 +37,7 @@ const StatusChip = ({ status, count }: Props) => {
             "text": trans("responses", { count: count || 0 })
         },
         "response_sent": {
-            "className": "text-orange border-green",
+            "className": "text-green border-green",
             "text": trans("response_sent"),
         },
         "declined": {
@@ -69,7 +70,7 @@ const StatusChip = ({ status, count }: Props) => {
         status && <div
             className={
                 clsx(
-                    "flex w-fit px-1 h-[14px] border rounded-[2px] text-[8px] align-middle font-normal leading-none",
+                    "flex w-fit px-1 h-[14px] !border-[0.66px] rounded-[2px] text-[8px] align-middle font-normal leading-none",
                     "tracking-wider text-center uppercase leading-3",
                     data[status].className,
                 )

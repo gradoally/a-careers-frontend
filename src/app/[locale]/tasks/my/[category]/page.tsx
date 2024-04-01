@@ -1,3 +1,5 @@
+"use client"
+
 import { useTranslations } from "next-intl";
 
 import Shell from "@/components/layout/Shell";
@@ -10,9 +12,8 @@ import Typography from "@mui/material/Typography";
 import { NextLinkComposed } from "@/components/Link";
 import TaskList from "@/components/Task/TaskList";
 import CenteredContainer from "@/components/ui/CenteredContainer";
-import { unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "@/config/config";
-import { Order } from "@/openapi/client/models/Order";
+
+import { Order } from "@/openapi/client";
 
 type Props = {
     params: {
@@ -20,14 +21,8 @@ type Props = {
     };
 };
 
-export function generateStaticParams() {
-    return locales.map((locale) => ({ locale }));
-}
-
 const Page = ({ params: { locale } }: Props) => {
 
-    // Enable static rendering
-    unstable_setRequestLocale(locale);
     const tc = useTranslations("common");
     const trans = useTranslations("tasks");
     const data: Order[] = [

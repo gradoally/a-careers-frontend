@@ -20,11 +20,10 @@ function SendFeedbackButton(props: ISendFeedbackButtonProps) {
 
 export default function FreelancerButtons(props: IButtonWrapperProps) {
     const trans = useTranslations();
-
     return <>
-        {props.order.status === 1 && <SendFeedbackButton
+        {[1, 20].includes(props.statusCode) && props.order.index !== undefined && <SendFeedbackButton
             title={trans("task.button.send_feedback")}
-            index={props.order?.index || -1}
+            index={props.order?.index}
         />}
     </>
 }

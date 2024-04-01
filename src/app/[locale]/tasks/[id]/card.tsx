@@ -9,19 +9,22 @@ import Link from "@/components/Link";
 import { useTranslations } from 'next-intl';
 
 export interface IResponse {
+    id: number;
     profile: StaticImageData;
     nickname: string;
     offerPrice: number;
     specialization: string;
     description: string;
+    deadline: string;
 }
 
 interface IResponseCardProps {
     response: IResponse;
     isSelected: boolean;
+    select: () => void;
 }
 
-export default function ResponseCard({ isSelected, response }: IResponseCardProps) {
+export default function ResponseCard({ isSelected, response, select }: IResponseCardProps) {
     const trans = useTranslations();
     return (
         <Card
@@ -34,6 +37,7 @@ export default function ResponseCard({ isSelected, response }: IResponseCardProp
                 borderBottomRightRadius: "13px"
             }}>
             <CardHeader
+                onClick={select}
                 avatar={
                     <Image src={response.profile} alt={response.nickname} width={71} height={71} className='aspect-square' />
                 }
@@ -56,7 +60,7 @@ export default function ResponseCard({ isSelected, response }: IResponseCardProp
                 }}
                 className="border-b-[1px] border-primary"
             />
-            <CardContent>
+            <CardContent onClick={select}>
                 <p className='!font-InterLight text-[9px] mb-2'> {response.description}</p>
                 <div className="!text-[12px] !font-InterRegular">
                     {trans('response.offer')}: 💎 {response.offerPrice}

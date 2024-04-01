@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -8,6 +8,7 @@ import { useAppContext } from "@/lib/provider/app.providers";
 import { Drawer as MuiDrawer, Stack, Typography, } from '@mui/material';
 import MuiDivider from "@mui/material/Divider";
 import MenuItem from "@mui/material/MenuItem";
+
 import Image from "@/components/Image";
 import BackButton from "@/components/ui/buttons/BackButton";
 import Divider from "@/components/ui/Divider";
@@ -19,49 +20,69 @@ import Shell from "@/components/layout/Shell";
 import NumberFormat from "@/components/forms/fields/NumberFormat";
 import TextField from "@/components/forms/fields/TextField";
 import SelectField from "@/components/forms/fields/SelectField";
+import Footer from "../Footer";
+import FooterButton from "@/components/ui/buttons/FooterButton";
+
+import { getOrdersCount } from "@/services/order";
+import { CircularLoading } from "@/components/features/Loaders";
 
 const FilterContent = () => {
     const { isFilterOpen, toggleFilter, config } = useAppContext()
     const trans = useTranslations("filter");
-    const tc = useTranslations("locale_switcher");
+    const tc = useTranslations();
+    const [count, setCount] = useState({ count: 0, loading: false });
     const [filters, setFilters] = React.useState<Record<string, string>>({})
     const router = useRouter()
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     React.useEffect(() => {
-        const price = searchParams.get("price") ?? ""
+        const price = searchParams.get("minPrice") ?? ""
         const orderBy = searchParams.get("orderBy")
-        const language = searchParams.get("language")
+        const language = searchParams.get("translateTo")
         const category = searchParams.get("category")
         const params: Record<string, string> = {}
         if (orderBy !== null && !["createdAt", "deadline"].includes(orderBy as string)) {
             params["orderBy"] = orderBy
         }
         if (price) {
-            params["price"] = price
+            params["minPrice"] = price;
         }
         if (language) {
-            params["language"] = language
+            params["translateTo"] = language;
         }
         if (category) {
-            params["category"] = category
+            params["category"] = category;
         }
         setFilters(params)
     }, [])
 
-    const setOptions = (key: "price" | "orderBy" | "language" | "category", value: string) => {
+    useEffect(() => {
+        if (!isFilterOpen || count.loading) return;
+        (async () => {
+            setCount({ loading: true, count: 0 });
+            try {
+                const res = await getOrdersCount(new URLSearchParams(filters).toString());
+                setCount({ count: res.data || 0, loading: false });
+            } catch (err) {
+                setCount({ count: 0, loading: false });
+            }
+        })();
+    }, [filters, isFilterOpen]);
+
+    const setOptions = (key: "minPrice" | "orderBy" | "translateTo" | "category", value: string) => {
         const options = {
             ...filters,
             [key]: value
         }
+        if (options[key] === "all")
+            delete options[key];
         setFilters(options)
     }
 
     const handleBack = () => {
         toggleFilter(false)
-        const params = new URLSearchParams(filters)
-
+        const params = new URLSearchParams(filters);
         router.replace(`${pathname}?${params.toString()}`);
     }
 
@@ -72,6 +93,18 @@ const FilterContent = () => {
                 <Typography variant="h5" color="info.main">{trans("filters")}</Typography>
             </Stack>
         </AppBar>
+    )
+
+    const footer = (
+        <Footer>
+            {!count.loading ? <FooterButton
+                onClick={handleBack}
+                color={"secondary"}
+                variant="contained"
+            >
+                {tc("tasks.show", { count: count.count })}
+            </FooterButton> : <CircularLoading className="m-auto" />}
+        </Footer>
     )
 
     return (
@@ -92,14 +125,18 @@ const FilterContent = () => {
             }}
         >
 
-            <Shell header={header}>
-
+            <Shell header={header} footer={footer}>
                 <HoverOpacityComponent>
                     <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
                         className="px-[16px] py-[20px]">
                         <div className="h-6 w-6 flex-shrink-0">
-                            <Image style={{ width: "24px", height: "24px" }} width="24" height="24" alt="puzzle-piece"
-                                src="/images/puzzle-piece.svg" />
+                            <Image
+                                style={{ width: "24px", height: "24px" }}
+                                width="24"
+                                height="24"
+                                alt="puzzle-piece"
+                                src="/images/puzzle-piece.svg"
+                            />
                         </div>
                         <SelectField variant="standard"
                             label={trans("categories")}
@@ -108,13 +145,12 @@ const FilterContent = () => {
                             value={filters?.category ?? "all"}
                             disableUnderline
                             onChange={(e) => setOptions("category", e.target.value)}
-
+                            className="capitalize"
                             SelectProps={{
                                 sx: { padding: "0" },
                                 IconComponent: () => null
                             }}
                         >
-                            {/*<MenuItem key={0} value={"all"}>{trans("all")}</MenuItem>*/}
                             {config?.categories && config.categories.filter(cat => cat.isActive && cat?.code).map((cat, index) => <MenuItem key={index + 1} value={cat.code}>{cat.code}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />
@@ -133,19 +169,16 @@ const FilterContent = () => {
                             label={trans("show_tasks_on_language")}
                             id="language"
                             name="language"
-                            value={filters?.language ?? "all"}
-                            onChange={(e) => setOptions("language", e.target.value)}
+                            value={filters?.translateTo ?? "all"}
+                            onChange={(e) => setOptions("translateTo", e.target.value)}
                             disableUnderline
                             SelectProps={{
-                                sx: { padding: "0" },
+                                sx: { padding: "0", textTransform: "capitalize" },
                                 IconComponent: () => null
                             }}
                         >
-                            {/*<MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
-                            <MenuItem value={"ru"}>Русский</MenuItem>
-                        <MenuItem value={"en"}>English</MenuItem>*/}
                             <MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
-                            {config?.languages && config.languages.map((lang, index) => <MenuItem key={index + 1} value={lang.code}>{lang.code ? tc(lang.code):""}</MenuItem>)}
+                            {config?.languages && config.languages.map((lang, index) => <MenuItem key={index + 1} value={lang.code}>{lang.code ? tc(`locale_switcher.${lang.code}`) : ""}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />
                     </Stack>
@@ -157,7 +190,7 @@ const FilterContent = () => {
                         <Image width="24" height="24" alt="gem" src="/images/gem.png" />
                     </div>
                     <TextField
-                        name="price"
+                        name="minPrice"
                         type="text"
                         InputProps={{
                             sx: { fontSize: "16px", 'fontWeight': "400" },
@@ -169,17 +202,21 @@ const FilterContent = () => {
                             },
                         }}
                         value={filters?.price}
-                        onChange={(e: any) => setOptions("price", e.target.value)}
+                        onChange={(e: any) => setOptions("minPrice", e.target.value)}
                         fullWidth id="price"
-                        variant="standard" />
+                        variant="standard" 
+                        readonly={count.loading}
+                        />
                 </Stack>
                 <MuiDivider />
                 <div className="mt-5">
                     <CustomizedRadios
-                        value={filters?.orderBy as "createdAt" | "deadline" | undefined}
-                        onChange={(value: string) => setOptions("orderBy", value)} />
+                        value={filters?.orderBy as "createdAt" | "deadline" | undefined || "createdAt"}
+                        onChange={(value: string) => setOptions("orderBy", value)}
+                    />
                 </div>
                 <MuiDivider />
+                {count.loading && <div className="cursor-not-allowed w-full h-full absolute top-0 left-0 opacity-40 bg-primary"></div>}
             </Shell>
         </MuiDrawer>
     )

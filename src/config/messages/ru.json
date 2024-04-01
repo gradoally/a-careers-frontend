@@ -83,6 +83,7 @@
     "first_step": "Первый шаг",
     "step_x_from_x": "Шаг {value} из {from}",
     "make_a_response": "Сделать отклик",
+    "commercial_proposal": "Коммерческое предложение",
     "select_deadline": "Укажите точный дедлайн",
     "create": "Создать задачу",
     "find": "Найти задачу",
@@ -131,15 +132,17 @@
 
     "confirm_the_deadline": "Подтвердите дедлайн",
     "response_comment": "Комментарий к отклику",
-    "make_response_comment_description": "Добавьте подробное описание вашего предложения и потенциальные преимущества для заказчиков"
+    "make_response_comment_description": "Добавьте подробное описание вашего предложения и потенциальные преимущества для заказчиков",
+    "make_offer_comment":"Сделайте предложение фрилансеру и заморозьте вознаграждение"
   },
   "task": {
     "category": "Категория {value}",
     "createdAt": "Создано {date} в {language}",
     "button": {
-      "offer_cooperation": "Предложить сотрудничество",
       "send_feedback": "Отправить отзыв",
-      "choose_specialist": "Выберите специалиста"
+      "choose_specialist": "Выберите специалиста",
+      "offer_cooperation": "Предложить сотрудничество",
+      "cancel_offer": "Отмеить предложение"
     }
   },
   "profile": {

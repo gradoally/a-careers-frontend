@@ -1,3 +1,5 @@
+import { IOrderArgs } from "@/interfaces/serviceArgs";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
 export const APIs = {
   user: {
@@ -11,8 +13,8 @@ export const APIs = {
       `${BASE_URL}/api/getuseractivity?index=${index}&page=${page}&pageSize=${limit}`,
   },
   orders: {
-    get: (index: number, language: string) =>
-      `${BASE_URL}/api/getorder?index=${index}&translateTo=${language}`,
+    get: (query: IOrderArgs) =>
+      `${BASE_URL}/api/getorder?index=${query.index}&translateTo=${query.translateTo}&${query?.currentUserIndex === undefined || query.currentUserIndex < 0 ? "":`currentUserIndex=${query.currentUserIndex}`}`,
     search: (query: string) => `${BASE_URL}/api/search?${query}`,
     counts: `${BASE_URL}/api/searchcount`,
   },

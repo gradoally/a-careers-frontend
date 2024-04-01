@@ -1,4 +1,4 @@
-import { Order } from "@/openapi/client";
+import { Order, UserResponse } from "@/openapi/client";
 
 type Click = () => void;
 
@@ -8,11 +8,14 @@ interface IClicks {
 
 export interface IButtonWrapperProps {
   order: Order;
+  statusCode: number;
+  response?: UserResponse;
   clicks?: IClicks;
 }
 
 export interface IButtonProps {
   title?: string;
+  comissionText?: string;
   click?: Click;
 }
 

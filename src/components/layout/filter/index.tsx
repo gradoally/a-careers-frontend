@@ -1,17 +1,17 @@
-import {useMessages, NextIntlClientProvider, useLocale} from "next-intl";
+import { useMessages, NextIntlClientProvider, useLocale } from "next-intl";
 import pick from "lodash/pick";
 
 import FilterContent from "./FilterContent";
 
-const Filter = ()=>{
+const Filter = () => {
     const locale = useLocale();
     const messages = useMessages();
     return (
         <NextIntlClientProvider
             locale={locale}
-            messages={pick(messages, 'filter')}
+            messages={pick(messages,'tasks', 'filter', 'locale_switcher')}
         >
-            <FilterContent/>
+            <FilterContent />
         </NextIntlClientProvider>
     )
 }

@@ -13,6 +13,8 @@ import { formatDatetime } from "@/lib/helper";
 import { truncateMiddleText } from "@/lib/utils/tools";
 import { getUserStatus } from "@/services/profile";
 import { useAppContext } from "@/lib/provider/app.providers";
+import { ITaskMetaInfo } from "@/hooks/useTaskFunc";
+import { IUser } from "@/interfaces";
 
 const StackContainer = ({ primary, secondary }: {
     primary: string;
@@ -30,20 +32,22 @@ const StackContainer = ({ primary, secondary }: {
     )
 }
 
-const Customer = (props: {
+function Customer(props: {
     locale: string;
-    index?: number;
-    address?: string | null;
-    nickname?: string | null;
-    telegram?: string | null;
-}) => {
+    customer: IUser;
+}) {
 
     const trans = useTranslations();
     const [status, setStatus] = useState<{ freelancer: number; customer: number }>({ freelancer: 0, customer: 0 })
 
+    const telegram = useMemo(() => {
+        let tg = props.customer?.telegram;
+        return (tg && tg.startsWith("@")) ? tg.slice(1) : tg;
+    }, [props.customer]);
+
     useEffect(() => {
-        if (!props?.address || (props?.index || -1) < 0) return;
-        getUserStatus({ address: props.address, index: props.index || -1, locale: props.locale })
+        if (!props?.customer?.address || (props?.customer?.index || -1) < 0) return;
+        getUserStatus({ address: props?.customer?.address, index: props?.customer.index || -1, locale: props.locale })
             .then(res => {
                 setStatus({
                     freelancer: res.data?.asFreelancerTotal || 0,
@@ -60,20 +64,20 @@ const Customer = (props: {
             <Stack component="div" direction="row" spacing={3}>
                 <UserAvatar height="80px" width="80px" />
                 <Stack direction="column" className="!my-auto" spacing="7px" component="div">
-                    <Typography variant="body2">@{props?.nickname}</Typography>
+                    <Typography variant="body2">@{props?.customer?.nickname}</Typography>
                     <Stack component="div" sx={{ fontSize: "10px" }} direction="row" spacing="5px">
                         <div className="opacity-70">✅ {status.freelancer}</div>
                         <div className="opacity-40">❎ {status.customer}</div>
                     </Stack>
                     <Stack component="div" className="text-[10px]" direction="row" spacing="10px">
                         <div className="border-b border-white text-white opacity-[40%]">
-                            <Link noLinkStyle href={`/profile/${props?.index}`}>
+                            <Link noLinkStyle href={`/profile/${props?.customer?.index}`}>
                                 {trans("common.profile")} 📖
                             </Link>
                         </div>
-                        {props.telegram && (
+                        {telegram && (
                             <div className="border-b border-white text-white opacity-[40%]">
-                                <Link noLinkStyle href={`https://t.me/${props.telegram}`}>
+                                <Link noLinkStyle href={`https://t.me/${telegram}`}>
                                     Telegram ↗
                                 </Link>
                             </div>
@@ -87,28 +91,20 @@ const Customer = (props: {
 
 const MemoizedCustomer = React.memo(Customer);
 
-export default function TaskView({ data, isCustomer }: { data: Order, isCustomer: boolean }) {
+export default function TaskView({
+    data,
+    info
+}: { data: Order, info: ITaskMetaInfo }) {
 
     const locale = useLocale();
     const trans = useTranslations();
     const { getCategory, getLanguage } = useAppContext();
 
-    const memoizedTask = useMemo(() => {
-        const taskData = { status: data.status || -1, telegram: data?.customer?.telegram };
-        if (data.status === 1 && data.responsesCount) {
-            taskData.status = 20
-        }
-        if (taskData.telegram && taskData.telegram.startsWith("@")) {
-            taskData.telegram = taskData.telegram.slice(1)
-        }
-        return taskData;
-    }, [data]);
-
     return (
         <>
             <Stack spacing={1}>
                 <StatusChip
-                    status={Statuses[memoizedTask.status]}
+                    status={Statuses[info.statusCode]}
                     count={data.responsesCount || 0}
                 />
                 <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{data?.name}</Typography>
@@ -138,12 +134,9 @@ export default function TaskView({ data, isCustomer }: { data: Order, isCustomer
                 <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(data?.category || "")?.code })}</div>
             </Stack>
             {
-                !isCustomer && <MemoizedCustomer
+                !info.isCustomer && data.customer && <MemoizedCustomer
                     locale={locale}
-                    address={data?.customer?.address}
-                    index={data?.customer?.index}
-                    nickname={data?.customer?.nickname}
-                    telegram={memoizedTask.telegram}
+                    customer={data.customer}
                 />
             }
         </>

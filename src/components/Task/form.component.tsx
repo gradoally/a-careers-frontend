@@ -3,6 +3,7 @@ import { Typography, Button } from "@mui/material";
 interface ITaskFormWrapperProps extends React.PropsWithChildren {
     title: string;
     description?: string;
+    className?:string;
 }
 
 interface ISelectorProps {
@@ -13,8 +14,8 @@ interface ISelectorProps {
 }
 
 export function TaskFormWrapper(props: ITaskFormWrapperProps) {
-    return <div className="w-full px-5 py-6">
-        <Typography className="!font-InterBold !text-[16px] !leading-none">{props.title}</Typography>
+    return <div className={`w-full px-5 py-6 ${props.className}`}>
+        <Typography className="!font-InterBold !text-[16px] leading-[25px]">{props.title}</Typography>
         {props.description && <Typography variant="caption" component="div" sx={{ marginTop: "18px",marginBottom:"12px" }}>{props.description}</Typography>}
         {props.children}
     </div>

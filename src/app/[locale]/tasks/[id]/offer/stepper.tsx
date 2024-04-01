@@ -8,7 +8,7 @@ import { z } from "zod";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { toNano } from "@ton/core";
+import { Address, address, toNano } from "@ton/core";
 
 import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
@@ -21,7 +21,7 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import { checkError, getError } from "@/lib/helper";
 import { useAuthContext } from "@/lib/provider/auth.provider";
 
-import { useUserContract } from "@/hooks/useUserContract";
+import { useOrderContract } from "@/hooks/useOrderContract";
 
 import { ResponseData, buildResponseContent } from '@/contracts/User';
 
@@ -70,15 +70,15 @@ export default function Stepper(props: { id: number }) {
     const router = useRouter();
 
     const { user } = useAuthContext();
-    const { task, updateTask } = useTask();
+    const { task, response, updateTask } = useTask();
 
     const [step, setStep] = useState<number>(1);
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
-    const [title] = useState(trans("tasks.make_a_response"));
+    const [title] = useState(trans("tasks.commercial_proposal"));
     const [disabled, setDisabled] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");;
 
-    const { sendAddResponse } = useUserContract(String(user?.data?.address));
+    const { sendAssignUser } = useOrderContract(String(task.content?.address));
     const { checkTxProgress } = useTxChecker();
 
     const schema = z.object({
@@ -86,13 +86,12 @@ export default function Stepper(props: { id: number }) {
         deadline: z.date({ required_error: trans("form.required.default") }),
         comment: z.string({ required_error: trans("form.required.default") })
     });
-
     const formik = useFormik<IResponseField>(
         {
             initialValues: {
-                price: `${task.content?.price || ""}`,
-                deadline: task.content?.deadline || null,
-                comment: ""
+                price: `${response?.price || ""}`,
+                deadline: response?.deadline || null,
+                comment: response?.text || ""
             },
             validationSchema: toFormikValidationSchema(schema),
             onSubmit: () => { }
@@ -137,16 +136,14 @@ export default function Stepper(props: { id: number }) {
         setErrorMessage(ButtonStatus.error || "");
     }
 
-    async function submitResponse() {
-        const respData: ResponseData = {
-            text: formik.values.comment,
-            price: toNano(formik.values.price),
-            deadline: formik.values.deadline ? new Date(formik.values.deadline).getTime() / 1000 : 0,
-        };
-        await sendAddResponse("0.2", 0, props.id, buildResponseContent(respData));
+    async function submitOffer() {
+        const price = toNano(formik.values.price);
+        const deadline = formik.values.deadline ? new Date(formik.values.deadline).getTime() / 1000 : 0;
+        await sendAssignUser(price + toNano("0.1"), 0, price, deadline, Address.parse(response?.freelancerAddress || ""));
+
         checkTxProgress(async (successCB) => {
             const orderRes = await getOrder({ index: props.id, translateTo: locale, currentUserIndex: user?.data?.index });
-            if (orderRes.data && orderRes.data.currentUserResponse) {
+            if (orderRes.data && (orderRes.data.status !== task.content?.status)) {
                 successCB();
                 updateTask(orderRes.data);
                 router.push(`/en/tasks/${props.id}`)
@@ -174,12 +171,12 @@ export default function Stepper(props: { id: number }) {
             {step === 3 ? (
                 <>
                     <FooterButton
-                        onClick={submitResponse}
+                        onClick={submitOffer}
                         disabled={disabled}
                         className="w-full"
                         color={"secondary"}
                         variant="contained">
-                        {trans("task.button.send_feedback")}
+                        {trans("task.button.offer_cooperation")}
                     </FooterButton>
                     <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
                 </>

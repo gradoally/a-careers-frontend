@@ -6,6 +6,7 @@ import { useTonClient } from "./useTonClient";
 import { useTonConnect } from "./useTonConnect";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { Order, OrderData } from "../contracts/Order";
+import { number } from "zod";
 
 export function useOrderContract(address: string) {
   const { client } = useTonClient();
@@ -33,8 +34,11 @@ export function useOrderContract(address: string) {
   return {
     address: orderContract?.address.toString(),
     orderData: orderData,
-    // sendChangeContent: (value: bigint | string, queryId: number, content: Cell) => {
-    //   return orderContract?.sendChangeContent(sender, toNano(value), queryId, content);
-    // },
+    sendAssignUser: (value: bigint, queryId: number, price: bigint, deadline: number, freelancerAddress: Address) => {
+      return orderContract?.sendAssignUser(sender, value, queryId, price, deadline, freelancerAddress);
+    },
+    sendCancelAssign: (value: bigint, queryID: number) => {
+      return orderContract?.sendCancelAssign(sender, value, queryID);
+    },
   };
 }

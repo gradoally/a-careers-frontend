@@ -13,10 +13,11 @@ import TaskList from "@/components/Task/TaskList";
 import Divider from "@/components/ui/Divider";
 
 import { getOrders } from "@/services/order";
-import { Order } from "@/openapi/client/models/Order";
+import { Order } from "@/openapi/client";
 
 import { getOrdersCount } from "@/services/order";
 import { useTonConnect } from "@/hooks/useTonConnect";
+import { useAuthContext } from "@/lib/provider/auth.provider";
 
 function SkeletonLoader() {
     return (
@@ -34,26 +35,54 @@ function SkeletonLoader() {
 function Content() {
     const searchParams = useSearchParams();
     const trans = useTranslations();
+
     const { connectionChecked } = useTonConnect();
+    const { user } = useAuthContext();
+
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [loading, setLoading] = useState(true);
-    const [pageLimit, setPageLimit] = useState(0);
+    const [pageLimit, setPageLimit] = useState({ count: 0, loading: false });
     const [query, setQuery] = useState<Record<string, any>>({
         page: -1,
-        orderBy: "createdAt",
-        translateTo: "en"
+        sort: "desc"
     });
+    const [countQuery, setCountQuery] = useState<Record<string, any>>({});
     const [tasks, setTasks] = useState<Order[]>([]);
 
     useEffect(() => {
-        if (!pageLimit) return;
+        if (pageLimit.loading || !pageLimit.count) return;
         setQuery({ ...query, page: 0 });
     }, [pageLimit]);
 
-    //Update Query State
+    //Update query state
     useEffect(() => {
-
+        ["translateTo", "category", "orderBy", "minPrice"].map((key) => {
+            const value = searchParams.get(key);
+            if (value) {
+                query[key] = value;
+                key !== "orderBy" && (countQuery[key] = value);
+            } else {
+                delete query[key];
+                key !== "orderBy" && (delete countQuery[key]);
+            }
+        });
+        setQuery({ ...query });
+        setCountQuery({ ...countQuery });
     }, [searchParams]);
+
+    //Fetch search counts
+    useEffect(() => {
+        if (pageLimit.loading) return;
+        setPageLimit({ ...pageLimit, loading: true });
+        const queryStr = new URLSearchParams(countQuery).toString();
+        getOrdersCount(queryStr)
+            .then(res => {
+                setPageLimit({ count: res.data || 1, loading: false });
+            }).catch(err => {
+                setPageLimit({ count: 0, loading: false });
+                alert((err as Error).message);
+            });
+    }, [countQuery]);
 
     //Load orders on query update
     useEffect(() => {
@@ -61,6 +90,8 @@ function Content() {
         if (query.page < 0) return;
         if (loading && tasks.length) return;
         setLoading(true);
+        if (user?.data?.index !== undefined)
+            query.currentUserIndex = user.data.index;
         const queryStr = new URLSearchParams(query).toString();
         getOrders(queryStr)
             .then((res) => {
@@ -92,18 +123,6 @@ function Content() {
             container.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
-    //Fetch search counts
-    useEffect(() => {
-        if (!connectionChecked) return;
-        if (pageLimit) return;
-        getOrdersCount()
-            .then(res => {
-                setPageLimit(res.data || 1);
-            }).catch(err => {
-                alert((err as Error).message);
-            });
-    }, [connectionChecked]);
 
     return (
         <div
