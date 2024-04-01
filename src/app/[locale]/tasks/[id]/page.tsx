@@ -35,7 +35,7 @@ const Page = ({ params: { locale, id } }: Props) => {
     const { connect, connected } = useTonConnect();
     const [tab, setTab] = useState(0);
     const { user } = useAuthContext();
-    const { task, response, loadTask, info } = useTask();
+    const { task, info, response, loadTask } = useTask();
 
     const handleChange = (e: any, newValue: number) => {
         setTab(newValue);

@@ -4,8 +4,9 @@ import { APIs } from "@/config/api.config";
 
 import { IUserRes, IUserStats } from "@/interfaces/request";
 
-import { OrderActivity } from "@/openapi/client";
+import { Order,OrderActivity } from "@/openapi/client";
 import { IUser } from "@/interfaces";
+import { IUserOrdersArgs } from "@/interfaces/serviceArgs";
 
 export async function getUserProfile(args: {
   address: string;
@@ -39,5 +40,11 @@ export async function getUserActivity(args: {
 }) {
   return await get<OrderActivity[]>({
     url: `${APIs.user.activity(args.index, args.page, args.pageSize)}`,
+  });
+}
+
+export async function getUserOrders(args: IUserOrdersArgs) {
+  return await get<Order[]>({
+    url: `${APIs.user.orders(args)}`,
   });
 }

@@ -16,7 +16,8 @@
     "filter": "Фильтр"
   },
   "network": {
-    "commission": "Комиссия сети ≈ {value}"
+    "commission": "Комиссия сети ≈ {value}",
+    "frozen":"{value} TON будут заморожены на смарт-контракте"
   },
   "locale_switcher": {
     "ru": "Русский",
@@ -106,6 +107,7 @@
     "response_denied": "Отклик отклонен · {value}",
     "an_offer_came_in": "Пришло предложение · {value}",
     "on_inspection": "На проверке · {value}",
+    "terminated": "Прекращено · {value}",
     "task_accomplished": "Task accomplished · {value}",
     "select_language": "Выберите язык объявления",
     "select_category": "Выберите категорию",
@@ -133,7 +135,7 @@
     "confirm_the_deadline": "Подтвердите дедлайн",
     "response_comment": "Комментарий к отклику",
     "make_response_comment_description": "Добавьте подробное описание вашего предложения и потенциальные преимущества для заказчиков",
-    "make_offer_comment":"Сделайте предложение фрилансеру и заморозьте вознаграждение"
+    "make_offer_comment": "Сделайте предложение фрилансеру и заморозьте вознаграждение"
   },
   "task": {
     "category": "Категория {value}",

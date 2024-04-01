@@ -7,19 +7,12 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Link from "@/components/Link";
 import { useTranslations } from 'next-intl';
+import { UserResponse } from '@/openapi/client';
 
-export interface IResponse {
-    id: number;
-    profile: StaticImageData;
-    nickname: string;
-    offerPrice: number;
-    specialization: string;
-    description: string;
-    deadline: string;
-}
+import DaimondIcon from "@/assets/DaimondProfile.svg";
 
 interface IResponseCardProps {
-    response: IResponse;
+    response: UserResponse;
     isSelected: boolean;
     select: () => void;
 }
@@ -39,21 +32,21 @@ export default function ResponseCard({ isSelected, response, select }: IResponse
             <CardHeader
                 onClick={select}
                 avatar={
-                    <Image src={response.profile} alt={response.nickname} width={71} height={71} className='aspect-square' />
+                    <Image src={DaimondIcon} alt={response.freelancer?.nickname || ""} width={71} height={71} className='aspect-square' />
                 }
                 action={
                     <Typography variant="caption">
-                        <Link className="border-b pb-[2px] text-[10px] border-[#fffff] mb-2" noLinkStyle href={"/profile"}>
+                        <Link className="!font-InterRegular border-b pb-[2px] text-[10px] border-[#fffff] mb-2" noLinkStyle href={"/profile"}>
                             {trans("response.profile")} 📖
                         </Link>
                     </Typography>
                 }
                 title={<div>
-                    <span className='!font-InterBold !text-[12px] mr-2'>@{response.nickname}</span>
-                    <span className='!font-InterLight !text-[12px]'>✅ 2 ❎ 1</span>
+                    <span className='!font-InterBold !text-[12px] mr-2'>@{response.freelancer?.nickname || ""}</span>
+                    <span className='!font-InterRegular !text-[12px]'>✅ 2 ❎ 1</span>
                 </div>}
                 subheader={
-                    <p className='!font-InterLight text-[9px] mt-1'>{response.specialization}</p>
+                    <p className='!font-InterRegular text-[9.5px] mt-1'>{response.freelancer?.specialization || ""}</p>
                 }
                 subheaderTypographyProps={{
                     sx: { color: isSelected ? "common.black" : "common.white", fontSize: "9px" }
@@ -61,11 +54,11 @@ export default function ResponseCard({ isSelected, response, select }: IResponse
                 className="border-b-[1px] border-primary"
             />
             <CardContent onClick={select}>
-                <p className='!font-InterLight text-[9px] mb-2'> {response.description}</p>
+                <p className='!font-InterRegular text-[9.5px] mb-2'> {response.text}</p>
                 <div className="!text-[12px] !font-InterRegular">
-                    {trans('response.offer')}: 💎 {response.offerPrice}
+                    {trans('response.offer')}: 💎 {response.price}
                 </div>
-                {!isSelected && <div className='w-[21px] h-[21px] ml-auto -mb-3 rounded-full bg-[#000015]'></div>}
+                <div className={`w-[21px] h-[21px] ml-auto -mb-3 rounded-full ${isSelected ? "bg-transparent" : "bg-[#000015]"}`}></div>
             </CardContent>
         </Card>
     );

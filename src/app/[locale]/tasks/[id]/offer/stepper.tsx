@@ -178,7 +178,7 @@ export default function Stepper(props: { id: number }) {
                         variant="contained">
                         {trans("task.button.offer_cooperation")}
                     </FooterButton>
-                    <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
+                    <Typography variant="body2">{trans("network.frozen", { value: formik.values.price })}</Typography>
                 </>
             ) : (
                 <FooterButton

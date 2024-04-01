@@ -25,8 +25,13 @@ interface TabPanelProps {
     value: number;
 }
 
-interface ICustomListProps { iconSrc: string, title: string, status?: number }
-
+interface ICustomListProps {
+    iconSrc: string;
+    title: string;
+    category: string;
+    status?: number;
+    user: "freelancer" | "customer";
+}
 
 function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -77,7 +82,7 @@ function a11yProps(index: number) {
     };
 }
 
-function CustomListItem({ iconSrc, title, status }: ICustomListProps) {
+function CustomListItem({ iconSrc, title, category, status, user }: ICustomListProps) {
     return (
         <>
             <ListItem
@@ -85,7 +90,7 @@ function CustomListItem({ iconSrc, title, status }: ICustomListProps) {
                 secondaryAction={<ArrowRightIcon />}>
                 <ListItemButton
                     component={NextLinkComposed}
-                    to={`/tasks/my/${status}?user=freelancer`}
+                    to={`/tasks/my/${category}?user=${user}&status=${status}`}
                     sx={{ "height": "80px", "padding": "0" }}
                     alignItems={"center"}>
                     <ListItemIcon>
@@ -94,6 +99,7 @@ function CustomListItem({ iconSrc, title, status }: ICustomListProps) {
                     <ListItemText primary={
                         <Typography variant="h4" color="secondary.main" sx={{
                             fontWeight: 400,
+                            fontFamily: "InterRegular"
                         }}>{title}</Typography>
                     } />
                 </ListItemButton>
@@ -107,7 +113,6 @@ export default function Content({ stats }: { stats: IUserStats }) {
 
     const tc = useTranslations('common');
     const trans = useTranslations('tasks');
-
     const [tab, setTab] = useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -116,35 +121,93 @@ export default function Content({ stats }: { stats: IUserStats }) {
 
     return (
         <div className="w-full">
-            <div className="h-[50px]">
-                <Tabs centered value={tab} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label={tc("created")} {...a11yProps(0)} />
-                    <Tab label={tc("responses")} {...a11yProps(1)} />
-                </Tabs>
-            </div>
+            <Tabs
+                centered
+                value={tab}
+                onChange={handleChange}
+            >
+                <Tab
+                    label={tc("created")}
+                    className='!font-InterRegular'
+                    {...a11yProps(0)}
+                />
+                <Tab
+                    label={tc("responses")}
+                    className='!font-InterRegular'
+                    {...a11yProps(1)}
+                />
+            </Tabs>
             <Divider />
             <CustomTabPanel value={tab} index={0}>
                 <nav>
                     <List
                         disablePadding
                         subheader={
-                            <ListSubheader sx={{ padding: "0", "color": "common.white" }}
+                            <ListSubheader sx={{ padding: "0", margin: "12px 0", "color": "common.white" }}
                                 disableSticky
                                 component="div" id="nested-list-subheader">
-                                <Typography variant="h4">
+                                <Typography variant="h4" sx={{ fontFamily: "InterBold" }}>
                                     {trans("you_have_created", { value: stats.asCustomerTotal })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/hourglass_flowing_sand.png"} title={trans("on_moderation", { value: 0 })} />
-                        <CustomListItem iconSrc={"/images/hear_no_evil.png"} title={trans("no_responses", { value: 0 })} />
-                        <CustomListItem iconSrc={"/images/gem.png"} title={trans("have_responses", { value: 81 })} />
-                        <CustomListItem iconSrc={"/images/offer_made.png"} title={trans("offer_made", { value: 1 })} />
-                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", { value: 4 })} />
-                        <CustomListItem iconSrc={"/images/money_with_wings.png"} title={trans("pending_payment", { value: 2 })} />
-                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", { value: 2 })} />
-                        <CustomListItem iconSrc={"/images/rocket.png"} title={trans("completed", { value: 6 })} />
+                        <CustomListItem
+                            iconSrc={"/images/hourglass_flowing_sand.png"}
+                            title={trans("on_moderation", { value: stats.asCustomerByStatus["0"] || 0 })}
+                            status={0}
+                            category='on_moderation'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/hear_no_evil.png"}
+                            title={trans("no_responses", { value: stats.asCustomerByStatus["1"] || 0 })}
+                            status={1}
+                            category='no_responses'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/gem.png"}
+                            title={trans("have_responses", { value: stats.asCustomerByStatus["1"] || 0 })}
+                            status={1}
+                            category='have_responses'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/offer_made.png"}
+                            title={trans("offer_made", { value: stats.asCustomerByStatus["2"] || 0 })}
+                            status={2}
+                            category='offer_made'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/right-facing_fist.png"}
+                            title={trans("in_the_work", { value: stats.asCustomerByStatus["3"] || 0 })}
+                            status={3}
+                            category='in_the_work'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/money_with_wings.png"}
+                            title={trans("pending_payment", { value: stats.asCustomerByStatus["6"] || 0 })}
+                            status={6}
+                            category='pending_payment'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/eyes.png"}
+                            title={trans("arbitration", { value: stats.asCustomerByStatus["9"] || 0 })}
+                            status={9}
+                            category='arbitration'
+                            user='customer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/rocket.png"}
+                            title={trans("completed", { value: stats.asCustomerByStatus["6"] || 0 })}
+                            status={6}
+                            category='completed'
+                            user='customer'
+                        />
                     </List>
                 </nav>
             </CustomTabPanel>
@@ -153,21 +216,63 @@ export default function Content({ stats }: { stats: IUserStats }) {
                     <List
                         disablePadding
                         subheader={
-                            <ListSubheader sx={{ padding: "0", "color": "common.white" }}
+                            <ListSubheader sx={{ padding: "0", margin: "12px 0", "color": "common.white" }}
                                 component="div" id="nested-list-subheader-2">
-                                <Typography variant="h4">
+                                <Typography variant="h4" sx={{ fontFamily: "InterBold" }}>
                                     {trans("you_have_responded", { value: stats.asFreelancerTotal })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
-                        <CustomListItem iconSrc={"/images/dizzy.png"} title={trans("response_sent", { value: 2 })} />
-                        <CustomListItem iconSrc={"/images/fire.png"} title={trans("response_denied", { value: 0 })} />
-                        <CustomListItem iconSrc={"/images/fish_cake.png"} title={trans("an_offer_came_in", { value: 81 })} />
-                        <CustomListItem iconSrc={"/images/right-facing_fist.png"} title={trans("in_the_work", { value: 1 })} />
-                        <CustomListItem iconSrc={"/images/dancer.png"} title={trans("on_inspection", { value: 2 })} />
-                        <CustomListItem iconSrc={"/images/eyes.png"} title={trans("arbitration", { value: 2 })} />
-                        <CustomListItem iconSrc={"/images/star.png"} title={trans("task_accomplished", { value: 2 })} />
+                        <CustomListItem
+                            iconSrc={"/images/dizzy.png"}
+                            title={trans("response_sent", { value: stats.asFreelancerByStatus["1"] || 0 })}
+                            status={0}
+                            category='responses_sent'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/fire.png"}
+                            title={trans("response_denied", { value: stats.asFreelancerByStatus["1"] || 0 })}
+                            status={0}
+                            category='responses_sent'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/fish_cake.png"}
+                            title={trans("an_offer_came_in", { value: stats.asFreelancerByStatus["2"] || 0 })}
+                            status={2}
+                            category='an_offer_came_in'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/right-facing_fist.png"}
+                            title={trans("in_the_work", { value: stats.asFreelancerByStatus["3"] })}
+                            status={3}
+                            category='in_the_work'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/dancer.png"}
+                            title={trans("on_inspection", { value: 0 })}
+                            status={0}
+                            category='on_inspection'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/eyes.png"}
+                            title={trans("arbitration", { value: stats.asFreelancerByStatus["9"] })}
+                            status={9}
+                            category='arbitration'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/king.png"}
+                            title={trans("terminated", { value: stats.asFreelancerByStatus["6"] || 0 })}
+                            status={6}
+                            category='terminated'
+                            user='freelancer'
+                        />
                     </List>
                 </nav>
             </CustomTabPanel>

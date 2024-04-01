@@ -1,56 +1,72 @@
 "use client"
-
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import Shell from "@/components/layout/Shell";
-import React, { Suspense } from "react";
-import AppBar from "@/components/layout/app-bar";
 import { Stack } from "@mui/material";
-import BackButton from "@/components/ui/buttons/BackButton";
 import Typography from "@mui/material/Typography";
 
+import AppBar from "@/components/layout/app-bar";
+import Shell from "@/components/layout/Shell";
 import { NextLinkComposed } from "@/components/Link";
 import TaskList from "@/components/Task/TaskList";
 import CenteredContainer from "@/components/ui/CenteredContainer";
+import BackButton from "@/components/ui/buttons/BackButton";
 
 import { Order } from "@/openapi/client";
+import { CircularLoading } from "@/components/features/Loaders";
+import { useAuthContext } from "@/lib/provider/auth.provider";
+import { getUserOrders } from "@/services/profile";
 
 type Props = {
     params: {
+        category: string;
         locale: string;
     };
+    searchParams: {
+        user: string;
+        status: number;
+    }
 };
 
-const Page = ({ params: { locale } }: Props) => {
+export default function Page(props: Props) {
 
-    const tc = useTranslations("common");
-    const trans = useTranslations("tasks");
-    const data: Order[] = [
-        {
-            "name": "Расширение редактируемого стандарта NFT",
-            "createdAt": "2024-02-07T10:09:38+00:00",
-            "responsesCount": 0,
-            "price": 567,
-        },
-        {
-            "name": "Расширение редактируемого стандарта NFT",
-            "createdAt": "2024-02-07T10:09:38+00:00",
-            "responsesCount": 1,
-            "price": 567,
-        },
-        {
-            "name": "Расширение редактируемого стандарта NFT",
-            "createdAt": "2024-02-07T10:09:38+00:00",
-            "responsesCount": 0,
-            "price": 567,
-        },
-        {
-            "name": "Расширение редактируемого стандарта NFT",
-            "createdAt": "2024-02-07T10:09:38+00:00",
-            "responsesCount": 1,
-            "price": 567,
-        },
-    ];
+    const trans = useTranslations();
+    const { user } = useAuthContext();
+    const [order, setOrder] = useState<{
+        loading: boolean;
+        status: string;
+        contents: Order[];
+    }>({
+        loading: true,
+        status: "",
+        contents: []
+    })
+
+    useEffect(() => {
+        if (!user?.data || user?.data?.index === undefined) return;
+
+        getUserOrders({
+            index: user.data.index,
+            status: props.searchParams.status,
+            role: props.searchParams.user
+        })
+            .then(res => {
+                setOrder({
+                    status: "success",
+                    loading: false,
+                    contents: res.data || []
+                });
+            })
+            .catch(err => {
+                console.log((err as Error).message);
+                setOrder({
+                    status: "fail",
+                    loading: false,
+                    contents: []
+                });
+            });
+
+    }, [user]);
 
     const header = (
         <AppBar>
@@ -59,26 +75,20 @@ const Page = ({ params: { locale } }: Props) => {
                 <Typography
                     variant="h5"
                     sx={{ color: "info.main" }}>
-                    {trans("on_moderation", { value: "777" })}
+                    {trans(`tasks.${props.params.category}`, { value: order.contents.length })}
                 </Typography>
             </Stack>
         </AppBar>
     )
+
     return (
         <Shell header={header}>
             <div className="pb-5 pt-[15px]">
-                <Suspense fallback={<div>Loading...</div>}>
-                    {data ? (
-                        <TaskList data={data} />
-                    ) : (
-                        <CenteredContainer>
-                            {tc("no_more_data")}
-                        </CenteredContainer>
-                    )}
-                </Suspense>
+                {order.loading ? <CircularLoading /> : (
+                    order.contents.length ?
+                        <TaskList data={order.contents} /> : <CenteredContainer>{trans("common.no_more_data")}</CenteredContainer>
+                )}
             </div>
         </Shell>
     )
 }
-
-export default Page;

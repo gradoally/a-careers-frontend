@@ -1,4 +1,4 @@
-import { IOrderArgs } from "@/interfaces/serviceArgs";
+import { IOrderArgs, IUserOrdersArgs } from "@/interfaces/serviceArgs";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL;
 export const APIs = {
@@ -11,12 +11,22 @@ export const APIs = {
       `${BASE_URL}/api/getuserstats?address=${address}&index=${index}`,
     activity: (index: string, page: number, limit: number) =>
       `${BASE_URL}/api/getuseractivity?index=${index}&page=${page}&pageSize=${limit}`,
+    orders: (args: IUserOrdersArgs) =>
+      `${BASE_URL}/api/getuserorders?index=${args.index}&status=${args.status}&role=${args.role}`,
   },
   orders: {
     get: (query: IOrderArgs) =>
-      `${BASE_URL}/api/getorder?index=${query.index}&translateTo=${query.translateTo}&${query?.currentUserIndex === undefined || query.currentUserIndex < 0 ? "":`currentUserIndex=${query.currentUserIndex}`}`,
+      `${BASE_URL}/api/getorder?index=${query.index}&translateTo=${
+        query.translateTo
+      }&${
+        query?.currentUserIndex === undefined || query.currentUserIndex < 0
+          ? ""
+          : `currentUserIndex=${query.currentUserIndex}`
+      }`,
     search: (query: string) => `${BASE_URL}/api/search?${query}`,
     counts: `${BASE_URL}/api/searchcount`,
+    responses: (index: number) =>
+      `${BASE_URL}/api/getorderresponses?index=${index}`,
   },
   config: {
     get: `${BASE_URL}/api/config`,

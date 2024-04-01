@@ -16,7 +16,8 @@
     "back": "Back"
   },
   "network": {
-    "commission": "Network commission ≈ {value}"
+    "commission": "Network commission ≈ {value}",
+    "frozen":"{value} TONs will be frozen on a smart contract"
   },
   "locale_switcher": {
     "ru": "Русский",
@@ -112,6 +113,7 @@
     "select_language": "Select task language of the task",
     "task_accomplished": "Task accomplished · {value}",
     "select_checking_period": "Task Checking Period",
+    "terminated":"Terminated · {value}",
     "checking_period_description": "Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
     "select_category": "Select a category",
     "send_task_to_blockchain": "Send a task to the blockchain",

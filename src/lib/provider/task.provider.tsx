@@ -1,24 +1,23 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 
 import { useAuthContext } from "./auth.provider";
 
-import { getOrder } from "@/services/order";
+
+import useTaskMetaInfo, { ITaskMetaInfo } from "@/hooks/useTaskFunc";
+
+import { getOrder, getOrderResponses } from "@/services/order";
 
 import { Order, UserResponse } from "@/openapi/client";
 import { IOrderArgs } from "@/interfaces/serviceArgs";
-import useTaskMetaInfo, { ITaskMetaInfo } from "@/hooks/useTaskFunc";
-
-interface ITaskContent {
-    loading: boolean,
-    status: string,
-    content: Order | null
-}
+import { IContent } from "@/interfaces/request";
 
 interface ITaskContext {
-    task: ITaskContent;
+    task: IContent<Order | null>;
+    info: ITaskMetaInfo;
     updateTask: (task: Order) => void;
     loadTask: (args: IOrderArgs) => void;
-    info: ITaskMetaInfo;
+    loadResponses: (index: number) => void;
+    responses: IContent<UserResponse[]>;
     response?: UserResponse;
     selectResponse: (response: UserResponse) => void;
 }
@@ -29,13 +28,19 @@ const TaskContext = React.createContext<ITaskContext>({
         status: "",
         content: null
     },
-    updateTask(task: Order) { },
-    loadTask(args) { },
     info: {
         isCustomer: false,
         isResponses: false,
         isResponded: false,
         statusCode: -1
+    },
+    updateTask(task: Order) { },
+    loadTask(args) { },
+    loadResponses(index: number) { },
+    responses: {
+        loading: false,
+        status: "",
+        content: []
     },
     selectResponse: (response: UserResponse) => { }
 })
@@ -50,14 +55,15 @@ export const useTask = (): ITaskContext => {
 
 export default function TaskProvider(props: React.PropsWithChildren) {
     const { user } = useAuthContext();
-    const [task, setTask] = useState<{
-        loading: boolean,
-        status: string,
-        content: Order | null
-    }>({
+    const [task, setTask] = useState<IContent<Order | null>>({
         loading: false,
         status: "",
         content: null
+    });
+    const [responses, setResponses] = useState<IContent<UserResponse[]>>({
+        loading: false,
+        status: "",
+        content: []
     });
     const [selectedResponse, setSelectedResponse] = useState<UserResponse>();
 
@@ -95,12 +101,37 @@ export default function TaskProvider(props: React.PropsWithChildren) {
             })
     }
 
+    function loadResponses(index: number) {
+        if (responses.loading) return;
+        setResponses({
+            loading: true,
+            status: "loading",
+            content: []
+        });
+        getOrderResponses(index)
+            .then(res => {
+                setResponses({
+                    loading: false,
+                    status: "success",
+                    content: res.data || []
+                });
+            }).catch(() => {
+                setResponses({
+                    loading: false,
+                    status: "fail",
+                    content: []
+                });
+            })
+    }
+
     return (
         <TaskContext.Provider value={{
             task,
+            info,
             loadTask,
             updateTask,
-            info,
+            loadResponses,
+            responses,
             response: selectedResponse,
             selectResponse
         }}>

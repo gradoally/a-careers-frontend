@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslations } from "next-intl";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -12,12 +12,9 @@ import ResponseCard from "./card";
 import TaskView from '@/components/Task/TaskView';
 import { Order } from '@/openapi/client/models/Order';
 
-import DaimondIcon from "@/assets/DaimondProfile.svg";
-
-import { IResponse } from './card';
 import { ITaskMetaInfo } from '@/hooks/useTaskFunc';
 import { useTask } from '@/lib/provider/task.provider';
-import { useAuthContext } from '@/lib/provider/auth.provider';
+import { CircularLoading } from '@/components/features/Loaders';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -81,24 +78,19 @@ export default function Content(props: {
     changeTab: (e: any, newValue: number) => void;
 }) {
     const trans = useTranslations();
-    const { response, selectResponse } = useTask();
-    const [responses] = useState<IResponse[]>([
-        {
-            id: 1,
-            profile: DaimondIcon,
-            offerPrice: 1200,
-            description: "Designed the architecture, ready to show.",
-            specialization: "Blockchain Developer, FunC, FIFT",
-            deadline: new Date().toISOString(),
-            nickname: "SomeDao"
-        }
-    ]);
+    const { responses, response, selectResponse, loadResponses } = useTask();
+
+    useEffect(() => {
+        if (!props.task || props.task.index === undefined || responses.loading) return;
+        loadResponses(props.task.index);
+    }, [props.task]);
+
     return (
         <div className="w-full">
             {props.tabVisibility && <div className="h-[50px]">
                 <Tabs centered value={props.tab} onChange={props.changeTab} aria-label="basic tabs example">
                     <Tab label={trans("common.task")} {...a11yProps(0)} />
-                    <Tab label={`${trans("common.responses")} (3)`} {...a11yProps(1)} />
+                    <Tab label={`${trans("common.responses")} (${props.task?.responsesCount || 0})`} {...a11yProps(1)} />
                 </Tabs>
             </div>}
             <Divider />
@@ -109,38 +101,16 @@ export default function Content(props: {
                 />}
             </CustomTabPanel>
             <CustomTabPanel value={props.tab} index={1}>
-                <Stack spacing="30px" direction="column">
-                    {responses.map((res, index) => <ResponseCard
-                        key={index}
-                        isSelected={response?.id === res.id ? true : false}
-                        response={res}
-                        select={() => selectResponse({
-                            id: res.id,
-                            price: res.offerPrice,
-                            text: res.description,
-                            deadline: res.deadline,
-                            freelancerAddress: "UQB0Nv1ucHN_7XJLkFlckrtQCjxEwPoiym2DqV_cAfvYaBKG",
-                            freelancer: {
-                                "index": 0,
-                                "address": "EQAqPwkjnAIKJs57CLCGYfA2-pOpb-EzpkhL9fQkCSPUbD0u",
-                                "userAddress": "UQB0Nv1ucHN_7XJLkFlckrtQCjxEwPoiym2DqV_cAfvYaBKG",
-                                "revokedAt": "",
-                                "userStatus": "active",
-                                "isUser": true,
-                                "isFreelancer": true,
-                                "nickname": "Jonathan",
-                                "telegram": "",
-                                "about": "Web developer with 3 years of experience",
-                                "website": "https://codernuub.com",
-                                "portfolio": "",
-                                "resume": "",
-                                "specialization": "Javascript,Css,Pythong,Html",
-                                "language": "dbd3a49d0d906b4ed9216b73330d2fb080ef2f758c12f3885068222e5e17151c",
-                                "aboutTranslated": null
-                            }
-                        })}
-                    />)}
-                </Stack>
+                {responses.loading ? <CircularLoading /> : <Stack spacing="20px" direction="column">
+                    {
+                        responses.content.map((res, index) => <ResponseCard
+                            key={index}
+                            response={res}
+                            select={() => selectResponse(res)}
+                            isSelected={response?.id === res.id ? true : false}
+                        />)
+                    }
+                </Stack>}
             </CustomTabPanel>
         </div>
     );
