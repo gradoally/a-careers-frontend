@@ -70,7 +70,7 @@ export default function Stepper(props: { id: number }) {
     const router = useRouter();
 
     const { user } = useAuthContext();
-    const { task, response, updateTask } = useTask();
+    const { task, response, updateTask, tabHandler } = useTask();
 
     const [step, setStep] = useState<number>(1);
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
@@ -146,6 +146,7 @@ export default function Stepper(props: { id: number }) {
             if (orderRes.data && (orderRes.data.status !== task.content?.status)) {
                 successCB();
                 updateTask(orderRes.data);
+                tabHandler.changeTab(0); //reset tab
                 router.push(`/en/tasks/${props.id}`)
             }
         });

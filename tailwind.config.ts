@@ -27,8 +27,8 @@ const config: Config = {
         InterThin: "InterThin",
         InterLight: "InterLight",
         InterRegular: "InterRegular",
-        InterSemiBold:"InterSemiBold",
-        InterBold:"InterBold"
+        InterSemiBold: "InterSemiBold",
+        InterBold: "InterBold",
       },
     },
     colors: {
@@ -38,6 +38,9 @@ const config: Config = {
       warning: "#00FF47",
       green: "#45F58B",
       "light-gray": "#CCCCCC",
+      orange: "#FFA800",
+      yellow: "#FFF000",
+      red: "#E01E1E",
       divider: "rgba(217, 217, 217, 0.2)",
       "gray-900": "rgb(17 24 39)",
     },

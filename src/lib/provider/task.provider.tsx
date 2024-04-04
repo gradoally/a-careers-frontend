@@ -4,12 +4,14 @@ import { useAuthContext } from "./auth.provider";
 
 
 import useTaskMetaInfo, { ITaskMetaInfo } from "@/hooks/useTaskFunc";
+import useTab, { ITabHook } from "@/hooks/useTab";
 
 import { getOrder, getOrderResponses } from "@/services/order";
 
 import { Order, UserResponse } from "@/openapi/client";
 import { IOrderArgs } from "@/interfaces/serviceArgs";
 import { IContent } from "@/interfaces/request";
+
 
 interface ITaskContext {
     task: IContent<Order | null>;
@@ -20,6 +22,9 @@ interface ITaskContext {
     responses: IContent<UserResponse[]>;
     response?: UserResponse;
     selectResponse: (response: UserResponse) => void;
+    tabHandler: ITabHook;
+    profileView: boolean;
+    toggleProfileView: (view: boolean) => void;
 }
 
 const TaskContext = React.createContext<ITaskContext>({
@@ -32,6 +37,12 @@ const TaskContext = React.createContext<ITaskContext>({
         isCustomer: false,
         isResponses: false,
         isResponded: false,
+        isWorkStarted: false,
+        isHired:false,
+        isProfile: {
+            customer: false,
+            freelancer: false
+        },
         statusCode: -1
     },
     updateTask(task: Order) { },
@@ -42,13 +53,20 @@ const TaskContext = React.createContext<ITaskContext>({
         status: "",
         content: []
     },
-    selectResponse: (response: UserResponse) => { }
+    selectResponse: (response: UserResponse) => { },
+    tabHandler: {
+        tab: 0,
+        changeTab(newTab) {
+        }
+    },
+    profileView: false,
+    toggleProfileView: (view: boolean) => { }
 })
 
 export const useTask = (): ITaskContext => {
     const context = React.useContext(TaskContext)
     if (context === undefined) {
-        throw new Error('useAuthContext must be used within a AuthProvider')
+        throw new Error('useTask must be used within a TaskProvider')
     }
     return context
 }
@@ -66,11 +84,16 @@ export default function TaskProvider(props: React.PropsWithChildren) {
         content: []
     });
     const [selectedResponse, setSelectedResponse] = useState<UserResponse>();
-
+    const [profileView, setProfileView] = useState(false);
     const info = useTaskMetaInfo(task.content, user?.data);
+    const tabHandler = useTab();
 
     function selectResponse(response: UserResponse) {
         setSelectedResponse(response);
+    }
+
+    function toggleProfileView(view: boolean) {
+        setProfileView(view);
     }
 
     function updateTask(updatedTask: Order) {
@@ -133,7 +156,10 @@ export default function TaskProvider(props: React.PropsWithChildren) {
             loadResponses,
             responses,
             response: selectedResponse,
-            selectResponse
+            selectResponse,
+            tabHandler,
+            profileView,
+            toggleProfileView
         }}>
             {props.children}
         </TaskContext.Provider>

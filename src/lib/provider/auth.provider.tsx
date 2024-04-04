@@ -6,8 +6,6 @@ import { useTonConnect } from "@/hooks/useTonConnect";
 
 import { getUserProfile } from "@/services/profile";
 
-import { Loader } from "@/components/features/Loaders";
-
 import { IUserRes } from "@/interfaces/request";
 
 interface HOCProps {
@@ -73,7 +71,7 @@ export default function AuthProvider(props: React.PropsWithChildren) {
 
     const [auth, setAuth] = useState<IAuth>({
         user: null,
-        isLoading: false,
+        isLoading: true,
         error: null
     });
 
@@ -123,14 +121,16 @@ export default function AuthProvider(props: React.PropsWithChildren) {
             })
     }
 
+    //Restrict create profile page access for active user
     useEffect(() => {
         if (!connected && pathname === createProfilePath)
             redirect(`/${locale}`);
         if (!connectionChecked || auth.isLoading || !auth.user) return;
         if (auth.user.found && pathname === createProfilePath)
             redirect(`/${locale}`);
-    }, [auth, connected, connectionChecked]);
+    }, [connectionChecked, connected, auth]);
 
+    //Prevent user from accessing restricted routes
     useEffect(() => {
         if (!walletAddress || auth.isLoading || !auth.user || isRegistered) return;
 
@@ -145,19 +145,24 @@ export default function AuthProvider(props: React.PropsWithChildren) {
             if (splittedRoute.length !== 2) restrictedTaskRoute = true;
         }
         const isRestrictedRoutes = restrictedTaskRoute || path === "/profile";
-        if (isRestrictedRoutes) router.push(createProfilePath)
+        if (isRestrictedRoutes) router.push(createProfilePath);
+
     }, [walletAddress, auth, pathname]);
 
-    //Fetch User Profile
+    //Fetch User Profile after wallet address loads
     useEffect(() => {
-        if (!walletAddress) return;
-        fetchProfile();
-    }, [walletAddress, locale]);
+        if (!connectionChecked) return;
+        if (connected) {
+            fetchProfile();
+        } else {
+            auth.isLoading = false;
+            setAuth({ ...auth });
+        }
+    }, [connectionChecked, connected]);
 
     return (
         <AuthContext.Provider value={{ ...auth, isRegistered, fetchProfile, updateUser }}>
             {props.children}
-            {auth.isLoading && <Loader className="absolute top-0 left-0 z-[500]" />}
         </AuthContext.Provider>
     );
 };

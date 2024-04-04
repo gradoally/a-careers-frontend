@@ -6,11 +6,17 @@ import React, { useEffect, useState, useRef, memo } from "react";
 
 import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { CircularLoading } from "@/components/features/Loaders";
-import CenteredContainer from "@/components/ui/CenteredContainer";
+
 import TaskListSkeleton from "@/components/Task/TaskListSkeleton";
 import TaskList from "@/components/Task/TaskList";
 import Divider from "@/components/ui/Divider";
+import Shell from "@/components/layout/Shell";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import Filter from "@/components/layout/filter";
+import CenteredContainer from "@/components/ui/CenteredContainer";
+import FilterButton from "@/components/ui/buttons/FilterButton";
+import { CircularLoading } from "@/components/features/Loaders";
 
 import { getOrders } from "@/services/order";
 import { Order } from "@/openapi/client";
@@ -125,21 +131,37 @@ function Content() {
     }, []);
 
     return (
-        <div
-            className="w-full h-full"
-            ref={containerRef}
-        >
-            {
-                !loading && !tasks.length ? (
-                    <CenteredContainer>
-                        <Typography component="div" variant="caption">
-                            {trans("common.no_more_data")}
-                        </Typography>
-                    </CenteredContainer>
-                ) : <TaskList data={tasks} />
+
+        <Shell
+            header={
+                <Header messages={{ "connect": trans("common.connect"), "find": trans("tasks.find") }} />
             }
-            {loading && (tasks.length ? <CircularLoading /> : <SkeletonLoader />)}
-        </div>
+            withDrawer
+            footer={
+                <Footer transparent={true}>
+                    <FilterButton>{trans("buttons.filter")}</FilterButton>
+                </Footer>
+            }
+            extra={<Filter />}
+        >
+            <div className="pt-[15px]">
+                <div
+                    className="w-full h-full"
+                    ref={containerRef}
+                >
+                    {
+                        !loading && !tasks.length ? (
+                            <CenteredContainer>
+                                <Typography component="div" variant="caption">
+                                    {trans("common.no_more_data")}
+                                </Typography>
+                            </CenteredContainer>
+                        ) : <TaskList data={tasks} />
+                    }
+                    {loading && (tasks.length ? <CircularLoading /> : <SkeletonLoader />)}
+                </div>
+            </div>
+        </Shell>
     );
 }
 

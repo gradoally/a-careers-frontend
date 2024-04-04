@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Stack } from "@mui/material";
@@ -7,8 +7,7 @@ import Typography from "@mui/material/Typography";
 
 import Link from "@/components/Link";
 import CopyContainer from "@/components/features/copy";
-import ReadMoreCollapse from "@/components/features/ReadMoreCollapse";
-import { Skill } from "./forms/Profile/ProfileForm";
+import { Skill } from "./form/ProfileForm";
 
 import { IUser } from "@/interfaces";
 
@@ -19,8 +18,16 @@ import { getUserActivity } from "@/services/profile";
 import { OrderActivity } from "@/openapi/client";
 import { truncateMiddleText } from "@/lib/utils/tools";
 
+interface IInfoProps extends React.PropsWithChildren {
+    label: string;
+    value?: string | null;
+}
 
-const History = ({ data }: { data: OrderActivity[] }) => {
+interface IProfileViewProps {
+    data: IUser; publicView?: boolean
+}
+
+function History({ data }: { data: OrderActivity[] }) {
     return (
         <Stack component="div" spacing="1px" className="mt-5">
             {data.map((e, i) => (
@@ -64,7 +71,7 @@ const statusObj = {
     "pending": { color: "grey", label: "Pending" }
 }
 
-const Status = ({ status }: { status: keyof typeof statusObj }) => {
+function Status({ status }: { status: keyof typeof statusObj }) {
     const { color, label } = statusObj[status] || { color: "grey", label: "Pending" };
     return <div className="flex mx-auto my-2">
         <span className={`block w-[7px] h-[7px] my-auto mr-1 rounded-full`} style={{ background: color }}></span>
@@ -72,7 +79,18 @@ const Status = ({ status }: { status: keyof typeof statusObj }) => {
     </div>
 }
 
-const ProfileView = ({ data, publicView }: { data: IUser; publicView?: boolean }) => {
+function Info(props: IInfoProps) {
+    return props.value ? <div>
+        <Typography component="div" variant="caption">
+            {props.label}
+        </Typography>
+        {
+            props.children || <Typography variant="body2">{props.value}</Typography>
+        }
+    </div> : <></>;
+}
+
+function ProfileView({ data, publicView }: IProfileViewProps) {
 
     const trans = useTranslations();
 
@@ -108,17 +126,17 @@ const ProfileView = ({ data, publicView }: { data: IUser; publicView?: boolean }
     }, [data]);
 
     return (
-        <>
+        <Fragment>
             <div className="bg-info bg-opacity-20 py-10 w-full flex flex-col justify-center items-center">
                 <Image src={ProfileIcon} alt="Fixed" width={90} height={90} />
                 <div className="mt-2.5 text-lg font-bold">{data?.nickname}</div>
                 {!publicView && <Status status={((data?.userStatus || "pending") as keyof typeof statusObj)} />}
             </div>
             <Stack spacing={"20px"} className="pt-[35px] px-5">
-                <div>
-                    <Typography component="div" variant="caption">
-                        {trans("common.smart_contract_address")}
-                    </Typography>
+                <Info
+                    label={trans("common.smart_contract_address")}
+                    value={data.address}
+                >
                     <CopyContainer className="mt-1">
                         <Typography color="secondary" variant="body2">
                             <Link target="_blank" noLinkStyle href={`http://tonviewer.com/${data?.address}`}>
@@ -126,69 +144,55 @@ const ProfileView = ({ data, publicView }: { data: IUser; publicView?: boolean }
                             </Link>
                         </Typography>
                     </CopyContainer>
-                </div>
-                <div>
-                    <Typography component="div" variant="caption">
-                        Telegram
+                </Info>
+                <Info
+                    label={"Telegram"}
+                    value={data.telegram}
+                >
+                    <Typography className="mt-1" color="secondary" variant="body2">
+                        <Link noLinkStyle href={`https://trans.me/${data.telegram}`}>
+                            @{data.telegram}
+                        </Link>
                     </Typography>
-                    {data?.telegram && (
-                        <Typography className="mt-1" color="secondary" variant="body2">
-                            <Link noLinkStyle href={`https://trans.me/${data.telegram}`}>
-                                @{data.telegram}
-                            </Link>
-                        </Typography>
-                    )}
-                </div>
-                <div>
-                    <Typography component="div" variant="caption">
-                        {trans("profile.about")}
-                    </Typography>
-                    {data?.about && (
-                        <ReadMoreCollapse read_more={trans("read_more.read_more")} hide={trans("read_more.hide")}
-                            className="mt-1 text-xs !font-InterRegular" text={data.about} />
-                    )}
-                </div>
-                <div>
-                    <Typography component="div" variant="caption">
-                        {trans("profile.site")}
-                    </Typography>
-                    <Typography className="mt-1" variant="body2">
-                        {data?.website}
-                    </Typography>
-                </div>
-                <div>
-                    <Typography component="div" variant="caption">
-                        {trans("profile.portfolio")}
-                    </Typography>
-                    <Typography className="mt-1" variant="body2">
-                        {data?.portfolio}
-                    </Typography>
-                </div>
-                <div>
-                    <Typography component="div" variant="caption">
-                        {trans("profile.resume")}
-                    </Typography>
-                    <Typography variant="body2">
-                        {data?.resume}
-                    </Typography>
-                </div>
-                <div>
-                    <Typography component="div" variant="caption">
-                        {trans("profile.specialization")}
-                    </Typography>
+                </Info>
+                <Info
+                    label={trans("profile.about")}
+                    value={data.about}
+                />
+                <Info
+                    label={trans("profile.site")}
+                    value={data?.website}
+                />
+                <Info
+                    label={trans("profile.portfolio")}
+                    value={data?.portfolio}
+                />
+                <Info
+                    label={trans("profile.resume")}
+                    value={data?.resume}
+                />
+                <Info
+                    label={trans("profile.specialization")}
+                    value={data?.specialization}
+                >
                     <Stack component="div" className="mt-2 gap-3" direction={"row"} spacing={1}>
                         {renderSpecialization()}
                     </Stack>
-                </div>
+                </Info>
             </Stack>
-            <div className="mt-8 px-5">
-                <Typography variant="h4" className="!font-InterSemiBold">{trans("profile.task_history")}</Typography>
-                <Typography className="!mt-2" variant="body2">
-                    {trans("profile.task_result", { "payed": "100%", completed: "99%" })}
-                </Typography>
-            </div>
-            <History data={history.activities} />
-        </>
+
+            {
+                history.activities.length ? <>
+                    <div className="mt-8 px-5">
+                        <Typography variant="h4" className="!font-InterSemiBold">{trans("profile.task_history")}</Typography>
+                        <Typography className="!mt-2" variant="body2">
+                            {trans("profile.task_result", { "payed": "100%", completed: "99%" })}
+                        </Typography>
+                    </div>
+                    <History data={history.activities} />
+                </> : <></>
+            }
+        </Fragment>
     )
 }
 

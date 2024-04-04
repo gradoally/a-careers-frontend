@@ -1,13 +1,16 @@
 "use client"
-import React, { useState, useEffect, useMemo } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useTonConnect } from "@/hooks/useTonConnect";
 
 import { Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
+import Divider from "@/components/ui/Divider";
 import { NextLinkComposed } from "@/components/Link";
 import Footer from "@/components/layout/Footer";
 import AppBar from "@/components/layout/app-bar";
@@ -16,37 +19,45 @@ import FooterButton from "@/components/ui/buttons/FooterButton";
 import Shell from "@/components/layout/Shell";
 import { CircularLoading } from "@/components/features/Loaders";
 
-import CustomerButtons from "@/components/Task/Buttons/CustomerButtons";
-import FreelancerButtons from "@/components/Task/Buttons/FreelancerButtons";
+import { CustomTabPanel, a11yProps } from '@/components/layout/TabPanel';
 
-import Content from "./page.content";
+import TaskView from "@/components/Task/View/TaskView";
+import ResponseView from "@/components/Task/View/ResponsesView";
+import CustomerButtons from "@/components/Task/View/Buttons/CustomerButtons";
+import FreelancerButtons from "@/components/Task/View/Buttons/FreelancerButtons";
 
 import { useTask } from "@/lib/provider/task.provider";
 import { useAuthContext } from "@/lib/provider/auth.provider";
+import ProfileView from "@/components/Profile/ProfileView";
+import FreelancerView from "@/components/Task/View/FreelancerView";
 
 type Props = {
     params: { locale: string, id: number };
 };
 
-const Page = ({ params: { locale, id } }: Props) => {
+export default function Page({ params: { locale, id } }: Props) {
 
     const trans = useTranslations();
     const router = useRouter();
     const { connect, connected } = useTonConnect();
-    const [tab, setTab] = useState(0);
+
     const { user } = useAuthContext();
-    const { task, info, response, loadTask } = useTask();
+    const { task, info, responses, selectResponse, response, loadTask, loadResponses, tabHandler, profileView, toggleProfileView } = useTask();
 
-    const handleChange = (e: any, newValue: number) => {
-        setTab(newValue);
-    };
-
-    const tabVisibility = useMemo(() => info.isResponses ? true : false, [info]);
+    const tabVisibility = useMemo(() => {
+        return (info.isResponses && !info.isWorkStarted) ? true : false
+    }, [info]);
 
     useEffect(() => {
         if (id < 0) router.replace('/en');
+        console.log(user?.data?.index);
         loadTask({ index: id, translateTo: locale, currentUserIndex: user?.data?.index });
     }, [id, user]);
+
+    useEffect(() => {
+        if (!task.content || task.content.index === undefined || responses.loading) return;
+        loadResponses(task.content.index);
+    }, [task]);
 
     const header = (
         <AppBar height="60px">
@@ -65,11 +76,7 @@ const Page = ({ params: { locale, id } }: Props) => {
         if (!connected) {
             return <Footer>
                 <FooterButton
-                    onClick={() => connect(() => {
-                        if (!info.isCustomer) {
-                            router.push(`${task.content?.index}/response`);
-                        }
-                    })}
+                    onClick={connect}
                     color={"secondary"}
                     variant="contained">
                     {trans("common.log_in_and_respond")} ⚡️
@@ -78,7 +85,7 @@ const Page = ({ params: { locale, id } }: Props) => {
         }
 
         if (info.isCustomer) {
-            return tab ? <Footer>
+            return tabHandler.tab ? <Footer>
                 <FooterButton
                     onClick={() => router.push(`${task.content?.index}/offer`)}
                     color={"secondary"}
@@ -87,32 +94,46 @@ const Page = ({ params: { locale, id } }: Props) => {
                 >
                     {trans("task.button.offer_cooperation")}
                 </FooterButton>
-            </Footer> : <CustomerButtons
-                order={task.content}
-                response={response}
-                statusCode={info.statusCode}
-                clicks={{
-                    20: () => handleChange(undefined, 1)
-                }}
-            />
+            </Footer> : <CustomerButtons />
         }
-
-        return <FreelancerButtons order={task.content} statusCode={info.statusCode} />
+        return <FreelancerButtons />
     }
 
     return (
-        <Shell withDrawer header={header} footer={footer()}>
-            <div className="px-[20px] pb-[20px]">
-                {task.loading ? <CircularLoading /> : <Content
-                    taskMetaInfo={info}
-                    tabVisibility={tabVisibility}
-                    tab={tab}
-                    changeTab={handleChange}
-                    task={task.content}
-                />}
-            </div>
-        </Shell>
+        <Fragment>
+            <Shell withDrawer header={header} footer={footer()}>
+                <div className="px-[20px] pb-[20px]">
+                    {task.loading ? <CircularLoading /> : <div className="w-full">
+                        {tabVisibility && <div className="h-[50px]">
+                            <Tabs centered value={tabHandler.tab} onChange={(e, newTab) => tabHandler.changeTab(newTab)} aria-label="basic tabs example">
+                                <Tab label={trans("common.task")} {...a11yProps(0)} />
+                                <Tab label={`${trans("common.responses")} (${task?.content?.responsesCount || 0})`} {...a11yProps(1)} />
+                            </Tabs>
+                        </div>}
+                        <Divider />
+                        <CustomTabPanel value={tabHandler.tab} index={0}>
+                            <TaskView task={task} info={info} />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={tabHandler.tab} index={1}>
+                            <ResponseView
+                                responses={responses}
+                                selectedResponse={response}
+                                selectResponse={selectResponse}
+                                toggleProfileView={() => toggleProfileView(true)}
+                            />
+                        </CustomTabPanel>
+                    </div>}
+                </div>
+            </Shell>
+            {profileView && response?.freelancer && <FreelancerView
+                isCustomer={info.isCustomer}
+                freelancer={response.freelancer}
+                click={() => {
+                    toggleProfileView(false);
+                    router.push(`/en/tasks/${task.content?.index}/offer`)
+                }}
+                back={() => toggleProfileView(false)}
+            />}
+        </Fragment>
     )
 }
-
-export default Page;

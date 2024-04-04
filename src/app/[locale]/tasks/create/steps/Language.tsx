@@ -36,6 +36,9 @@ export default function SelectLanguage({ formik, error }: IForm) {
                     ),
                 }}
                 className="!m-0"
+                sxStyles={{
+                    padding: "15px 0"
+                }}
                 onChange={(e) => formik.setFieldValue("language", e.target.value)}
             >
                 {config ? config?.languages?.map((e, i) => {

@@ -40,5 +40,17 @@ export function useOrderContract(address: string) {
     sendCancelAssign: (value: bigint, queryID: number) => {
       return orderContract?.sendCancelAssign(sender, value, queryID);
     },
+    sendAcceptOrder: (value: bigint, queryID: number) => {
+      return orderContract?.sendAcceptOrder(sender, value, queryID);
+    },
+    sendRejectOrder: (value: bigint, queryID: number) => {
+      return orderContract?.sendRejectOrder(sender, value, queryID);
+    },
+    sendCompleteOrder: (value: bigint, queryID: number, result: string) => {
+      return orderContract?.sendCompleteOrder(sender, value, queryID, result);
+    },
+    sendCustomerFeedback: (value: bigint, queryID: number, arbitration: boolean) => {
+      return orderContract?.sendCustomerFeedback(sender, value, queryID, arbitration);
+    },
   };
 }

@@ -4,7 +4,7 @@ import { useUserContract } from "@/hooks/useUserContract";
 import { useTonClient } from "@/hooks/useTonClient";
 import useTxChecker from "@/hooks/useTxChecker";
 
-import ProfileForm, { UserFormValues } from "@/components/forms/Profile/ProfileForm";
+import ProfileForm, { UserFormValues } from "@/components/Profile/form/ProfileForm";
 
 import { getUserProfile } from "@/services/profile";
 

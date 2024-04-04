@@ -1,20 +1,26 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { Stack } from "@mui/material";
-import StatusChip, { Statuses } from "@/components/Task/StatusChip";
 import Typography from "@mui/material/Typography";
+
+import StatusChip from "@/components/Task/StatusChip";
 import CopyContainer from "@/components/features/copy";
 import Divider from "@/components/ui/Divider";
 import Link from "@/components/Link";
 import UserAvatar from "@/components/UserAvatar";
-import { Order } from "@/openapi/client";
+
 import { formatDatetime } from "@/lib/helper";
 import { truncateMiddleText } from "@/lib/utils/tools";
-import { getUserStatus } from "@/services/profile";
+
 import { useAppContext } from "@/lib/provider/app.providers";
 import { ITaskMetaInfo } from "@/hooks/useTaskFunc";
+
+import { getUserStatus } from "@/services/profile";
+
+import { Order } from "@/openapi/client";
 import { IUser } from "@/interfaces";
+import { IContent } from "@/interfaces/request";
 
 const StackContainer = ({ primary, secondary }: {
     primary: string;
@@ -32,22 +38,23 @@ const StackContainer = ({ primary, secondary }: {
     )
 }
 
-function Customer(props: {
+function Profile(props: {
     locale: string;
-    customer: IUser;
+    user?: IUser;
+    userType: "customer" | "freelancer"
 }) {
 
     const trans = useTranslations();
     const [status, setStatus] = useState<{ freelancer: number; customer: number }>({ freelancer: 0, customer: 0 })
 
     const telegram = useMemo(() => {
-        let tg = props.customer?.telegram;
+        let tg = props.user?.telegram;
         return (tg && tg.startsWith("@")) ? tg.slice(1) : tg;
-    }, [props.customer]);
+    }, [props.user]);
 
     useEffect(() => {
-        if (!props?.customer?.address || (props?.customer?.index || -1) < 0) return;
-        getUserStatus({ address: props?.customer?.address, index: props?.customer.index || -1, locale: props.locale })
+        if (!props?.user?.address || (props?.user?.index || -1) < 0) return;
+        getUserStatus({ address: props?.user?.address, index: props?.user?.index || -1, locale: props.locale })
             .then(res => {
                 setStatus({
                     freelancer: res.data?.asFreelancerTotal || 0,
@@ -59,19 +66,19 @@ function Customer(props: {
     }, [props]);
 
     return <Stack className="mt-6" direction={"column"}>
-        <Typography className="!font-InterSemiBold !text-[12px]" >{trans("common.customer")}</Typography>
+        <Typography className="!font-InterSemiBold !text-[12px]" >{trans(`common.${props.userType}`)}</Typography>
         <div className="mt-3">
             <Stack component="div" direction="row" spacing={3}>
                 <UserAvatar height="80px" width="80px" />
                 <Stack direction="column" className="!my-auto" spacing="7px" component="div">
-                    <Typography variant="body2">@{props?.customer?.nickname}</Typography>
+                    <Typography variant="body2">@{props?.user?.nickname}</Typography>
                     <Stack component="div" sx={{ fontSize: "10px" }} direction="row" spacing="5px">
                         <div className="opacity-70">✅ {status.freelancer}</div>
                         <div className="opacity-40">❎ {status.customer}</div>
                     </Stack>
                     <Stack component="div" className="text-[10px]" direction="row" spacing="10px">
                         <div className="border-b border-white text-white opacity-[40%]">
-                            <Link noLinkStyle href={`/profile/${props?.customer?.index}`}>
+                            <Link noLinkStyle href={`/profile/${props?.user?.index}`}>
                                 {trans("common.profile")} 📖
                             </Link>
                         </div>
@@ -89,56 +96,66 @@ function Customer(props: {
     </Stack>
 }
 
-const MemoizedCustomer = React.memo(Customer);
+const MemoizedCustomer = React.memo(Profile);
 
 export default function TaskView({
-    data,
+    task,
     info
-}: { data: Order, info: ITaskMetaInfo }) {
+}: { task: IContent<Order | null>, info: ITaskMetaInfo }) {
 
     const locale = useLocale();
     const trans = useTranslations();
     const { getCategory, getLanguage } = useAppContext();
 
-    return (
-        <>
+    return (task.content &&
+        <Fragment>
             <Stack spacing={1}>
                 <StatusChip
-                    status={Statuses[info.statusCode]}
-                    count={data.responsesCount || 0}
+                    statusCode={info.statusCode}
+                    isCustomer={info.isCustomer}
+                    count={task.content.responsesCount || 0}
                 />
-                <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{data?.name}</Typography>
-                <Typography className="!text-[12px] !font-InterLight">💎 {data?.price}</Typography>
+                <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{task.content?.name}</Typography>
+                <Typography className="!text-[12px] !font-InterLight">💎 {task.content?.price}</Typography>
             </Stack>
             <Stack component="div" className="mt-4" direction="column">
                 <Typography component="div" variant={"caption"}>{trans("common.smart_contract_address")}</Typography>
-                {data?.address && (
+                {task.content?.address && (
                     <CopyContainer className="!m-0 !mt-1 !h-fit">
-                        <Typography className="!font-InterRegular !text-[12px]" >{truncateMiddleText(data.address, 10)}</Typography>
+                        <Typography className="!font-InterRegular !text-[12px]" >{truncateMiddleText(task.content.address, 10)}</Typography>
                     </CopyContainer>
                 )}
             </Stack>
-            <StackContainer primary={trans(`locale_switcher.${getLanguage(data?.language || "")?.code}`)} secondary={trans("tasks.language")} />
-            <StackContainer primary={data?.description ?? ""} secondary={trans("common.description")} />
-            <StackContainer primary={data?.technicalTask ?? ""} secondary={trans("common.technical_task")} />
+            <StackContainer primary={trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)} secondary={trans("tasks.language")} />
+            {info.isHired && task.content?.result && <StackContainer primary={task.content?.result ?? ""} secondary={trans("common.result")} />}
+            <StackContainer primary={task.content?.description ?? ""} secondary={trans("common.description")} />
+            <StackContainer primary={task.content?.technicalTask ?? ""} secondary={trans("common.technical_task")} />
             <StackContainer
-                primary={formatDatetime({ date: data?.deadline, locale: locale })}
+                primary={formatDatetime({ date: task.content?.deadline, locale: locale })}
                 secondary={trans("common.deadline")} />
             <Divider className="!my-3" />
             <Stack className="!text-[10px] !font-InterRegular !leading-5 opacity-[40%]" direction="column">
                 <div className="truncate w-[300px]">{trans("task.createdAt", {
-                    date: formatDatetime({ date: data?.createdAt, locale: locale }),
-                    language: trans(`locale_switcher.${getLanguage(data?.language || "")?.code}`)
+                    date: formatDatetime({ date: task.content?.createdAt, locale: locale }),
+                    language: trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)
                 })}
                 </div>
-                <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(data?.category || "")?.code })}</div>
+                <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(task.content?.category || "")?.code })}</div>
             </Stack>
             {
-                !info.isCustomer && data.customer && <MemoizedCustomer
+                info.isProfile.customer && <MemoizedCustomer
                     locale={locale}
-                    customer={data.customer}
+                    user={task.content.customer}
+                    userType="customer"
                 />
             }
-        </>
+            {
+                info.isProfile.freelancer && <MemoizedCustomer
+                    locale={locale}
+                    user={task.content.freelancer}
+                    userType="freelancer"
+                />
+            }
+        </Fragment>
     )
 }

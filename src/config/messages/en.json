@@ -17,7 +17,7 @@
   },
   "network": {
     "commission": "Network commission ≈ {value}",
-    "frozen":"{value} TONs will be frozen on a smart contract"
+    "frozen": "{value} TONs will be frozen on a smart contract"
   },
   "locale_switcher": {
     "ru": "Русский",
@@ -46,12 +46,15 @@
     "no_responses": "No Responses",
     "response_sent": "Responded",
     "responses": "Responses {count}",
-    "declined": "Refusal",
+    "refusal": "Refusal",
     "cp_sent": "Cp sended",
     "in_work": "In work",
     "deadline_passed": "Deadline passed",
+    "on_check": "On check",
     "awaiting_payment": "Awaiting payment",
-    "completed": "Completed"
+    "in_arbitration": "In Arbitration",
+    "completed": "Completed",
+    "offer_received": "Offer Received"
   },
   "read_more": {
     "read_more": "Read more",
@@ -72,20 +75,22 @@
     "technical_task": "Technical task",
     "deadline": "Deadline",
     "customer": "Customer",
+    "freelancer": "Freelancer",
     "smart_contract_address": "Smart contract address",
     "created": "Created",
     "responses": "Responses",
     "optional": "optional",
     "profile": "Profile",
     "task": "Task",
-    "back_to_app": "Back to the app"
+    "back_to_app": "Back to the app",
+    "result": "Result"
   },
   "tasks": {
     "task_successfully_created": "Task successfully created",
     "first_step": "First step",
     "step_x_from_x": "Step {value} of {from}",
     "make_a_response": "Make a response",
-    "commercial_proposal":"Commercial proposal",
+    "commercial_proposal": "Commercial proposal",
     "task": "Task",
     "create": "Create a task",
     "find": "Find the task",
@@ -93,7 +98,8 @@
     "show": "Show {count} assignments",
     "detail": "Task {value}",
     "language": "Task language",
-
+    "provide_result": "Provide the result",
+    "provide_result_description": "Provide the result of the work done in text form.",
     "you_have_created": "You've created {value} tasks",
     "you_have_not_created_tasks": "You haven't created or taken any tasks yet.",
     "on_moderation": "On moderation · {value}",
@@ -113,7 +119,7 @@
     "select_language": "Select task language of the task",
     "task_accomplished": "Task accomplished · {value}",
     "select_checking_period": "Task Checking Period",
-    "terminated":"Terminated · {value}",
+    "terminated": "Terminated · {value}",
     "checking_period_description": "Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
     "select_category": "Select a category",
     "send_task_to_blockchain": "Send a task to the blockchain",
@@ -141,7 +147,7 @@
     "confirm_the_deadline": "Confirm the deadline",
     "response_comment": "Response Comment",
     "make_response_comment_description": "Add a detailed description of your offer and potential customer benefits",
-    "make_offer_comment":"Make an offer to a freelancer and freeze the remuneration"
+    "make_offer_comment": "Make an offer to a freelancer and freeze the remuneration"
   },
   "task": {
     "category": "Category {value}",
@@ -150,7 +156,13 @@
       "send_feedback": "Send feedback",
       "choose_specialist": "Choose a specialist",
       "offer_cooperation": "Offer Cooperation",
-      "cancel_offer":"Cancel the offer"
+      "cancel_offer": "Cancel the offer",
+      "take_the_task": "Take the task to work",
+      "reject_offer": "REJECT AN OFFER",
+      "send_result": "Send result",
+      "submit_result": "Submit result",
+      "send_arbitration": "SEND TO ARBITRATION",
+      "pay": "Pay"
     }
   },
   "profile": {

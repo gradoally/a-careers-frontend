@@ -35,5 +35,6 @@ export type Order = {
   nameTranslated?: string | null;
   descriptionTranslated?: string | null;
   technicalTaskTranslated?: string | null;
+  result?: string | null;
   currentUserResponse?: UserResponse;
 };

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import AppBar from "@/components/layout/app-bar";
 import Shell from "@/components/layout/Shell";
 import BackButton from "@/components/ui/buttons/BackButton";
-import ProfileView from "@/components/ProfileView";
+import ProfileView from "@/components/Profile/ProfileView";
 import { CircularLoading } from "@/components/features/Loaders";
 
 import { getUser } from "@/services/profile";

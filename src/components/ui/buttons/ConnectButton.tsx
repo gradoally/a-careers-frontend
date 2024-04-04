@@ -12,12 +12,14 @@ import { CHAIN } from "@tonconnect/protocol";
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { toast } from "@/lib/helper";
 import { CircularLoading } from '@/components/features/Loaders';
+import { useAuthContext } from '@/lib/provider/auth.provider';
 
 const ConnectButton = ({ text }: { text: string }) => {
     const trans = useTranslations();
+    const { updateUser } = useAuthContext();
     const [tonConnectUI] = useTonConnectUI();
     const { connected, network, connectionChecked } = useTonConnect();
-   
+
     useEffect(() => {
         if (!network) return;
         if (network === CHAIN.TESTNET) {
@@ -39,7 +41,8 @@ const ConnectButton = ({ text }: { text: string }) => {
         !connectionChecked ? <CircularLoading className='!w-[30px] !h-[30px] my-auto' color='info' /> : (connected ?
             <Avatar onClick={async () => {
                 await tonConnectUI.disconnect()
-                toast(trans("common.disconnected_from_ton_wallet"), 'success')
+                toast(trans("common.disconnected_from_ton_wallet"), 'success');
+                updateUser({ found: false, data: null });
             }}
                 className="!w-[30px] !h-[30px] border border-white"
                 alt="Diamond"

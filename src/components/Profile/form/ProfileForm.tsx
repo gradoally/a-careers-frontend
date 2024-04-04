@@ -1,5 +1,5 @@
 "use client"
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 
 import { useFormik } from "formik";
@@ -202,7 +202,7 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                 </Typography>
             </Stack> : <Stack style={{ width: "100%" }} direction={"row"} alignContent={"space-between"}>
                 <Typography variant="h5" sx={{ color: "info.main", margin: "auto 0" }}>{title}</Typography>
-                <CloseButton style={{ marginRight: "5px", marginLeft:"auto" }} component={NextLinkComposed} to={`/`} />
+                <CloseButton style={{ marginRight: "5px", marginLeft: "auto" }} component={NextLinkComposed} to={`/`} />
             </Stack>}
         </AppBar>
     )
@@ -242,6 +242,9 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                                     </div>
                                 </InputAdornment>
                             ),
+                        }}
+                        sxStyles={{
+                            "padding": "19px 0"
                         }}
                         onChange={(e) => formik.setFieldValue("language", e.target.value)}
                     >

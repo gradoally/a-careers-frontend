@@ -123,7 +123,6 @@ const AppProviders = (props: Props) => {
             getLanguage,
             isDesktopView
         }),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         [isDrawerOpen, isFilterOpen, isDesktopView, config]
     );
 
@@ -132,7 +131,6 @@ const AppProviders = (props: Props) => {
         setDesktopView(document.body.clientWidth >= 720);
         //Fetch config
         getConfig().then(res => {
-            console.log(res.data);
             res.data && setConfig(res.data)
         }).then(err => {
             console.log(err);

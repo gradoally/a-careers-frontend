@@ -13,6 +13,7 @@ export default function Comment({ formik, error }: IResponseFormProps) {
             <TaskFormWrapper
                 title={trans("response_comment")}
                 description={trans("make_response_comment_description")}
+                descriptionStyles="!mb-0"
             />
             <div className="flex-grow">
                 <StyledInputMultiline

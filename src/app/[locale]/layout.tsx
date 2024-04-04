@@ -1,11 +1,12 @@
 import React, { ReactNode } from "react";
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 import pick from 'lodash/pick';
 import { NextIntlClientProvider } from 'next-intl';
-
 import { unstable_setRequestLocale, getMessages } from 'next-intl/server';
+
 import { locales } from '@/config/config';
 import AppProviders from "@/lib/provider/app.providers";
+
 import 'react-toastify/dist/ReactToastify.css';
 
 import "../fonts.css";
@@ -35,7 +36,7 @@ const RootLayout = async ({ children, params: { locale } }: Props) => {
             <body className="dark font-sans-serif scroll-hide">
                 <NextIntlClientProvider
                     locale={locale}
-                    messages={pick(messages,"screen", "task", "buttons", "read_more", "profile", 'tasks', 'response', 'status_chip', 'errors', 'buttons', "locale_switcher", "common", "network", "form", "copy", 'profile', 'common', "errors", 'form', 'network')}
+                    messages={pick(messages, "buttons", "copy", "common", "errors", "form", "filter", "locale_switcher", "network", "profile", "read_more", 'response', "screen", 'status_chip', 'tasks', "task")}
                 >
                     <AppProviders options={{ key: 'mui' }} config={config}>
                         {children}

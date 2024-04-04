@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import MuiSelect, { SelectProps, SelectChangeEvent } from '@mui/material/Select';
+import MuiSelect, { SelectProps } from '@mui/material/Select';
+
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 
@@ -28,13 +29,13 @@ interface Props {
     shrink?: boolean;
     disableUnderline?: boolean;
     paddingBottom?: string;
+    sxStyles?: Record<string, string>;
 }
 
 const SelectField = (
     {
         id,
         label,
-        paddingBottom,
         name,
         children,
         error,
@@ -48,6 +49,7 @@ const SelectField = (
         disableUnderline = false,
         dividerClassName,
         shrink = true,
+        sxStyles
     }: Props) => {
     return (
 
@@ -69,11 +71,9 @@ const SelectField = (
                 label={label}
                 onChange={onChange}
                 value={value}
-                sx={{
-                    padding:"20px 0"
-                }}
-                inputProps={{ sx: { paddingBottom: paddingBottom || 0 } }}
-                MenuProps={{ sx: { "& .MuiMenu-paper": { "border": "1px solid #fff" },textTransform:"capitalize" } }}
+                sx={sxStyles}
+                inputProps={{ sx: { padding: 0 } }}
+                MenuProps={{ sx: { "& .MuiMenu-paper": { "border": "1px solid #fff" }, textTransform: "capitalize" } }}
             >
                 {children}
             </MuiSelect>

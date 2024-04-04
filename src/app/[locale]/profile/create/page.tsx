@@ -1,6 +1,6 @@
 "use client"
 
-import CreateProfile from "@/components/forms/Profile/CreateProfileForm"
+import CreateProfile from "@/components/Profile/form/CreateProfileForm"
 
 export default function Page() {
     return <CreateProfile />

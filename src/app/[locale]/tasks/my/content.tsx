@@ -17,13 +17,8 @@ import Divider from "@/components/ui/Divider";
 import { NextLinkComposed } from "@/components/Link";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 import Image from "@/components/Image";
+import { CustomTabPanel, a11yProps } from '@/components/layout/TabPanel';
 import { IUserStats } from '@/interfaces/request';
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
 
 interface ICustomListProps {
     iconSrc: string;
@@ -33,66 +28,19 @@ interface ICustomListProps {
     user: "freelancer" | "customer";
 }
 
-function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <div className="pt-5">
-                    {children}
-                </div>
-            )}
-        </div>
-    );
-}
-
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-        sx: {
-            height: "50px",
-            width: "155px",
-            fontSize: "11px",
-            fontWeight: 400,
-            lineHeight: "20px",
-            letterSpacing: "0.0666em",
-            textAlign: "center",
-            textTransform: "uppercase",
-            '&:hover': {
-                color: 'info.main',
-                opacity: 1,
-            },
-            '&.Mui-selected': {
-                color: 'common.white',
-                // fontWeight: theme.typography.fontWeightMedium,
-            },
-            '&.Mui-focusVisible': {
-                backgroundColor: 'common.white',
-            },
-        },
-        variant: "fullWidth",
-    };
-}
-
 function CustomListItem({ iconSrc, title, category, status, user }: ICustomListProps) {
     return (
         <>
             <ListItem
                 disablePadding
-                secondaryAction={<ArrowRightIcon />}>
+                secondaryAction={<ArrowRightIcon />}
+            >
                 <ListItemButton
                     component={NextLinkComposed}
                     to={`/tasks/my/${category}?user=${user}&status=${status}`}
-                    sx={{ "height": "80px", "padding": "0" }}
-                    alignItems={"center"}>
+                    sx={{ "height": "80px", "padding": "0 !important" }}
+                    alignItems={"center"}
+                >
                     <ListItemIcon>
                         <Image width="24" height="24" alt="" src={iconSrc} />
                     </ListItemIcon>
@@ -189,8 +137,8 @@ export default function Content({ stats }: { stats: IUserStats }) {
                         />
                         <CustomListItem
                             iconSrc={"/images/money_with_wings.png"}
-                            title={trans("pending_payment", { value: stats.asCustomerByStatus["6"] || 0 })}
-                            status={6}
+                            title={trans("pending_payment", { value: stats.asCustomerByStatus["4"] || 0 })}
+                            status={4}
                             category='pending_payment'
                             user='customer'
                         />
@@ -227,15 +175,15 @@ export default function Content({ stats }: { stats: IUserStats }) {
                         <CustomListItem
                             iconSrc={"/images/dizzy.png"}
                             title={trans("response_sent", { value: stats.asFreelancerByStatus["1"] || 0 })}
-                            status={0}
-                            category='responses_sent'
+                            status={1}
+                            category='response_sent'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/fire.png"}
                             title={trans("response_denied", { value: stats.asFreelancerByStatus["1"] || 0 })}
-                            status={0}
-                            category='responses_sent'
+                            status={1}
+                            category='response_denied'
                             user='freelancer'
                         />
                         <CustomListItem
@@ -247,21 +195,21 @@ export default function Content({ stats }: { stats: IUserStats }) {
                         />
                         <CustomListItem
                             iconSrc={"/images/right-facing_fist.png"}
-                            title={trans("in_the_work", { value: stats.asFreelancerByStatus["3"] })}
+                            title={trans("in_the_work", { value: stats.asFreelancerByStatus["3"] || 0 })}
                             status={3}
                             category='in_the_work'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/dancer.png"}
-                            title={trans("on_inspection", { value: 0 })}
-                            status={0}
+                            title={trans("on_inspection", { value: stats.asFreelancerByStatus["4"] || 0 })}
+                            status={4}
                             category='on_inspection'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/eyes.png"}
-                            title={trans("arbitration", { value: stats.asFreelancerByStatus["9"] })}
+                            title={trans("arbitration", { value: stats.asFreelancerByStatus["9"] || 0 })}
                             status={9}
                             category='arbitration'
                             user='freelancer'

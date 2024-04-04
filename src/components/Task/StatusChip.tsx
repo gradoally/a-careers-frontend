@@ -1,26 +1,65 @@
 import { useTranslations } from "next-intl";
 import clsx from "clsx"
-import React from "react";
+import React, { useMemo } from "react";
 
-type StatusType = "on_moderation" | "no_responses" | "responses" | "response_sent" | "declined" | "cp_sent" | "in_work" | "deadline_passed" | "awaiting_payment" | "completed"
+type StatusType =
+    "on_moderation" |
+    "no_responses" |
+    "responses" |
+    "response_sent" |
+    "refusal" |
+    "cp_sent" |
+    "in_work" |
+    "deadline_passed" |
+    "awaiting_payment" |
+    "on_check" |
+    "in_arbitration" |
+    "completed" |
+    "offer_received"
 
 interface Props {
-    status: StatusType | undefined;
+    statusCode: number;
     count?: number;
+    isCustomer: boolean;
 }
 
-export const Statuses: Record<number, StatusType> = {
-    0: "on_moderation",
-    1: "no_responses",
-    2: "cp_sent",
-    3: "in_work",
-    6: "completed",
-    11: "deadline_passed",
-    20: "responses",
-    21: "response_sent"
+interface IStatus {
+    "customer": Record<number, StatusType>;
+    "freelancer": Record<number, StatusType>;
 }
 
-const StatusChip = ({ status, count }: Props) => {
+const statuses: IStatus = {
+    "customer": {
+        0: "on_moderation",
+        1: "no_responses",
+        2: "cp_sent",
+        3: "in_work",
+        4: "awaiting_payment",
+        6: "completed",
+        9: "in_arbitration",
+        11: "deadline_passed",
+        20: "responses",
+    },
+    "freelancer": {
+        1: "no_responses",
+        2: "offer_received",
+        3: "in_work",
+        4: "on_check",
+        6: "completed",
+        9: "in_arbitration",
+        20: "responses",
+        21: "response_sent",
+        22: "refusal"
+    }
+}
+
+function getStatus(statusCode: number, isCustomer: boolean): StatusType {
+    const user = isCustomer ? "customer" : "freelancer";
+    const statusLists = statuses[user];
+    return statusLists[statusCode];
+}
+
+function StatusChip({ statusCode, count, isCustomer }: Props) {
     const trans = useTranslations("status_chip");
 
     const data: Record<StatusType, { className: string, text: string, }> = {
@@ -40,31 +79,45 @@ const StatusChip = ({ status, count }: Props) => {
             "className": "text-green border-green",
             "text": trans("response_sent"),
         },
-        "declined": {
-            "className": "text-light-gray border-light-gray",
-            "text": trans("declined"),
-        },
         "cp_sent": {
             "className": "text-green border-green",
             "text": trans("cp_sent"),
         },
+        "refusal": {
+            "className": "text-light-gray border-light-gray",
+            "text": trans("refusal"),
+        },
         "in_work": {
-            "className": "border-green text-green",
+            "className": isCustomer ? "border-green text-green" : "border-orange text-orange",
             "text": trans("in_work")
         },
+        "on_check": {
+            "className": "border-orange text-orange",
+            "text": trans("on_check")
+        },
         "awaiting_payment": {
-            "className": "border-red text-red",
+            "className": "border-yellow text-yellow",
             "text": trans("awaiting_payment")
+        },
+        "in_arbitration": {
+            "className": "border-red text-red",
+            "text": trans("in_arbitration")
         },
         "deadline_passed": {
             "className": "border-red text-red",
             "text": trans("deadline_passed")
         },
         "completed": {
-            "className": "border-red text-red",
+            "className": "border-green text-green",
             "text": trans("completed")
         },
+        "offer_received": {
+            "className": "border-green text-green",
+            "text": trans("offer_received")
+        }
     }
+
+    const status: StatusType = useMemo(() => getStatus(statusCode, isCustomer), [isCustomer, statusCode]);
 
     return (
         status && <div

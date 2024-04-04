@@ -17,7 +17,7 @@
   },
   "network": {
     "commission": "Комиссия сети ≈ {value}",
-    "frozen":"{value} TON будут заморожены на смарт-контракте"
+    "frozen": "{value} TON будут заморожены на смарт-контракте"
   },
   "locale_switcher": {
     "ru": "Русский",
@@ -47,12 +47,15 @@
     "no_responses": "Без откликов",
     "response_sent": "Ответил",
     "responses": "Ответы {count}",
-    "declined": "Отказ",
+    "refusal": "Отказ",
     "cp_sent": "КП отправлено",
     "in_work": "В работе",
     "deadline_passed": "Срок истек",
+    "on_check": "На чеке",
+    "in_arbitration": "В арбитраже",
     "awaiting_payment": "Ожидание оплаты",
-    "completed": "Завершенный"
+    "completed": "Завершенный",
+    "offer_received": "Предложение получено"
   },
   "read_more": {
     "read_more": "Подробнее",
@@ -63,20 +66,22 @@
     "disconnected_from_ton_wallet": "Отключено от кошелька ton",
     "no_more_data": "Нету больше данных",
     "filter": "Фильтр",
-    "connect": "Подключиться",
+    "connect": "Connect",
     "text_support": "Написать в поддержку",
     "log_in_and_respond": "Войти и откликнуться",
     "description": "Описание",
     "technical_task": "Техническое задание",
     "deadline": "Дедлайн",
     "customer": "Заказчик",
+    "freelancer": "Фрилансер",
     "profile": "Профиль",
     "smart_contract_address": "Адрес смарт-контракта",
     "created": "Созданные",
     "responses": "Отклики",
     "task": "ЗАДАЧА",
     "optional": "Необязательный",
-    "back_to_app": "Вернуться в приложение"
+    "back_to_app": "Вернуться в приложение",
+    "result": "Результат"
   },
   "tasks": {
     "task_successfully_created": "Задача успешно создано",
@@ -86,6 +91,8 @@
     "make_a_response": "Сделать отклик",
     "commercial_proposal": "Коммерческое предложение",
     "select_deadline": "Укажите точный дедлайн",
+    "provide_result": "Предоставьте результат",
+    "provide_result_description": "Результат проделанной работы представить в текстовом виде.",
     "create": "Создать задачу",
     "find": "Найти задачу",
     "my": "Мои задачи",
@@ -144,7 +151,13 @@
       "send_feedback": "Отправить отзыв",
       "choose_specialist": "Выберите специалиста",
       "offer_cooperation": "Предложить сотрудничество",
-      "cancel_offer": "Отмеить предложение"
+      "cancel_offer": "Отмеить предложение",
+      "take_the_task": "Возьмите задачу в работу",
+      "reject_offer": "ОТКЛОНИТЬ ПРЕДЛОЖЕНИЕ",
+      "send_result": "Отправить результат",
+      "submit_result": "Отправить результат",
+      "send_arbitration": "ОТПРАВИТЬ В АРБИТРАЖ",
+      "pay": "Платить"
     }
   },
   "profile": {

@@ -128,7 +128,7 @@ const FilterContent = () => {
             <Shell header={header} footer={footer}>
                 <HoverOpacityComponent>
                     <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
-                        className="px-[16px] py-[20px]">
+                        className="px-[16px] py-[19px]">
                         <div className="h-6 w-6 flex-shrink-0">
                             <Image
                                 style={{ width: "24px", height: "24px" }}
@@ -138,7 +138,8 @@ const FilterContent = () => {
                                 src="/images/puzzle-piece.svg"
                             />
                         </div>
-                        <SelectField variant="standard"
+                        <SelectField
+                            variant="standard"
                             label={trans("categories")}
                             id="category"
                             name="category"
@@ -150,6 +151,9 @@ const FilterContent = () => {
                                 sx: { padding: "0" },
                                 IconComponent: () => null
                             }}
+                            sxStyles={{
+                                padding: "6px 0 0 0"
+                            }}
                         >
                             {config?.categories && config.categories.filter(cat => cat.isActive && cat?.code).map((cat, index) => <MenuItem key={index + 1} value={cat.code}>{cat.code}</MenuItem>)}
                         </SelectField>
@@ -159,7 +163,7 @@ const FilterContent = () => {
                 </HoverOpacityComponent>
                 <HoverOpacityComponent>
                     <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
-                        className="px-[16px] py-[20px]">
+                        className="px-[16px] py-[19px]">
                         <div className="h-6 w-6 flex-shrink-0">
                             <Image style={{ width: "24px", height: "24px" }} width="24" height="24" alt="earth"
                                 src="/images/earth_americas.png" />
@@ -176,6 +180,9 @@ const FilterContent = () => {
                                 sx: { padding: "0", textTransform: "capitalize" },
                                 IconComponent: () => null
                             }}
+                            sxStyles={{
+                                padding: "6px 0 0 0"
+                            }}
                         >
                             <MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
                             {config?.languages && config.languages.map((lang, index) => <MenuItem key={index + 1} value={lang.code}>{lang.code ? tc(`locale_switcher.${lang.code}`) : ""}</MenuItem>)}
@@ -185,7 +192,7 @@ const FilterContent = () => {
                     <Divider className="hover-opacity transition-opacity" />
                 </HoverOpacityComponent>
                 <Stack spacing="15px" alignItems="center" justifyContent="center" direction="row"
-                    className="px-[16px] py-[25px]">
+                    className="px-[16px] py-[24px]">
                     <div className="h-6 w-6 flex-shrink-0 my-auto">
                         <Image width="24" height="24" alt="gem" src="/images/gem.png" />
                     </div>
@@ -204,9 +211,9 @@ const FilterContent = () => {
                         value={filters?.price}
                         onChange={(e: any) => setOptions("minPrice", e.target.value)}
                         fullWidth id="price"
-                        variant="standard" 
+                        variant="standard"
                         readonly={count.loading}
-                        />
+                    />
                 </Stack>
                 <MuiDivider />
                 <div className="mt-5">

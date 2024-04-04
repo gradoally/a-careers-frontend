@@ -10,7 +10,7 @@ import useTxChecker from "@/hooks/useTxChecker";
 
 import { UserContentData, buildUserContent } from '@/contracts/User';
 
-import ProfileForm, { UserFormValues } from "@/components/forms/Profile/ProfileForm";
+import ProfileForm, { UserFormValues } from "@/components/Profile/form/ProfileForm";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
 

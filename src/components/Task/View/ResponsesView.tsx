@@ -1,23 +1,37 @@
 import React from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+
 import Link from "@/components/Link";
-import { useTranslations } from 'next-intl';
-import { UserResponse } from '@/openapi/client';
+import { CircularLoading } from '@/components/features/Loaders';
 
 import DaimondIcon from "@/assets/DaimondProfile.svg";
+
+import { IContent } from '@/interfaces/request';
+import { UserResponse } from '@/openapi/client';
+import { propagateServerField } from 'next/dist/server/lib/render-server';
 
 interface IResponseCardProps {
     response: UserResponse;
     isSelected: boolean;
     select: () => void;
+    viewProfile: () => void;
 }
 
-export default function ResponseCard({ isSelected, response, select }: IResponseCardProps) {
+interface IResponseViewProps {
+    responses: IContent<UserResponse[]>;
+    selectedResponse?: UserResponse;
+    selectResponse: (response: UserResponse) => void;
+    toggleProfileView: () => void;
+}
+
+function ResponseCard({ isSelected, response, select, viewProfile }: IResponseCardProps) {
     const trans = useTranslations();
     return (
         <Card
@@ -36,7 +50,7 @@ export default function ResponseCard({ isSelected, response, select }: IResponse
                 }
                 action={
                     <Typography variant="caption">
-                        <Link className="!font-InterRegular border-b pb-[2px] text-[10px] border-[#fffff] mb-2" noLinkStyle href={"/profile"}>
+                        <Link href="" className="!font-InterRegular border-b pb-[2px] text-[10px] border-[#fffff] mb-2" noLinkStyle onClick={viewProfile}>
                             {trans("response.profile")} 📖
                         </Link>
                     </Typography>
@@ -62,4 +76,21 @@ export default function ResponseCard({ isSelected, response, select }: IResponse
             </CardContent>
         </Card>
     );
+}
+
+export default function ResponseView(props: IResponseViewProps) {
+    return props.responses.loading ? <CircularLoading /> : <Stack spacing="20px" direction="column">
+        {
+            props.responses.content.map((res, index) => <ResponseCard
+                key={index}
+                response={res}
+                select={() => props.selectResponse(res)}
+                isSelected={props.selectedResponse?.id === res.id ? true : false}
+                viewProfile={() => {
+                    props.selectResponse(res)
+                    props.toggleProfileView();
+                }}
+            />)
+        }
+    </Stack>
 }
