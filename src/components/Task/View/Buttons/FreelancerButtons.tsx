@@ -64,13 +64,25 @@ function SubmitResultButton(props: IButtonProps) {
     </Footer>
 }
 
+function GetPaymentButton(props: IButtonProps) {
+    return <Footer>
+        <FooterButton
+            color={"secondary"}
+            variant="contained"
+            onClick={props.click}
+        >
+            {props.title}
+        </FooterButton>
+    </Footer>
+}
+
 export default function FreelancerButtons() {
     const locale = useLocale();
     const trans = useTranslations();
     const router = useRouter();
 
     const { task, info, updateTask } = useTask();
-    const { sendAcceptOrder, sendRejectOrder } = useOrderContract(task.content?.address || "");
+    const { sendAcceptOrder, sendRejectOrder, sendForcePayment } = useOrderContract(task.content?.address || "");
 
     const { checkTxProgress } = useTxChecker();
 
@@ -115,6 +127,25 @@ export default function FreelancerButtons() {
         }
     }
 
+    async function getPayment() {
+        try {
+            if (!task.content || task.content.index === undefined) return;
+            const index = task.content.index;
+            await sendForcePayment(toNano("0.05"), 0);
+
+            checkTxProgress(async (successCB) => {
+                const orderRes = await getOrder({ index, translateTo: locale });
+                if (orderRes.data && (orderRes.data.status !== task.content?.status)) {
+                    successCB();
+                    updateTask(orderRes.data);
+                    router.push(`/en/tasks/${index}`)
+                }
+            });
+        } catch (err) {
+            toast(trans("errors.something_went_wrong_sorry"), "error");
+        }
+    }
+
     return (task.content && index !== undefined) ? <Fragment>
         {
             [1, 20].includes(info.statusCode) && <SendFeedbackButton
@@ -139,6 +170,12 @@ export default function FreelancerButtons() {
             info.statusCode === 3 && <SubmitResultButton
                 click={() => router.push(`/en/tasks/${index}/submit`)}
                 title={trans("task.button.send_result")}
+            />
+        }
+        {
+            info.statusCode === 23 && <GetPaymentButton
+                click={getPayment}
+                title={trans("task.button.get_payment")}
             />
         }
     </Fragment> : <></>

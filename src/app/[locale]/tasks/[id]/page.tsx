@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useEffect, useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -27,37 +27,24 @@ import CustomerButtons from "@/components/Task/View/Buttons/CustomerButtons";
 import FreelancerButtons from "@/components/Task/View/Buttons/FreelancerButtons";
 
 import { useTask } from "@/lib/provider/task.provider";
-import { useAuthContext } from "@/lib/provider/auth.provider";
-import ProfileView from "@/components/Profile/ProfileView";
 import FreelancerView from "@/components/Task/View/FreelancerView";
+import { UserResponse } from "@/openapi/client";
 
 type Props = {
     params: { locale: string, id: number };
 };
 
-export default function Page({ params: { locale, id } }: Props) {
+export default function Page({ params: { id } }: Props) {
 
     const trans = useTranslations();
     const router = useRouter();
     const { connect, connected } = useTonConnect();
 
-    const { user } = useAuthContext();
-    const { task, info, responses, selectResponse, response, loadTask, loadResponses, tabHandler, profileView, toggleProfileView } = useTask();
+    const { task, info, stats, responses, selectResponse, response, tabHandler, profileView, toggleProfileView } = useTask();
 
     const tabVisibility = useMemo(() => {
         return (info.isResponses && !info.isWorkStarted) ? true : false
     }, [info]);
-
-    useEffect(() => {
-        if (id < 0) router.replace('/en');
-        console.log(user?.data?.index);
-        loadTask({ index: id, translateTo: locale, currentUserIndex: user?.data?.index });
-    }, [id, user]);
-
-    useEffect(() => {
-        if (!task.content || task.content.index === undefined || responses.loading) return;
-        loadResponses(task.content.index);
-    }, [task]);
 
     const header = (
         <AppBar height="60px">
@@ -112,14 +99,16 @@ export default function Page({ params: { locale, id } }: Props) {
                         </div>}
                         <Divider />
                         <CustomTabPanel value={tabHandler.tab} index={0}>
-                            <TaskView task={task} info={info} />
+                            <TaskView task={task} info={info} stats={stats} />
                         </CustomTabPanel>
                         <CustomTabPanel value={tabHandler.tab} index={1}>
                             <ResponseView
                                 responses={responses}
                                 selectedResponse={response}
                                 selectResponse={selectResponse}
-                                toggleProfileView={() => toggleProfileView(true)}
+                                viewProfile={(res: UserResponse) => {
+                                    toggleProfileView({ view: true, response: res });
+                                }}
                             />
                         </CustomTabPanel>
                     </div>}
@@ -129,10 +118,10 @@ export default function Page({ params: { locale, id } }: Props) {
                 isCustomer={info.isCustomer}
                 freelancer={response.freelancer}
                 click={() => {
-                    toggleProfileView(false);
+                    toggleProfileView({ view: false });
                     router.push(`/en/tasks/${task.content?.index}/offer`)
                 }}
-                back={() => toggleProfileView(false)}
+                back={() => toggleProfileView({ view: false })}
             />}
         </Fragment>
     )

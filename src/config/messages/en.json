@@ -54,7 +54,8 @@
     "awaiting_payment": "Awaiting payment",
     "in_arbitration": "In Arbitration",
     "completed": "Completed",
-    "offer_received": "Offer Received"
+    "offer_received": "Offer Received",
+    "result_ignored": "Result ignored"
   },
   "read_more": {
     "read_more": "Read more",
@@ -123,6 +124,7 @@
     "checking_period_description": "Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
     "select_category": "Select a category",
     "send_task_to_blockchain": "Send a task to the blockchain",
+    "login_send_task_to_blockchain": "Log in and Send a task to the blockchain",
 
     "what_needs_to_be_done": "What needs to be done?",
     "job_title": "Job title",
@@ -152,6 +154,7 @@
   "task": {
     "category": "Category {value}",
     "createdAt": "Created on {date} in {language}",
+    "original_translation":"Show original translation",
     "button": {
       "send_feedback": "Send feedback",
       "choose_specialist": "Choose a specialist",
@@ -162,7 +165,9 @@
       "send_result": "Send result",
       "submit_result": "Submit result",
       "send_arbitration": "SEND TO ARBITRATION",
-      "pay": "Pay"
+      "pay":"Pay",
+      "get_payment": "Get payment",
+      "get_fund": "Get funds back"
     }
   },
   "profile": {

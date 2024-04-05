@@ -2,9 +2,9 @@ import { get } from "@/lib/utils/request";
 
 import { APIs } from "@/config/api.config";
 
-import { IUserRes, IUserStats } from "@/interfaces/request";
+import { IUserRes, IUserStats, IUserStats2 } from "@/interfaces/request";
 
-import { Order,OrderActivity } from "@/openapi/client";
+import { Order, OrderActivity } from "@/openapi/client";
 import { IUser } from "@/interfaces";
 import { IUserOrdersArgs } from "@/interfaces/serviceArgs";
 
@@ -24,12 +24,16 @@ export async function getUser(args: { index: string; locale: string }) {
 }
 
 export async function getUserStatus(args: {
-  address: string;
   index: number;
-  locale: string;
 }) {
   return await get<IUserStats>({
-    url: `${APIs.user.status(args.address, args.index)}`,
+    url: `${APIs.user.status(args.index)}`,
+  });
+}
+
+export async function getUserStatus2(args: { index: number }) {
+  return await get<IUserStats2>({
+    url: `${APIs.user.stats(args.index)}`,
   });
 }
 

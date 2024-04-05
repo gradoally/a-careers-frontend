@@ -15,15 +15,14 @@ import { truncateMiddleText } from "@/lib/utils/tools";
 
 import { useAppContext } from "@/lib/provider/app.providers";
 import { ITaskMetaInfo } from "@/hooks/useTaskFunc";
-
-import { getUserStatus } from "@/services/profile";
+import { IStats } from "@/hooks/useUserStats";
 
 import { Order } from "@/openapi/client";
 import { IUser } from "@/interfaces";
 import { IContent } from "@/interfaces/request";
 
 const StackContainer = ({ primary, secondary }: {
-    primary: string;
+    primary: string | React.ReactNode;
     secondary: string;
 }) => {
     return (
@@ -31,9 +30,9 @@ const StackContainer = ({ primary, secondary }: {
             <Typography component="div" variant={"caption"}>
                 {secondary}
             </Typography>
-            <Typography variant="body2" style={{ wordBreak: "break-word", marginTop: "4px" }}>
+            {typeof primary === "string" ? <Typography variant="body2" style={{ wordBreak: "break-word", marginTop: "4px" }}>
                 {primary}
-            </Typography>
+            </Typography> : primary}
         </Stack>
     )
 }
@@ -41,29 +40,15 @@ const StackContainer = ({ primary, secondary }: {
 function Profile(props: {
     locale: string;
     user?: IUser;
+    stats: IStats;
     userType: "customer" | "freelancer"
 }) {
 
     const trans = useTranslations();
-    const [status, setStatus] = useState<{ freelancer: number; customer: number }>({ freelancer: 0, customer: 0 })
-
     const telegram = useMemo(() => {
         let tg = props.user?.telegram;
         return (tg && tg.startsWith("@")) ? tg.slice(1) : tg;
     }, [props.user]);
-
-    useEffect(() => {
-        if (!props?.user?.address || (props?.user?.index || -1) < 0) return;
-        getUserStatus({ address: props?.user?.address, index: props?.user?.index || -1, locale: props.locale })
-            .then(res => {
-                setStatus({
-                    freelancer: res.data?.asFreelancerTotal || 0,
-                    customer: res.data?.asCustomerTotal || 0
-                });
-            }).catch(err => {
-                console.log((err as Error).message);
-            });
-    }, [props]);
 
     return <Stack className="mt-6" direction={"column"}>
         <Typography className="!font-InterSemiBold !text-[12px]" >{trans(`common.${props.userType}`)}</Typography>
@@ -73,8 +58,8 @@ function Profile(props: {
                 <Stack direction="column" className="!my-auto" spacing="7px" component="div">
                     <Typography variant="body2">@{props?.user?.nickname}</Typography>
                     <Stack component="div" sx={{ fontSize: "10px" }} direction="row" spacing="5px">
-                        <div className="opacity-70">✅ {status.freelancer}</div>
-                        <div className="opacity-40">❎ {status.customer}</div>
+                        <div className="opacity-70">✅ {props.stats.freelancer}</div>
+                        <div className="opacity-40">❎ {props.stats.customer}</div>
                     </Stack>
                     <Stack component="div" className="text-[10px]" direction="row" spacing="10px">
                         <div className="border-b border-white text-white opacity-[40%]">
@@ -100,11 +85,13 @@ const MemoizedCustomer = React.memo(Profile);
 
 export default function TaskView({
     task,
-    info
-}: { task: IContent<Order | null>, info: ITaskMetaInfo }) {
+    info,
+    stats
+}: { task: IContent<Order | null>, info: ITaskMetaInfo, stats: IStats }) {
 
     const locale = useLocale();
     const trans = useTranslations();
+    const [originalTL, setOriginalTL] = useState(false);
     const { getCategory, getLanguage } = useAppContext();
 
     return (task.content &&
@@ -115,7 +102,7 @@ export default function TaskView({
                     isCustomer={info.isCustomer}
                     count={task.content.responsesCount || 0}
                 />
-                <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{task.content?.name}</Typography>
+                <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{(originalTL ? task.content?.nameTranslated : task.content?.name)}</Typography>
                 <Typography className="!text-[12px] !font-InterLight">💎 {task.content?.price}</Typography>
             </Stack>
             <Stack component="div" className="mt-4" direction="column">
@@ -126,10 +113,31 @@ export default function TaskView({
                     </CopyContainer>
                 )}
             </Stack>
-            <StackContainer primary={trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)} secondary={trans("tasks.language")} />
-            {info.isHired && task.content?.result && <StackContainer primary={task.content?.result ?? ""} secondary={trans("common.result")} />}
-            <StackContainer primary={task.content?.description ?? ""} secondary={trans("common.description")} />
-            <StackContainer primary={task.content?.technicalTask ?? ""} secondary={trans("common.technical_task")} />
+            <StackContainer
+                primary={
+                    <Stack direction={"row"} spacing={"10px"}>
+                        <Typography variant="body2" style={{ wordBreak: "break-word", marginTop: "4px" }}>
+                            {trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)}
+                        </Typography>
+                        {!info.isSameLanguage && <Typography
+                            variant="body2"
+                            color="secondary"
+                            onClick={() => setOriginalTL(!originalTL)}
+                            style={{
+                                wordBreak: "break-word",
+                                marginTop: "4px",
+                                cursor: "pointer"
+                            }}
+                        >
+                            {trans('task.original_translation')}
+                        </Typography>}
+                    </Stack>
+                }
+                secondary={trans("tasks.language")}
+            />
+            {(info.isHired || info.isCustomer) && task.content?.result && <StackContainer primary={task.content?.result ?? ""} secondary={trans("common.result")} />}
+            <StackContainer primary={(originalTL ? task.content.descriptionTranslated : task.content?.description) || ""} secondary={trans("common.description")} />
+            <StackContainer primary={(originalTL ? task.content.technicalTaskTranslated : task.content?.technicalTask) || ""} secondary={trans("common.technical_task")} />
             <StackContainer
                 primary={formatDatetime({ date: task.content?.deadline, locale: locale })}
                 secondary={trans("common.deadline")} />
@@ -146,6 +154,7 @@ export default function TaskView({
                 info.isProfile.customer && <MemoizedCustomer
                     locale={locale}
                     user={task.content.customer}
+                    stats={stats}
                     userType="customer"
                 />
             }
@@ -153,6 +162,7 @@ export default function TaskView({
                 info.isProfile.freelancer && <MemoizedCustomer
                     locale={locale}
                     user={task.content.freelancer}
+                    stats={stats}
                     userType="freelancer"
                 />
             }

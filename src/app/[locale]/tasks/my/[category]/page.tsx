@@ -48,7 +48,7 @@ export default function Page(props: Props) {
         getUserOrders({
             index: user.data.index,
             status: props.searchParams.status,
-            role: props.searchParams.user
+            role: props.searchParams.user === "freelancer" ? "freelancerStatus" : "customerStatus"
         })
             .then(res => {
                 setOrder({

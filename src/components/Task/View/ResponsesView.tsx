@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
@@ -15,7 +15,8 @@ import DaimondIcon from "@/assets/DaimondProfile.svg";
 
 import { IContent } from '@/interfaces/request';
 import { UserResponse } from '@/openapi/client';
-import { propagateServerField } from 'next/dist/server/lib/render-server';
+
+import useUserStats from '@/hooks/useUserStats';
 
 interface IResponseCardProps {
     response: UserResponse;
@@ -28,11 +29,18 @@ interface IResponseViewProps {
     responses: IContent<UserResponse[]>;
     selectedResponse?: UserResponse;
     selectResponse: (response: UserResponse) => void;
-    toggleProfileView: () => void;
+    viewProfile: (response: UserResponse) => void;
 }
 
 function ResponseCard({ isSelected, response, select, viewProfile }: IResponseCardProps) {
     const trans = useTranslations();
+    const { stats, loadStats } = useUserStats();
+
+    useEffect(() => {
+        if (!response.freelancer) return;
+        loadStats(response.freelancer.index);
+    }, [])
+
     return (
         <Card
             sx={{
@@ -57,7 +65,7 @@ function ResponseCard({ isSelected, response, select, viewProfile }: IResponseCa
                 }
                 title={<div>
                     <span className='!font-InterBold !text-[12px] mr-2'>@{response.freelancer?.nickname || ""}</span>
-                    <span className='!font-InterRegular !text-[12px]'>✅ 2 ❎ 1</span>
+                    <span className='!font-InterRegular !text-[12px]'>✅ {stats.customer} ❎ {stats.freelancer}</span>
                 </div>}
                 subheader={
                     <p className='!font-InterRegular text-[9.5px] mt-1'>{response.freelancer?.specialization || ""}</p>
@@ -78,18 +86,17 @@ function ResponseCard({ isSelected, response, select, viewProfile }: IResponseCa
     );
 }
 
+const MemoizedResponseCard = React.memo(ResponseCard);
+
 export default function ResponseView(props: IResponseViewProps) {
     return props.responses.loading ? <CircularLoading /> : <Stack spacing="20px" direction="column">
         {
-            props.responses.content.map((res, index) => <ResponseCard
+            props.responses.content.map((res, index) => <MemoizedResponseCard
                 key={index}
                 response={res}
                 select={() => props.selectResponse(res)}
                 isSelected={props.selectedResponse?.id === res.id ? true : false}
-                viewProfile={() => {
-                    props.selectResponse(res)
-                    props.toggleProfileView();
-                }}
+                viewProfile={() => props.viewProfile(res)}
             />)
         }
     </Stack>

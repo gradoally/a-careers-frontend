@@ -4,9 +4,9 @@ import React from 'react';
 import clsx from "clsx";
 import Button from "@mui/material/Button";
 
-import {Boundary} from "@/components/ui/boundary";
+import { Boundary } from "@/components/ui/boundary";
 
-export default function Error({error, reset}: any) {
+export default function Error({ error, reset }: any) {
     React.useEffect(() => {
         console.log('logging error:', error);
     }, [error]);

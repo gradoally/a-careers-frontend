@@ -15,7 +15,8 @@ type StatusType =
     "on_check" |
     "in_arbitration" |
     "completed" |
-    "offer_received"
+    "offer_received" |
+    "result_ignored"
 
 interface Props {
     statusCode: number;
@@ -49,7 +50,8 @@ const statuses: IStatus = {
         9: "in_arbitration",
         20: "responses",
         21: "response_sent",
-        22: "refusal"
+        22: "refusal",
+        23: "result_ignored"
     }
 }
 
@@ -60,8 +62,8 @@ function getStatus(statusCode: number, isCustomer: boolean): StatusType {
 }
 
 function StatusChip({ statusCode, count, isCustomer }: Props) {
+    
     const trans = useTranslations("status_chip");
-
     const data: Record<StatusType, { className: string, text: string, }> = {
         "on_moderation": {
             "className": "text-white border-white",
@@ -106,6 +108,10 @@ function StatusChip({ statusCode, count, isCustomer }: Props) {
         "deadline_passed": {
             "className": "border-red text-red",
             "text": trans("deadline_passed")
+        },
+        "result_ignored": {
+            "className": "border-orange text-orange",
+            "text": trans("result_ignored")
         },
         "completed": {
             "className": "border-green text-green",

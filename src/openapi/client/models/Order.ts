@@ -36,5 +36,7 @@ export type Order = {
   descriptionTranslated?: string | null;
   technicalTaskTranslated?: string | null;
   result?: string | null;
+  forcePaymentAvailable: boolean;
+  refundAvailable: boolean;
   currentUserResponse?: UserResponse;
 };

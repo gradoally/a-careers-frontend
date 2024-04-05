@@ -1,6 +1,9 @@
 import { useMemo } from "react";
+import { useLocale } from "next-intl";
+
 import { IUser } from "@/interfaces";
 import { Order } from "@/openapi/client";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 export interface ITaskMetaInfo {
   isCustomer: boolean;
@@ -12,6 +15,7 @@ export interface ITaskMetaInfo {
     customer: boolean;
     freelancer: boolean;
   };
+  isSameLanguage: boolean;
   statusCode: number;
 }
 
@@ -19,6 +23,8 @@ export default function useTaskMetaInfo(
   task: Order | null,
   user?: IUser | undefined | null
 ): ITaskMetaInfo {
+  const { getLanguage } = useAppContext();
+  const locale = useLocale();
   const isCustomer = useMemo(() => {
     return user?.index === task?.customer?.index;
   }, [task, user]);
@@ -48,6 +54,7 @@ export default function useTaskMetaInfo(
     if (isCustomer) {
       /*CUSTOMER*/
       if (task?.status === 1 && isResponses) return 20;
+      if (task?.refundAvailable) return 11;
     } else {
       /**FREELANCER */
       if (task?.status === 1) {
@@ -57,6 +64,7 @@ export default function useTaskMetaInfo(
       }
       //If someone else received offer
       if (isResponded && !isHired) return 22;
+      if (task?.forcePaymentAvailable) return 23;
     }
     return task?.status !== undefined ? task.status : -1;
   }, [task, isCustomer, isResponses, isResponded, isHired]);
@@ -68,6 +76,11 @@ export default function useTaskMetaInfo(
     };
   }, [task, isCustomer]);
 
+  const isSameLanguage = useMemo(() => {
+    const orderLanguage = getLanguage(task?.language || "")?.code || "";
+    return locale === orderLanguage;
+  }, [task]);
+
   return {
     isCustomer,
     isResponses,
@@ -75,6 +88,7 @@ export default function useTaskMetaInfo(
     isWorkStarted,
     isHired,
     statusCode,
+    isSameLanguage,
     isProfile,
   };
 }

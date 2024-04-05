@@ -2,7 +2,7 @@ import { get } from "@/lib/utils/request";
 
 import { APIs } from "@/config/api.config";
 
-import { Order, UserResponse } from "@/openapi/client";
+import { Order, OrderActivity, UserResponse } from "@/openapi/client";
 import { IOrderArgs } from "@/interfaces/serviceArgs";
 
 export async function getOrders(query: string) {
@@ -26,5 +26,11 @@ export async function getOrdersCount(query?: string) {
 export async function getOrderResponses(index: number) {
   return await get<UserResponse[]>({
     url: APIs.orders.responses(index),
+  });
+}
+
+export async function getOrderActivities(index: number) {
+  return await get<OrderActivity[]>({
+    url: APIs.orders.activities(index),
   });
 }

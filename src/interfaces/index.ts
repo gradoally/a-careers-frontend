@@ -1,5 +1,5 @@
 export interface IUser {
-  index?: number;
+  index: number;
   address?: string;
   userAddress?: string;
   revokedAt?: string | null;

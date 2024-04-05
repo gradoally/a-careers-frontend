@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -38,6 +38,7 @@ import SelectCheckingPeriod from "./steps/TaskCheckingPeriod";
 import { checkError, getError, toast } from "@/lib/helper";
 
 import { getOrder } from "@/services/order";
+import { useTonConnect } from "@/hooks/useTonConnect";
 
 const keys: Record<number, string> = {
     1: "language",
@@ -96,7 +97,9 @@ export default function Stepper() {
     const trans = useTranslations();
     const { user } = useAuthContext();
     const { client } = useTonClient();
+    const { connect, connected } = useTonConnect();
     const { checkTxProgress } = useTxChecker();
+    const actionRef = useRef<boolean>(false);
 
     const {
         sendCreateOrder
@@ -135,16 +138,17 @@ export default function Stepper() {
                     technicalTask: values.technicalTask,
                 };
                 const orderContentDataCell = buildOrderContent(orderContentData);
+                const deadlineInSec = values.deadline ? new Date(values.deadline).getTime() / 1000 : 0;
                 await sendCreateOrder("0.3",
                     0, orderContentDataCell,
                     toNano(values.price),
-                    new Date(values.deadline || "date time in ISO").getTime() / 1000,
+                    deadlineInSec,
                     values.period
                 );
 
                 checkTxProgress(async (successCB) => {
                     try {
-                        const orderRes = await getOrder({ index: orderNextIndex, translateTo:locale });
+                        const orderRes = await getOrder({ index: orderNextIndex, translateTo: locale });
                         if (orderRes.data) {
                             successCB();
                             toast(trans("tasks.task_successfully_created"), 'success');
@@ -156,6 +160,7 @@ export default function Stepper() {
                 });
 
             } catch (e) {
+                actionRef.current = false;
                 console.log("create_order", e);
                 toast(trans("errors.something_went_wrong_sorry"), 'warning');
             }
@@ -216,6 +221,22 @@ export default function Stepper() {
         setErrorMessage(ButtonStatus.error || "");
     }
 
+    const create = () => {
+        handleSubmit(formik.values);
+    }
+
+    const loginAndCreate = () => {
+        alert("Login and create");
+        actionRef.current = true;
+        connect();
+    }
+
+    useEffect(() => {
+        if (!actionRef.current || !user?.found) return;
+        //Call create task function
+        handleSubmit(formik.values);
+    }, [user]);
+
     const Header = (
         <AppBar height="70px">
             <Stack alignItems="center" className="w-full" spacing={2} direction="row">
@@ -236,22 +257,27 @@ export default function Stepper() {
     );
 
     //Footer
-    const footer = (<Footer>
-        {step === 8 ? (
-            <>
-                <FooterButton
-                    onClick={() => handleSubmit(formik.values)}
-                    disabled={disabled}
-                    className="w-full"
-                    color={"secondary"}
-                    variant="contained">
-                    {trans("tasks.send_task_to_blockchain")}
-                </FooterButton>
-                <Typography variant="body2">
-                    {trans("network.commission", { value: "0.011 TON" })}
-                </Typography>
-            </>
-        ) : (
+    const footer = (step === 8 ? <Footer>
+        {connected ? <FooterButton
+            onClick={create}
+            disabled={disabled}
+            className="w-full"
+            color={"secondary"}
+            variant="contained">
+            {trans("tasks.send_task_to_blockchain")}
+        </FooterButton> : <FooterButton
+            onClick={loginAndCreate}
+            disabled={disabled}
+            className="w-full !text-[14px]"
+            color={"secondary"}
+            variant="contained">
+            {trans("tasks.login_send_task_to_blockchain")}
+        </FooterButton>}
+        <Typography variant="body2">
+            {trans("network.commission", { value: "0.011 TON" })}
+        </Typography>
+    </Footer> :
+        <Footer>
             <FooterButton
                 style={{
                     opacity: ButtonStatus.disabled ? 0.5 : 1,
@@ -261,8 +287,7 @@ export default function Stepper() {
                 variant="contained">
                 {trans("buttons.next")}
             </FooterButton>
-        )}
-    </Footer>
+        </Footer>
     );
 
     return (

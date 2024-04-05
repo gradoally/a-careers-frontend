@@ -8,7 +8,7 @@ import { z } from "zod";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { Address, address, toNano } from "@ton/core";
+import { Address, toNano } from "@ton/core";
 
 import Shell from "@/components/layout/Shell";
 import AppBar from "@/components/layout/app-bar";
@@ -22,8 +22,6 @@ import { checkError, getError } from "@/lib/helper";
 import { useAuthContext } from "@/lib/provider/auth.provider";
 
 import { useOrderContract } from "@/hooks/useOrderContract";
-
-import { ResponseData, buildResponseContent } from '@/contracts/User';
 
 import Deadline from "./step/deadline";
 import Price from "./step/price";

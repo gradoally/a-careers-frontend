@@ -52,5 +52,11 @@ export function useOrderContract(address: string) {
     sendCustomerFeedback: (value: bigint, queryID: number, arbitration: boolean) => {
       return orderContract?.sendCustomerFeedback(sender, value, queryID, arbitration);
     },
+    sendRefund: (value: bigint, queryID: number) => {
+      return orderContract?.sendRefund(sender, value, queryID);
+    },
+    sendForcePayment: (value: bigint, queryID: number) => {
+      return orderContract?.sendForcePayment(sender, value, queryID);
+    },
   };
 }

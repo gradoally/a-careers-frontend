@@ -1,7 +1,7 @@
 export interface IOrderArgs {
   index: number;
   currentUserIndex?: number;
-  translateTo: string;
+  translateTo?: string;
 }
 
 export interface IUserOrdersArgs {

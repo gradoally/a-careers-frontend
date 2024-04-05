@@ -30,7 +30,6 @@ function ChooseSpecialistButton(props: IButtonProps) {
 }
 
 function CancelOfferButton(props: IButtonProps) {
-
     return <Footer>
         <FooterButton
             onClick={props.click}
@@ -63,12 +62,25 @@ function ReviewResultButton(props: IMultipleButtonProps) {
     </Footer>
 }
 
+function GetFundBackButton(props: IButtonProps) {
+    return <Footer>
+        <FooterButton
+            onClick={props.click}
+            color={"secondary"}
+            variant="contained"
+        >
+            {props.title}
+        </FooterButton>
+        {props.comissionText && <Typography variant="body2">{props.comissionText}</Typography>}
+    </Footer>
+}
+
 export default function CustomerButtons() {
     const locale = useLocale();
     const trans = useTranslations();
     const router = useRouter();
     const { task, info, updateTask, tabHandler } = useTask();
-    const { sendCancelAssign, sendCustomerFeedback } = useOrderContract(task.content?.address || "");
+    const { sendCancelAssign, sendCustomerFeedback, sendRefund } = useOrderContract(task.content?.address || "");
     const { checkTxProgress } = useTxChecker();
 
     const commissionText = trans("network.commission", { value: "0.011 TON" });
@@ -130,6 +142,25 @@ export default function CustomerButtons() {
         }
     }
 
+    async function getFundBack() {
+        try {
+            if (!task.content || task.content.index === undefined) return;
+            const index = task.content.index;
+            await sendRefund(toNano("0.05"), 0);
+
+            checkTxProgress(async (successCB) => {
+                const orderRes = await getOrder({ index, translateTo: locale });
+                if (orderRes.data && (orderRes.data.status !== task.content?.status)) {
+                    successCB();
+                    updateTask(orderRes.data);
+                    router.push(`/en/tasks/${index}`)
+                }
+            });
+        } catch (err) {
+            toast(trans("errors.something_went_wrong_sorry"), "error");
+        }
+    }
+
     return <>
         {
             info.statusCode === 20 && <ChooseSpecialistButton
@@ -154,6 +185,13 @@ export default function CustomerButtons() {
                     title: trans('task.button.pay'),
                     click: pay
                 }}
+                comissionText={commissionText}
+            />
+        }
+        {
+            info.statusCode === 11 && <GetFundBackButton
+                title={trans('task.button.get_fund')}
+                click={getFundBack}
                 comissionText={commissionText}
             />
         }

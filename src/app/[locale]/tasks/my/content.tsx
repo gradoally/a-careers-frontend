@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -18,13 +18,22 @@ import { NextLinkComposed } from "@/components/Link";
 import ArrowRightIcon from "@/components/ui/ArrowRightIcon";
 import Image from "@/components/Image";
 import { CustomTabPanel, a11yProps } from '@/components/layout/TabPanel';
-import { IUserStats } from '@/interfaces/request';
+
+import { IUserStats2 } from '@/interfaces/request';
+
+interface IContentProps {
+    stats: IUserStats2;
+    counts: {
+        created: number;
+        responded: number;
+    }
+}
 
 interface ICustomListProps {
     iconSrc: string;
     title: string;
     category: string;
-    status?: number;
+    status: string;
     user: "freelancer" | "customer";
 }
 
@@ -57,7 +66,7 @@ function CustomListItem({ iconSrc, title, category, status, user }: ICustomListP
     )
 }
 
-export default function Content({ stats }: { stats: IUserStats }) {
+export default function Content({ stats, counts }: IContentProps) {
 
     const tc = useTranslations('common');
     const trans = useTranslations('tasks');
@@ -95,64 +104,64 @@ export default function Content({ stats }: { stats: IUserStats }) {
                                 disableSticky
                                 component="div" id="nested-list-subheader">
                                 <Typography variant="h4" sx={{ fontFamily: "InterBold" }}>
-                                    {trans("you_have_created", { value: stats.asCustomerTotal })}
+                                    {trans("you_have_created", { value: counts.created })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
                         <CustomListItem
                             iconSrc={"/images/hourglass_flowing_sand.png"}
-                            title={trans("on_moderation", { value: stats.asCustomerByStatus["0"] || 0 })}
-                            status={0}
+                            title={trans("on_moderation", { value: stats.asCustomerByStatus.onModeration })}
+                            status={"onModeration"}
                             category='on_moderation'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/hear_no_evil.png"}
-                            title={trans("no_responses", { value: stats.asCustomerByStatus["1"] || 0 })}
-                            status={1}
+                            title={trans("no_responses", { value: stats.asCustomerByStatus.noResponses })}
+                            status={"noResponses"}
                             category='no_responses'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/gem.png"}
-                            title={trans("have_responses", { value: stats.asCustomerByStatus["1"] || 0 })}
-                            status={1}
+                            title={trans("have_responses", { value: stats.asCustomerByStatus.haveResponses })}
+                            status={"haveResponses"}
                             category='have_responses'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/offer_made.png"}
-                            title={trans("offer_made", { value: stats.asCustomerByStatus["2"] || 0 })}
-                            status={2}
+                            title={trans("offer_made", { value: stats.asCustomerByStatus.offerMade })}
+                            status={"offerMade"}
                             category='offer_made'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/right-facing_fist.png"}
-                            title={trans("in_the_work", { value: stats.asCustomerByStatus["3"] || 0 })}
-                            status={3}
+                            title={trans("in_the_work", { value: stats.asCustomerByStatus.inTheWork })}
+                            status={"inTheWork"}
                             category='in_the_work'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/money_with_wings.png"}
-                            title={trans("pending_payment", { value: stats.asCustomerByStatus["4"] || 0 })}
-                            status={4}
+                            title={trans("pending_payment", { value: stats.asCustomerByStatus.pendingPayment })}
+                            status={"pendingPayment"}
                             category='pending_payment'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/eyes.png"}
-                            title={trans("arbitration", { value: stats.asCustomerByStatus["9"] || 0 })}
-                            status={9}
+                            title={trans("arbitration", { value: stats.asCustomerByStatus.arbitration })}
+                            status={"arbitration"}
                             category='arbitration'
                             user='customer'
                         />
                         <CustomListItem
                             iconSrc={"/images/rocket.png"}
-                            title={trans("completed", { value: stats.asCustomerByStatus["6"] || 0 })}
-                            status={6}
+                            title={trans("completed", { value: stats.asCustomerByStatus.completed })}
+                            status={"completed"}
                             category='completed'
                             user='customer'
                         />
@@ -167,57 +176,57 @@ export default function Content({ stats }: { stats: IUserStats }) {
                             <ListSubheader sx={{ padding: "0", margin: "12px 0", "color": "common.white" }}
                                 component="div" id="nested-list-subheader-2">
                                 <Typography variant="h4" sx={{ fontFamily: "InterBold" }}>
-                                    {trans("you_have_responded", { value: stats.asFreelancerTotal })}
+                                    {trans("you_have_responded", { value: counts.responded })}
                                 </Typography>
                             </ListSubheader>
                         }
                     >
                         <CustomListItem
                             iconSrc={"/images/dizzy.png"}
-                            title={trans("response_sent", { value: stats.asFreelancerByStatus["1"] || 0 })}
-                            status={1}
+                            title={trans("response_sent", { value: stats.asFreelancerByStatus.responseSent })}
+                            status={"responseSent"}
                             category='response_sent'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/fire.png"}
-                            title={trans("response_denied", { value: stats.asFreelancerByStatus["1"] || 0 })}
-                            status={1}
+                            title={trans("response_denied", { value: stats.asFreelancerByStatus.responseDenied })}
+                            status={"responseDenied"}
                             category='response_denied'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/fish_cake.png"}
-                            title={trans("an_offer_came_in", { value: stats.asFreelancerByStatus["2"] || 0 })}
-                            status={2}
+                            title={trans("an_offer_came_in", { value: stats.asFreelancerByStatus.anOfferCameIn })}
+                            status={'anOfferCameIn'}
                             category='an_offer_came_in'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/right-facing_fist.png"}
-                            title={trans("in_the_work", { value: stats.asFreelancerByStatus["3"] || 0 })}
-                            status={3}
+                            title={trans("in_the_work", { value: stats.asFreelancerByStatus.inTheWork })}
+                            status={"inTheWork"}
                             category='in_the_work'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/dancer.png"}
-                            title={trans("on_inspection", { value: stats.asFreelancerByStatus["4"] || 0 })}
-                            status={4}
+                            title={trans("on_inspection", { value: stats.asFreelancerByStatus.onInspection })}
+                            status={"onInspection"}
                             category='on_inspection'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/eyes.png"}
-                            title={trans("arbitration", { value: stats.asFreelancerByStatus["9"] || 0 })}
-                            status={9}
+                            title={trans("arbitration", { value: stats.asFreelancerByStatus.arbitration })}
+                            status={'arbitration'}
                             category='arbitration'
                             user='freelancer'
                         />
                         <CustomListItem
                             iconSrc={"/images/king.png"}
-                            title={trans("terminated", { value: stats.asFreelancerByStatus["6"] || 0 })}
-                            status={6}
+                            title={trans("terminated", { value: stats.asFreelancerByStatus.terminated })}
+                            status={'terminated'}
                             category='terminated'
                             user='freelancer'
                         />

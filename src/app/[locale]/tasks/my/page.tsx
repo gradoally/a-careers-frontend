@@ -17,12 +17,11 @@ import Footer from "@/components/layout/Footer";
 import FooterButton from "@/components/ui/buttons/FooterButton";
 import Content from "./content";
 
-import { getUserStatus } from '@/services/profile';
+import { getUserStatus2 } from '@/services/profile';
 
-import { IUserStats } from '@/interfaces/request';
+import { IUserStats2 } from '@/interfaces/request';
 
 export default function Page() {
-    const locale = useLocale();
     const trans = useTranslations("tasks");
 
     const { user } = useAuthContext();
@@ -30,23 +29,53 @@ export default function Page() {
     const [stats, setStats] = useState<{
         loading: boolean;
         status: string;
-        content: IUserStats;
+        content: IUserStats2;
     }>({
         loading: false,
         status: "",
         content: {
-            "asCustomerTotal": 0,
-            "asCustomerByStatus": {},
-            "asFreelancerTotal": 0,
-            "asFreelancerByStatus": {}
+            "asCustomerByStatus": {
+                "onModeration": 0,
+                "noResponses": 0,
+                "haveResponses": 0,
+                "offerMade": 1,
+                "inTheWork": 0,
+                "pendingPayment": 0,
+                "arbitration": 0,
+                "completed": 1
+            },
+            "asFreelancerByStatus": {
+                "responseSent": 0,
+                "responseDenied": 0,
+                "anOfferCameIn": 0,
+                "inTheWork": 0,
+                "onInspection": 0,
+                "arbitration": 0,
+                "terminated": 0
+            }
         }
     });
 
     const dataStatus = useMemo(() => {
-        return {
+        const obj = {
+            created: 0,
+            responded: 0,
             isLoading: stats.loading ? true : false,
-            noTasks:(stats.content.asCustomerTotal || stats.content.asFreelancerTotal) ? false : true
+            noTasks: (stats.content.asCustomerByStatus || stats.content.asFreelancerByStatus) ? false : true
         }
+
+        if (obj.isLoading) return obj;
+
+        Object.keys(stats.content.asCustomerByStatus).forEach(key => {
+            const field = key as keyof typeof stats.content.asCustomerByStatus;
+            obj.created += stats.content.asCustomerByStatus[field];
+        });
+        Object.keys(stats.content.asFreelancerByStatus).forEach(key => {
+            const field = key as keyof typeof stats.content.asFreelancerByStatus;
+            obj.responded += stats.content.asFreelancerByStatus[field];
+        });
+
+        return obj;
     }, [stats]);
 
     useEffect(() => {
@@ -56,10 +85,8 @@ export default function Page() {
             loading: true,
             status: "loading"
         });
-        getUserStatus({
-            address: user?.data?.userAddress || "",
-            index: user?.data?.index === undefined ? -1 : user.data.index,
-            locale
+        getUserStatus2({
+            index: user?.data?.index === undefined ? -1 : user.data.index
         })
             .then(res => {
                 res.data && setStats({
@@ -101,7 +128,10 @@ export default function Page() {
         <div className="px-[20px] pb-[20px] h-full">
             {dataStatus.isLoading ? <CircularLoading className="m-auto" /> : (
                 dataStatus.noTasks ? <CenteredContainer className="opacity-[40%] text-[12px] !font-InterLight" >{trans("you_have_not_created_tasks")}</CenteredContainer>
-                    : <Content stats={stats.content} />
+                    : <Content stats={stats.content} counts={{
+                        created: dataStatus.created,
+                        responded: dataStatus.responded
+                    }} />
             )}
         </div>
     </Shell>

@@ -19,7 +19,7 @@ const TechnicalTask = ({ formik, error }: IForm) => {
                 <StyledInputMultiline
                     error={error ? true : false}
                     fullWidth
-                    inputProps={{ style: { height: "100%", padding: "10px 20px" } }}
+                    inputProps={{ style: { height: "95%", padding: "20px !important" } }}
                     multiline
                     onChange={formik.handleChange}
                     value={formik.values.technicalTask}

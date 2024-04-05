@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type User = {
-    index?: number;
+    index: number;
     /**
      * Smartcontract address - in bounceable form.
      */
