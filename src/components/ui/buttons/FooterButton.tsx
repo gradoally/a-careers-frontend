@@ -18,7 +18,7 @@ export default function FooterButton({ children, ...props }: Props) {
                 fontSize: "16px",
                 lineHeight: "24px",
                 textTransform: "none",
-                fontFamily: "InterBold",
+                fontFamily: "SFProBold",
                 "&.Mui-disabled": {
                     "backgroundColor": "rgb(69, 174, 245,0.4)"
                 }
@@ -45,7 +45,7 @@ export function FooterButton2({ children, ...props }: Props) {
                 fontSize: "12px",
                 lineHeight: "24px",
                 textTransform: "none",
-                fontFamily: "InterRegular",
+                fontFamily: "SFProRegular",
                 fontWeight: 500,
                 border: "1px solid #45AEF5",
                 "&.Mui-disabled": {

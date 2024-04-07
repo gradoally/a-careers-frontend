@@ -54,7 +54,7 @@ const ConnectButton = ({ text }: { text: string }) => {
                     borderRadius: "25px",
                     padding: "5px 12px 6px 14px",
                     color: "common.black",
-                    fontFamily: "InterSemiBold",
+                    fontFamily: "SFProSemiBold",
                     fontWeight: "600",
                     fontSize: "16px",
                     lineHeight: "normal"

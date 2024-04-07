@@ -86,7 +86,7 @@ export default function Page(props: Props) {
             <div className="pb-5 pt-[15px]">
                 {order.loading ? <CircularLoading /> : (
                     order.contents.length ?
-                        <TaskList data={order.contents} /> : <CenteredContainer>{trans("common.no_more_data")}</CenteredContainer>
+                        <TaskList data={order.contents} hideStatus={true} /> : <CenteredContainer>{trans("common.no_more_data")}</CenteredContainer>
                 )}
             </div>
         </Shell>

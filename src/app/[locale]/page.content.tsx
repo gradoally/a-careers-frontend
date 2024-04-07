@@ -18,12 +18,12 @@ import CenteredContainer from "@/components/ui/CenteredContainer";
 import FilterButton from "@/components/ui/buttons/FilterButton";
 import { CircularLoading } from "@/components/features/Loaders";
 
-import { getOrders } from "@/services/order";
 import { Order } from "@/openapi/client";
 
-import { getOrdersCount } from "@/services/order";
-import { useTonConnect } from "@/hooks/useTonConnect";
+import { getOrdersCount, getOrders } from "@/services/order";
+
 import { useAuthContext } from "@/lib/provider/auth.provider";
+import { useTonConnect } from "@/hooks/useTonConnect";
 
 function SkeletonLoader() {
     return (
@@ -41,27 +41,25 @@ function SkeletonLoader() {
 function Content() {
     const searchParams = useSearchParams();
     const trans = useTranslations();
-
-    const { connectionChecked } = useTonConnect();
     const { user } = useAuthContext();
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [loading, setLoading] = useState(true);
-    const [pageLimit, setPageLimit] = useState({ count: 0, loading: false });
+    const [countQuery, setCountQuery] = useState<Record<string, any>>({});
     const [query, setQuery] = useState<Record<string, any>>({
         page: -1,
-        sort: "desc"
+        sort: "desc",
     });
-    const [countQuery, setCountQuery] = useState<Record<string, any>>({});
+    const [pageLimit, setPageLimit] = useState({ count: 0, loading: false });
     const [tasks, setTasks] = useState<Order[]>([]);
 
+    //On filter applied, set count query
     useEffect(() => {
-        if (pageLimit.loading || !pageLimit.count) return;
-        setQuery({ ...query, page: 0 });
-    }, [pageLimit]);
-
-    //Update query state
-    useEffect(() => {
+        //Clear orders
+        setTasks([]);
+        //Set Loading
+        setLoading(true);
+        //Set Query
         ["translateTo", "category", "orderBy", "minPrice"].map((key) => {
             const value = searchParams.get(key);
             if (value) {
@@ -72,7 +70,6 @@ function Content() {
                 key !== "orderBy" && (delete countQuery[key]);
             }
         });
-        setQuery({ ...query });
         setCountQuery({ ...countQuery });
     }, [searchParams]);
 
@@ -90,14 +87,29 @@ function Content() {
             });
     }, [countQuery]);
 
+    //On new page size load, set query state
+    useEffect(() => {
+        if (pageLimit.loading || !pageLimit.count) return;
+        setQuery({ ...query, page: 0 });
+    }, [pageLimit]);
+
     //Load orders on query update
     useEffect(() => {
-        if (!connectionChecked) return;
+        //SKIP ORDER SEARCH
         if (query.page < 0) return;
         if (loading && tasks.length) return;
+
         setLoading(true);
-        if (user?.data?.index !== undefined)
-            query.currentUserIndex = user.data.index;
+
+        if (user?.data?.index !== undefined) {
+            //Refetch all task, if user logged in
+            if (query.currentUserIndex === undefined) {
+                setTasks([]);
+                query.page = 0;
+            }
+            query.currentUserIndex = user?.data?.index
+        }
+
         const queryStr = new URLSearchParams(query).toString();
         getOrders(queryStr)
             .then((res) => {
@@ -105,7 +117,8 @@ function Content() {
             })
             .catch(console.log)
             .finally(() => setLoading(false));
-    }, [query, connectionChecked]);
+
+    }, [query]);
 
     useEffect(() => {
         const container = containerRef.current;

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { Stack } from "@mui/material";
@@ -50,12 +50,12 @@ function Profile(props: {
         return (tg && tg.startsWith("@")) ? tg.slice(1) : tg;
     }, [props.user]);
 
-    return <Stack className="mt-6" direction={"column"}>
-        <Typography className="!font-InterSemiBold !text-[12px]" >{trans(`common.${props.userType}`)}</Typography>
-        <div className="mt-3">
+    return <Stack className="mt-7" direction={"column"}>
+        <Typography className="!font-SFProSemiBold !text-[12px]" >{trans(`common.${props.userType}`)}</Typography>
+        <div className="mt-5">
             <Stack component="div" direction="row" spacing={3}>
                 <UserAvatar height="80px" width="80px" />
-                <Stack direction="column" className="!my-auto" spacing="7px" component="div">
+                <Stack direction="column" className="!my-auto" spacing="4px" component="div">
                     <Typography variant="body2">@{props?.user?.nickname}</Typography>
                     <Stack component="div" sx={{ fontSize: "10px" }} direction="row" spacing="5px">
                         <div className="opacity-70">✅ {props.stats.freelancer}</div>
@@ -102,14 +102,14 @@ export default function TaskView({
                     isCustomer={info.isCustomer}
                     count={task.content.responsesCount || 0}
                 />
-                <Typography className="!text-[16px] !leading-25px] !font-InterSemiBold !font-[700]" >{(originalTL ? task.content?.nameTranslated : task.content?.name)}</Typography>
-                <Typography className="!text-[12px] !font-InterLight">💎 {task.content?.price}</Typography>
+                <Typography className="!text-[16px] !font-SFProSemiBold !leading-25px] !font-[700]" >{(originalTL ? task.content?.nameTranslated : task.content?.name)}</Typography>
+                <Typography className="!text-[12px] !font-SFProLight">💎 {task.content?.price}</Typography>
             </Stack>
             <Stack component="div" className="mt-4" direction="column">
                 <Typography component="div" variant={"caption"}>{trans("common.smart_contract_address")}</Typography>
                 {task.content?.address && (
                     <CopyContainer className="!m-0 !mt-1 !h-fit">
-                        <Typography className="!font-InterRegular !text-[12px]" >{truncateMiddleText(task.content.address, 10)}</Typography>
+                        <Typography className="!font-SFProRegular !text-[12px]" >{truncateMiddleText(task.content.address, 10)}</Typography>
                     </CopyContainer>
                 )}
             </Stack>
@@ -129,7 +129,7 @@ export default function TaskView({
                                 cursor: "pointer"
                             }}
                         >
-                            {trans('task.original_translation')}
+                            {originalTL ? "DeepL Translation" : trans('task.original_translation')}
                         </Typography>}
                     </Stack>
                 }
@@ -141,14 +141,14 @@ export default function TaskView({
             <StackContainer
                 primary={formatDatetime({ date: task.content?.deadline, locale: locale })}
                 secondary={trans("common.deadline")} />
-            <Divider className="!my-3" />
-            <Stack className="!text-[10px] !font-InterRegular !leading-5 opacity-[40%]" direction="column">
-                <div className="truncate w-[300px]">{trans("task.createdAt", {
+            <Divider className="!mb-3 !mt-8" />
+            <Stack className="!text-[10px] !font-SFProLight !leading-none opacity-[40%]" direction="column">
+                <div className="truncate w-[300px] mt-[6px]">{trans("task.createdAt", {
                     date: formatDatetime({ date: task.content?.createdAt, locale: locale }),
                     language: trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)
                 })}
                 </div>
-                <div className="truncate w-[200px] mt-1">{trans("task.category", { value: getCategory(task.content?.category || "")?.code })}</div>
+                <div className="truncate w-[200px] mt-[10px]">{trans("task.category", { value: getCategory(task.content?.category || "")?.code })}</div>
             </Stack>
             {
                 info.isProfile.customer && <MemoizedCustomer

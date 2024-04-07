@@ -129,12 +129,12 @@ export default function DrawerContent({ routes }: Props) {
                             <Stack spacing="20px" className="py-[30px]" direction="column" justifyContent="center"
                                 alignItems="center">
                                 <UserAvatar />
-                                <div className="text-center">
-                                    {user?.data?.telegram && <Typography variant="h4">
-                                        {user?.data?.telegram}
+                                <div className="text-center flex flex-col justify-center">
+                                    {user?.data?.nickname && <Typography variant="h4" className="!mb-[8px] !font-SFProBold">
+                                        {user?.data?.nickname}
                                     </Typography>}
-                                    <Typography component="div" variant="caption">
-                                        <Link onClick={() => toggleDrawer(false)} className="underline"
+                                    <Typography component="div" variant="caption" className="border-b !w-fit !mx-auto !leading-[15px]">
+                                        <Link onClick={() => toggleDrawer(false)}
                                             noLinkStyle href={"/profile"}>
                                             {trans("profile")} 📖
                                         </Link>
@@ -144,7 +144,7 @@ export default function DrawerContent({ routes }: Props) {
                             <Divider />
                         </div>
                     )}
-                    <nav className={clsx("grow", walletAddress ? "" : "flex flex-col justify-center items-center")}>
+                    <nav className={clsx("grow","flex flex-col justify-center items-center")}>
                         <List sx={{ width: "100%" }}>
                             {routes.map((e, index) => {
                                 const [, , ...segments] = pathname.split('/');
@@ -168,7 +168,7 @@ export default function DrawerContent({ routes }: Props) {
                                                 sx={{ textAlign: "center" }}
                                                 primaryTypographyProps={{
                                                     "color": isSelectedRoute ? "text.primary" : "text.secondary",
-                                                    fontFamily: "InterRegular",
+                                                    fontFamily: "SFProRegular",
                                                     "fontWeight": "700 !important"
                                                 }}
                                                 primary={e.label} />

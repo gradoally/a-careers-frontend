@@ -51,7 +51,9 @@ export default function Page() {
                 "inTheWork": 0,
                 "onInspection": 0,
                 "arbitration": 0,
-                "terminated": 0
+                "terminated": 0,
+                "completedTotal":0,
+                "failedTotal":0
             }
         }
     });

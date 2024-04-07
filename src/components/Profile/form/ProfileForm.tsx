@@ -34,7 +34,7 @@ import ProfileIcon from "@/assets/gif/unicorn-low.gif";
 
 export function Skill(props: { name: string; remove?: () => void }) {
     return <div className="flex shrink-0 w-auto bg-[#3A4362] font-[400] px-3 py-1 !ml-0 mb-[2px] rounded-[20px]">
-        <span className="text-[#FFFFFF] text-[12px] !font-InterLight !font-[600]">{props.name}</span>
+        <span className="text-[#FFFFFF] text-[12px] !font-SFProLight !font-[600]">{props.name}</span>
         {props.remove && <Image src={CrossIcon} className="block ml-2" alt="close" onClick={(props.remove)} />}
     </div>
 }
@@ -279,7 +279,7 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                 </Stack>
                 <Stack spacing={"20px"}>
                     <div className="!mt-10">
-                        <Typography className="!font-InterSemiBold !font-[800]">{trans("profile.freelancer_profile")}</Typography>
+                        <Typography className="!font-SFProSemiBold !font-[800]">{trans("profile.freelancer_profile")}</Typography>
                         <Typography sx={{ marginTop: "5px", fontHeight: "20px" }} variant="body2">
                             {trans("profile.fill_if_you_want_make_response")}
                         </Typography>
@@ -330,7 +330,7 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                                     list="programmingLanguages"
                                     autoComplete="on"
                                 />
-                                <datalist id="programmingLanguages" onClick={console.log}>
+                                <datalist id="programmingLanguages" onClick={console.log} className="!my-5 !p-0">
                                     {config?.categories && config.categories.map((cat, indx) => <option
                                         key={indx}
                                         value={cat.code}

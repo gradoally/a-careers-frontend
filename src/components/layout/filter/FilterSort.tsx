@@ -23,7 +23,7 @@ export default function CustomizedRadios(
             <FormLabel sx={{
                 padding: "0 16px",
                 color: "common.white",
-                fontFamily: "InterSemiBold",
+                fontFamily: "SFProSemiBold",
                 fontSize: "14px",
                 "&.Mui-focused": {
                     color: "common.white"

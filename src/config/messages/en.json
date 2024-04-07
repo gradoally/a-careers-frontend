@@ -48,6 +48,7 @@
     "responses": "Responses {count}",
     "refusal": "Refusal",
     "cp_sent": "Cp sended",
+    "offer_sent": "Offer sent",
     "in_work": "In work",
     "deadline_passed": "Deadline passed",
     "on_check": "On check",
@@ -91,6 +92,7 @@
     "first_step": "First step",
     "step_x_from_x": "Step {value} of {from}",
     "make_a_response": "Make a response",
+    "make_an_offer": "Make an offer",
     "commercial_proposal": "Commercial proposal",
     "task": "Task",
     "create": "Create a task",
@@ -121,6 +123,8 @@
     "task_accomplished": "Task accomplished · {value}",
     "select_checking_period": "Task Checking Period",
     "terminated": "Terminated · {value}",
+    "completedTotal": "Completed · {value}",
+    "failedTotal": "Failed · {value}",
     "checking_period_description": "Select the period you will need to review the task after it is completed. If you do not respond to the freelancer within this period after completing the task, the freelancer will have the opportunity to receive payment without your confirmation.",
     "select_category": "Select a category",
     "send_task_to_blockchain": "Send a task to the blockchain",
@@ -154,7 +158,7 @@
   "task": {
     "category": "Category {value}",
     "createdAt": "Created on {date} in {language}",
-    "original_translation":"Show original translation",
+    "original_translation": "Show original translation",
     "button": {
       "send_feedback": "Send feedback",
       "choose_specialist": "Choose a specialist",
@@ -165,7 +169,7 @@
       "send_result": "Send result",
       "submit_result": "Submit result",
       "send_arbitration": "SEND TO ARBITRATION",
-      "pay":"Pay",
+      "pay": "Pay",
       "get_payment": "Get payment",
       "get_fund": "Get funds back"
     }

@@ -41,29 +41,29 @@ export const getTheme = () => {
         },
         typography: {
             h4: {
-                fontFamily: 'InterLight',
+                fontFamily: 'SFProLight',
                 fontSize: "16px",
             },
             h5: {
-                fontFamily: 'InterLight',
+                fontFamily: 'SFProLight',
                 fontSize: "14px",
                 fontWeight: "bold",
             },
             h6: {
-                fontFamily: 'InterLight',
+                fontFamily: 'SFProLight',
                 fontSize: "12px",
             },
             body1: {
-                fontFamily: 'InterLight',
+                fontFamily: 'SFProLight',
                 fontSize: "16px",
             },
             body2: {
-                fontFamily:'InterRegular',
+                fontFamily:'SFProRegular',
                 fontSize:"12px",
                 lineHeight:"20px"
             },
             caption: {
-                fontFamily:'InterLight',
+                fontFamily:'SFProLight',
                 color: "rgba(255, 255, 255, 0.4)",
             },
             button:{

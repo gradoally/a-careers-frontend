@@ -58,17 +58,17 @@ function ResponseCard({ isSelected, response, select, viewProfile }: IResponseCa
                 }
                 action={
                     <Typography variant="caption">
-                        <Link href="" className="!font-InterRegular border-b pb-[2px] text-[10px] border-[#fffff] mb-2" noLinkStyle onClick={viewProfile}>
+                        <Link href="" className="!font-SFProRegular border-b pb-[2px] text-[10px] border-[#fffff] mb-2" noLinkStyle onClick={viewProfile}>
                             {trans("response.profile")} 📖
                         </Link>
                     </Typography>
                 }
                 title={<div>
-                    <span className='!font-InterBold !text-[12px] mr-2'>@{response.freelancer?.nickname || ""}</span>
-                    <span className='!font-InterRegular !text-[12px]'>✅ {stats.customer} ❎ {stats.freelancer}</span>
+                    <span className='!font-SFProBold !text-[12px] mr-2'>@{response.freelancer?.nickname || ""}</span>
+                    <span className='!font-SFProRegular !text-[12px]'>✅ {stats.customer} ❎ {stats.freelancer}</span>
                 </div>}
                 subheader={
-                    <p className='!font-InterRegular text-[9.5px] mt-1'>{response.freelancer?.specialization || ""}</p>
+                    <p className='!font-SFProRegular text-[9.5px] mt-1'>{response.freelancer?.specialization || ""}</p>
                 }
                 subheaderTypographyProps={{
                     sx: { color: isSelected ? "common.black" : "common.white", fontSize: "9px" }
@@ -76,8 +76,8 @@ function ResponseCard({ isSelected, response, select, viewProfile }: IResponseCa
                 className="border-b-[1px] border-primary"
             />
             <CardContent onClick={select}>
-                <p className='!font-InterRegular text-[9.5px] mb-2'> {response.text}</p>
-                <div className="!text-[12px] !font-InterRegular">
+                <p className='!font-SFProRegular text-[9.5px] mb-2'> {response.text}</p>
+                <div className="!text-[12px] !font-SFProRegular">
                     {trans('response.offer')}: 💎 {response.price}
                 </div>
                 <div className={`w-[21px] h-[21px] ml-auto -mb-3 rounded-full ${isSelected ? "bg-transparent" : "bg-[#000015]"}`}></div>

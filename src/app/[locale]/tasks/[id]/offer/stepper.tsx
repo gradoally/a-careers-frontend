@@ -72,7 +72,7 @@ export default function Stepper(props: { id: number }) {
 
     const [step, setStep] = useState<number>(1);
     const [subtitle, setSubtitle] = useState(trans("tasks.first_step"))
-    const [title] = useState(trans("tasks.commercial_proposal"));
+    const [title] = useState(trans("tasks.make_an_offer"));
     const [disabled, setDisabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");;
 

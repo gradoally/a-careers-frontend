@@ -91,12 +91,12 @@ export default function Page({ params: { id } }: Props) {
             <Shell withDrawer header={header} footer={footer()}>
                 <div className="px-[20px] pb-[20px]">
                     {task.loading ? <CircularLoading /> : <div className="w-full">
-                        {tabVisibility && <div className="h-[50px]">
-                            <Tabs centered value={tabHandler.tab} onChange={(e, newTab) => tabHandler.changeTab(newTab)} aria-label="basic tabs example">
-                                <Tab label={trans("common.task")} {...a11yProps(0)} />
-                                <Tab label={`${trans("common.responses")} (${task?.content?.responsesCount || 0})`} {...a11yProps(1)} />
+                        {tabVisibility && 
+                            <Tabs className="!h-fit" centered value={tabHandler.tab} onChange={(e, newTab) => tabHandler.changeTab(newTab)} aria-label="basic tabs example">
+                                <Tab className="!p-[20px] !font-SFProRegular !mr-[10px]" label={trans("common.task")} {...a11yProps(0)} />
+                                <Tab className="!p-[20px] !font-SFProRegular" label={`${trans("common.responses")} (${task?.content?.responsesCount || 0})`} {...a11yProps(1)} />
                             </Tabs>
-                        </div>}
+                        }
                         <Divider />
                         <CustomTabPanel value={tabHandler.tab} index={0}>
                             <TaskView task={task} info={info} stats={stats} />

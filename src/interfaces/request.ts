@@ -41,5 +41,7 @@ export interface IUserStats2 {
     onInspection: number;
     arbitration: number;
     terminated: number;
+    completedTotal: number;
+    failedTotal: number;
   };
 }

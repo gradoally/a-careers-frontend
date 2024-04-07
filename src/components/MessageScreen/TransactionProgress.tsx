@@ -11,8 +11,8 @@ export default function TransactionProgress() {
     >
         <div className="m-auto text-center">
             <Image src={UnicornGif} alt="unicorn" className="mx-auto" width={90} height={90} />
-            <h1 className="text-[16px] font-InterBold mt-4 mb-2">{trans("screen.tx_progress.heading")}</h1>
-            <h3 className="font-[400] font-InterRegular text-[13px]">{trans("screen.tx_progress.subheading")}</h3>
+            <h1 className="text-[16px] font-SFProBold mt-4 mb-2">{trans("screen.tx_progress.heading")}</h1>
+            <h3 className="font-[400] font-SFProRegular text-[13px]">{trans("screen.tx_progress.subheading")}</h3>
         </div>
     </div>
 }

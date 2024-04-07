@@ -15,7 +15,7 @@ import { Order } from "../../openapi/client";
 
 import { formatDatetime } from "../../lib/helper";
 
-const TaskItem = ({ order, locale }: { order: Order, locale: string }) => {
+const TaskItem = ({ order, locale, hideStatus }: { order: Order, locale: string, hideStatus?: boolean }) => {
     const { user } = useAuthContext();
     const { statusCode, isCustomer } = useTaskMetaInfo(order, user?.data)
     return (
@@ -27,27 +27,27 @@ const TaskItem = ({ order, locale }: { order: Order, locale: string }) => {
                 }
             }}
             href={`/tasks/${order?.index}`}>
-            <div className="text-[12px] leading-5 font-InterSemiBold font-[700]">
+            <div className="text-[12px] leading-5 font-SFProBold font-[700]">
                 {order?.name}
             </div>
-            <Typography component="div" variant="caption" className="!text-[10px] leading-[15px]">
+            <Typography component="div" variant="caption" className="!text-[10px] !mt-[9px] !mb-[8px] !leading-none">
                 {formatDatetime({ date: order?.createdAt, locale })} - {formatDatetime({ date: order?.deadline, locale })}
             </Typography>
-            <Typography className="font-InterLight !text-[12px] leading-[14px]">
+            <Typography className="font-SFProLight !text-[12px] !leading-none">
                 💎 {order?.price}
             </Typography>
-            <StatusChip statusCode={statusCode} isCustomer={isCustomer} count={order.responsesCount} />
+            {!hideStatus && <StatusChip styles="!mt-[8px]" statusCode={statusCode} isCustomer={isCustomer} count={order.responsesCount} />}
         </Link>
     )
 }
 
 const MemoTaskItem = React.memo(TaskItem)
 
-const TaskList = ({ data }: { data: Order[] }) => {
+const TaskList = ({ data, hideStatus }: { data: Order[]; hideStatus?: boolean }) => {
     const locale = useLocale();
     return (
         <Stack spacing={"15px"} divider={<Divider />}>
-            {data.map((e, i) => <MemoTaskItem key={i} order={e} locale={locale} />)}
+            {data.map((e, i) => <MemoTaskItem key={i} hideStatus={hideStatus} order={e} locale={locale} />)}
         </Stack>
     )
 }

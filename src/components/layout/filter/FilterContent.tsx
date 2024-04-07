@@ -208,7 +208,7 @@ const FilterContent = () => {
                                 min: 0,
                             },
                         }}
-                        value={filters?.price}
+                        value={filters?.minPrice}
                         onChange={(e: any) => setOptions("minPrice", e.target.value)}
                         fullWidth id="price"
                         variant="standard"

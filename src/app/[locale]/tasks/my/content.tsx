@@ -56,7 +56,7 @@ function CustomListItem({ iconSrc, title, category, status, user }: ICustomListP
                     <ListItemText primary={
                         <Typography variant="h4" color="secondary.main" sx={{
                             fontWeight: 400,
-                            fontFamily: "InterRegular"
+                            fontFamily: "SFProRegular"
                         }}>{title}</Typography>
                     } />
                 </ListItemButton>
@@ -85,12 +85,12 @@ export default function Content({ stats, counts }: IContentProps) {
             >
                 <Tab
                     label={tc("created")}
-                    className='!font-InterRegular'
+                    className='!font-SFProRegular'
                     {...a11yProps(0)}
                 />
                 <Tab
                     label={tc("responses")}
-                    className='!font-InterRegular'
+                    className='!font-SFProRegular'
                     {...a11yProps(1)}
                 />
             </Tabs>
@@ -103,7 +103,7 @@ export default function Content({ stats, counts }: IContentProps) {
                             <ListSubheader sx={{ padding: "0", margin: "12px 0", "color": "common.white" }}
                                 disableSticky
                                 component="div" id="nested-list-subheader">
-                                <Typography variant="h4" sx={{ fontFamily: "InterBold" }}>
+                                <Typography variant="h4" sx={{ fontFamily: "SFProBold" }}>
                                     {trans("you_have_created", { value: counts.created })}
                                 </Typography>
                             </ListSubheader>
@@ -117,7 +117,7 @@ export default function Content({ stats, counts }: IContentProps) {
                             user='customer'
                         />
                         <CustomListItem
-                            iconSrc={"/images/hear_no_evil.png"}
+                            iconSrc={"/images/cap.png"}
                             title={trans("no_responses", { value: stats.asCustomerByStatus.noResponses })}
                             status={"noResponses"}
                             category='no_responses'
@@ -138,7 +138,7 @@ export default function Content({ stats, counts }: IContentProps) {
                             user='customer'
                         />
                         <CustomListItem
-                            iconSrc={"/images/right-facing_fist.png"}
+                            iconSrc={"/images/hammer.png"}
                             title={trans("in_the_work", { value: stats.asCustomerByStatus.inTheWork })}
                             status={"inTheWork"}
                             category='in_the_work'
@@ -152,7 +152,7 @@ export default function Content({ stats, counts }: IContentProps) {
                             user='customer'
                         />
                         <CustomListItem
-                            iconSrc={"/images/eyes.png"}
+                            iconSrc={"/images/lawyer.png"}
                             title={trans("arbitration", { value: stats.asCustomerByStatus.arbitration })}
                             status={"arbitration"}
                             category='arbitration'
@@ -175,7 +175,7 @@ export default function Content({ stats, counts }: IContentProps) {
                         subheader={
                             <ListSubheader sx={{ padding: "0", margin: "12px 0", "color": "common.white" }}
                                 component="div" id="nested-list-subheader-2">
-                                <Typography variant="h4" sx={{ fontFamily: "InterBold" }}>
+                                <Typography variant="h4" sx={{ fontFamily: "SFProBold" }}>
                                     {trans("you_have_responded", { value: counts.responded })}
                                 </Typography>
                             </ListSubheader>
@@ -196,14 +196,14 @@ export default function Content({ stats, counts }: IContentProps) {
                             user='freelancer'
                         />
                         <CustomListItem
-                            iconSrc={"/images/fish_cake.png"}
+                            iconSrc={"/images/take.png"}
                             title={trans("an_offer_came_in", { value: stats.asFreelancerByStatus.anOfferCameIn })}
                             status={'anOfferCameIn'}
                             category='an_offer_came_in'
                             user='freelancer'
                         />
                         <CustomListItem
-                            iconSrc={"/images/right-facing_fist.png"}
+                            iconSrc={"/images/kite.png"}
                             title={trans("in_the_work", { value: stats.asFreelancerByStatus.inTheWork })}
                             status={"inTheWork"}
                             category='in_the_work'
@@ -217,7 +217,7 @@ export default function Content({ stats, counts }: IContentProps) {
                             user='freelancer'
                         />
                         <CustomListItem
-                            iconSrc={"/images/eyes.png"}
+                            iconSrc={"/images/lawyer.png"}
                             title={trans("arbitration", { value: stats.asFreelancerByStatus.arbitration })}
                             status={'arbitration'}
                             category='arbitration'
@@ -228,6 +228,20 @@ export default function Content({ stats, counts }: IContentProps) {
                             title={trans("terminated", { value: stats.asFreelancerByStatus.terminated })}
                             status={'terminated'}
                             category='terminated'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/rocket.png"}
+                            title={trans("completedTotal", { value: stats.asFreelancerByStatus.completedTotal })}
+                            status={'completedTotal'}
+                            category='completedTotal'
+                            user='freelancer'
+                        />
+                        <CustomListItem
+                            iconSrc={"/images/king.png"}
+                            title={trans("failedTotal", { value: stats.asFreelancerByStatus.failedTotal })}
+                            status={'failedTotal'}
+                            category='failedTotal'
                             user='freelancer'
                         />
                     </List>

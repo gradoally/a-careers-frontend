@@ -17,7 +17,7 @@ export default function Price({ error, formik }: IResponseFormProps) {
                 name="price"
                 error={error ? true : false}
                 helperText={error}
-                placeholder={trans("price")}
+                placeholder={"0"}
                 value={`${formik.values.price}`}
                 onChange={formik.handleChange}
             />

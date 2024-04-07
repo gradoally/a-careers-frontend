@@ -23,6 +23,11 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
+        SFProThin: "SFProThin",
+        SFProLight: "SFProLight",
+        SFProRegular: "SFProRegular",
+        SFProSemiBold: "SFProSemiBold",
+        SFProBold: "SFProBold",
         SFProRoundedBold: "SFProRoundedBold",
         InterThin: "InterThin",
         InterLight: "InterLight",
@@ -36,7 +41,8 @@ const config: Config = {
       secondary: "#45AEF5",
       info: "#3A4362",
       warning: "#00FF47",
-      green: "#45F58B",
+      green: "#00FF47",
+      lightGreen:"#45F58B",
       "light-gray": "#CCCCCC",
       orange: "#FFA800",
       yellow: "#FFF000",

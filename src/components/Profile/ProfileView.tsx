@@ -184,7 +184,7 @@ function ProfileView({ data, publicView }: IProfileViewProps) {
             {
                 history.activities.length ? <>
                     <div className="mt-8 px-5">
-                        <Typography variant="h4" className="!font-InterSemiBold">{trans("profile.task_history")}</Typography>
+                        <Typography variant="h4" className="!font-SFProSemiBold">{trans("profile.task_history")}</Typography>
                         <Typography className="!mt-2" variant="body2">
                             {trans("profile.task_result", { "payed": "100%", completed: "99%" })}
                         </Typography>

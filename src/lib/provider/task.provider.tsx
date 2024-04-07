@@ -169,6 +169,7 @@ export default function TaskProvider(props: ITaskProviderProps) {
             .then(res => {
                 const activities = (res.data || []);
                 const activity = activities.find(act => act.opCode === 3);
+                console.log(activity);
                 if (activity && task.content) {
                     task.content.price = activity?.order?.price || task.content?.price || 0;
                     task.content.deadline = activity?.order?.deadline || task.content?.deadline || "";
