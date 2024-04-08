@@ -21,7 +21,6 @@ export default function SelectCategory({ formik, setTitle }: ICategoryForm) {
         <TaskFormWrapper title={trans("select_category")}>
             <Stack component="div" className="mt-5" spacing="20px">
                 {config && config?.categories?.map((e, i) => {
-                    if (!e.isActive) return
                     const isSelected = formik.values.category === e.code
                     return <Selector
                         key={i}

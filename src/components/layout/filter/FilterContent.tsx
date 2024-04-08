@@ -155,6 +155,7 @@ const FilterContent = () => {
                                 padding: "6px 0 0 0"
                             }}
                         >
+                            <MenuItem key={0} value={"all"}>{trans("all")}</MenuItem>
                             {config?.categories && config.categories.filter(cat => cat.isActive && cat?.code).map((cat, index) => <MenuItem key={index + 1} value={cat.code}>{cat.code}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />

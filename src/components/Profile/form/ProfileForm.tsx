@@ -332,7 +332,6 @@ const ProfileForm = ({ data, onSubmit, action, title, back }: Props) => {
                                 />
                                 <datalist id="programmingLanguages" onClick={console.log} className="!my-5 !p-0">
                                     {config?.categories && config.categories.map((cat, indx) => {
-                                        if (!cat.isActive) return;
                                         return <option
                                             key={indx}
                                             value={cat.code}

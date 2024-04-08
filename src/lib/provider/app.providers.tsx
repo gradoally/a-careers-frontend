@@ -131,7 +131,12 @@ const AppProviders = (props: Props) => {
         setDesktopView(document.body.clientWidth >= 720);
         //Fetch config
         getConfig().then(res => {
-            res.data && setConfig(res.data)
+            const config = res.data;
+            if (config) {
+                if (config.categories)
+                    config.categories = config.categories.filter(category => category.code !== "all")
+                setConfig(config);
+            }
         }).then(err => {
             console.log(err);
         });
