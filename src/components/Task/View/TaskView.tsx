@@ -129,7 +129,7 @@ export default function TaskView({
                                 cursor: "pointer"
                             }}
                         >
-                            {originalTL ? "DeepL Translation" : trans('task.original_translation')}
+                            {originalTL ? trans('task.alt.deepl_translation') : trans('task.alt.original_translation')}
                         </Typography>}
                     </Stack>
                 }

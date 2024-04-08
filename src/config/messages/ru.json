@@ -57,7 +57,7 @@
     "awaiting_payment": "Ожидание оплаты",
     "completed": "Завершенный",
     "offer_received": "Предложение получено",
-    "result_ignored":"Результат проигнорирован"
+    "result_ignored": "Результат проигнорирован"
   },
   "read_more": {
     "read_more": "Подробнее",
@@ -128,7 +128,7 @@
     "select_checking_period": "Период проверки задачи",
     "checking_period_description": "Выберите период, в течение которого вам потребуется просмотреть задачу после ее выполнения. Если вы не ответите фрилансеру в течение этого срока после выполнения задания, фрилансер получит возможность получить оплату без вашего подтверждения.",
     "send_task_to_blockchain": "Отправить задачу в блокчейн",
-    "login_send_task_to_blockchain":"Войдите и отправьте задачу в блокчейн",
+    "login_send_task_to_blockchain": "Войдите и отправьте задачу в блокчейн",
     "what_needs_to_be_done": "Что нужно сделать?",
     "job_title": "Название задания",
     "task_title_example": "Например, создать бот для блокчейн-голосования",
@@ -155,7 +155,6 @@
   "task": {
     "category": "Категория {value}",
     "createdAt": "Создано {date} в {language}",
-    "original_translation":"Показать оригинальный перевод",
     "button": {
       "send_feedback": "Отправить отзыв",
       "choose_specialist": "Выберите специалиста",
@@ -169,6 +168,10 @@
       "pay": "Платить",
       "get_payment": "Получить оплату",
       "get_fund": "Верните средства"
+    },
+    "alt": {
+      "original_translation": "Показать оригинальный перевод",
+      "deepl_translation": "DeepL-перевод"
     }
   },
   "profile": {
