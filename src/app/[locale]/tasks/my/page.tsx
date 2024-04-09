@@ -127,7 +127,7 @@ export default function Page() {
     )
 
     return (<Shell withDrawer header={header} footer={footer}>
-        <div className="px-[20px] pb-[20px] h-full">
+        <div className="pl-[20px] pr-[0px] pb-[20px] h-full">
             {dataStatus.isLoading ? <CircularLoading className="m-auto" /> : (
                 dataStatus.noTasks ? <CenteredContainer className="opacity-[40%] text-[12px] !font-InterLight" >{trans("you_have_not_created_tasks")}</CenteredContainer>
                     : <Content stats={stats.content} counts={{

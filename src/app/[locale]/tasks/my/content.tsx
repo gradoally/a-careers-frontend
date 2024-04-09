@@ -42,7 +42,7 @@ function CustomListItem({ iconSrc, title, category, status, user }: ICustomListP
         <>
             <ListItem
                 disablePadding
-                secondaryAction={<ArrowRightIcon />}
+                secondaryAction={<div className='!ml-auto !mr-0'><ArrowRightIcon /></div>}
             >
                 <ListItemButton
                     component={NextLinkComposed}

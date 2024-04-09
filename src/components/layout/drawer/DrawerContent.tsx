@@ -116,7 +116,7 @@ export default function DrawerContent({ routes }: Props) {
                 <div className="w-full max-w-[768px] min-w-[300px] mx-auto p-4">
                     <Stack direction="row" spacing={2}
                         justifyContent="space-between">
-                        <Typography component="div" sx={{ color: "text.secondary" }} variant="body2">
+                        <Typography component={NextLinkComposed} to={"https://t.me/cryptosoft_dao"} sx={{ color: "text.secondary" }} variant="body2">
                             {trans("text_support")}
                         </Typography>
                         <LanguageToggler />
@@ -144,7 +144,7 @@ export default function DrawerContent({ routes }: Props) {
                             <Divider />
                         </div>
                     )}
-                    <nav className={clsx("grow","flex flex-col justify-center items-center")}>
+                    <nav className={clsx("grow", "flex flex-col justify-center items-center")}>
                         <List sx={{ width: "100%" }}>
                             {routes.map((e, index) => {
                                 const [, , ...segments] = pathname.split('/');

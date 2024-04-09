@@ -13,6 +13,9 @@ interface ITxCheckerHook {
   checkTxProgress: CheckTxProgressFunc;
 }
 
+const DefaultTimeoutInMS = 90000;
+const DefaultIntervalInMS = 6000;
+
 export default function useTxChecker(): ITxCheckerHook {
   const { toggleTxProgress, toggleFailScreen } = useScreen();
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -37,8 +40,9 @@ export default function useTxChecker(): ITxCheckerHook {
   }
 
   function checkTxProgress(request: RequestFunc, options?: IOptions) {
-    let timeoutInMs = options?.timeoutInMs || 60000;
-    let retryInMs = options?.retryInMs || 3000;
+    
+    let timeoutInMs = options?.timeoutInMs || DefaultTimeoutInMS;
+    let retryInMs = options?.retryInMs || DefaultIntervalInMS;
 
     toggleTxProgress(true);
     intervalRef.current = setInterval(async () => {

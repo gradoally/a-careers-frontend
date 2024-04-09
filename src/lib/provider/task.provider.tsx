@@ -84,7 +84,7 @@ export const useTask = (): ITaskContext => {
 export default function TaskProvider(props: ITaskProviderProps) {
     const router = useRouter();
     const locale = useLocale();
-    const { user } = useAuthContext();
+    const { user, isLoading } = useAuthContext();
     const [task, setTask] = useState<IContent<Order | null>>({
         loading: false,
         status: "",
@@ -96,7 +96,7 @@ export default function TaskProvider(props: ITaskProviderProps) {
         status: "",
         content: []
     });
-    const [selectedResponse, setSelectedResponse] = useState<UserResponse>();
+    const [selectedResponse, setSelectedResponse] = useState<UserResponse | undefined>(undefined);
     const [profileView, setProfileView] = useState(false);
 
     const info = useTaskMetaInfo(task.content, user?.data);
@@ -105,7 +105,11 @@ export default function TaskProvider(props: ITaskProviderProps) {
 
     function selectResponse(response?: UserResponse) {
         if (!info.isCustomer) return;
-        setSelectedResponse(response);
+        //Unselect same response
+        if (selectedResponse?.id === response?.id) {
+            setSelectedResponse(undefined);
+        } else
+            setSelectedResponse(response);
     }
 
     function toggleProfileView({ response, view }: { response?: UserResponse, view: boolean }) {
@@ -183,9 +187,9 @@ export default function TaskProvider(props: ITaskProviderProps) {
     //Load task
     useEffect(() => {
         if (props.id < 0) router.replace('/en');
-        if (!user) return;
+        if (!user && isLoading) return;
         loadTask({ index: props.id, translateTo: locale, currentUserIndex: user?.data?.index });
-    }, [props.id, user]);
+    }, [props.id, user, isLoading]);
 
 
     useEffect(() => {
