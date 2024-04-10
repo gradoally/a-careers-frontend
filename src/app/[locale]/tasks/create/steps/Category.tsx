@@ -9,16 +9,16 @@ import { TaskFormWrapper, Selector } from "@/components/Task/form.component";
 import { ICategoryForm } from "../stepper";
 
 export default function SelectCategory({ formik, setTitle }: ICategoryForm) {
-    const trans = useTranslations("tasks")
+    const trans = useTranslations()
     const { config } = useAppContext();
 
     const handleClick = async (value: string) => {
         await formik.setFieldValue("category", value)
-        setTitle(value)
+        setTitle(trans(`category.${value}`))
     }
 
     return (
-        <TaskFormWrapper title={trans("select_category")}>
+        <TaskFormWrapper title={trans("tasks.select_category")}>
             <Stack component="div" className="mt-5" spacing="20px">
                 {config && config?.categories?.map((e, i) => {
                     const isSelected = formik.values.category === e.code
@@ -26,7 +26,7 @@ export default function SelectCategory({ formik, setTitle }: ICategoryForm) {
                         key={i}
                         isSelected={isSelected}
                         select={() => handleClick(e?.code ?? "")}
-                        name={e?.code || ""}
+                        name={e?.code ? trans(`category.${e.code}`) : ""}
                         value={e?.code || ""}
                     />
                 })}

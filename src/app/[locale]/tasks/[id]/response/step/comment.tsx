@@ -15,7 +15,6 @@ export default function Comment({ formik, error }: IResponseFormProps) {
                 description={trans("make_response_comment_description")}
                 descriptionStyles="!mb-0"
             />
-            <div className="flex-grow">
                 <StyledInputMultiline
                     error={error ? true : false}
                     fullWidth
@@ -23,14 +22,13 @@ export default function Comment({ formik, error }: IResponseFormProps) {
                     onChange={formik.handleChange}
                     inputProps={{
                         style: {
-                            height: "100%",
+                            height: "98%",
                         }
                     }}
                     id="comment"
                     value={formik.values.comment}
                     name="comment"
                 />
-            </div>
         </div>
     )
 }

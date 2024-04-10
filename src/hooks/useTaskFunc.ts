@@ -17,14 +17,16 @@ export interface ITaskMetaInfo {
   };
   isSameLanguage: boolean;
   statusCode: number;
+  language: string;
+  category: string;
 }
 
 export default function useTaskMetaInfo(
   task: Order | null,
   user?: IUser | undefined | null
 ): ITaskMetaInfo {
-  const { getLanguage } = useAppContext();
   const locale = useLocale();
+  const { getCategory, getLanguage } = useAppContext();
   const isCustomer = useMemo(() => {
     return user?.index === task?.customer?.index;
   }, [task, user]);
@@ -81,6 +83,14 @@ export default function useTaskMetaInfo(
     return locale === orderLanguage;
   }, [task]);
 
+  const category = useMemo(() => {
+    return getCategory(task?.category || "")?.code || "";
+  }, [task]);
+
+  const language = useMemo(() => {
+    return getLanguage(task?.language || "")?.code || "";
+  }, [task]);
+
   return {
     isCustomer,
     isResponses,
@@ -90,5 +100,7 @@ export default function useTaskMetaInfo(
     statusCode,
     isSameLanguage,
     isProfile,
+    category,
+    language,
   };
 }

@@ -92,7 +92,6 @@ export default function TaskView({
     const locale = useLocale();
     const trans = useTranslations();
     const [originalTL, setOriginalTL] = useState(false);
-    const { getCategory, getLanguage } = useAppContext();
 
     return (task.content &&
         <Fragment>
@@ -117,7 +116,7 @@ export default function TaskView({
                 primary={
                     <Stack direction={"row"} spacing={"10px"}>
                         <Typography variant="body2" style={{ wordBreak: "break-word", marginTop: "4px" }}>
-                            {trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)}
+                            {info.language && trans(`locale_switcher.${info.language}`)}
                         </Typography>
                         {!info.isSameLanguage && <Typography
                             variant="body2"
@@ -145,10 +144,10 @@ export default function TaskView({
             <Stack className="!text-[10px] !font-SFProLight !leading-none opacity-[40%]" direction="column">
                 <div className="truncate w-[300px] mt-[6px]">{trans("task.createdAt", {
                     date: formatDatetime({ date: task.content?.createdAt, locale: locale }),
-                    language: trans(`locale_switcher.${getLanguage(task.content?.language || "")?.code}`)
+                    language: info.language && trans(`locale_switcher.${info.language}`)
                 })}
                 </div>
-                <div className="truncate w-[200px] mt-[10px]">{trans("task.category", { value: getCategory(task.content?.category || "")?.code })}</div>
+                <div className="truncate w-[200px] mt-[10px]">{trans("task.category", { value: info.category && trans(`category.${info.category}`) })}</div>
             </Stack>
             {
                 info.isProfile.customer && <MemoizedCustomer

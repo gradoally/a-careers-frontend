@@ -10,22 +10,20 @@ import { TaskFormWrapper } from "@/components/Task/form.component";
 const TechnicalTask = ({ formik, error }: IForm) => {
     const trans = useTranslations('tasks')
     return (
-        <Stack direction="column" className="h-full">
+        <Stack direction="column" className="h-full pb-1">
             <TaskFormWrapper
                 title={trans("technical_task")}
                 description={trans("technical_task_description")}
             />
-            <div className="grow">
-                <StyledInputMultiline
-                    error={error ? true : false}
-                    fullWidth
-                    inputProps={{ style: { height: "95%", padding: "20px !important" } }}
-                    multiline
-                    onChange={formik.handleChange}
-                    value={formik.values.technicalTask}
-                    id="technicalTask"
-                    name="technicalTask" />
-            </div>
+            <StyledInputMultiline
+                error={error ? true : false}
+                fullWidth
+                inputProps={{ style: { height: "98%" } }}
+                multiline
+                onChange={formik.handleChange}
+                value={formik.values.technicalTask}
+                id="technicalTask"
+                name="technicalTask" />
         </Stack>
     )
 }

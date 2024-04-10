@@ -24,6 +24,17 @@
     "zh": "Simplified-Chinese",
     "en": "English"
   },
+  "category": {
+    "turnkey-project": "Проект под ключ",
+    "smart-contracts": "Разработка смарт-контрактов",
+    "bots-and-web-apps": "Разработка ботов и web app",
+    "websites-and-ton-sites": "Создание сайтов и TON-сайтов",
+    "backend-and-blockchain-interactions": "Backend и взаимодействие с блокчейном",
+    "ux-ui-graphic-design-and-3d": "UX/UI дизайн, графический дизайн, 3D",
+    "frontend": "Frontend-разработка",
+    "nft": "Разработка и минт NFT",
+    "texts-documentation-copywriting": "Написание текстов, документации, копирайтинг"
+  },
   "form": {
     "required": {
       "default": "Это поле обязательно для заполнения",
@@ -170,8 +181,8 @@
       "get_fund": "Верните средства"
     },
     "alt": {
-      "original_translation": "Показать оригинальный перевод",
-      "deepl_translation": "DeepL-перевод"
+      "original_translation": "Show original translation",
+      "deepl_translation": "DeepL translation"
     }
   },
   "profile": {

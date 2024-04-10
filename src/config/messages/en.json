@@ -24,6 +24,17 @@
     "en": "English",
     "zh": "Simplified-Chinese"
   },
+  "category": {
+    "turnkey-project": "Turnkey project",
+    "smart-contracts": "Development of smart contracts",
+    "bots-and-web-apps": "Development of Telegram bots and Web Apps",
+    "websites-and-ton-sites": "Website Creation and TON Sites",
+    "backend-and-blockchain-interactions": "Backend and interaction with blockchain",
+    "ux-ui-graphic-design-and-3d": "UX/UI design, graphic design, 3D",
+    "frontend": "Frontend development",
+    "nft": "Development and minting of NFT",
+    "texts-documentation-copywriting": "Writing texts, documentation, copywriting"
+  },
   "form": {
     "required": {
       "default": "This field is required",
@@ -173,8 +184,8 @@
       "get_fund": "Get funds back"
     },
     "alt": {
-      "original_translation": "Show original translation",
-      "deepl_translation": "DeepL translation"
+      "original_translation": "Показать оригинальный перевод",
+      "deepl_translation": "DeepL-перевод"
     }
   },
   "profile": {

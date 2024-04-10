@@ -53,7 +53,9 @@ const TaskContext = React.createContext<ITaskContext>({
             customer: false,
             freelancer: false
         },
-        statusCode: -1
+        statusCode: -1,
+        category: "",
+        language: ""
     },
     updateTask(task: Order) { },
     loadTask(args) { },
