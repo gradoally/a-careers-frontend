@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import "../fonts.css";
 import "../globals.css";
+import { useSearchParams } from "next/navigation";
 
 export const metadata: Metadata = {
     title: 'Alfamater',
@@ -30,7 +31,9 @@ const RootLayout = async ({ children, params: { locale } }: Props) => {
     // Enable static rendering
     unstable_setRequestLocale(locale);
     const messages = await getMessages();
+    
     let config = null;
+
     return (
         <html lang={locale}>
             <body className="dark font-sans-serif scroll-hide">

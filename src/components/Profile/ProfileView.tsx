@@ -33,15 +33,15 @@ function History({ data }: { data: OrderActivity[] }) {
             {data.map((e, i) => (
                 <Stack className="bg-info px-[20px] py-2" direction="column" key={i}>
                     <Typography variant="caption" component="div">{e.timestamp}</Typography>
-                    <Stack direction="row" spacing={1} className="h-[30px]">
+                    <Stack direction="row" spacing={1} >
                         <div>{"in" === 'in' ? "↘" : "↗"}</div>
                         <div className="flex-grow">
                             <Typography component="div" variant="body2">
                                 {e.order?.technicalTask}
                             </Typography>
                             <Typography component="div" color="secondary" variant="body2">
-                                <Link target="_blank" noLinkStyle href={`https://tonviewer.com/${e.senderAddress}`}>
-                                    {e.senderAddress}
+                                <Link target="_blank" noLinkStyle href={`https://tonviewer.com/${e.txHash}`}>
+                                    {e?.txHash || "s"}
                                 </Link>
                             </Typography>
                         </div>

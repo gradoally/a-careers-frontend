@@ -1,8 +1,10 @@
 "use client"
 import { useLocale, useTranslations } from "next-intl";
 import { Typography } from "@mui/material";
-import React, { useTransition } from "react";
+import React, { useEffect, useTransition } from "react";
 import { usePathname, useRouter } from "@/navigation";
+import { useAppContext } from "@/lib/provider/app.providers";
+import { useSearchParams } from "next/navigation";
 
 const LanguageToggler = () => {
     const locale = useLocale();
@@ -13,9 +15,10 @@ const LanguageToggler = () => {
 
     function handleClick() {
         startTransition(() => {
-            router.replace(pathname, { locale: locale === "ru" ? "en" : "ru" });
+            router.replace(pathname, { locale: locale === "ru" ? "en?menu=true" : "ru?menu=true" });
         });
     }
+
     if (isPending) return (
         <Typography component="div" color="text.secondary" variant="body2">...</Typography>
     )

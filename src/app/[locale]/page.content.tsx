@@ -9,13 +9,16 @@ import Stack from "@mui/material/Stack";
 
 import TaskListSkeleton from "@/components/Task/TaskListSkeleton";
 import TaskList from "@/components/Task/TaskList";
-import Divider from "@/components/ui/Divider";
+
 import Shell from "@/components/layout/Shell";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Filter from "@/components/layout/filter";
+
 import CenteredContainer from "@/components/ui/CenteredContainer";
+import Divider from "@/components/ui/Divider";
 import FilterButton from "@/components/ui/buttons/FilterButton";
+
 import { CircularLoading } from "@/components/features/Loaders";
 
 import { Order } from "@/openapi/client";
@@ -23,7 +26,7 @@ import { Order } from "@/openapi/client";
 import { getOrdersCount, getOrders } from "@/services/order";
 
 import { useAuthContext } from "@/lib/provider/auth.provider";
-import { useTonConnect } from "@/hooks/useTonConnect";
+import { useAppContext } from "@/lib/provider/app.providers";
 
 function SkeletonLoader() {
     return (
@@ -41,6 +44,7 @@ function SkeletonLoader() {
 function Content() {
     const searchParams = useSearchParams();
     const trans = useTranslations();
+    const { toggleDrawer } = useAppContext();
     const { user } = useAuthContext();
 
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -142,6 +146,12 @@ function Content() {
             container.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        if (searchParams.get('menu')) {
+            toggleDrawer(true);
+        }
+    }, [searchParams]);
 
     return (
 

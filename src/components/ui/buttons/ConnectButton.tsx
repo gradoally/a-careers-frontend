@@ -1,5 +1,5 @@
 "use client"
-
+import Image from 'next/image';
 import { useEffect } from 'react';
 import { useTranslations } from "next-intl";
 
@@ -11,8 +11,11 @@ import { CHAIN } from "@tonconnect/protocol";
 
 import { useTonConnect } from "@/hooks/useTonConnect";
 import { toast } from "@/lib/helper";
-import { CircularLoading } from '@/components/features/Loaders';
 import { useAuthContext } from '@/lib/provider/auth.provider';
+
+import { CircularLoading } from '@/components/features/Loaders';
+
+import UnicornGif from "@/assets/gif/unicorn-low.gif";
 
 const ConnectButton = ({ text }: { text: string }) => {
     const trans = useTranslations();
@@ -38,7 +41,7 @@ const ConnectButton = ({ text }: { text: string }) => {
     };
 
     return (
-        !connectionChecked ? <CircularLoading className='!w-[30px] !h-[30px] my-auto' color='info' /> : (connected ?
+        !connectionChecked ? <Image src={UnicornGif} alt='unicorn' width={30} height={30} /> : (connected ?
             <Avatar onClick={async () => {
                 await tonConnectUI.disconnect()
                 toast(trans("common.disconnected_from_ton_wallet"), 'success');

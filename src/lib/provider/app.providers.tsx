@@ -50,10 +50,10 @@ const manifestUrl =
     "https://raw.githubusercontent.com/cryptosoft-dao/a-careers-frontend/main/tonconnect-manifest.json";
 
 const AppProviders = (props: Props) => {
-    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-    const [isFilterOpen, setIsFilterOpen] = React.useState(false)
+    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+    const [isFilterOpen, setIsFilterOpen] = React.useState(false);
     const [isDesktopView, setDesktopView] = React.useState(false);
-    const [config, setConfig] = React.useState<BackendConfig | null>(null)
+    const [config, setConfig] = React.useState<BackendConfig | null>(null);
 
     const [{ cache, flush }] = React.useState(() => {
         const cache = createCache(props.options);

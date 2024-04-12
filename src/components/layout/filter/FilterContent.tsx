@@ -28,7 +28,7 @@ import { CircularLoading } from "@/components/features/Loaders";
 
 const FilterContent = () => {
     const { isFilterOpen, toggleFilter, config } = useAppContext()
-    const trans = useTranslations("filter");
+    const trans = useTranslations();
     const tc = useTranslations();
     const [count, setCount] = useState({ count: 0, loading: false });
     const [filters, setFilters] = React.useState<Record<string, string>>({})
@@ -90,7 +90,7 @@ const FilterContent = () => {
         <AppBar padding="15px" height="60px">
             <Stack direction="row" alignItems="center" spacing={1}>
                 <BackButton onClick={handleBack} />
-                <Typography variant="h5" color="info.main">{trans("filters")}</Typography>
+                <Typography variant="h5" color="info.main">{trans("filter.filters")}</Typography>
             </Stack>
         </AppBar>
     )
@@ -140,7 +140,7 @@ const FilterContent = () => {
                         </div>
                         <SelectField
                             variant="standard"
-                            label={trans("categories")}
+                            label={trans("filter.categories")}
                             id="category"
                             name="category"
                             value={filters?.category ?? "all"}
@@ -155,8 +155,8 @@ const FilterContent = () => {
                                 padding: "6px 0 0 0"
                             }}
                         >
-                            <MenuItem key={0} value={"all"}>{trans("all")}</MenuItem>
-                            {config?.categories && config.categories.filter(cat => cat.isActive && cat?.code).map((cat, index) => <MenuItem key={index + 1} value={cat.code}>{cat.code}</MenuItem>)}
+                            <MenuItem key={0} value={"all"}>{trans("filter.all")}</MenuItem>
+                            {config?.categories && config.categories.filter(cat => cat.isActive && cat?.code).map((cat, index) => <MenuItem key={index + 1} value={cat.code}>{trans(`category.${cat.code}`)}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />
                     </Stack>
@@ -171,7 +171,7 @@ const FilterContent = () => {
                         </div>
                         <SelectField
                             variant="standard"
-                            label={trans("show_tasks_on_language")}
+                            label={trans("filter.show_tasks_on_language")}
                             id="language"
                             name="language"
                             value={filters?.translateTo ?? "all"}
@@ -185,7 +185,7 @@ const FilterContent = () => {
                                 padding: "6px 0 0 0"
                             }}
                         >
-                            <MenuItem value={"all"}>{trans("all_languages")}</MenuItem>
+                            <MenuItem value={"all"}>{trans("filter.all_languages")}</MenuItem>
                             {config?.languages && config.languages.map((lang, index) => <MenuItem key={index + 1} value={lang.code}>{lang.code ? tc(`locale_switcher.${lang.code}`) : ""}</MenuItem>)}
                         </SelectField>
                         <ArrowRightIcon />
@@ -202,7 +202,7 @@ const FilterContent = () => {
                         type="text"
                         InputProps={{
                             sx: { fontSize: "16px", 'fontWeight': "400" },
-                            placeholder: trans("tasks_price_from"),
+                            placeholder: trans("filter.tasks_price_from"),
                             disableUnderline: true,
                             inputComponent: NumberFormat as any,
                             inputProps: {

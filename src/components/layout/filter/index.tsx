@@ -9,7 +9,7 @@ const Filter = () => {
     return (
         <NextIntlClientProvider
             locale={locale}
-            messages={pick(messages,'tasks', 'filter', 'locale_switcher')}
+            messages={pick(messages,'tasks','category', 'filter', 'locale_switcher')}
         >
             <FilterContent />
         </NextIntlClientProvider>
