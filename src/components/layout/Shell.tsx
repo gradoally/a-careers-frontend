@@ -18,7 +18,7 @@ interface Props {
 const Shell = (props: Props) => {
     return (
         <div
-            className="flex flex-col justify-center items-center min-h-screen h-full w-screen min-w-[300px] overflow-x-scroll"
+            className="flex flex-col justify-center min-h-screen h-full w-screen min-w-[300px] overflow-x-scroll"
         >
             {props.header && props.header}
             {props.withDrawer && <Drawer/>}

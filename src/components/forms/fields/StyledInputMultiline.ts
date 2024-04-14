@@ -10,7 +10,6 @@ export const StyledInputMultiline = styled(InputBase)(({theme}) => ({
         height: "100%",
         overflowY: "scroll",
         resize: "none",
-        backgroundColor: "rgba(43, 43, 60, 0.2)",
         caretColor: "#fff",
         border: 'none',
         fontWeight: "400",

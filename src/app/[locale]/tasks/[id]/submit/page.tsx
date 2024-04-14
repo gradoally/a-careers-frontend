@@ -30,6 +30,7 @@ import { useOrderContract } from "@/hooks/useOrderContract";
 import useTxChecker from "@/hooks/useTxChecker";
 
 import { getOrder } from "@/services/order";
+import { maxHeight } from "@mui/system";
 
 export interface IResponseFormProps {
     formik: FormikProps<IResponseField>;
@@ -49,7 +50,7 @@ interface Props {
 };
 
 export default function Page({ params }: Props) {
-    
+
     const locale = useLocale();
     const trans = useTranslations();
     const router = useRouter();
@@ -91,7 +92,7 @@ export default function Page({ params }: Props) {
     async function submitResult() {
         alert(`Submit Result! ${formik.values.comment}`);
         const result = formik.values.comment;
-        
+
         try {
             await sendCompleteOrder(toNano("0.1"), 0, result);
 
@@ -108,55 +109,37 @@ export default function Page({ params }: Props) {
         }
     }
 
-    const header = (
-        <AppBar height="70px">
-            <Stack alignItems="center" className="w-full" spacing={2} direction="row">
-                <BackButton onClick={handleBack} />
-                <div className="flex-grow text-center">
-                    <Typography variant="body1">
-                        {trans("task.button.send_result")}
-                    </Typography>
-                </div>
-                <CloseButton style={{ marginRight: "5px" }} component={NextLinkComposed} to={`/tasks/${params.id}`} />
-            </Stack>
-        </AppBar>
-    )
-
-    const footer = (
-        <Footer>
-            <>
-                <FooterButton
-                    onClick={submitResult}
-                    disabled={disabled}
-                    className="w-full"
-                    color={"secondary"}
-                    variant="contained">
-                    {trans("task.button.submit_result")}
-                </FooterButton>
-                <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
-            </>
-        </Footer>
-    )
     return (
-        <Shell
-            header={header}
-            footer={footer}
-            contentClassName="!px-0"
-        >
-            <div className="h-full flex flex-col">
+        <div className="w-full h-full flex flex-col">
+            <AppBar height="70px" sx={{ position: "absolute", top: "0" }}>
+                <Stack alignItems="center" className="w-full" spacing={2} direction="row">
+                    <BackButton onClick={handleBack} />
+                    <div className="flex-grow text-center">
+                        <Typography variant="body1">
+                            {trans("task.button.send_result")}
+                        </Typography>
+                    </div>
+                    <CloseButton style={{ marginRight: "5px" }} component={NextLinkComposed} to={`/tasks/${params.id}`} />
+                </Stack>
+            </AppBar>
+            <div className="flex flex-col mt-[70px] h-full !overflow-none">
                 <TaskFormWrapper
                     title={trans("tasks.provide_result")}
                     description={trans("tasks.provide_result_description")}
                     descriptionStyles="!mb-0"
                 />
-                <div className="flex-grow">
+                <div style={{
+                    backgroundColor: "rgba(43, 43, 60, 0.2)",
+                    flex: 1,
+                }}>
                     <StyledInputMultiline
                         fullWidth
                         multiline
                         onChange={formik.handleChange}
                         inputProps={{
                             style: {
-                                height: "95%",
+                                height: "100%",
+                                overflowY:"scroll"
                             }
                         }}
                         id="comment"
@@ -165,7 +148,20 @@ export default function Page({ params }: Props) {
                     />
                 </div>
             </div>
-        </Shell>
+            <Footer className="footer-gradient">
+                <>
+                    <FooterButton
+                        onClick={submitResult}
+                        disabled={disabled}
+                        className="w-full"
+                        color={"secondary"}
+                        variant="contained">
+                        {trans("task.button.submit_result")}
+                    </FooterButton>
+                    <Typography variant="body2">{trans("network.commission", { value: "0.011 TON" })}</Typography>
+                </>
+            </Footer>
+        </div>
     )
 }
 
