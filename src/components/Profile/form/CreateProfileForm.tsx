@@ -49,7 +49,7 @@ export default function CreateProfile() {
                 language: values.language,
             };
 
-            await sendCreateUser("0.2", 0, buildUserContent(userContentData));
+            await sendCreateUser("0.3", 0, buildUserContent(userContentData));
 
             checkTxProgress(async (successCB) => {
                 //Fetch profile
