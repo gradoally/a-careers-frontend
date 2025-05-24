@@ -14,7 +14,7 @@ export const COOKIE_THEME = 'APP_THEME'
 export const COOKIE_DRAWER_STATE = 'drawer_state'
 export const COOKIE_ENABLE_SECURE = process.env.NEXT_PUBLIC_ENABLE_COOKIE_SECURE === 'true'
 
-export const BASE_URL = process.browser ? process.env.NEXT_PUBLIC_BASE_URL : process.env.NEXT_PUBLIC_BASE_SERVER_URL
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_SERVER_URL
 
 export const IS_PRODUCTION = process.env.NODE_ENV === "production";
 export const IS_PRODUCTION_BUILD = process.env.NODE_ENV === "production";
@@ -26,4 +26,4 @@ export const WEBAPP_URL =
     "http://localhost:3000";
 
 
-export const DEFAULT_LOCALE = "ru";
+export const DEFAULT_LOCALE = "en";

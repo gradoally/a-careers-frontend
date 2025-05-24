@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, use } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -31,10 +31,11 @@ import FreelancerView from "@/components/Task/View/FreelancerView";
 import { UserResponse } from "@/openapi/client";
 
 type Props = {
-    params: { locale: string, id: number };
+    params: Promise<{ locale: string, id: number }>;
 };
 
-export default function Page({ params: { id } }: Props) {
+export default function Page({ params }: Props) {
+    const { id } = use(params);
 
     const trans = useTranslations();
     const router = useRouter();

@@ -3,8 +3,8 @@ import { toast as baseToast } from "react-toastify";
 import { format, parseISO } from "date-fns";
 import type { FormikProps } from "formik";
 
-import ruLocale from "date-fns/locale/ru";
-import enLocale from "date-fns/locale/en-US";
+import { ru as ruLocale } from "date-fns/locale/ru";
+import { enUS as enLocale } from "date-fns/locale/en-US";
 import { DEFAULT_LOCALE } from "@/lib/constants";
 
 const localeMap: any = {

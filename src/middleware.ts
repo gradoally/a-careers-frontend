@@ -5,7 +5,7 @@ import createMiddleware from 'next-intl/middleware';
 // import {checkToken} from "@/lib/auth";
 
 import {DEFAULT_LOCALE} from "./lib/constants";
-import {localePrefix, locales, pathnames} from './config/config';
+import {localePrefix, locales} from './config/config';
 
 
 export default function middleware(request: NextRequest) {
@@ -29,7 +29,6 @@ export default function middleware(request: NextRequest) {
     const handleI18nRouting = createMiddleware({
         defaultLocale: DEFAULT_LOCALE,
         locales,
-        pathnames,
         localePrefix
       });
 

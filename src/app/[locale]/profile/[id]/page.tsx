@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 
 import { useLocale, useTranslations } from "next-intl";
@@ -22,8 +22,9 @@ interface IUserRes {
     content: IUser | null;
 }
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
-
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
+    
     const trans = useTranslations();
     const locale = useLocale();
     const router = useRouter();

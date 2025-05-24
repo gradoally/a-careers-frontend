@@ -4,8 +4,8 @@ import React from "react";
 import { useLocale } from "next-intl";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import ruLocale from "date-fns/locale/ru";
-import enLocale from "date-fns/locale/en-US";
+import { ru as ruLocale } from "date-fns/locale/ru";
+import { enUS as enLocale } from "date-fns/locale/en-US";
 
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import InputAdornment from "@mui/material/InputAdornment";
@@ -49,7 +49,7 @@ const DateTimePicker = (
                 <MobileDateTimePicker
                     disablePast
                     label={label}
-                    value={value ? new Date(value) : ""}
+                    value={value ? new Date(value) : null}
                     onChange={onChange}
                     className={className}
                     slotProps={{

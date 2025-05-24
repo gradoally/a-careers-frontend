@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import type { Metadata } from 'next';
 import pick from 'lodash/pick';
 import { NextIntlClientProvider } from 'next-intl';
-import { unstable_setRequestLocale, getMessages } from 'next-intl/server';
+import { setRequestLocale, getMessages } from 'next-intl/server';
 
 import { locales } from '@/config/config';
 import AppProviders from "@/lib/provider/app.providers";
@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import "../fonts.css";
 import "../globals.css";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 export const metadata: Metadata = {
     title: 'Alfamater',
@@ -20,18 +20,19 @@ export const metadata: Metadata = {
 
 type Props = {
     children: ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 };
 
 export function generateStaticParams() {
     return locales.map((locale) => ({ locale }));
 }
 
-const RootLayout = async ({ children, params: { locale } }: Props) => {
+const RootLayout = async ({ children, params }: Props) => {
+    const { locale } = await params;
     // Enable static rendering
-    unstable_setRequestLocale(locale);
+    setRequestLocale(locale);
     const messages = await getMessages();
-    
+
     let config = null;
 
     return (

@@ -1,21 +1,22 @@
 "use client"
 
-import React from "react";
+import React, { use } from "react";
 
 import Stepper from "./stepper";
 
 interface Props {
-    params: {
+    params: Promise<{
         category: string;
         locale: string;
         id: number;
-    },
+    }>;
 };
 
 export default function Page({ params }: Props) {
+    const { id } = use(params);
 
     return (
-        <Stepper id={params.id} />
+        <Stepper id={id} />
     )
 }
 
