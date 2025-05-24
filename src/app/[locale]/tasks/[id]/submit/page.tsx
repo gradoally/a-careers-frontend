@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -42,14 +42,15 @@ export interface IResponseField {
 }
 
 interface Props {
-    params: {
+    params: Promise<{
         category: string;
         locale: string;
         id: number;
-    },
+    }>;
 };
 
 export default function Page({ params }: Props) {
+    const { id } = use(params);
 
     const locale = useLocale();
     const trans = useTranslations();
@@ -86,7 +87,7 @@ export default function Page({ params }: Props) {
     }, [formik.errors]);
 
     const handleBack = () => {
-        router.push(`/en/tasks/${params.id}`);
+        router.push(`/en/tasks/${id}`);
     }
 
     async function submitResult() {
@@ -97,11 +98,11 @@ export default function Page({ params }: Props) {
             await sendCompleteOrder(toNano("0.1"), 0, result);
 
             checkTxProgress(async (successCB) => {
-                const orderRes = await getOrder({ index: params.id, translateTo: locale });
+                const orderRes = await getOrder({ index: id, translateTo: locale });
                 if (orderRes.data && orderRes.data.currentUserResponse) {
                     successCB();
                     updateTask(orderRes.data);
-                    router.push(`/en/tasks/${params.id}`)
+                    router.push(`/en/tasks/${id}`)
                 }
             });
         } catch (err) {
@@ -119,7 +120,7 @@ export default function Page({ params }: Props) {
                             {trans("task.button.send_result")}
                         </Typography>
                     </div>
-                    <CloseButton style={{ marginRight: "5px" }} component={NextLinkComposed} to={`/tasks/${params.id}`} />
+                    <CloseButton style={{ marginRight: "5px" }} component={NextLinkComposed} to={`/tasks/${id}`} />
                 </Stack>
             </AppBar>
             <div className="flex flex-col mt-[70px] h-full !overflow-none">

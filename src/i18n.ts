@@ -7,6 +7,7 @@ export default getRequestConfig(async ({ locale }) => {
   if (!locales.includes(locale as any)) notFound();
 
   return {
+    locale: locale as string,
     messages: (
       await (locale === "ru"
         ? // When using Turbopack, this will enable HMR for `DEFAULT_LOCALE`

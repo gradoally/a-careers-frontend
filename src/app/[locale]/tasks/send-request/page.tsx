@@ -1,8 +1,7 @@
 import React from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { unstable_setRequestLocale } from "next-intl/server";
-import { useTranslations } from "next-intl";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 
 import Avatar from '@mui/material/Avatar';
 import Footer from "@/components/layout/Footer";
@@ -19,7 +18,7 @@ import Link from "@/components/Link";
 import StatusChip from "@/components/Task/StatusChip";
 
 type Props = {
-    params: { locale: string, id: number };
+    params: Promise<{ locale: string, id: number }>;
 };
 
 export function generateStaticParams() {
@@ -44,10 +43,11 @@ const StackContainer = ({ primary, secondary, primaryHeight = "15px" }: { primar
     )
 }
 
-const Page = ({ params: { locale, id } }: Props) => {
-    unstable_setRequestLocale(locale);
-    const tc = useTranslations("common");
-    const trans = useTranslations("tasks");
+const Page = async ({ params }: Props) => {
+    const { locale, id } = await params;
+    setRequestLocale(locale);
+    const tc = await getTranslations("common");
+    const trans = await getTranslations("tasks");
     const data = {
         "title": "Доработать мета-данные и память смарт-контракта",
         "diamonds": 1225,

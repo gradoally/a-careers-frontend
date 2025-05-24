@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useTranslations } from "next-intl";
 
 import { Stack } from "@mui/material";
@@ -18,17 +18,19 @@ import { useAuthContext } from "@/lib/provider/auth.provider";
 import { getUserOrders } from "@/services/profile";
 
 type Props = {
-    params: {
+    params: Promise<{
         category: string;
         locale: string;
-    };
-    searchParams: {
+    }>;
+    searchParams: Promise<{
         user: string;
         status: number;
-    }
+    }>
 };
 
 export default function Page(props: Props) {
+    const { category } = use(props.params);
+    const searchParams = use(props.searchParams);
 
     const trans = useTranslations();
     const { user } = useAuthContext();
@@ -47,8 +49,8 @@ export default function Page(props: Props) {
 
         getUserOrders({
             index: user.data.index,
-            status: props.searchParams.status,
-            role: props.searchParams.user === "freelancer" ? "freelancerStatus" : "customerStatus"
+            status: searchParams.status,
+            role: searchParams.user === "freelancer" ? "freelancerStatus" : "customerStatus"
         })
             .then(res => {
                 setOrder({
@@ -75,7 +77,7 @@ export default function Page(props: Props) {
                 <Typography
                     variant="h5"
                     sx={{ color: "info.main" }}>
-                    {trans(`tasks.${props.params.category}`, { value: order.contents.length })}
+                    {trans(`tasks.${category}`, { value: order.contents.length })}
                 </Typography>
             </Stack>
         </AppBar>

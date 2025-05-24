@@ -3,13 +3,14 @@ import React from "react";
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
-import { StandardTextFieldProps } from "@mui/material/TextField/TextField";
+import { TextFieldProps } from "@mui/material/TextField";
 
 import Input from "@/components/forms/fields/Input";
 import FormControl from "@/components/forms/FormControl";
 
-interface ITextFieldProps extends StandardTextFieldProps {
+interface ITextFieldProps extends Omit<TextFieldProps, 'variant'> {
     readonly?: boolean;
+    variant?: 'standard' | 'outlined' | 'filled';
 }
 
 const TextField = (
