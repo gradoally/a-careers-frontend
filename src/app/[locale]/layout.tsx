@@ -14,8 +14,8 @@ import "../globals.css";
 // import { useSearchParams } from "next/navigation";
 
 export const metadata: Metadata = {
-    title: 'Alfamater',
-    description: 'Ton wallet, Alfamater',
+    title: 'Careers',
+    description: 'Freelance-exchange by klass',
 }
 
 type Props = {

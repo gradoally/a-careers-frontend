@@ -167,7 +167,7 @@ function Content() {
             }
             extra={<Filter />}
         >
-            <div className="pt-[15px]">
+            <div className="p-[15px]">
                 <div
                     className="w-full h-full"
                     ref={containerRef}

@@ -130,7 +130,7 @@ function StatusChip({ statusCode, count, isCustomer, styles }: Props) {
         status && <div
             className={
                 clsx(
-                    "flex w-fit px-1 h-[14px] !border-[0.66px] rounded-[2px] text-[8px] align-middle font-normal leading-none",
+                    "flex w-fit px-4 h-[14px] !border-[0.66px] rounded-[2px] text-[8px] align-middle font-normal leading-none",
                     "tracking-wider text-center uppercase leading-3",
                     data[status].className,
                     styles || ""

@@ -47,7 +47,7 @@ const AppContext = React.createContext<AppContextType>({
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
-    "https://cryptosoft-dao.github.io/a-careers-manifest/tonconnect-mainfest.json";
+    "https://careers-one.vercel.app/tonconnect-mainfest.json";
 
 const AppProviders = (props: Props) => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
