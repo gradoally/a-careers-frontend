@@ -130,13 +130,13 @@ function StatusChip({ statusCode, count, isCustomer, styles }: Props) {
         status && <div
             className={
                 clsx(
-                    "flex w-fit px-4 h-[14px] !border-[0.66px] rounded-[2px] text-[8px] align-middle font-normal leading-none",
+                    "flex w-fit h-[14px] !border-[0.11px] rounded-[2px] text-[8px] align-middle font-normal leading-none [padding-top:2px] [padding-bottom:5px]",
                     "tracking-wider text-center uppercase leading-3",
                     data[status].className,
                     styles || ""
                 )
             }>
-            <span className="block m-auto leading-none">{data[status].text}</span>
+            <span className="block m-auto leading-none [padding-left:5px] [padding-right:5px]">{data[status].text}</span>
         </div>
     )
 }

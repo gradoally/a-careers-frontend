@@ -113,10 +113,10 @@ export default function DrawerContent({ routes }: Props) {
             }}
         >
             <Shell header={header} footer={
-                <div className="w-full max-w-[768px] min-w-[300px] mx-auto p-4">
+                <div className="w-full max-w-[768px] min-w-[300px] mx-auto pt-[16px] px-[30px] pb-[30px]">
                     <Stack direction="row" spacing={2}
                         justifyContent="space-between">
-                        <Typography component={NextLinkComposed} to={"https://t.me/cryptosoft_dao"} sx={{ color: "text.secondary" }} variant="body2">
+                        <Typography component={NextLinkComposed} to={"https://t.me/klass_public"} sx={{ color: "text.secondary" }} variant="body2">
                             {trans("text_support")}
                         </Typography>
                         <LanguageToggler />

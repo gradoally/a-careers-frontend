@@ -217,7 +217,7 @@ const FilterContent = () => {
                     />
                 </Stack>
                 <MuiDivider />
-                <div className="mt-5">
+                <div className="mt-5 pb-[30px] pt-[30px]">
                     <CustomizedRadios
                         value={filters?.orderBy as "createdAt" | "deadline" | undefined || "createdAt"}
                         onChange={(value: string) => setOptions("orderBy", value)}
