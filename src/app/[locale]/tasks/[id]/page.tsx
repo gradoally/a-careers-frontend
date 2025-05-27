@@ -98,7 +98,6 @@ export default function Page({ params }: Props) {
                                 <Tab className="!p-[20px] !font-SFProRegular" label={`${trans("common.responses")} (${task?.content?.responsesCount || 0})`} {...a11yProps(1)} />
                             </Tabs>
                         }
-                        <Divider />
                         <CustomTabPanel value={tabHandler.tab} index={0}>
                             <TaskView task={task} info={info} stats={stats} />
                         </CustomTabPanel>

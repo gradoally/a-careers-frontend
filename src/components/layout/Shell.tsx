@@ -25,7 +25,7 @@ const Shell = (props: Props) => {
             {props.extra && props.extra}
             <div
                 id="styled-content"
-                className={`h-full overflow-y-scroll w-full max-w-[768px] mx-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${props.contentClassName}`}
+                className={`h-full overflow-y-scroll w-full max-w-[768px] mx-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] p-[20px] ${props.contentClassName}`}
             >
                 {props.children}
             </div>

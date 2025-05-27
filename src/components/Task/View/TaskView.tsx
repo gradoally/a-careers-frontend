@@ -21,12 +21,16 @@ import { Order } from "@/openapi/client";
 import { IUser } from "@/interfaces";
 import { IContent } from "@/interfaces/request";
 
-const StackContainer = ({ primary, secondary }: {
+interface Props {
+    className?: string
     primary: string | React.ReactNode;
     secondary: string;
-}) => {
+    children?: React.ReactNode;
+}
+
+const StackContainer = ({children, className="", primary, secondary}: Props)=>{
     return (
-        <Stack component="div" className="mt-[20px]" direction="column">
+        <Stack component="div" className={`mt-[20px] ${className}`} direction="column">
             <Typography component="div" variant={"caption"}>
                 {secondary}
             </Typography>
@@ -139,16 +143,7 @@ export default function TaskView({
             <StackContainer primary={(originalTL ? task.content.technicalTaskTranslated : task.content?.technicalTask) || ""} secondary={trans("common.technical_task")} />
             <StackContainer
                 primary={formatDatetime({ date: task.content?.deadline, locale: locale })}
-                secondary={trans("common.deadline")} />
-            <Divider className="!mb-3 !mt-8" />
-            <Stack className="!text-[10px] !font-SFProLight !leading-none opacity-[40%]" direction="column">
-                <div className="truncate w-[300px] mt-[6px]">{trans("task.createdAt", {
-                    date: formatDatetime({ date: task.content?.createdAt, locale: locale }),
-                    language: info.language && trans(`locale_switcher.${info.language}`)
-                })}
-                </div>
-                <div className="truncate w-[200px] mt-[10px]">{trans("task.category", { value: info.category && trans(`category.${info.category}`) })}</div>
-            </Stack>
+                secondary={trans("common.deadline")} className="mb-[20px]" />
             {
                 info.isProfile.customer && <MemoizedCustomer
                     locale={locale}
@@ -165,6 +160,15 @@ export default function TaskView({
                     userType="freelancer"
                 />
             }
+            <Divider sx={{ marginBottom: "12px", marginTop: "32px" }} />
+            <Stack className="!text-[10px] !font-SFProLight !leading-none opacity-[40%]" direction="column">
+                <div className="truncate w-[300px] mt-[6px]">{trans("task.createdAt", {
+                    date: formatDatetime({ date: task.content?.createdAt, locale: locale }),
+                    language: info.language && trans(`locale_switcher.${info.language}`)
+                })}
+                </div>
+                <div className="truncate w-[200px] mt-[10px]">{trans("task.category", { value: info.category && trans(`category.${info.category}`) })}</div>
+            </Stack>
         </Fragment>
     )
 }
